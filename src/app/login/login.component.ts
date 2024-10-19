@@ -17,7 +17,7 @@ export class LoginComponent {
  successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  private apiUrl = 'http://localhost:3000/api'; // Cambia esta URL si es necesario
+  private apiUrl = 'https://back-tienda-three.vercel.app/api'; // Cambia esta URL si es necesario
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 

@@ -113,7 +113,7 @@ export class RegistroComponent {
   localStorage.setItem('correoRegistro', registerForm.value.email);
 
     // Hacer la solicitud POST a la API
-    this.http.post<any>('http://localhost:3000/api/usuarios', registerData)
+    this.http.post<any>('https://back-tienda-three.vercel.app/api/usuarios', registerData)
       .subscribe(
         (response) => {
           console.log('Registro exitoso', response);

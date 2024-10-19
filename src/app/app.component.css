@@ -1,0 +1,46 @@
+
+
+  /* Estilos para el footer */
+.footer {
+    background-color: #1F407A; /* Color azul */
+    color: white;
+    padding: 20px 0; /* Espaciado vertical */
+}
+
+/* Estilos para el contenedor del footer */
+.footer-container {
+    display: flex;
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: center; /* Alinea verticalmente */
+    max-width: 1200px; /* Ancho máximo */
+    margin: auto; /* Centra el footer */
+    padding: 0 20px; /* Espaciado horizontal */
+}
+
+/* Estilos para la información del footer */
+.footer-info {
+    font-size: 14px;
+}
+
+/* Estilos para los enlaces del footer */
+.footer-info a {
+    color: white;
+    text-decoration: none; /* Sin subrayado */
+    margin-left: 10px; /* Espacio entre enlaces */
+    transition: color 0.3s;
+}
+
+.footer-info a:hover {
+    color: #FFD700; /* Color dorado al pasar el mouse */
+}
+
+/* Estilos para los enlaces de redes sociales */
+.footer-social a {
+    color: white;
+    margin-left: 15px; /* Espacio entre iconos */
+    transition: color 0.3s;
+}
+
+.footer-social a:hover {
+    color: #FFD700; /* Color dorado al pasar el mouse */
+}

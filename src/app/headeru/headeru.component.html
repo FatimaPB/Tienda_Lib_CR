@@ -1,0 +1,38 @@
+<header>
+    <!-- Parte superior de información -->
+    <div class="info-bar" id="infoBar">
+      <div class="info-container">
+        <div class="contact-info">
+          <span><i class="fas fa-phone"></i> 55 5208 3200</span>
+          <span><i class="fas fa-envelope"></i> inf</span>
+          <span class="cerrar"(click)="onLogout()" >Cerrar sesión</span>
+        </div>
+        <div class="social-links">
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="https://rss.com" target="_blank"><i class="fas fa-rss"></i></a>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Parte inferior con logo y menú -->
+    <div class="main-header" id="mainHeader">
+      <div class="header-container">
+        <div class="logo-container">
+          <img routerLink="/" src="../assets/img/logo.png" alt="Logo" class="logo">
+        </div>
+        <nav>
+          <ul class="menu">
+            <li><a routerLink="/quienes">QUIÉNES SOMOS</a></li>
+            <li><a routerLink="/ubica-parroquia">UBICA TU PARROQUIA</a></li>
+            <li><a routerLink="/pastoral">PASTORAL</a></li>
+            <li><a routerLink="/tramites">TRÁMITES</a></li>
+            <li><a routerLink="/documentos">DOCUMENTOS</a></li>
+            <li><a routerLink="/buscar"><i class="fas fa-search"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>

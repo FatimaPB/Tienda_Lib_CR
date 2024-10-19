@@ -1,0 +1,29 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CarouselModule } from 'primeng/carousel';
+
+@Component({
+  selector: 'app-inicio',
+  standalone: true,
+  imports: [CommonModule, CarouselModule],
+  templateUrl: './inicio.component.html',
+  styleUrl: './inicio.component.css'
+})
+export class InicioComponent {
+
+  
+
+  images: string[];
+
+  constructor() {
+    // Array con las rutas de tus imágenes
+    this.images = [
+      '',
+      '',
+      ''
+
+    ];
+  }
+
+
+}

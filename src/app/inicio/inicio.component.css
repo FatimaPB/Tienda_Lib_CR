@@ -1,0 +1,54 @@
+.fullscreen-carousel {
+    width: 100vw; /* El contenedor cubre todo el ancho de la pantalla */
+    height: 100vh; /* El contenedor cubre todo el alto de la pantalla */
+    position: relative; /* Permite la colocación absoluta de las flechas */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Evita que cualquier parte de la imagen desborde el contenedor */
+}
+
+.image-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el área del contenedor */
+    object-position: center; /* Centra la imagen en el contenedor */
+}
+
+/* Estilo para las flechas */
+.p-carousel .p-carousel-prev,
+.p-carousel .p-carousel-next {
+    position: absolute; /* Cambiar a posición absoluta */
+    top: 50%; /* Centra verticalmente las flechas */
+    transform: translateY(-50%); /* Ajuste para centrar exacto */
+    z-index: 100; /* Asegura que las flechas estén por encima de la imagen */
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente para mejor visibilidad */
+    border: none; /* Sin borde */
+    border-radius: 50%; /* Opcional: hace las flechas circulares */
+    width: 40px; /* Ancho de la flecha */
+    height: 40px; /* Alto de la flecha */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la flecha */
+}
+
+/* Posicionar las flechas a los lados del carrusel */
+.p-carousel .p-carousel-prev {
+    left: 20px; /* Posicionar a la izquierda */
+}
+
+.p-carousel .p-carousel-next {
+    right: 20px; /* Posicionar a la derecha */
+}
+
+/* Asegurar que las flechas no ocupen espacio en el contenedor */
+.p-carousel .p-carousel-prev,
+.p-carousel .p-carousel-next {
+    margin: 0; /* Sin margen */
+    padding: 0; /* Sin padding */
+}

@@ -1,0 +1,18 @@
+<div class="contenedor">
+<div class="verification-container">
+    <h3>Verificación de correo</h3>
+  
+    <form (ngSubmit)="verificarCodigo()">
+      <div class="code-input">
+        <label for="codigo">Ingresa el código de verificación:</label>
+        <input type="text" id="codigo" [(ngModel)]="codigo" name="codigo" maxlength="6" required class="form-control" />
+      </div>
+  
+      <button type="submit" class="btn-submit" [disabled]="!codigo">Verificar</button>
+    </form>
+  
+    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+      {{ mensaje }}
+    </div>
+  </div>
+</div>

@@ -1,14 +1,54 @@
-<p-carousel 
-    [value]="images" 
-    [numVisible]="1" 
-    [numScroll]="1" 
-    [circular]="true" 
-    showIndicators="false" 
-    class="fullscreen-carousel">
-
-    <ng-template pTemplate="item" let-image>
-        <div class="image-item">
-            <img [src]="image" alt="Imagen del carrusel" class="carousel-image"/>
-        </div>
-    </ng-template>
-</p-carousel>
+<div class="inicio-container">
+    <h1>Bienvenido a la Tienda de Artículos Religiosos</h1>
+  
+    <div class="product-grid">
+      <div class="product-item">
+        <img src="../assets/img/catedral1.png" alt="Biblia Sagrada" class="product-image" />
+        <h2>Biblia Sagrada</h2>
+        <p>Edición especial de la Biblia.</p>
+        <span class="price">$300.00</span>
+        <button pButton type="button" label="Comprar" class="buy-button"></button>
+      </div>
+  
+      <div class="product-item">
+        <img src="../assets/img/catedral1.png" alt="Rosario de Madera" class="product-image" />
+        <h2>Rosario de Madera</h2>
+        <p>Rosario hecho a mano de madera.</p>
+        <span class="price">$50.00</span>
+        <button pButton type="button" label="Comprar" class="buy-button"></button>
+      </div>
+  
+      <div class="product-item">
+        <img src="../assets/img/catedral1.png" alt="Imagen de la Virgen" class="product-image" />
+        <h2>Imagen de la Virgen</h2>
+        <p>Imagen de la Virgen María.</p>
+        <span class="price">$150.00</span>
+        <button pButton type="button" label="Comprar" class="buy-button"></button>
+      </div>
+  
+      <div class="product-item">
+        <img src="../assets/img/catedral1.png" alt="Cruz de Madera" class="product-image" />
+        <h2>Cruz de Madera</h2>
+        <p>Cruz artesanal de madera.</p>
+        <span class="price">$200.00</span>
+        <button pButton type="button" label="Comprar" class="buy-button"></button>
+      </div>
+  
+      <div class="product-item">
+        <img src="../assets/img/catedral1.png" alt="Vela Religiosa" class="product-image" />
+        <h2>Vela Religiosa</h2>
+        <p>Vela para oraciones y ceremonias.</p>
+        <span class="price">$30.00</span>
+        <button pButton type="button" label="Comprar" class="buy-button"></button>
+      </div>
+  
+      <div class="product-item">
+        <img src="../assets/img/catedral1.png" alt="Medalla de San Benito" class="product-image" />
+        <h2>Medalla de San Benito</h2>
+        <p>Medalla protectora de San Benito.</p>
+        <span class="price">$80.00</span>
+        <button pButton type="button" label="Comprar" class="buy-button"></button>
+      </div>
+    </div>
+  </div>
+  

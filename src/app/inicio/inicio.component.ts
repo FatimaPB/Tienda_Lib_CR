@@ -11,19 +11,5 @@ import { CarouselModule } from 'primeng/carousel';
 })
 export class InicioComponent {
 
-  
-
-  images: string[];
-
-  constructor() {
-    // Array con las rutas de tus imágenes
-    this.images = [
-      '',
-      '',
-      ''
-
-    ];
-  }
-
 
 }

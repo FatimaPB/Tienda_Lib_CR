@@ -10,6 +10,14 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header-normal.component.css'
 })
 export class HeaderNormalComponent {
- 
+  menuActive = false; // Variable para controlar el estado del menú
+
+  toggleMenu() {
+    this.menuActive = !this.menuActive; // Alterna el estado del menú
+  }
+
+  closeMenu() {
+    this.menuActive = false; // Cierra el menú cuando se selecciona una opción
+  }
 
 }

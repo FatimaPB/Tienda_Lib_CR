@@ -4,7 +4,7 @@
     justify-content: center;
   }
   .verification-container {
-    margin-top: 150px;
+    margin-top: 220px;
     background-color: #fff;
     padding: 2rem;
     border-radius: 8px;
@@ -12,7 +12,7 @@
     width: 100%;
     max-width: 400px;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 200px;
   }
   
   h2 {

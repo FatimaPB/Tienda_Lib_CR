@@ -1,0 +1,15 @@
+<div class="politica-privacidad-container">
+    <h2>Terminos y condiciones</h2>
+  
+    <div *ngIf="documentoVigente; else loading">
+      <h3>{{ documentoVigente.titulo }}</h3> <!-- Suponiendo que el documento tiene un campo 'titulo' -->
+      <p>{{ documentoVigente.contenido }}</p> <!-- Suponiendo que el documento tiene un campo 'contenido' -->
+    </div>
+  
+    <ng-template #loading>
+      <p>Cargando documento vigente...</p>
+    </ng-template>
+  
+    <p *ngIf="mensaje" class="error">{{ mensaje }}</p>
+  </div>
+  

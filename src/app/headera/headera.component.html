@@ -1,12 +1,19 @@
-<header>
+  <header>
     <!-- Parte superior de información -->
     <div class="info-bar" id="infoBar">
       <div class="info-container">
         <div class="contact-info">
           <span><i class="fas fa-phone"></i> 55 5208 3200</span>
-          <span><i class="fas fa-envelope"></i> admi</span>
+          <span><i class="fas fa-envelope"></i> info</span>
           <span class="cerrar"(click)="onLogout()" >Cerrar sesión</span>
-
+  
+        </div>
+        <div class="social-links">
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="https://rss.com" target="_blank"><i class="fas fa-rss"></i></a>
         </div>
       </div>
     </div>
@@ -14,15 +21,23 @@
     <!-- Parte inferior con logo y menú -->
     <div class="main-header" id="mainHeader">
       <div class="header-container">
-        <nav>
+        <!-- Botón de menú para pantallas pequeñas -->
+        <button class="menu-toggle" (click)="toggleMenu()">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+  
+        <nav [class.active]="menuActive">
           <ul class="menu">
-            <li><a routerLink="/admin/dashboard">DASHBOARD</a></li>
-            <li><a routerLink="/admin/usuarios">USUARIOS</a></li>
-            <li><a routerLink="/admin/parroquias">PARROQUIAS</a></li>
-            <li><a routerLink="/admin/documentos">DOCUMENTOS</a></li>
-            <li><a routerLink="/admin/tramites">TRÁMITES</a></li>
-            <li><a routerLink="/admin/pastoral">PASTORAL</a></li>
-            <li><a routerLink="/buscar"><i class="fas fa-search"></i></a></li>
+            <li><a routerLink="/incidencias" (click)="closeMenu()">INCIDENCIAS</a></li>
+            <li><a routerLink="/politicas" (click)="closeMenu()">POLITICAS</a></li>
+            <li><a routerLink="/terminos" (click)="closeMenu()">TERMINOS</a></li>
+            <li><a routerLink="/deslinde" (click)="closeMenu()">DESLINDE LEGAL</a></li>
+            <li><a routerLink="/pempresa" (click)="closeMenu()">PERFIL EMPRESA</a></li>
+            <li><a routerLink="/buscar" (click)="closeMenu()"><i class="fas fa-search"></i></a></li>
           </ul>
         </nav>
       </div>

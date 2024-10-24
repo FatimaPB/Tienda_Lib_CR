@@ -1,0 +1,90 @@
+<div class="incidencias-container">
+    <h2>Gestión de Incidencias de Usuarios</h2>
+
+    <div>
+        <h3>Configuración de Bloqueo</h3>
+        <label for="intentosLimite">Número de Intentos Límites:</label>
+        <input type="number" id="intentosLimite" [(ngModel)]="intentosLimite" min="1" />
+        <button (click)="guardarConfiguracionBloqueo()">Guardar Configuración</button>
+        <p *ngIf="mensajeError" class="error">{{ mensajeError }}</p>
+        <p *ngIf="mensajeExito" class="success">{{ mensajeExito }}</p>
+      </div>
+      
+  
+    <h3>Usuarios Activos</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Intentos Fallidos</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.failedAttempts }}</td>
+          <td>
+            <button class="btn" (click)="bloquearUsuarioDesdeLista(usuario)">Bloquear</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <h3>Usuarios Bloqueados últimos días</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Bloqueado Hasta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosBloqueados">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.blockedUntil | date: 'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <h3>Usuarios Bloqueados últimas semanas</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Bloqueado Hasta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosBloqueadossemana">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.blockedUntil | date: 'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <h3>Usuarios Bloqueados último mes</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Bloqueado Hasta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosBloqueadosmes">
+          <td>{{ usuario.nombre }}</td>
+          <td>{{ usuario.correo }}</td>
+          <td>{{ usuario.blockedUntil | date: 'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

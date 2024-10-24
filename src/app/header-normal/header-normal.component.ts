@@ -1,15 +1,43 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'; // Agrega OnInit para la inicialización
 import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+export interface Empresa {
+  slogan?: string;
+  logo?: string; // Asegúrate de que este campo sea correcto en el modelo
+}
 
 @Component({
   selector: 'app-header-normal',
   standalone: true,
-  imports: [RouterLink],
+  imports:[FormsModule , CommonModule, RouterLink],
   templateUrl: './header-normal.component.html',
-  styleUrl: './header-normal.component.css'
+  styleUrls: ['./header-normal.component.css'] // Corrige aquí de styleUrl a styleUrls
 })
-export class HeaderNormalComponent {
+export class HeaderNormalComponent implements OnInit { // Implementa OnInit
+
+  empresaData: Empresa | null = null; // Inicializa como null
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.getEmpresasData(); 
+  }
+
+  getEmpresasData(): void {
+    this.http.get<Empresa>('http://localhost:3000/api/perfil').subscribe({
+      next: (response) => {
+        this.empresaData = response; // Guarda el objeto directamente
+      },
+      error: (err) => {
+        console.error('Error al obtener los perfiles de empresa', err);
+        // Manejar el error
+      }
+    });
+  }
+
   menuActive = false; // Variable para controlar el estado del menú
 
   toggleMenu() {
@@ -19,5 +47,4 @@ export class HeaderNormalComponent {
   closeMenu() {
     this.menuActive = false; // Cierra el menú cuando se selecciona una opción
   }
-
 }

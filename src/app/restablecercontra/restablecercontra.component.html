@@ -1,0 +1,13 @@
+<h2 class="resta">Restablecer Contraseña</h2>
+<form (ngSubmit)="restablecerContrasena()" class="restablecer-contrasena-container">
+  <div class="form-group">
+    <label for="nuevaContrasena">Nueva Contraseña:</label>
+    <input type="password" [(ngModel)]="nuevaContrasena" name="nuevaContrasena" class="form-control" required />
+  </div>
+  <div class="form-group">
+    <label for="confirmacionContrasena">Confirmar Contraseña:</label>
+    <input type="password" [(ngModel)]="confirmacionContrasena" name="confirmacionContrasena" class="form-control" required />
+  </div>
+  <button type="submit" class="btn">Restablecer Contraseña</button>
+</form>
+<p class="mensaje">{{ mensaje }}</p>

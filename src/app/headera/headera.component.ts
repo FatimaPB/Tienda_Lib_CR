@@ -17,5 +17,13 @@ export class HeaderaComponent {
     this.authService.logout(); // Llama al método de logout del servicio
     this.router.navigate(['']); // Redirige a la página de inicio de sesión
   }
+  menuActive = false; // Variable para controlar el estado del menú
 
+  toggleMenu() {
+    this.menuActive = !this.menuActive; // Alterna el estado del menú
+  }
+
+  closeMenu() {
+    this.menuActive = false; // Cierra el menú cuando se selecciona una opción
+  }
 }

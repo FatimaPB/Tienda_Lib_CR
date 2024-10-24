@@ -1,0 +1,29 @@
+.politica-privacidad-container {
+    max-width: 800px; /* Ancho máximo */
+    margin: 200px auto; /* Centrado */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #e0e0e0; /* Borde */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  h2 {
+    text-align: center; /* Centrado del título */
+    margin-bottom: 20px; /* Margen inferior */
+    color: #333; /* Color del texto */
+  }
+  
+  .error {
+    color: red; /* Color del mensaje de error */
+    text-align: center; /* Centrado del mensaje de error */
+    margin-top: 15px; /* Margen superior */
+  }
+  
+  /* Responsividad */
+  @media (max-width: 600px) {
+    .politica-privacidad-container {
+      padding: 15px; /* Espaciado interno reducido */
+    }
+  }
+  

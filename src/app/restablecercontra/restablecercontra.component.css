@@ -1,0 +1,93 @@
+.restablecer-contrasena-container {
+    max-width: 500px; /* Ancho máximo */
+    margin: 180px auto; /* Centrado vertical y horizontal */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #e0e0e0; /* Borde */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+  }
+  
+  .restablecer-contrasena-container h2 {
+    text-align: center; /* Centrado del título */
+    margin-bottom: 20px; /* Margen inferior */
+    color: #333; /* Color del texto */
+  }
+  
+  .form-group {
+    margin-bottom: 15px; /* Margen inferior para cada grupo de formulario */
+  }
+  
+  label {
+    display: block; /* Para ocupar el 100% de ancho */
+    font-weight: bold; /* Negrita */
+    margin-bottom: 5px; /* Margen inferior del label */
+    color: #555; /* Color del texto */
+  }
+  
+  .form-control {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: border-color 0.3s; /* Transición suave */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+  }
+  
+  .form-control:focus {
+    border-color: #007ad9; /* Color de foco */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(0, 122, 217, 0.5); /* Sombra al enfocar */
+  }
+  
+  .btn {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    background-color: #007ad9; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Transición suave para el hover */
+  }
+  
+  .btn:not(:disabled):hover {
+    background-color: #005bb5; /* Color de fondo en hover */
+  }
+  
+  .mensaje {
+    text-align: center; /* Centrado del mensaje */
+    color: #333; /* Color del texto */
+    margin-top: 15px; /* Margen superior */
+    font-size: 14px; /* Tamaño de fuente */
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 600px) {
+    .restablecer-contrasena-container {
+      margin: 100px auto; /* Margen superior reducido en pantallas pequeñas */
+      padding: 15px; /* Espaciado interno reducido */
+    }
+  
+    .restablecer-contrasena-container h2 {
+      font-size: 24px; /* Tamaño de fuente del título */
+    }
+  
+    .form-control {
+      font-size: 14px; /* Tamaño de fuente reducido para inputs */
+      padding: 8px; /* Espaciado interno reducido */
+    }
+  
+    .btn {
+      font-size: 14px; /* Tamaño de fuente reducido para el botón */
+      padding: 8px; /* Espaciado interno reducido para el botón */
+    }
+  
+    .mensaje {
+      font-size: 12px; /* Tamaño de fuente reducido para el mensaje */
+    }
+  }
+  

@@ -1,0 +1,73 @@
+.incidencias-container {
+    max-width: 800px; /* Anchura máxima del contenedor */
+    margin: 60px auto; /* Margen superior e inferior y centrado horizontal */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #e0e0e0; /* Borde */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    background-color: #ffffff; /* Fondo blanco */
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+  }
+  
+  .incidencias-container h2 {
+    text-align: center; /* Centrado del título */
+    margin-bottom: 20px; /* Margen inferior */
+    color: #333; /* Color del texto */
+  }
+  
+  .incidencias-container h3 {
+    margin-top: 30px; /* Margen superior para separar las secciones */
+    color: #555; /* Color del texto */
+  }
+  
+  table {
+    width: 100%; /* Ancho completo */
+    border-collapse: collapse; /* Colapsar bordes */
+    margin-bottom: 20px; /* Margen inferior para separar tablas */
+  }
+  
+  th, td {
+    padding: 10px; /* Espaciado interno */
+    text-align: left; /* Alinear texto a la izquierda */
+    border-bottom: 1px solid #ccc; /* Borde inferior */
+  }
+  
+  th {
+    background-color: #f9f9f9; /* Color de fondo de los encabezados */
+    font-weight: bold; /* Negrita para los encabezados */
+  }
+  
+  .btn {
+    padding: 5px 10px; /* Espaciado interno para el botón */
+    background-color: #007ad9; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Transición suave para el hover */
+  }
+  
+  .btn:hover {
+    background-color: #005bb5; /* Color de fondo en hover */
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 600px) {
+    .incidencias-container {
+      padding: 15px; /* Menos padding en pantallas pequeñas */
+    }
+  
+    table {
+      font-size: 14px; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+    }
+  
+    th, td {
+      padding: 8px; /* Menos espaciado interno en pantallas pequeñas */
+    }
+  
+    .btn {
+      width: 100%; /* Botón ocupa el ancho completo */
+    }
+  }
+  

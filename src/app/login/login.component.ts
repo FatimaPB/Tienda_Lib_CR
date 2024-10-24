@@ -37,7 +37,7 @@ export class LoginComponent {
             console.log("Tipo de usuario:", response.tipoUsuario); // Esto debería mostrar 'admin' o 'cliente'
   
             if (response.tipoUsuario === 'admin') {
-              this.router.navigate(['/inicioadmin']); // Redirigir al admin
+              this.router.navigate(['/incidencias']); // Redirigir al admin
               this.successMessage = 'Inicio de sesión exitoso!';
               this.errorMessage = null;
             } else {

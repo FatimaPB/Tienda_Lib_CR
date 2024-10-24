@@ -99,6 +99,11 @@
       <small *ngIf="!registerForm.controls['phone']?.valid && registerForm.controls['phone']?.touched" class="error-message">El teléfono debe tener 10 números</small>
     </div>
 
+    <re-captcha
+    siteKey="6LfFw2oqAAAAAOAgM0lpejqCeiOpnBCB243eUTgA"
+    (resolved)="resolved($event)"
+  ></re-captcha>
+
     <!-- Botón de Registrarse -->
     <button type="submit" class="btn" [disabled]="!registerForm.valid">Registrarse</button>
 

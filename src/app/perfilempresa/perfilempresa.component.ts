@@ -110,6 +110,7 @@ export class PerfilempresaComponent implements OnInit {
       next: (response) => {
         console.log('Perfil de empresa actualizado exitosamente', response);
         this.getEmpresasData(); // Actualiza los datos después de modificar
+        this.empresaForm.reset();
       },
       error: (err) => {
         console.error('Error al actualizar el perfil de la empresa', err);

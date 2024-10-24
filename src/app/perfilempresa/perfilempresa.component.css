@@ -1,137 +1,122 @@
-/* src/app/empresa/empresa.component.css */
-
 /* Contenedor principal del formulario de empresa */
 .empresa-container {
-    max-width: 600px; /* Ajusta según sea necesario */
-    margin: 85px auto; /* Centra verticalmente */
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    box-sizing: border-box;
-  }
-  
-  .empresa-container h2,
-  .empresa-container h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* Estilos para el formulario */
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-    box-sizing: border-box;
-  }
-  
-  .form-control:focus {
-    border-color: #007ad9;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 122, 217, 0.5);
-  }
-  
-  /* Estilo del botón */
-  .btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #007ad9;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .btn:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .btn:not(:disabled):hover {
-    background-color: #005bb5;
-  }
-  
-  /* Estilos para la tabla */
+  max-width: 600px;
+  margin: 85px auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.empresa-container h2,
+.empresa-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilos para el formulario */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #007ad9;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 122, 217, 0.5);
+}
+
+/* Estilo del botón */
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007ad9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.btn:not(:disabled):hover {
+  background-color: #005bb5;
+}
+
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+table td {
+  vertical-align: middle;
+}
+
+table img {
+  display: block;
+  max-width: 100px;
+  height: auto;
+}
+
+/* Estilos para móviles */
+@media (max-width: 768px) {
   table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+      display: block;
+      overflow-x: auto; /* Permite el scroll horizontal si es necesario */
+      white-space: nowrap;
   }
   
   table th,
   table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+      padding: 8px;
   }
-  
-  table th {
-    background-color: #f2f2f2;
-    color: #333;
+
+  table img {
+      max-width: 80px; /* Tamaño del logo más pequeño para móviles */
+      height: auto;
   }
-  
-  table td {
-    vertical-align: top;
-  }
-  
+
+  /* Ajuste adicional para los botones en móviles */
   table button {
-    background-color: #007ad9;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+      padding: 8px;
+      font-size: 14px;
   }
-  
-  table button:hover {
-    background-color: #005bb5;
-  }
-  
-  /* Mensaje de error */
-  .error-message {
-    color: #e74c3c;
-    font-size: 12px;
-    margin-top: 5px;
-  }
-  
-  /* Estilos para móviles */
-  @media (max-width: 768px) {
-    .empresa-container {
-      width: 100%;
-    }
-  
-    table th,
-    table td {
-      display: block;
-      text-align: right;
-    }
-  
-    table th::after {
-      content: ":";
-      margin-left: 10px;
-    }
-  
-    table td {
-      text-align: left;
-    }
-  }
-  
+}

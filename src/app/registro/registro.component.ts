@@ -5,12 +5,11 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { sha1 } from 'crypto-hash'; // Asegúrate de tener esto instalado
-import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule, RecaptchaFormsModule],
+  imports: [FormsModule, RouterLink, CommonModule],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
@@ -22,7 +21,6 @@ export class RegistroComponent {
   passwordMismatch = false; // Nuevo estado para controlar si las contraseñas coinciden
   isPasswordVisible = false; // Para la contraseña
   isConfirmPasswordVisible = false; // Para confirmar la contraseña
-  recaptchaToken: string = ''; // Cambia esto a una cadena vacía
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -104,17 +102,15 @@ export class RegistroComponent {
       return;
     }
 
-    // Preparar los datos del registro
     const registerData = {
       nombre: registerForm.value.name,
       correo: registerForm.value.email,
       telefono: registerForm.value.phone,
-      contrasena: password,
-      recaptchaToken: this.recaptchaToken // Agregar el token de reCAPTCHA
+      contrasena: password
     };
 
-    // Guardar el correo en el LocalStorage
-    localStorage.setItem('correoRegistro', registerForm.value.email);
+     // Guardar el correo en el LocalStorage
+  localStorage.setItem('correoRegistro', registerForm.value.email);
 
     // Hacer la solicitud POST a la API
     this.http.post<any>('https://back-tienda-three.vercel.app/api/usuarios', registerData)
@@ -156,8 +152,5 @@ export class RegistroComponent {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 
-  resolved(captchaResponse: string | null): void {
-    console.log(`Resolved reCAPTCHA con respuesta: ${captchaResponse}`);
-    this.recaptchaToken = captchaResponse || '';  // Asegúrate de que recaptchaToken siempre sea un string
-  }
+  
 }

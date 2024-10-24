@@ -9,6 +9,9 @@
   background-color: #ffffff;
   box-sizing: border-box;
 }
+.per{
+  text-align: center;
+}
 
 .empresa-container h2,
 .empresa-container h3 {

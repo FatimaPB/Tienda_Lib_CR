@@ -19,7 +19,7 @@ export class VerificarComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   verificarCodigo() {
-    this.http.post('http://localhost:3000/api/verificar-codigo', { correo: this.correo, codigo: this.codigo })
+    this.http.post('https://back-tienda-three.vercel.app/api/verificar-codigo', { correo: this.correo, codigo: this.codigo })
       .subscribe(response => {
         this.mensaje = 'Código verificado con éxito. Ahora puedes restablecer tu contraseña.';
         this.router.navigate(['/restablecer'], { state: { correo: this.correo } });

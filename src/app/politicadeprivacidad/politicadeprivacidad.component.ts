@@ -21,7 +21,7 @@ export class PoliticadeprivacidadComponent {
   }
 
   obtenerDocumentoVigente(): void {
-    this.http.get('http://localhost:3000/api/documentos/vigente') // Reemplaza con la URL correcta de tu API
+    this.http.get('https://back-tienda-three.vercel.app/api/documentos/vigente') // Reemplaza con la URL correcta de tu API
       .subscribe(
         (data) => {
           this.documentoVigente = data;

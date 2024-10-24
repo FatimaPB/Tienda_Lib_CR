@@ -121,7 +121,7 @@ guardarConfiguracionBloqueo() {
         return;
     }
 
-    this.http.post('http://localhost:3000/api/configurar-intentos', { intentosLimite: this.intentosLimite })
+    this.http.post('https://back-tienda-three.vercel.app/api/configurar-intentos', { intentosLimite: this.intentosLimite })
       .subscribe(
         () => {
             this.mensajeExito = 'Configuración guardada con éxito.';

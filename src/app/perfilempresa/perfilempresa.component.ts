@@ -53,7 +53,7 @@ export class PerfilempresaComponent implements OnInit {
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('http://localhost:3000/api/perfil').subscribe({
+    this.http.get<Empresa>('https://back-tienda-three.vercel.app/api/perfil').subscribe({
       next: (response) => {
         this.empresaData = response; // Guarda el objeto directamente
       },
@@ -106,7 +106,7 @@ export class PerfilempresaComponent implements OnInit {
     formData.append('contacto', JSON.stringify(contacto)); // Convertir a JSON
 
     // Enviar la solicitud PUT al servidor
-    this.http.put('http://localhost:3000/api/perfil', formData).subscribe({
+    this.http.put('https://back-tienda-three.vercel.app/api/perfil', formData).subscribe({
       next: (response) => {
         console.log('Perfil de empresa actualizado exitosamente', response);
         this.getEmpresasData(); // Actualiza los datos después de modificar

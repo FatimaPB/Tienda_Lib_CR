@@ -25,7 +25,6 @@ export class LoginComponent {
   onLogin(loginForm: NgForm) {
     const { email, password } = loginForm.value;
 
-    // Asegúrate de que el reCAPTCHA esté resuelto
     if (!this.resolvedCaptcha) {
       this.errorMessage = 'Por favor, completa el reCAPTCHA.';
       return;
@@ -38,8 +37,6 @@ export class LoginComponent {
             localStorage.setItem('token', response.token);
             localStorage.setItem('tipoUsuario', response.tipoUsuario);
             this.authService.login(response.tipoUsuario);
-            console.log("Tipo de usuario después de iniciar sesión:", response.tipoUsuario);
-            console.log("Token:", response.token);
 
             if (response.tipoUsuario === 'admin') {
               this.router.navigate(['/incidencias']);
@@ -52,7 +49,6 @@ export class LoginComponent {
         },
         error: (err) => {
           if (err.status === 400) {
-            // Esto es un error de verificación de reCAPTCHA
             this.errorMessage = 'Error de verificación de reCAPTCHA. Intenta de nuevo.';
           } else if (err.status === 401) {
             this.errorMessage = 'Credenciales inválidas.';
@@ -64,5 +60,9 @@ export class LoginComponent {
           this.successMessage = null;
         }
       });
+  }
+
+  onCaptchaResolved(captchaResponse: string) {
+    this.resolvedCaptcha = captchaResponse;
   }
 }

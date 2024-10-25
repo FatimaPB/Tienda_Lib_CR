@@ -45,7 +45,7 @@
     color: #FFD700; /* Color dorado al pasar el mouse */
 }
 .dark-mode-toggle {
-    position: fixed;
+    position:absolute;
     top: 20px;
     right: 18px;
     padding: 5px 10px;

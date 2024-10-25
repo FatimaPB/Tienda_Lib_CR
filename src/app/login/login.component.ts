@@ -2,54 +2,75 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth.service'; // Asegúrate de importar el servicio
+import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
- successMessage: string | null = null;
+  resolvedCaptcha: string | null = null;
+  successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  private apiUrl = 'https://back-tienda-three.vercel.app/api'; // Cambia esta URL si es necesario
+  private apiUrl = 'https://back-tienda-three.vercel.app/api';
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   onLogin(loginForm: NgForm) {
     const { email, password } = loginForm.value;
-  
-    this.http.post<any>(`${this.apiUrl}/login`, { correo: email, contrasena: password })
+
+    // Asegúrate de que el reCAPTCHA esté resuelto
+    if (!this.resolvedCaptcha) {
+      this.errorMessage = 'Por favor, completa el reCAPTCHA.';
+      console.log("reCAPTCHA no resuelto.");
+      return;
+    }
+
+    console.log("reCAPTCHA resuelto:", this.resolvedCaptcha); // Mensaje para verificar el token
+
+    this.http.post<any>(`${this.apiUrl}/login`, { correo: email, contrasena: password, recaptcha: this.resolvedCaptcha })
       .subscribe({
         next: (response) => {
+          console.log('Respuesta del servidor:', response); // Muestra la respuesta del servidor
+
           if (response && response.token) {
             localStorage.setItem('token', response.token);
-            localStorage.setItem('tipoUsuario', response.tipoUsuario); // Almacenar el tipo de usuario
-            this.authService.login(response.tipoUsuario); // Establecer el tipo de usuario
-            console.log("Tipo de usuario después de iniciar sesión:", response.tipoUsuario); // Verificar el tipo de usuario
-            console.log("Token:", response.token); // Verificar el tipo de usuario
+            localStorage.setItem('tipoUsuario', response.tipoUsuario);
+            this.authService.login(response.tipoUsuario);
+            console.log("Tipo de usuario después de iniciar sesión:", response.tipoUsuario);
+            console.log("Token:", response.token);
 
-            console.log("Tipo de usuario:", response.tipoUsuario); // Esto debería mostrar 'admin' o 'cliente'
-  
             if (response.tipoUsuario === 'admin') {
-              this.router.navigate(['/incidencias']); // Redirigir al admin
+              this.router.navigate(['/incidencias']);
               this.successMessage = 'Inicio de sesión exitoso!';
               this.errorMessage = null;
             } else {
-              this.router.navigate(['']); // Redirigir al cliente
+              this.router.navigate(['']);
             }
           }
         },
         error: (err) => {
-          if (err.status === 403) {
-            alert('Fallaste los 5 intentos permitidos cuenta bloqueada. Intenta más tarde.'); // Mensaje para cuenta bloqueada
+          console.error("Error al iniciar sesión:", err); // Mensaje de error general
+
+          if (err.status === 400) {
+            // Esto es un error de verificación de reCAPTCHA
+            this.errorMessage = 'Error de verificación de reCAPTCHA. Intenta de nuevo.';
+            console.log("Error de verificación de reCAPTCHA.");
+          } else if (err.status === 401) {
+            this.errorMessage = 'Credenciales inválidas.';
+            console.log("Credenciales inválidas.");
+          } else if (err.status === 403) {
+            alert('Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.');
+            console.log("Cuenta bloqueada.");
           } else {
             this.errorMessage = 'Error al iniciar sesión: ' + (err.error?.message || 'Servidor no disponible');
+            console.log("Error al iniciar sesión:", err.error?.message || 'Servidor no disponible');
           }
           this.successMessage = null;
         }

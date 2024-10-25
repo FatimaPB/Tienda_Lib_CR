@@ -28,17 +28,12 @@ export class LoginComponent {
     // Asegúrate de que el reCAPTCHA esté resuelto
     if (!this.resolvedCaptcha) {
       this.errorMessage = 'Por favor, completa el reCAPTCHA.';
-      console.log("reCAPTCHA no resuelto.");
       return;
     }
-
-    console.log("reCAPTCHA resuelto:", this.resolvedCaptcha); // Mensaje para verificar el token
 
     this.http.post<any>(`${this.apiUrl}/login`, { correo: email, contrasena: password, recaptcha: this.resolvedCaptcha })
       .subscribe({
         next: (response) => {
-          console.log('Respuesta del servidor:', response); // Muestra la respuesta del servidor
-
           if (response && response.token) {
             localStorage.setItem('token', response.token);
             localStorage.setItem('tipoUsuario', response.tipoUsuario);
@@ -56,21 +51,15 @@ export class LoginComponent {
           }
         },
         error: (err) => {
-          console.error("Error al iniciar sesión:", err); // Mensaje de error general
-
           if (err.status === 400) {
             // Esto es un error de verificación de reCAPTCHA
             this.errorMessage = 'Error de verificación de reCAPTCHA. Intenta de nuevo.';
-            console.log("Error de verificación de reCAPTCHA.");
           } else if (err.status === 401) {
             this.errorMessage = 'Credenciales inválidas.';
-            console.log("Credenciales inválidas.");
           } else if (err.status === 403) {
             alert('Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.');
-            console.log("Cuenta bloqueada.");
           } else {
             this.errorMessage = 'Error al iniciar sesión: ' + (err.error?.message || 'Servidor no disponible');
-            console.log("Error al iniciar sesión:", err.error?.message || 'Servidor no disponible');
           }
           this.successMessage = null;
         }

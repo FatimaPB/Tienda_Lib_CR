@@ -5,7 +5,6 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
     box-sizing: border-box;
   }
   
@@ -34,7 +33,7 @@
   }
   
   th {
-    background-color: #f9f9f9;
+
     font-weight: bold;
   }
   
@@ -83,4 +82,34 @@
       font-size: 12px;
     }
   }
-  
+  /* Estilos para el modo oscuro */
+.dark-theme .incidencias-container {
+  background-color: #121212; /* Fondo oscuro */
+  border: 1px solid var(--border-color); /* Usar variable de borde */
+}
+
+.dark-theme .incidencias-container h2,
+.dark-theme .incidencias-container h3 {
+  color: var(--text-color); /* Usar variable para el color del texto */
+}
+
+.dark-theme table {
+  background-color: #1e1e1e; /* Fondo de la tabla */
+}
+
+.dark-theme th {
+  background-color: #2a2a2a; /* Fondo de encabezados en la tabla */
+  color: var(--text-color); /* Color del texto en encabezados */
+}
+
+.dark-theme td {
+  color: var(--text-color); /* Color del texto en celdas */
+}
+
+.dark-theme .btn {
+  background-color: var(--button-background); /* Fondo del botón */
+}
+
+.dark-theme .btn:hover {
+  background-color: var(--button-hover-background); /* Fondo del botón en hover */
+}

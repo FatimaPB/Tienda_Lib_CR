@@ -8,7 +8,6 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
     box-sizing: border-box;
   }
   
@@ -122,6 +121,52 @@
     font-size: 12px;
     margin-top: 5px;
   }
+
+  /* Estilos para el modo oscuro */
+.dark-theme .politicas-container {
+  background-color: #121212; /* Fondo oscuro */
+  border: 1px solid var(--border-color); /* Usar variable de borde */
+}
+
+.dark-theme .politicas-container h2 {
+  color: var(--text-color); /* Usar variable para el color del texto */
+}
+
+.dark-theme label {
+  color: var(--text-color); /* Color del texto de las etiquetas */
+}
+
+.dark-theme .form-control {
+  background-color: #1e1e1e; /* Fondo de la entrada en modo oscuro */
+  border: 1px solid var(--border-color); /* Borde en modo oscuro */
+  color: var(--text-color); /* Color del texto en entrada */
+}
+
+.dark-theme .form-control:focus {
+  border-color: #007ad9; /* Color de borde al enfocar */
+  box-shadow: 0 0 5px rgba(0, 122, 217, 0.5);
+}
+
+.dark-theme .btn {
+  background-color: var(--button-background); /* Fondo del botón en modo oscuro */
+}
+
+.dark-theme .btn:hover {
+  background-color: var(--button-hover-background); /* Fondo del botón en hover */
+}
+
+.dark-theme table th {
+  background-color: #2a2a2a; /* Fondo de encabezados en la tabla */
+  color: var(--text-color); /* Color del texto en encabezados */
+}
+
+.dark-theme table td {
+  color: var(--text-color); /* Color del texto en celdas */
+}
+
+.dark-theme .error-message {
+  color: #e74c3c; /* Color del mensaje de error */
+}
   
   /* Estilos para móviles */
   @media (max-width: 768px) {

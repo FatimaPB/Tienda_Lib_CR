@@ -3,7 +3,6 @@
     margin: 120px auto;
     max-width: 1300px;
     padding: 20px;
-    background-color: #f9f9f9;
     border-radius: 10px;
   }
   
@@ -19,7 +18,6 @@
   }
   
   .product-item {
-    background-color: #fff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -67,7 +65,37 @@
   .buy-button:hover {
     background-color: #3e2723;
   }
+  .dark-theme .product-item {
+    background-color: #1e1e1e; /* Fondo oscuro para los productos */
+    border: 1px solid #444; /* Borde gris oscuro */
+  }
   
+   
+  .dark-theme h1 {
+    color: #ffffff; /* Color claro para subtítulos */
+  }
+  .dark-theme h2 {
+    color: #e0e0e0; /* Color claro para subtítulos */
+  }
+  
+  .dark-theme p {
+    color: #b0bec5; /* Color claro para párrafos */
+  }
+  
+  .dark-theme .price {
+    color: #a5d6a7; /* Color claro para precios */
+  }
+  
+  .dark-theme .buy-button {
+    background-color: #795548; /* Fondo oscuro para el botón */
+    color: #fff; /* Color de texto del botón */
+  }
+  
+  .dark-theme .buy-button:hover {
+    background-color: #4e342e; /* Fondo más oscuro en hover */
+  }
+
+
   /* Para pantallas medianas, mostrar dos productos por fila */
   @media screen and (max-width: 768px) {
     .product-grid {

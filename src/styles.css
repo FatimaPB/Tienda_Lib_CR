@@ -1,1 +1,117 @@
 /* You can add global styles to this file, and also import other style files */
+/* styles.css */
+
+/* Variables para el modo claro */
+/* styles.css */
+
+/* Variables para el modo claro */
+/* styles.css */
+
+/* Variables para el modo claro */
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --border-color: #e0e0e0; /* Color del borde */
+    --input-background: #ffffff; /* Fondo de inputs en modo claro */
+    --input-border: #ccc; /* Borde de inputs en modo claro */
+    --button-background: #007ad9; /* Color de fondo del botón */
+    --button-hover-background: #005bb5; /* Color del botón en hover */
+    /* Otras variables de color para el modo claro */
+}
+
+/* Variables para el modo oscuro */
+.dark-theme {
+    --background-color: #121212;
+    --info-bar: #121212;
+    --container :#121212; 
+    --text-color: #ffffff;
+    --border-color: #444; /* Borde más oscuro */
+    --input-background: #333; /* Fondo de inputs en modo oscuro */
+    --input-border: #666; /* Borde de inputs en modo oscuro */
+    --button-background: #007bff; /* Color de fondo del botón */
+    --button-hover-background: #0056b3; /* Color del botón en hover */
+    /* Otras variables de color para el modo oscuro */
+}
+
+/* Usa las variables en los elementos */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color); /* Asegura que todos los encabezados usen el color de texto */
+}
+
+p, span, a {
+    color: var(--text-color); /* Asegura que todos los párrafos y enlaces usen el color de texto */
+}
+
+.container, .card, .modal, .dropdown {
+    background-color: var(--background-color); /* Fondo para contenedores, tarjetas y modales */
+    border: 1px solid var(--border-color); /* Borde */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Margen inferior para cada grupo de formulario */
+}
+
+label {
+    color: var(--text-color); /* Color de las etiquetas */
+}
+
+input, textarea, select {
+    background-color: var(--input-background); /* Fondo de inputs y selects */
+    color: var(--text-color); /* Color del texto en inputs */
+    border: 1px solid var(--input-border); /* Borde */
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--button-background); /* Borde de enfoque */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(0, 122, 217, 0.5); /* Sombra al enfocar */
+}
+
+.btn {
+    background-color: var(--button-background); /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+.btn:hover {
+    background-color: var(--button-hover-background); /* Color de fondo del botón en hover */
+}
+
+/* Toast notifications */
+.toast {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para las toasts */
+    color: var(--text-color); /* Color del texto de las toasts */
+}
+
+/* Estilos específicos para el modo oscuro */
+.dark-theme .container,
+.dark-theme .card,
+.dark-theme .modal,
+.dark-theme .dropdown {
+    background-color: var(--background-color); /* Usar variable de fondo */
+    border: 1px solid var(--border-color); /* Usar variable de borde */
+}
+
+.dark-theme .form-control {
+    background-color: var(--input-background); /* Usar variable de fondo de inputs */
+    border: 1px solid var(--input-border); /* Usar variable de borde de inputs */
+    color: var(--text-color); /* Usar variable de color de texto */
+}
+
+.dark-theme .btn {
+    background-color: var(--button-background); /* Usar variable de fondo del botón */
+}
+
+.dark-theme .btn:hover {
+    background-color: var(--button-hover-background); /* Usar variable de fondo del botón en hover */
+}
+
+.dark-theme .toast {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para las toasts */
+    color: var(--text-color); /* Color del texto de las toasts */
+}

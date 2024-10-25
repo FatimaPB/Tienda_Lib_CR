@@ -44,3 +44,49 @@
 .footer-social a:hover {
     color: #FFD700; /* Color dorado al pasar el mouse */
 }
+.dark-mode-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #697e95; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+    z-index: 1000; /* Asegurar que esté sobre otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transición suave para cambios */
+}
+
+.icon {
+    font-size: 24px; /* Tamaño de los iconos */
+    display: none; /* Ocultar ambos iconos por defecto */
+}
+
+/* Mostrar el icono de luna en modo claro */
+.dark-theme .sun {
+    display: none; /* Ocultar sol en modo oscuro */
+}
+
+.dark-theme .moon {
+    display: inline; /* Mostrar luna en modo oscuro */
+}
+
+/* Mostrar el icono de sol en modo oscuro */
+.sun {
+    display: inline; /* Mostrar sol en modo claro */
+}
+
+.moon {
+    display: none; /* Ocultar luna en modo claro */
+}
+
+.dark-mode-toggle:hover {
+    background-color: #8dd3d7; /* Color de fondo al pasar el mouse */
+    transform: translateY(-2px); /* Sube un poco el botón */
+}
+
+.dark-mode-toggle:active {
+    transform: translateY(0); /* Regresa a su posición original al hacer clic */
+}

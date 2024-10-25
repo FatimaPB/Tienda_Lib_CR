@@ -21,6 +21,13 @@
   <app-header-normal></app-header-normal> <!-- Encabezado normal para usuarios no autenticados -->
 </ng-template>
 
+<!-- Botón de alternancia de modo oscuro -->
+<button class="dark-mode-toggle" (click)="toggleDarkMode()">
+  <span class="icon sun">&#9728;</span> <!-- Icono de sol -->
+  <span class="icon moon">&#9790;</span> <!-- Icono de luna -->
+</button>
+
+
 <router-outlet></router-outlet>
 
 

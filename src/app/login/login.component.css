@@ -5,7 +5,6 @@
   border: 1px solid #e0e0e0; /* Borde */
   border-radius: 8px; /* Bordes redondeados */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
-  background-color: #ffffff; /* Fondo blanco */
   box-sizing: border-box; /* Incluye padding en el ancho total */
 }
 
@@ -104,4 +103,29 @@ label {
 
 .error-toast {
   background-color: #dc3545; /* Rojo para error */
+}
+
+/* Estilos para el modo oscuro */
+.dark-theme .login-container {
+  --background-color: #121212;
+  border: 1px solid var(--border-color); /* Usar variable de borde */
+}
+
+.dark-theme .login-container h2,
+.dark-theme label {
+  color: var(--text-color); /* Usar variable para el color del texto */
+}
+
+.dark-theme .form-control {
+  background-color: var(--input-background); /* Usar variable para el fondo de inputs */
+  color: var(--text-color); /* Usar variable para el color de texto en inputs */
+  border: 1px solid var(--input-border); /* Usar variable para el borde */
+}
+
+.dark-theme .btn {
+  background-color: var(--button-background); /* Usar variable para el fondo del botón */
+}
+
+.dark-theme .btn:hover {
+  background-color: var(--button-hover-background); /* Usar variable para el fondo del botón en hover */
 }

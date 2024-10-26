@@ -106,40 +106,54 @@ export class RegistroComponent {
       nombre: registerForm.value.name,
       correo: registerForm.value.email,
       telefono: registerForm.value.phone,
-      contrasena: password
+      contrasena: registerForm.value.password
     };
-
-     // Guardar el correo en el LocalStorage
-  localStorage.setItem('correoRegistro', registerForm.value.email);
-
-    // Hacer la solicitud POST a la API
+  
     this.http.post<any>('https://back-tienda-three.vercel.app/api/usuarios', registerData)
       .subscribe(
         (response) => {
           console.log('Registro exitoso', response);
           this.successMessage = 'Registro exitoso!';
           this.errorMessage = null;
-
+  
           setTimeout(() => {
             this.router.navigate(['/verificacion']);
           }, 3000);
         },
         (error) => {
           console.error('Error al registrar', error);
-          this.errorMessage = 'Error en el registro. Inténtalo de nuevo.';
+  
+          // Manejo de error específico del backend
+          if (error.status === 400 && error.error?.message === 'El correo ya está registrado') {
+            this.errorMessage = 'El correo ya está registrado. Por favor, utiliza otro correo.';
+          } else {
+            this.errorMessage = 'Error en el registro. Inténtalo de nuevo.';
+          }
+  
           this.successMessage = null;
-
+  
           setTimeout(() => {
             this.errorMessage = null;
           }, 3000);
         }
       );
+  
   }
 
   preventLetters(event: KeyboardEvent): void {
     const input = String.fromCharCode(event.charCode);
     if (!/[0-9]/.test(input)) {
       event.preventDefault();
+    }
+  }
+
+  onNameInput(event: Event): void {
+    const input = (event.target as HTMLInputElement);
+    const regex = /^[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*$/;
+
+    if (!regex.test(input.value)) {
+      // Si el valor ingresado no coincide con el patrón, elimina el último carácter
+      input.value = input.value.slice(0, -1);
     }
   }
 

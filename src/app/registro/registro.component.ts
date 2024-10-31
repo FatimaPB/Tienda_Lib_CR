@@ -115,6 +115,8 @@ export class RegistroComponent {
           console.log('Registro exitoso', response);
           this.successMessage = 'Registro exitoso!';
           this.errorMessage = null;
+
+          localStorage.setItem('correoRegistro', registerData.correo);
   
           setTimeout(() => {
             this.router.navigate(['/verificacion']);

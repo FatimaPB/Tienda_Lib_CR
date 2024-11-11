@@ -1,92 +1,222 @@
-
-
-  /* Estilos para el footer */
+/* Estilos para el footer */
 .footer {
-    background-color: #1F407A; /* Color azul */
-    color: white;
-    padding: 20px 0; /* Espaciado vertical */
+  background-color: #660000;
+  color: white;
+  padding: 20px 0;
 }
 
 /* Estilos para el contenedor del footer */
 .footer-container {
-    display: flex;
-    justify-content: space-between; /* Espacio entre los elementos */
-    align-items: center; /* Alinea verticalmente */
-    max-width: 1200px; /* Ancho máximo */
-    margin: auto; /* Centra el footer */
-    padding: 0 20px; /* Espaciado horizontal */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  text-align: center;
+  position: relative; /* Para posicionar el interruptor en función de este contenedor */
 }
 
-/* Estilos para la información del footer */
 .footer-info {
-    font-size: 14px;
+  font-size: 14px;
 }
 
-/* Estilos para los enlaces del footer */
+/* Enlaces del footer */
 .footer-info a {
-    color: white;
-    text-decoration: none; /* Sin subrayado */
-    margin-left: 10px; /* Espacio entre enlaces */
-    transition: color 0.3s;
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s;
 }
 
 .footer-info a:hover {
-    color: #FFD700; /* Color dorado al pasar el mouse */
+  color: #FFD700;
 }
 
-/* Estilos para los enlaces de redes sociales */
-.footer-social a {
+/* Estilos para el interruptor */
+.switch {
+  font-size: 10px;
+  display: inline-block;
+  width: 54px;
+  height: 24px;
+  position: absolute; /* Absoluto para posicionarlo dentro del contenedor */
+  bottom: 30px; /* Espaciado desde la parte inferior */
+  right: 5px; /* Espaciado desde la derecha */
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #73c0fc;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  border-radius: 20px;
+  left: 1px;
+  bottom: 1px;
+  z-index: 2;
+  background-color: #e8e8e8;
+  transition: 0.4s;
+}
+
+.sun svg,
+.moon svg {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 2px;
+}
+
+.sun svg {
+  left: 32px;
+  z-index: 1;
+}
+
+.moon svg {
+  left: 5px;
+  z-index: 1;
+  fill: #73c0fc;
+}
+
+.input:checked + .slider {
+  background-color: #183153;
+}
+
+.input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+/* Estilo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .footer-container {
+      align-items: center;
+      text-align: center;
+  }
+  .switch {
+    font-size: 10px;
+    display: inline-block;
+    width: 54px;
+    height: 24px;
+    position: absolute; /* Absoluto para posicionarlo dentro del contenedor */
+    bottom: 30px; /* Espaciado desde la parte inferior */
+    right: 15px; /* Espaciado desde la derecha */
+  }
+  .example-2 {
+   margin-right:35px; 
+  }
+}
+
+
+
+
+
+/* From Uiverse.io by PriyanshuGupta28 */ 
+ul {
+    list-style: none;
+  }
+  
+  .example-2 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .example-2 .icon-content {
+    margin: 0 10px;
+    position: relative;
+  }
+  
+  .example-2 .icon-content .tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .example-2 .icon-content:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    top: -32px;
+  }
+  
+  .example-2 .icon-content a {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #242424;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+    font-size: 24px; /* Tamaño del ícono */
+    text-decoration: none; /* Eliminar subrayado */
+  }
+  
+  .example-2 .icon-content a:hover {
+    box-shadow: 3px 2px 45px 0px rgb(0 0 0 / 12%);
+  }
+  
+  .example-2 .icon-content a i {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .example-2 .icon-content a:hover {
     color: white;
-    margin-left: 15px; /* Espacio entre iconos */
-    transition: color 0.3s;
-}
-
-.footer-social a:hover {
-    color: #FFD700; /* Color dorado al pasar el mouse */
-}
-.dark-mode-toggle {
-    position:absolute;
-    top: 20px;
-    right: 18px;
-    padding: 5px 10px;
-    background-color: #697e95; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
-    z-index: 1000; /* Asegurar que esté sobre otros elementos */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Transición suave para cambios */
-}
-
-.icon {
-    font-size: 24px; /* Tamaño de los iconos */
-    display: none; /* Ocultar ambos iconos por defecto */
-}
-
-/* Mostrar el icono de luna en modo claro */
-.dark-theme .sun {
-    display: none; /* Ocultar sol en modo oscuro */
-}
-
-.dark-theme .moon {
-    display: inline; /* Mostrar luna en modo oscuro */
-}
-
-/* Mostrar el icono de sol en modo oscuro */
-.sun {
-    display: inline; /* Mostrar sol en modo claro */
-}
-
-.moon {
-    display: none; /* Ocultar luna en modo claro */
-}
-
-.dark-mode-toggle:hover {
-    background-color: #8dd3d7; /* Color de fondo al pasar el mouse */
-    transform: translateY(-2px); /* Sube un poco el botón */
-}
-
-.dark-mode-toggle:active {
-    transform: translateY(0); /* Regresa a su posición original al hacer clic */
-}
+  }
+  
+  .example-2 .icon-content a .filled {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #000;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .example-2 .icon-content a:hover .filled {
+    height: 100%;
+  }
+  
+  .example-2 .icon-content a[data-social="whatsapp"] .filled,
+  .example-2 .icon-content a[data-social="whatsapp"] ~ .tooltip {
+    background-color: #1db954;
+  }
+  
+  .example-2 .icon-content a[data-social="instagram"] .filled,
+  .example-2 .icon-content a[data-social="instagram"] ~ .tooltip {
+    background: linear-gradient(45deg, #F58529, #D93F7C, #8A3AB9, #FD1D1D, #FCAF45);
+  }
+  
+  .example-2 .icon-content a[data-social="facebook"] .filled,
+  .example-2 .icon-content a[data-social="facebook"] ~ .tooltip {
+    background-color: #0088cc;
+  }

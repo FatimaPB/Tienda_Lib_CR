@@ -1,21 +1,22 @@
 .login-container {
-  max-width: 500px; /* Misma anchura que el registro */
-  margin: 180px auto; /* Centrado vertical y horizontal */
-  padding: 20px; /* Espaciado interno */
-  border: 1px solid #e0e0e0; /* Borde */
-  border-radius: 8px; /* Bordes redondeados */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
-  box-sizing: border-box; /* Incluye padding en el ancho total */
+  max-width: 400px;
+  border-radius: 40px;
+  padding: 25px 35px;
+  border: 5px solid rgb(255, 255, 255);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+  margin: 20px auto;
 }
 
 .login-container h2 {
-  text-align: center; /* Centrado del título */
-  margin-bottom: 20px; /* Margen inferior */
-  color: #333; /* Color del texto */
+  text-align: center;
+  font-weight: 900;
+  font-size: 30px;
+  color: rgb(16, 137, 211);
 }
 
 .form-group {
-  margin-bottom: 15px; /* Margen inferior para cada grupo de formulario */
+  margin-top: 20px;
+
 }
 
 label {
@@ -23,16 +24,17 @@ label {
   font-weight: bold; /* Negrita */
   margin-bottom: 5px; /* Margen inferior del label */
   color: #555; /* Color del texto */
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
 }
 
 .form-control {
-  width: 100%; /* Ancho completo */
-  padding: 10px; /* Espaciado interno */
-  border: 1px solid #ccc; /* Borde */
-  border-radius: 4px; /* Bordes redondeados */
-  font-size: 16px; /* Tamaño de fuente */
-  transition: border-color 0.3s; /* Transición suave */
-  box-sizing: border-box; /* Incluye padding en el ancho total */
+  width: 90%;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 20px;
+  margin-top: 15px;
+  box-shadow: #cff0ff 0px 10px 10px -5px;
+  border-inline: 2px solid transparent;
 }
 
 .form-control:focus {
@@ -42,15 +44,16 @@ label {
 }
 
 .btn {
-  width: 100%; /* Ancho completo */
-  padding: 10px; /* Espaciado interno */
+  margin: 20px auto;
+  width: 100%;
+  padding: 10px;
   background-color: #007ad9; /* Color de fondo del botón */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  border-radius: 4px; /* Bordes redondeados */
-  font-size: 16px; /* Tamaño de fuente */
-  cursor: pointer; /* Cambia el cursor al pasar el mouse */
-  transition: background-color 0.3s; /* Transición suave para el hover */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:disabled {

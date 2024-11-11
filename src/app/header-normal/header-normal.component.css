@@ -1,249 +1,254 @@
-/* Estilos para la barra de información superior */
-/* Estilos para la barra de información superior */
-.info-bar {
-    background-color: #1F407A; /* Color azul */
-    padding: 15px;
-    color: white;
 
-    top: 0; /* Siempre en la parte superior */
-    left: 0; /* Alineado a la izquierda */
-    right: 0; /* Alineado a la derecha */
-    transition: transform 0.3s; /* Transición suave para ocultar */
-    z-index: 999; /* Asegura que esté por encima de otros elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Oculta la barra de información al hacer scroll */
-.info-bar.hidden {
-    transform: translateY(-100%); /* Desplaza la barra fuera de la vista */
-}
-
-  
-  .info-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .contact-info span {
-    margin-right: 15px;
-    color: white;
-  }
-  
-  .contact-info a {
-    color: white;
-    text-decoration: none; /* Asegura que no haya subrayado */
-    transition: color 0.3s;
-  }
-  
-  .contact-info a:hover {
-    color: #FFD700; /* Cambia a color dorado al pasar el mouse */
-  }
-  
-  .social-links a {
-    color: white;
-    margin-left: 10px;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .social-links a:hover {
-    color: #FFD700; /* Cambia a color dorado al pasar el mouse */
-  }
-  
-  /* Estilos para el main header */
-  .main-header {
-    background-color: white;
-    padding: 0px 0;
-    position: fixed; /* Fija el header en la parte superior */
-    top: 20; /* Siempre en la parte superior */
-    left: 0; /* Alineado a la izquierda */
-    right: 0; /* Alineado a la derecha */
-    transition: padding 0.3s, height 0.3s, top 0.3s; /* Transición suave */
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-  }
-  
-  .header-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Cambia el tamaño del logo al hacer scroll */
-  .logo-container .logo {
-  
-    width: 160px;
-    height: auto; /* Cambia a auto para mantener la proporción */
-    transition: width 0.3s; /* Transición suave al cambiar el tamaño */
-  }
-  
-  /* Estilos para el menú */
-  .menu {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    padding: 0px;
-    margin: 0;
-  }
-  
-  .menu li {
-    display: inline-block;
-  }
-  
-  .menu a {
-    text-decoration: none;
-    color: #1F407A; /* Color azul oscuro para los enlaces */
-    font-weight: bold;
-    position: relative;
-    transition: color 0.3s, border-bottom 0.3s;
-    padding: 5px 10px; /* Mejora la zona clicable */
-  }
-  
-  .menu a::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    background: #FFD700; /* Subrayado dorado */
-    transition: width 0.3s;
-    position: absolute;
-    left: 0;
-    bottom: -5px; /* Ajusta la posición del subrayado */
-  }
-  
-  .menu a:hover::after {
-    width: 100%; /* Al pasar el cursor se subraya todo el texto */
-  }
-  
-  .menu a:hover {
-    color: #FFD700; /* Cambia a color dorado */
-    cursor: pointer;
-  }
-  
-  /* Estilo para el ícono de búsqueda */
-  .menu i {
-    font-size: 18px;
-    cursor: pointer;
-    color: rgb(180, 17, 17);
-  }
-  
-  /* Estilos opcionales para la clase active */
-  .menu a.active {
-    color: #FFD700; /* Color dorado para el enlace activo */
-  }
-  
-  .menu a.active::after {
-    width: 100%;
-  }
-  
-  /* Efecto de scroll */
-  body {
-    padding-top: 150px; /* Da espacio para el header fijo */
-  }
-  
-  /* Estilo para encojer el header al hacer scroll */
-  .main-header.shrink {
-    padding: 10px 0; /* Reduce el padding al hacer scroll */
-    top: 0; /* Asegura que se mantenga en la parte superior */
-  }
-  
-  /* Cambiar tamaño del logo al hacer scroll */
-  .main-header.shrink .logo-container .logo {
-    width: 90px; /* Tamaño reducido */
-  }
-  
-  /* Cambiar la visibilidad de la parte superior al hacer scroll */
-  .info-bar.hide {
-    display: none; /* Oculta la barra de información al hacer scroll */
-  }
-  
-
-
- /* Estilos del ícono de menú (hamburguesa) */
-.hamburger-icon {
+/* Header Styling */
+header {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 25px;
-  cursor: pointer;
-}
-
-.hamburger-icon span {
+  align-items: center;
   width: 100%;
-  height: 4px;
-  background-color: #1F407A; /* Color de las rayas */
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  background-color: #660000;
+  border-bottom: 1px solid #ccc;
 }
 
-
-
-
-/* Estilos para dispositivos móviles */
-.menu-toggle {
-  display: none;
-  margin-right: 15px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
 }
 
-nav {
+/* Left Links */
+.nav-links {
+  margin-top: 15px;
+  flex: 1;
   display: flex;
 }
 
-.menu {
-  list-style: none;
+.nav-links ul {
   display: flex;
   gap: 20px;
-  padding: 0;
-  margin: 0;
+  list-style: none;
 }
 
-.menu li {
-  display: inline-block;
-}
-
-.menu a {
+.nav-links li a {
   text-decoration: none;
-  color: #1F407A;
-  font-weight: bold;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
 }
 
-/* Para pantallas pequeñas */
+/* Center Logo */
+.logo-container {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  width: 100px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Right Icons */
+.right-icons {
+  margin-top: 15px;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.right-icons a {
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* Menu Icon (hidden by default) */
+.menu-icon {
+  display: none;
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+/* Slogan Styling */
+.contenedor-slogan {
+  margin-top: 20px;
+  background-color: #CCB63E;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slogan {
+  font-size: 14px;
+  color: #000000;
+  white-space: nowrap;
+  animation: moverSlogan 50s linear infinite;
+}
+
+@keyframes moverSlogan {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  background-color: #660000;
+  width: 100%;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 10px;
+}
+
+.mobile-menu li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.mobile-menu li a:hover {
+  background-color: #CCB63E;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
-  nav {
-    display: none; /* Ocultar menú por defecto */
-    flex-direction: column;
-    background-color: white;
-    position: absolute;
-    top: 60px; /* Ajusta según la altura del header */
-    right: 0;
-    width: 200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  .nav-links {
+    display: none; /* Ocultar enlaces de texto */
+  }
+  
+  .menu-icon {
+    display: block; /* Mostrar ícono de menú */
   }
 
-  nav.active {
-    display: flex; /* Mostrar menú al hacer clic */
+  .mobile-menu {
+    display: block; /* Mostrar menú móvil */
   }
-
-  .menu {
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .menu-toggle {
-    display: block; /* Mostrar el botón de menú en pantallas pequeñas */
-  }
-
   .logo-container {
-    flex: 1;
-  }
+  margin-left: 17px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  width: 9px;
+  height: 5px;
 
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 }
+
+
+
+
+
+.switch {
+    font-size: 10px;
+    position:absolute; /* Cambiado a fixed para posicionamiento en toda la pantalla */
+    top: 40px; /* Espaciado desde la parte superior */
+    right: 50px; /* Espaciado desde la derecha */
+    z-index: 1000; /* Asegura que esté encima de todos los elementos */
+    display: inline-block;
+    width: 54px;
+    height: 24px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #73c0fc;
+    transition: 0.4s;
+    border-radius: 30px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    border-radius: 20px;
+    left: 1px;
+    bottom: 1px;
+    z-index: 2;
+    background-color: #e8e8e8;
+    transition: 0.4s;
+  }
+  
+  .sun svg {
+    position: absolute;
+    top: 2px;
+    left: 32px;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .moon svg {
+    fill: #73c0fc;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .switch:hover .sun svg {
+    animation: rotate 15s linear infinite;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .switch:hover .moon svg {
+    animation: tilt 5s linear infinite;
+  }
+  
+  @keyframes tilt {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-10deg);
+    }
+    75% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  
+  .input:checked + .slider {
+    background-color: #183153;
+  }
+  
+  .input:checked + .slider:before {
+    transform: translateX(30px);
+  }
+  

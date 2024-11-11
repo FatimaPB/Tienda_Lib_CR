@@ -38,13 +38,14 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
     });
   }
 
-  menuActive = false; // Variable para controlar el estado del menú
+  isMenuOpen = false;
 
   toggleMenu() {
-    this.menuActive = !this.menuActive; // Alterna el estado del menú
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   closeMenu() {
-    this.menuActive = false; // Cierra el menú cuando se selecciona una opción
+    this.isMenuOpen = false;
   }
+
 }

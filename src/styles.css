@@ -1,13 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
-/* styles.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
 
-/* Variables para el modo claro */
-/* styles.css */
-
-/* Variables para el modo claro */
-/* styles.css */
-
-/* Variables para el modo claro */
 :root {
     --background-color: #ffffff;
     --text-color: #000000;

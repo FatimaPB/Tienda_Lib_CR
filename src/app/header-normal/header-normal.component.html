@@ -1,51 +1,43 @@
-<header>
-  <!-- Parte superior de información -->
-  <div class="info-bar" id="infoBar">
-    <div class="info-container">
-      <div class="contact-info">
-        <span><i class="fas fa-phone"></i> 55 5208 3200</span>
-        <span><i class="fas fa-envelope"></i> info</span>
-        <span><a routerLink="/login"><i class="fas fa-user"></i>Login</a></span>
-        <div class="slogan">{{ empresaData?.slogan }}</div> <!-- Mostrar el eslogan dinámico -->
+<link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
 
-      </div>
-      <div class="social-links">
-        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="https://rss.com" target="_blank"><i class="fas fa-rss"></i></a>
-      </div>
+<header>
+  <div class="main-header">
+    <!-- Enlaces de la izquierda (ocultos en móviles) -->
+    <div class="nav-links">
+      <ul>
+        <li><a routerLink="/opcion1">PRODUCTOS</a></li>
+        <li><a routerLink="/opcion2">UBICACIÓN</a></li>
+        <li><a routerLink="/opcion3">MISIÓN</a></li>
+      </ul>
+    </div>
+
+    <!-- Logo centrado -->
+    <div class="logo-container">
+      <img routerLink="/" [src]="empresaData?.logo" alt="Logo de la Empresa" width="80" height="80" *ngIf="empresaData?.logo; else noLogo" />
+      <ng-template #noLogo>
+        <img src="../../assets/img/catedral1.png" alt="Logo por defecto" width="80" height="80" />
+      </ng-template>
+    </div>
+
+    <!-- Iconos de la derecha y botón del menú en móvil -->
+    <div class="right-icons">
+      <a routerLink="/login" class="login-link"><i class="pi pi-sign-in"></i></a>
+      <a routerLink="/" class="car-link"><i class="pi pi-shopping-cart"></i></a>
+      <i class="pi pi-bars menu-icon" (click)="toggleMenu()"></i>
     </div>
   </div>
 
-  <!-- Parte inferior con logo y menú -->
-  <div class="main-header" id="mainHeader">
-    <div class="header-container">
-      <div class="logo-container">
-        <img routerLink="/" [src]="empresaData?.logo" alt="Logo de la Empresa" width="100" height="100" *ngIf="empresaData?.logo; else noLogo" />
-        <ng-template #noLogo> 
-          <img  src="../../assets/img/catedral1.png" alt="Logo por defecto" width="100" height="100" />
-        </ng-template>
-      </div>
-      <!-- Botón de menú para pantallas pequeñas -->
-      <button class="menu-toggle" (click)="toggleMenu()">
-        <div class="hamburger-icon">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </button>
+  <!-- Slogan -->
+  <div class="contenedor-slogan">
+    <div class="slogan">{{ empresaData?.slogan }}</div>
+  </div>
 
-      <nav [class.active]="menuActive">
-        <ul class="menu">
-          <li><a routerLink="/quienes" (click)="closeMenu()">QUIÉNES SOMOS</a></li>
-          <li><a routerLink="/ubica" (click)="closeMenu()">UBICA TU LIBRERIA</a></li>
-          <li><a routerLink="/pastoral" (click)="closeMenu()">ARTICULOS</a></li>
-          <li><a routerLink="/tramites" (click)="closeMenu()">REVISTAS</a></li>
-          <li><a routerLink="/documentos" (click)="closeMenu()">LIBROS</a></li>
-        </ul>
-      </nav>
-    </div>
+  <!-- Menú desplegable para móvil -->
+  <div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu">
+    <ul>
+      <li><a routerLink="/opcion1" (click)="closeMenu()">PRODUCTOS</a></li>
+      <li><a routerLink="/opcion2" (click)="closeMenu()">UBICACIÓN</a></li>
+      <li><a routerLink="/opcion3" (click)="closeMenu()">MISIÓN</a></li>
+    </ul>
   </div>
 </header>

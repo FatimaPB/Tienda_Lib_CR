@@ -1,6 +1,5 @@
-import { Component, inject, HostListener, Renderer2 } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { ProductComponent } from './components/product/product.component';
+import { Component, inject, Renderer2 } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './components/models/product.models';
@@ -14,9 +13,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ProductComponent, HttpClientModule, CommonModule, RouterLink, HeaderuComponent, HeaderaComponent, HeaderNormalComponent],
+  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderuComponent, HeaderaComponent, HeaderNormalComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'] // Asegúrate de que la propiedad sea 'styleUrls'
+  styleUrls: ['./app.component.css'] 
 })
 export class AppComponent {
   token: string | null = null;
@@ -65,18 +64,6 @@ export class AppComponent {
     } else {
       this.renderer.removeClass(document.body, 'dark-theme'); // Remover clase para modo claro
       localStorage.setItem('darkMode', 'false'); // Guardar el estado en localStorage
-    }
-  }
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const header = document.querySelector('.main-header');
-    if (header) {
-      if (window.pageYOffset > 0) {
-        header.classList.add('shrink');
-      } else {
-        header.classList.remove('shrink');
-      }
     }
   }
 }

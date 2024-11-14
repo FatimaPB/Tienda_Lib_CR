@@ -41,17 +41,25 @@ export class LoginComponent {
 
             if (response.tipoUsuario === 'admin') {
               this.successMessage = 'Inicio de sesión exitoso!';
-              
-              // Muestra el mensaje
-              setTimeout(() => {
-                // Después de 3 segundos, navega
-                this.router.navigate(['/incidencias']);
-              }, 3000);  // 3000 milisegundos = 3 segundos
-              
               this.errorMessage = null;
+            
+              // Muestra el mensaje por 3 segundos antes de navegar
+              setTimeout(() => {
+                // Navega a la ruta correspondiente
+                this.router.navigate(['/incidencias']);
+                this.successMessage = null;  // Limpia el mensaje después de navegar
+              }, 3000);  // 3000 milisegundos = 3 segundos
             } else {
-              this.router.navigate(['']);
+              this.successMessage = 'Inicio de sesión exitoso!';
+              this.errorMessage = null;
+            
+              setTimeout(() => {
+                this.router.navigate(['']);
+                this.successMessage = null;
+              }, 3000);  // 3000 milisegundos = 3 segundos
             }
+            
+            
             
           }
         },

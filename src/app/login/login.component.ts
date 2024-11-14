@@ -48,7 +48,7 @@ export class LoginComponent {
                 // Navega a la ruta correspondiente
                 this.router.navigate(['/incidencias']);
                 this.successMessage = null;  // Limpia el mensaje después de navegar
-              }, 3000);  // 3000 milisegundos = 3 segundos
+              }, 1000);  // 3000 milisegundos = 3 segundos
             } else {
               this.successMessage = 'Inicio de sesión exitoso!';
               this.errorMessage = null;
@@ -56,7 +56,7 @@ export class LoginComponent {
               setTimeout(() => {
                 this.router.navigate(['']);
                 this.successMessage = null;
-              }, 3000);  // 3000 milisegundos = 3 segundos
+              }, 1000);  // 3000 milisegundos = 3 segundos
             }
             
             

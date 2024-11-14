@@ -27,7 +27,7 @@ export class HeaderuComponent {
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('https://back-tienda-three.vercel.app/api/perfil').subscribe({
+    this.http.get<Empresa>('https://back-tienda-three.vercel.app/api/datos').subscribe({
       next: (response) => {
         this.empresaData = response; // Guarda el objeto directamente
       },

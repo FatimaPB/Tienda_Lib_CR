@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './perfilusuario.component.css'
 })
 export class PerfilusuarioComponent  implements OnInit {
-  private apiUrl = `http://localhost:3000/api`;
+  private apiUrl = `https://back-tienda-three.vercel.app/api`;
   perfil: any = null;
   errorMessage: string | null = null;
   successMessage: string | null = null;

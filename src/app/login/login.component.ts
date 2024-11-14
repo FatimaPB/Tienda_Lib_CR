@@ -30,7 +30,7 @@ export class LoginComponent {
       return;
     }
 
-    this.http.post<any>(`${this.apiUrl}/login`, { correo: email, contrasena: password, recaptcha: this.resolvedCaptcha })
+    this.http.post<any>(`${this.apiUrl}/login`, { correo: email, contrasena: password, recaptcha: this.resolvedCaptcha }, { withCredentials: true })
       .subscribe({
         next: (response) => {
           if (response && response.token) {

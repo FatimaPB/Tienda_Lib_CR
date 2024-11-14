@@ -35,6 +35,7 @@
     required
     class="form-control"
     placeholder="Ingresa tu correo"
+    maxlength="50"
     email
   />
   <!-- Mensaje de correo inválido -->
@@ -106,6 +107,7 @@
         pattern="[0-9]{10}"
         class="form-control"
         placeholder="Ingresa tu número de teléfono"
+        maxlength="10"
         (keypress)="preventLetters($event)"
       />
       <small *ngIf="!registerForm.controls['phone']?.valid && registerForm.controls['phone']?.touched" class="error-message">El teléfono debe tener 10 números</small>

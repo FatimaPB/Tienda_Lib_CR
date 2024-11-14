@@ -22,9 +22,10 @@
 
     <!-- Iconos de la derecha y botón del menú en móvil -->
     <div class="right-icons">
-        <a class="out-link"(click)="onLogout()"><i class="pi pi-sign-out"></i></a>
+      <a routerLink="/" class="login-link"><i class="pi pi-home"></i></a>
       <a routerLink="/" class="car-link"><i class="pi pi-shopping-cart"></i></a>
       <a routerLink="/perfil" class="car-link"><i class="pi pi-user"></i></a>
+      <a class="out-link"(click)="onLogout()"><i class="pi pi-sign-out"></i></a>
       <i class="pi pi-bars menu-icon" (click)="toggleMenu()"></i>
     </div>
   </div>

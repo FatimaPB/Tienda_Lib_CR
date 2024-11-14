@@ -1,61 +1,120 @@
-/* Estilos generales del header */
+
+/* Header Styling */
 header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
   background-color: #660000;
-  padding: 45px;  /* Eliminar márgenes y rellenos */
+  border-bottom: 1px solid #ccc;
+}
+.cerrar{
+  color:white;
+
 }
 
-/* Menú de navegación principal */
-.main-header {
+
+/* Left Links */
+.nav-links {
+  margin-top: 15px;
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-/* Centrado de los elementos dentro de header-container */
-.header-container {
+.nav-links ul {
   display: flex;
-  justify-content: center;  /* Centra el contenido */
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+}
+
+/* Right Icons */
+.logout-container {
+  display: flex;
   align-items: center;
+  gap: 20px;
+}
+
+.logout-container a, .logout-container span {
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* Menu Icon (hidden by default) */
+.menu-icon {
+  display: none;
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  margin-right: 300px;
+}
+
+/* Slogan Styling */
+.contenedor-slogan {
+  margin-top: 20px;
+  background-color: #CCB63E;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  background-color: #660000;
   width: 100%;
 }
 
-nav ul {
-  display: flex;
+.mobile-menu ul {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  padding: 10px;
 }
 
-nav ul li {
-  margin: 0 15px;  /* Espacio entre las opciones */
-}
-
-nav ul li a {
-  text-decoration: none;
+.mobile-menu li a {
   color: white;
-  font-weight: bold;
-  transition: color 0.3s;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  font-size: 18px;
 }
 
-nav ul li a:hover {
-  color: #007bff;
-}
-
-/* Contenedor de cerrar sesión */
-.logout-container {
-  position: absolute;  /* Lo coloca a la derecha */
-  right: 20px;  /* Alineado a la derecha con un margen de 20px */
-}
-
-.cerrar {
-  margin-right: 60px;
-  font-size: 22px;
+.mobile-menu li a:hover {
   cursor: pointer;
-  color: #ffffff;
-  font-weight: bold;
-  transition: color 0.3s;
+  background-color: #ffd900;
+}
+.mobile-cerrar{
+  color: white;
+  margin-left: 280px;
+  
+}
+.mobile-cerrar1{
+  color: white;
+  margin-left: 20px;
+  
 }
 
-.cerrar:hover {
-  color: #c0392b;
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Ocultar enlaces de texto en móviles */
+  }
+
+  .logout-container {
+    display: none; /* Ocultar botones de cerrar sesión en móviles */
+  }
+
+  .menu-icon {
+    display: block; /* Mostrar ícono de menú en móviles */
+  }
+
+  .mobile-menu {
+    display: block; /* Mostrar menú móvil */
+  }
+
 }
+

@@ -13,6 +13,7 @@
                 required
                 class="form-control"
                 placeholder="Ingresa tu correo"
+                autocomplete="email"
             />
         </div>
   
@@ -43,10 +44,13 @@
         
     </form>
   
-    <!-- Toast de éxito -->
-    <div class="toast success-toast" *ngIf="successMessage">{{ successMessage }}</div>
-      
-    <!-- Toast de error -->
-    <div class="toast error-toast" *ngIf="errorMessage">{{ errorMessage }}</div>
+ 
   </div>
+
+
+     <!-- Toast de éxito -->
+     <div class="toast success-toast" *ngIf="successMessage">{{ successMessage }}</div>
+      
+     <!-- Toast de error -->
+     <div class="toast error-toast" *ngIf="errorMessage">{{ errorMessage }}</div>
   

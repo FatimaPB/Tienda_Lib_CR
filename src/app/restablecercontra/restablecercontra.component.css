@@ -1,13 +1,16 @@
 .restablecer-contrasena-container {
     max-width: 500px; /* Ancho máximo */
-    margin: 180px auto; /* Centrado vertical y horizontal */
+    margin: 80px auto; /* Centrado vertical y horizontal */
     padding: 20px; /* Espaciado interno */
     border: 1px solid #e0e0e0; /* Borde */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
     box-sizing: border-box; /* Incluye padding en el ancho total */
   }
-  
+  .resta{
+    text-align: center;
+    margin-top: 80px;
+    }
   .restablecer-contrasena-container h2 {
     text-align: center; /* Centrado del título */
     margin-bottom: 20px; /* Margen inferior */

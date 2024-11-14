@@ -1,6 +1,6 @@
 .verificar-codigo-container {
     max-width: 500px; /* Ancho máximo */
-    margin: 180px auto; /* Centrado vertical y horizontal */
+    margin: 80px auto; /* Centrado vertical y horizontal */
     padding: 20px; /* Espaciado interno */
     border: 1px solid #e0e0e0; /* Borde */
     border-radius: 8px; /* Bordes redondeados */
@@ -13,7 +13,10 @@
     margin-bottom: 20px; /* Margen inferior */
     color: #333; /* Color del texto */
   }
-  
+  .ver{
+    text-align: center;
+    margin-top: 80px;
+    }
   .form-group {
     margin-bottom: 15px; /* Margen inferior para cada grupo de formulario */
   }

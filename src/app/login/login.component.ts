@@ -35,16 +35,24 @@ export class LoginComponent {
         next: (response) => {
           if (response && response.token) {
             localStorage.setItem('token', response.token);
+            console.log('token generado es:', response.token)
             localStorage.setItem('tipoUsuario', response.tipoUsuario);
             this.authService.login(response.tipoUsuario);
 
             if (response.tipoUsuario === 'admin') {
-              this.router.navigate(['/incidencias']);
               this.successMessage = 'Inicio de sesión exitoso!';
+              
+              // Muestra el mensaje
+              setTimeout(() => {
+                // Después de 3 segundos, navega
+                this.router.navigate(['/incidencias']);
+              }, 3000);  // 3000 milisegundos = 3 segundos
+              
               this.errorMessage = null;
             } else {
               this.router.navigate(['']);
             }
+            
           }
         },
         error: (err) => {

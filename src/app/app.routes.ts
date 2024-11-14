@@ -16,6 +16,7 @@ import { RestablecercontraComponent } from './restablecercontra/restablecercontr
 import { PoliticadeprivacidadComponent } from './politicadeprivacidad/politicadeprivacidad.component';
 import { DeslindelegalComponent } from './deslindelegal/deslindelegal.component';
 import { TerminosycondicionesComponent } from './terminosycondiciones/terminosycondiciones.component';
+import { PerfilusuarioComponent } from './perfilusuario/perfilusuario.component';
 
 
 export const routes: Routes = [
@@ -35,6 +36,7 @@ export const routes: Routes = [
 { path: 'deslinde', component: DeslindeComponent, canActivate: [AuthGuard] },
 { path: 'pempresa', component: PerfilempresaComponent, canActivate: [AuthGuard] },
 { path: 'incidencias', component: IncidenciasComponent, canActivate: [AuthGuard] },
+{ path: 'perfil', component: PerfilusuarioComponent, canActivate: [AuthGuard] },
 
 
 ];

@@ -2,13 +2,19 @@ import { Component, inject, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { Product } from './components/models/product.models';
 import { CommonModule } from '@angular/common';
 import { HeaderuComponent } from './headeru/headeru.component';
 import { HeaderaComponent } from './headera/headera.component';
 import { HeaderNormalComponent } from './header-normal/header-normal.component';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+
+export interface Empresa {
+  redesSociales?: {
+    facebook?: string;
+    instagram?: string;
+  };
+}
 
 @Component({
   selector: 'app-root',
@@ -18,11 +24,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'] 
 })
 export class AppComponent {
+  title = 'cristo';
   token: string | null = null;
   tipoUsuario: string | null = null;
   darkMode = false;
 
-  constructor(private router: Router, private authService: AuthService, private renderer: Renderer2) {
+  constructor(private router: Router, private authService: AuthService, private renderer: Renderer2, private http: HttpClient) {
     // Suscribirse al tipo de usuario
     this.authService.tipoUsuario$.subscribe((tipo) => {
       this.tipoUsuario = tipo;
@@ -45,14 +52,7 @@ export class AppComponent {
       this.tipoUsuario = localStorage.getItem('tipoUsuario'); 
       console.log('Tipo de usuario al iniciar:', this.tipoUsuario);
     } 
-  }
-
-  title = 'Libreria';
-  http = inject(HttpClient);
-  products: Product[] = [];
-
-  changeTitle() {
-    this.title = 'Changed';
+    this.getEmpresasData(); 
   }
 
   toggleDarkMode() {
@@ -65,5 +65,19 @@ export class AppComponent {
       this.renderer.removeClass(document.body, 'dark-theme'); // Remover clase para modo claro
       localStorage.setItem('darkMode', 'false'); // Guardar el estado en localStorage
     }
+  }
+
+  empresaData: Empresa | null = null; // Inicializa como null
+
+  getEmpresasData(): void {
+    this.http.get<Empresa>('https://back-tienda-three.vercel.app/api/perfil').subscribe({
+      next: (response) => {
+        this.empresaData = response; // Guarda el objeto directamente
+      },
+      error: (err) => {
+        console.error('Error al obtener los perfiles de empresa', err);
+        // Manejar el error
+      }
+    });
   }
 }

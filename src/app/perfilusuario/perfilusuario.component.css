@@ -1,0 +1,201 @@
+/* Perfil de Usuario */
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 50px;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .card {
+
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .profile-info {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .profile-details p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .profile-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .profile-actions .btn {
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-edit {
+    background-color: #ff9900;
+    color: white;
+  }
+  
+  .btn-edit:hover {
+    background-color: #e68900;
+  }
+  
+  .btn-change-password {
+    background-color: #4e73df;
+    color: white;
+  }
+  
+  .btn-change-password:hover {
+    background-color: #2e59d9;
+  }
+  
+  /* Formulario de Edición */
+  .form-card {
+    background-color: #f7f7f7;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #4e73df;
+    outline: none;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn-update {
+    background-color: #4e73df;
+    color: white;
+  }
+  
+  .btn-update:hover {
+    background-color: #2e59d9;
+  }
+  
+  .btn-cancel {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .btn-cancel:hover {
+    background-color: #c1c1c1;
+  }
+  
+  
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    min-width: 250px;
+    padding: 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1000; /* Asegura que el toast esté sobre otros elementos */
+    opacity: 0; /* Inicialmente oculto */
+    animation: fadeIn 0.5s forwards; /* Animación de aparición */
+  }
+  
+  .success-toast {
+    background-color: #28a745; /* Verde para éxito */
+  }
+  
+  .error-toast {
+    background-color: #dc3545; /* Rojo para error */
+  }
+  
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  
+
+  /* Estilos responsivos para dispositivos pequeños */
+@media (max-width: 768px) {
+    .profile-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-actions {
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-input {
+        font-size: 0.9rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .profile-container {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+}

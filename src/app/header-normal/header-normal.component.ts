@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 
 export interface Empresa {
   slogan?: string;
+  nombre?: string;
   logo?: string; // Asegúrate de que este campo sea correcto en el modelo
 }
 

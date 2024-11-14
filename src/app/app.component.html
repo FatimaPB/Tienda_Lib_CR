@@ -34,10 +34,11 @@
           <p>&copy; 2024 Libreria Cristo Rey. Todos los derechos reservados.</p>
           <p><a href="/politicadeprivacidad">Política de Privacidad</a> | <a href="/deslindelegal">Deslinde Legal</a> | <a href="/terminosycondiciones">Terminos y condiciones</a></p>
       </div>
-     
+
       <ul class="example-2">
+    
         <li class="icon-content">
-          <a data-social="facebook" aria-label="Facebook" href="https://www.facebook.com/">
+          <a data-social="facebook" aria-label="Facebook" href="{{ empresaData?.redesSociales?.facebook }}">
             <div class="filled"></div>
             <i class="pi pi-facebook"></i>
           </a>
@@ -51,7 +52,7 @@
           <div class="tooltip">WhatsApp</div>
         </li>
         <li class="icon-content">
-          <a data-social="instagram" aria-label="Instagram" href="https://www.instagram.com/">
+          <a data-social="instagram" aria-label="Instagram" href="{{ empresaData?.redesSociales?.instagram }}">
             <div class="filled"></div>
             <i class="pi pi-instagram"></i>
           </a>
@@ -78,6 +79,7 @@
         </label>
         
       </ul>
+      
   </div>
 </footer>
 

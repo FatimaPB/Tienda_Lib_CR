@@ -3,10 +3,16 @@
     <form (ngSubmit)="recuperarContrasena()">
       <div class="form-group">
         <label for="correo">Correo:</label>
-        <input type="email" [(ngModel)]="correo" name="correo" class="form-control" required />
+        <input type="email" [(ngModel)]="correo" name="correo" class="form-control" placeholder="Ingresa tu correo" required />
       </div>
-      <button type="submit" class="btn">Enviar Código</button>
+      <div class="contenedorboton">
+        <button type="submit" class="btn">Enviar Código</button>
+      </div>
+    
     </form>
-    <p class="mensaje">{{ mensaje }}</p>
+    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+      {{ mensaje }}
+    </div>
   </div>
+
   

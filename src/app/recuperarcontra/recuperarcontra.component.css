@@ -4,11 +4,27 @@
     padding: 20px; /* Espaciado interno */
     border: 1px solid #e0e0e0; /* Borde */
     border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    box-shadow: 0 8px 8px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box; /* Incluye padding en el ancho total */
+   
+  }
+  .contenedorboton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .alert-success {
+    color: green;
   }
   
+  .alert-danger {
+    color: red;
+  }
+  
+  
   .recuperar-contrasena-container h2 {
+    font-family: Arial, sans-serif;
     text-align: center; /* Centrado del título */
     margin-bottom: 20px; /* Margen inferior */
     color: #333; /* Color del texto */
@@ -42,10 +58,11 @@
   }
   
   .btn {
-    width: 100%; /* Ancho completo */
-    padding: 10px; /* Espaciado interno */
-    background-color: #007ad9; /* Color de fondo del botón */
-    color: white; /* Color del texto */
+
+    width: 50%; /* Ancho completo */
+    padding: 10px 20px;
+  color: #fff;
+  background-color: #660000;
     border: none; /* Sin borde */
     border-radius: 4px; /* Bordes redondeados */
     font-size: 16px; /* Tamaño de fuente */
@@ -54,7 +71,7 @@
   }
   
   .btn:not(:disabled):hover {
-    background-color: #005bb5; /* Color de fondo en hover */
+    background-color: #aa1111; /* Color de fondo en hover */
   }
   
   .mensaje {

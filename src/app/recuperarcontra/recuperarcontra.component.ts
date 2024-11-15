@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class RecuperarcontraComponent {
   correo: string = '';
   mensaje: string = '';
+  exito: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -21,9 +22,13 @@ export class RecuperarcontraComponent {
     this.http.post('https://back-tienda-three.vercel.app/api/recuperar-contrasena', { correo: this.correo })
       .subscribe(response => {
         this.mensaje = 'Se ha enviado un código de verificación a tu correo';
-        this.router.navigate(['/verificar']);
+        this.exito = true;
+        setTimeout(() => {
+          this.router.navigate(['/verificar']);
+        }, 3000);
       }, error => {
-        this.mensaje = error.error.message;
+        this.mensaje = 'error al enviar código de verificación a tu correo';
+        this.exito = false;
       });
   }
 }

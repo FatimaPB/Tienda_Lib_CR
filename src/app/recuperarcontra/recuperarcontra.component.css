@@ -15,6 +15,8 @@
 
   }
   .alert-success {
+    margin-top: 20px;
+    text-align: center;
     color: green;
   }
   
@@ -76,12 +78,6 @@
     background-color: #aa1111; /* Color de fondo en hover */
   }
   
-  .mensaje {
-    text-align: center; /* Centrado del mensaje */
-    color: #333; /* Color del texto */
-    margin-top: 15px; /* Margen superior */
-    font-size: 14px; /* Tamaño de fuente */
-  }
   
   /* Estilos responsivos */
   @media (max-width: 600px) {

@@ -15,8 +15,21 @@
 }
 
 .form-group {
+  position: relative; /* Necesario para posicionar el ícono del ojo dentro del input */
   margin-top: 20px;
+}
 
+.eye-icon {
+  position: absolute;
+  right: 15px; /* Ajusta esta posición para que se mantenga dentro del input */
+  top: 70%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px; /* Ajusta el tamaño según tus necesidades */
+}
+
+.eye-icon.visible {
+  color: #007bff; /* Color cuando la contraseña es visible */
 }
 
 label {

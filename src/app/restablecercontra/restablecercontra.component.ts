@@ -14,6 +14,7 @@ export class RestablecercontraComponent {
   nuevaContrasena: string = '';
   confirmacionContrasena: string = '';
   mensaje: string = '';
+  isPasswordVisible = false; // Para la contraseña
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -27,4 +28,9 @@ export class RestablecercontraComponent {
         this.mensaje = error.error.message;
       });
   }
+
+      // Métodos para mostrar/ocultar contraseñas
+      togglePasswordVisibility() {
+        this.isPasswordVisible = !this.isPasswordVisible;
+      }
 }

@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-verificar-codigo',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './verificar-codigo.component.html',
   styleUrls: ['./verificar-codigo.component.css']
 })
@@ -45,4 +45,22 @@ export class VerificarCodigoComponent {
       }
     );
   }
+
+  moveFocus(event: any, index: number) {
+    const input = event.target as HTMLInputElement;
+    const inputs = document.querySelectorAll('.form-control');
+  
+    // Solo permitir números
+    if (/^\d$/.test(input.value)) {
+      // Mover al siguiente campo si el valor es un número y no estamos en el último input
+      if (index < inputs.length - 1) {
+        (inputs[index + 1] as HTMLElement).focus();
+      }
+    } else {
+      // Si el valor no es un número, borrarlo
+      input.value = '';
+    }
+  }
+  
+  
 }

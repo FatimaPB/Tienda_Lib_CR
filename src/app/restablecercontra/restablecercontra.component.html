@@ -2,7 +2,11 @@
 <form (ngSubmit)="restablecerContrasena()" class="restablecer-contrasena-container">
   <div class="form-group">
     <label for="nuevaContrasena">Nueva Contraseña:</label>
-    <input type="password" [(ngModel)]="nuevaContrasena" name="nuevaContrasena" class="form-control" required />
+    <input     [type]="isPasswordVisible ? 'text' : 'password'" [(ngModel)]="nuevaContrasena" name="nuevaContrasena" class="form-control" required />
+    <span 
+    class="eye-icon" 
+    (click)="togglePasswordVisibility()"
+    [class.visible]="isPasswordVisible"><i class="pi pi-eye"></i></span>
   </div>
   <div class="form-group">
     <label for="confirmacionContrasena">Confirmar Contraseña:</label>

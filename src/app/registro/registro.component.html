@@ -63,7 +63,7 @@
         <span 
           class="eye-icon" 
           (click)="togglePasswordVisibility()"
-          [class.visible]="isPasswordVisible">👁️</span> <!-- Ícono de ojo -->
+          [class.visible]="isPasswordVisible"><i class="pi pi-eye"></i></span>
       </div>
       <small *ngIf="!registerForm.controls['password']?.valid && registerForm.controls['password']?.touched" class="error-message">La contraseña es obligatoria</small>
       <div class="password-strength">
@@ -89,7 +89,7 @@
         <span 
           class="eye-icon" 
           (click)="toggleConfirmPasswordVisibility()"
-          [class.visible]="isConfirmPasswordVisible">👁️</span> <!-- Ícono de ojo -->
+          [class.visible]="isConfirmPasswordVisible"><i class="pi pi-eye"></i></span>
       </div>
       <small *ngIf="!registerForm.controls['confirmPassword']?.valid && registerForm.controls['confirmPassword']?.touched" class="error-message">La confirmación de la contraseña es obligatoria</small>
       <small *ngIf="passwordMismatch" class="error-message">Las contraseñas no coinciden</small>

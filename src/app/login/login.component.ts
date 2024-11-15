@@ -17,6 +17,7 @@ export class LoginComponent {
   resolvedCaptcha: string | null = null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  isPasswordVisible = false; // Para la contraseña
 
   private apiUrl = 'https://back-tienda-three.vercel.app/api';
 
@@ -70,4 +71,8 @@ export class LoginComponent {
   onCaptchaResolved(captchaResponse: string) {
     this.resolvedCaptcha = captchaResponse;
   }
+    // Métodos para mostrar/ocultar contraseñas
+    togglePasswordVisibility() {
+      this.isPasswordVisible = !this.isPasswordVisible;
+    }
 }

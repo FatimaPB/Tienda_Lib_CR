@@ -16,6 +16,18 @@
     margin-bottom: 20px; /* Margen inferior */
     color: #333; /* Color del texto */
   }
+  .eye-icon {
+    position:fixed;
+    right: 570px;
+    top: 53%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px; /* Cambia el tamaño según tus necesidades */
+  }
+  
+  .eye-icon.visible {
+    color: #007bff; /* Color cuando la contraseña es visible */
+  }
   
   .form-group {
     margin-bottom: 15px; /* Margen inferior para cada grupo de formulario */

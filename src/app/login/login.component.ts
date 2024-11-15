@@ -38,6 +38,7 @@ export class LoginComponent {
             localStorage.setItem('token', response.token);
             console.log('token generado es:', response.token)
             localStorage.setItem('tipoUsuario', response.tipoUsuario);
+            localStorage.setItem('correoRegistro', response.correo);
             this.authService.login(response.tipoUsuario);
 
             if (response.tipoUsuario === 'admin') {

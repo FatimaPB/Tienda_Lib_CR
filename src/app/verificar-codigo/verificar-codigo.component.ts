@@ -42,6 +42,9 @@ export class VerificarCodigoComponent {
       (error) => {
         this.mensaje = 'Código de verificación incorrecto o expirado.';
         this.exito = false;
+        setTimeout(() => {
+          this.mensaje = '';
+        }, 3000);
       }
     );
   }

@@ -140,7 +140,7 @@ label {
   .eye-icon {
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: 65%;
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 14px; /* Cambia el tamaño según tus necesidades */

@@ -27,8 +27,11 @@ export class RecuperarcontraComponent {
           this.router.navigate(['/verificar']);
         }, 3000);
       }, error => {
-        this.mensaje = 'error al enviar código de verificación a tu correo';
+        this.mensaje = 'Error al enviar código de verificación a tu correo';
         this.exito = false;
+        setTimeout(() => {
+          this.mensaje = '';
+        }, 3000);
       });
   }
 }

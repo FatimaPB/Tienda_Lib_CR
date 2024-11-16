@@ -17,9 +17,9 @@
     color: #333; /* Color del texto */
   }
   .eye-icon {
-    position:fixed;
-    right: 570px;
-    top: 53%;
+    position: absolute;
+    right: 10px;
+    top: 65%;
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 14px; /* Cambia el tamaño según tus necesidades */
@@ -77,6 +77,38 @@
     color: #333; /* Color del texto */
     margin-top: 15px; /* Margen superior */
     font-size: 14px; /* Tamaño de fuente */
+  }
+
+  .error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .password-strength {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  
+  .strength-bar {
+    height: 5px;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  
+  .strength-bar.weak {
+    width: 33%;
+    background-color: #e74c3c; /* Rojo para débil */
+  }
+  
+  .strength-bar.medium {
+    width: 66%;
+    background-color: #f39c12; /* Naranja para medio */
+  }
+  
+  .strength-bar.strong {
+    width: 100%;
+    background-color: #2ecc71; /* Verde para fuerte */
   }
   
   /* Estilos responsivos */

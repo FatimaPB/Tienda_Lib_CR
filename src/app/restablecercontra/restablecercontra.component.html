@@ -1,17 +1,66 @@
-<h2 class="resta">Restablecer Contraseña</h2>
-<form (ngSubmit)="restablecerContrasena()" class="restablecer-contrasena-container">
-  <div class="form-group">
-    <label for="nuevaContrasena">Nueva Contraseña:</label>
-    <input     [type]="isPasswordVisible ? 'text' : 'password'" [(ngModel)]="nuevaContrasena" name="nuevaContrasena" class="form-control" required />
-    <span 
-    class="eye-icon" 
-    (click)="togglePasswordVisibility()"
-    [class.visible]="isPasswordVisible"><i class="pi pi-eye"></i></span>
-  </div>
-  <div class="form-group">
-    <label for="confirmacionContrasena">Confirmar Contraseña:</label>
-    <input type="password" [(ngModel)]="confirmacionContrasena" name="confirmacionContrasena" class="form-control" required />
-  </div>
-  <button type="submit" class="btn">Restablecer Contraseña</button>
-</form>
-<p class="mensaje">{{ mensaje }}</p>
+<div class="restablecer-container">
+  <h2>Restablecer Contraseña</h2>
+  <form (ngSubmit)="onPasswordReset(resetForm)" #resetForm="ngForm">
+    <!-- Campo de Nueva Contraseña -->
+    <div class="form-group">
+      <label for="newPassword">Nueva Contraseña</label>
+      <div class="password-wrapper">
+        <input
+          [type]="isPasswordVisible ? 'text' : 'password'" 
+          id="newPassword"
+          name="newPassword"
+          #newPassword="ngModel"
+          ngModel
+          required
+          (input)="checkPasswordStrength(newPassword.value)"
+          class="form-control"
+          placeholder="Ingresa tu nueva contraseña"
+        />
+        <span 
+          class="eye-icon" 
+          (click)="togglePasswordVisibility()"
+          [class.visible]="isPasswordVisible"><i class="pi pi-eye"></i></span>
+      </div>
+      <small *ngIf="!resetForm.controls['newPassword']?.valid && resetForm.controls['newPassword']?.touched" class="error-message">
+        La contraseña es obligatoria
+      </small>
+      <div class="password-strength">
+        <div class="strength-bar" [ngClass]="passwordStrengthClass"></div>
+        <span>{{ passwordStrengthMessage }}</span>
+      </div>
+    </div>
+
+    <!-- Campo de Confirmar Contraseña -->
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Contraseña</label>
+      <div class="password-wrapper">
+        <input
+          [type]="isConfirmPasswordVisible ? 'text' : 'password'" 
+          id="confirmPassword"
+          name="confirmPassword"
+          #confirmPassword="ngModel"
+          ngModel
+          required
+          class="form-control"
+          placeholder="Confirma tu contraseña"
+        />
+        <span 
+          class="eye-icon" 
+          (click)="toggleConfirmPasswordVisibility()"
+          [class.visible]="isConfirmPasswordVisible"><i class="pi pi-eye"></i></span>
+      </div>
+      <small *ngIf="!resetForm.controls['confirmPassword']?.valid && resetForm.controls['confirmPassword']?.touched" class="error-message">
+        La confirmación de la contraseña es obligatoria
+      </small>
+      <small *ngIf="passwordMismatch" class="error-message">
+        Las contraseñas no coinciden
+      </small>
+    </div>
+
+    <!-- Botón de Restablecer Contraseña -->
+    <button type="submit" class="btn" [disabled]="!resetForm.valid || passwordMismatch">Restablecer Contraseña</button>
+  </form>
+
+  <!-- Mensaje -->
+  <p class="mensaje">{{ mensaje }}</p>
+</div>

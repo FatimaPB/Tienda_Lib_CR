@@ -74,15 +74,9 @@ export class RestablecercontraComponent {
       .subscribe(response => {
         this.mensaje = 'Contraseña restablecida exitosamente';
         this.exito = true;
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 3000);
+        this.router.navigate(['/login']);
       }, error => {
-        this.mensaje = 'Error al restablecer contraseña';
-        this.exito = false;
-        setTimeout(() => {
-          this.mensaje = '';
-        }, 3000);
+        this.mensaje = error.error.message;
       });
     }
 

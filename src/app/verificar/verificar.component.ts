@@ -20,9 +20,9 @@ export class VerificarComponent {
 
   ngOnInit(): void {
     // Recuperar el correo desde localStorage
-    const correoGuardado = localStorage.getItem('correo');
-    if (correoGuardado) {
-      this.correo = correoGuardado; // Asignar el correo recuperado.
+    const correo = localStorage.getItem('correoguardado');
+    if (correo) {
+      this.correo = correo; // Asignar el correo recuperado.
     } else {
       this.mensaje = 'No se encontró un correo guardado.';
     }

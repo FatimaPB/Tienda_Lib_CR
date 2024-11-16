@@ -23,7 +23,7 @@ export class RecuperarcontraComponent {
       .subscribe(response => {
         this.mensaje = 'Se ha enviado un código de verificación a tu correo';
         this.exito = true;
-        localStorage.setItem('correo', this.correo);
+        localStorage.setItem('correoguardado', this.correo);
         setTimeout(() => {
           this.router.navigate(['/verificar']);
         }, 3000);

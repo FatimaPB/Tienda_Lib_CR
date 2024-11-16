@@ -18,6 +18,16 @@ export class VerificarComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  ngOnInit(): void {
+    // Recuperar el correo desde localStorage
+    const correoGuardado = localStorage.getItem('correo');
+    if (correoGuardado) {
+      this.correo = correoGuardado; // Asignar el correo recuperado.
+    } else {
+      this.mensaje = 'No se encontró un correo guardado.';
+    }
+  }
+
   verificarCodigo() {
     this.http.post('https://back-tienda-three.vercel.app/api/verificar-codigo', { correo: this.correo, codigo: this.codigo })
       .subscribe(response => {

@@ -6,5 +6,7 @@
   </div>
   <button type="submit" class="btn">Verificar Código</button>
 </form>
-<p class="mensaje">{{ mensaje }}</p>
+<div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+  {{ mensaje }}
+</div>
 

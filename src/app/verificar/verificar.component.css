@@ -55,6 +55,18 @@
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
     transition: background-color 0.3s; /* Transición suave para el hover */
   }
+
+  .alert-success {
+    margin-top: 20px;
+    text-align: center;
+    color: green;
+  }
+  
+  .alert-danger {
+    margin-top: 20px;
+    text-align: center;
+    color: red;
+  }
   
   .btn:not(:disabled):hover {
     background-color: #005bb5; /* Color de fondo en hover */

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-verificar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './verificar.component.html',
   styleUrl: './verificar.component.css'
 })
@@ -15,6 +16,7 @@ export class VerificarComponent {
   correo: string = '';
   codigo: string = '';
   mensaje: string = '';
+  exito: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -32,9 +34,16 @@ export class VerificarComponent {
     this.http.post('https://back-tienda-three.vercel.app/api/verificar-codigo', { correo: this.correo, codigo: this.codigo })
       .subscribe(response => {
         this.mensaje = 'Código verificado con éxito. Ahora puedes restablecer tu contraseña.';
-        this.router.navigate(['/restablecer'], { state: { correo: this.correo } });
+        this.exito = true;
+        setTimeout(() => {
+          this.router.navigate(['/restablecer'], { state: { correo: this.correo } });
+        }, 3000);
       }, error => {
-        this.mensaje = error.error.message;
+        this.mensaje = 'Error al verificar código';
+        this.exito = false;
+        setTimeout(() => {
+          this.mensaje = '';
+        }, 3000);
       });
   }
 }

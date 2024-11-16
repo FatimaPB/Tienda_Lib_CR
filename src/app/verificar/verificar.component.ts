@@ -30,6 +30,7 @@ export class VerificarComponent {
     this.http.post('https://back-tienda-three.vercel.app/api/verificar-codigo',payload)
       .subscribe(response => {
         this.mensaje = 'Código verificado con éxito. Ahora puedes restablecer tu contraseña.';
+        localStorage.setItem('correores', this.correo);
         this.exito = true;
         setTimeout(() => {
           this.router.navigate(['/restablecer'], { state: { correo: this.correo } });

@@ -69,14 +69,20 @@ export class RestablecercontraComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   restablecerContrasena() {
-    const correo = localStorage.getItem('correores');
+    const correo = localStorage.getItem('correoguardado');
     this.http.post('https://back-tienda-three.vercel.app/api/restablecer-contrasena', { correo, nuevaContrasena: this.nuevaContrasena })
       .subscribe(response => {
         this.mensaje = 'Contraseña restablecida exitosamente';
         this.exito = true;
-        this.router.navigate(['/login']);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 3000);
       }, error => {
-        this.mensaje = error.error.message;
+        this.mensaje = 'Error al verificar código';
+        this.exito = false;
+        setTimeout(() => {
+          this.mensaje = '';
+        }, 3000);
       });
     }
 

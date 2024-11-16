@@ -52,10 +52,10 @@ export class RestablecercontraComponent {
   }
 
   onPasswordReset(form: NgForm) {
-    const { newPassword, confirmPassword } = form.value;
+    const { nuevaContrasena, confirmacionContrasena } = form.value;
 
     // Verificar si las contraseñas coinciden
-    this.passwordMismatch = newPassword !== confirmPassword;
+    this.passwordMismatch = nuevaContrasena !== confirmacionContrasena;
 
     if (this.passwordMismatch) {
       this.mensaje = 'Las contraseñas no coinciden.';

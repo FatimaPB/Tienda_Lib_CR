@@ -1,107 +1,123 @@
-.verificar-codigo-container {
-    max-width: 500px; /* Ancho máximo */
-    margin: 80px auto; /* Centrado vertical y horizontal */
-    padding: 20px; /* Espaciado interno */
-    border: 1px solid #e0e0e0; /* Borde */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
-    box-sizing: border-box; /* Incluye padding en el ancho total */
-  }
-  
-  .verificar-codigo-container h2 {
-    text-align: center; /* Centrado del título */
-    margin-bottom: 20px; /* Margen inferior */
-    color: #333; /* Color del texto */
-  }
-  .ver{
-    text-align: center;
-    margin-top: 80px;
-    }
-  .form-group {
-    margin-bottom: 15px; /* Margen inferior para cada grupo de formulario */
-  }
-  
-  label {
-    display: block; /* Para ocupar el 100% de ancho */
-    font-weight: bold; /* Negrita */
-    margin-bottom: 5px; /* Margen inferior del label */
-    color: #555; /* Color del texto */
-  }
-  
-  .form-control {
-    width: 100%; /* Ancho completo */
-    padding: 10px; /* Espaciado interno */
-    border: 1px solid #ccc; /* Borde */
-    border-radius: 4px; /* Bordes redondeados */
-    font-size: 16px; /* Tamaño de fuente */
-    transition: border-color 0.3s; /* Transición suave */
-    box-sizing: border-box; /* Incluye padding en el ancho total */
-  }
-  
-  .form-control:focus {
-    border-color: #007ad9; /* Color de foco */
-    outline: none; /* Sin contorno */
-    box-shadow: 0 0 5px rgba(0, 122, 217, 0.5); /* Sombra al enfocar */
-  }
-  
-  .btn {
-    width: 100%; /* Ancho completo */
-    padding: 10px; /* Espaciado interno */
-    background-color: #007ad9; /* Color de fondo del botón */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    font-size: 16px; /* Tamaño de fuente */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    transition: background-color 0.3s; /* Transición suave para el hover */
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding: 20px;
+}
+
+.verification-container {
+  border-radius: 8px;
+  box-shadow: 0 8px 8px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.verification-container h3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.verification-container p {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.code-input {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.form-control {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+
+.alert-success {
+  color: green;
+}
+
+.alert-danger {
+  color: red;
+}
+
+.btn-submit {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #660000;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .verification-container {
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
   }
 
-  .alert-success {
-    margin-top: 20px;
-    text-align: center;
-    color: green;
+  .verification-container h3 {
+    font-size: 20px;
   }
-  
-  .alert-danger {
-    margin-top: 20px;
-    text-align: center;
-    color: red;
+
+  .verification-container p {
+    font-size: 12px;
   }
-  
-  .btn:not(:disabled):hover {
-    background-color: #005bb5; /* Color de fondo en hover */
+
+  .form-control {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
   }
-  
-  .mensaje {
-    text-align: center; /* Centrado del mensaje */
-    color: #333; /* Color del texto */
-    margin-top: 15px; /* Margen superior */
-    font-size: 14px; /* Tamaño de fuente */
+
+  .btn-submit {
+    width: 100%;
+    font-size: 14px;
   }
-  
-  /* Estilos responsivos */
-  @media (max-width: 600px) {
-    .verificar-codigo-container {
-      margin: 100px auto; /* Margen superior reducido en pantallas pequeñas */
-      padding: 15px; /* Espaciado interno reducido */
-    }
-  
-    .verificar-codigo-container h2 {
-      font-size: 24px; /* Tamaño de fuente del título */
-    }
-  
-    .form-control {
-      font-size: 14px; /* Tamaño de fuente reducido para inputs */
-      padding: 8px; /* Espaciado interno reducido */
-    }
-  
-    .btn {
-      font-size: 14px; /* Tamaño de fuente reducido para el botón */
-      padding: 8px; /* Espaciado interno reducido para el botón */
-    }
-  
-    .mensaje {
-      font-size: 12px; /* Tamaño de fuente reducido para el mensaje */
-    }
+}
+
+@media (max-width: 480px) {
+  .verification-container {
+    padding: 20px;
+    width: 90%;
+    max-width: 350px;
   }
-  
+
+  .verification-container h3 {
+    font-size: 18px;
+  }
+
+  .verification-container p {
+    font-size: 12px;
+  }
+
+  .form-control {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  .btn-submit {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}

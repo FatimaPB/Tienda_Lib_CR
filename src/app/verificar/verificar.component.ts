@@ -20,18 +20,14 @@ export class VerificarComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  ngOnInit(): void {
-    // Recuperar el correo desde localStorage
-    const correo = localStorage.getItem('correoguardado');
-    if (correo) {
-      this.correo = correo; // Asignar el correo recuperado.
-    } else {
-      this.mensaje = 'No se encontró un correo guardado.';
-    }
-  }
-
   verificarCodigo() {
-    this.http.post('https://back-tienda-three.vercel.app/api/verificar-codigo', { correo: this.correo, codigo: this.codigo })
+    const correo = localStorage.getItem('correoguardado');
+    const inputs = document.querySelectorAll('.code-input .form-control') as NodeListOf<HTMLInputElement>;
+    this.codigo = Array.from(inputs).map(input => input.value).join('');
+
+    const payload = { correo, codigo: this.codigo };
+
+    this.http.post('https://back-tienda-three.vercel.app/api/verificar-codigo',payload)
       .subscribe(response => {
         this.mensaje = 'Código verificado con éxito. Ahora puedes restablecer tu contraseña.';
         this.exito = true;
@@ -45,5 +41,22 @@ export class VerificarComponent {
           this.mensaje = '';
         }, 3000);
       });
+  }
+
+
+  moveFocus(event: any, index: number) {
+    const input = event.target as HTMLInputElement;
+    const inputs = document.querySelectorAll('.form-control');
+  
+    // Solo permitir números
+    if (/^\d$/.test(input.value)) {
+      // Mover al siguiente campo si el valor es un número y no estamos en el último input
+      if (index < inputs.length - 1) {
+        (inputs[index + 1] as HTMLElement).focus();
+      }
+    } else {
+      // Si el valor no es un número, borrarlo
+      input.value = '';
+    }
   }
 }

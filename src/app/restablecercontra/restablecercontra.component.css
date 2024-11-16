@@ -102,6 +102,13 @@ label {
     background-color: #005bb5; /* Color de fondo en hover */
   }
   
+  .alert-success {
+    color: green;
+  }
+  
+  .alert-danger {
+    color: red;
+  }
   
   /* Estilos responsivos */
   @media (max-width: 600px) {

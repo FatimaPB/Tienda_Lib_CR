@@ -21,6 +21,7 @@ export class RestablecercontraComponent {
   isPasswordVisible = false;
   isConfirmPasswordVisible = false;
   mensaje = '';
+  exito: boolean = false;
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
@@ -72,9 +73,16 @@ export class RestablecercontraComponent {
     this.http.post('https://back-tienda-three.vercel.app/api/restablecer-contrasena', { correo, nuevaContrasena: this.nuevaContrasena })
       .subscribe(response => {
         this.mensaje = 'Contraseña restablecida exitosamente';
-        this.router.navigate(['/login']);
+        this.exito = true;
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 3000);
       }, error => {
-        this.mensaje = error.error.message;
+        this.mensaje = 'Error al restablecer contraseña';
+        this.exito = false;
+        setTimeout(() => {
+          this.mensaje = '';
+        }, 3000);
       });
     }
 

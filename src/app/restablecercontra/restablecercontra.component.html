@@ -60,7 +60,7 @@
     <!-- Botón de Restablecer Contraseña -->
     <button type="submit" class="btn" [disabled]="!resetForm.valid || passwordMismatch">Restablecer Contraseña</button>
   </form>
-
-  <!-- Mensaje -->
-  <p class="mensaje">{{ mensaje }}</p>
+  <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+    {{ mensaje }}
+  </div>
 </div>

@@ -1,4 +1,3 @@
-
 <div class="restablecer-container">
   <h2>Restablecer Contraseña</h2>
   <form (ngSubmit)="onPasswordReset(resetForm)" #resetForm="ngForm">
@@ -14,7 +13,7 @@
           #newPassword="ngModel"
           (input)="checkPasswordStrength(newPassword.value)"
           class="form-control"
-          placeholder="Ingresa tu nueva contraseña"
+          placeholder="Nueva contraseña"
           required 
         />
         <span 

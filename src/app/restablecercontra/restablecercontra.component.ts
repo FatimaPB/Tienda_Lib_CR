@@ -78,7 +78,7 @@ export class RestablecercontraComponent {
           this.router.navigate(['/login']);
         }, 3000);
       }, error => {
-        this.mensaje = 'Error al verificar código';
+        this.mensaje = 'Error al restablecer contraseña';
         this.exito = false;
         setTimeout(() => {
           this.mensaje = '';

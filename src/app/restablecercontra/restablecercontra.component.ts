@@ -22,6 +22,7 @@ export class RestablecercontraComponent {
   isConfirmPasswordVisible = false;
   mensaje = '';
   exito: boolean = false;
+  isPasswordStrong = false; // Agregado: bandera para la fuerza de la contraseña
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
@@ -40,31 +41,44 @@ export class RestablecercontraComponent {
     if (password.length < 8) {
       this.passwordStrengthMessage = 'Muy débil';
       this.passwordStrengthClass = 'weak';
+      this.isPasswordStrong = false;
     } else if (hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChars) {
       this.passwordStrengthMessage = 'Fuerte';
       this.passwordStrengthClass = 'strong';
+      this.isPasswordStrong = true;
     } else if ((hasUpperCase || hasLowerCase) && hasNumbers) {
       this.passwordStrengthMessage = 'Mediana';
       this.passwordStrengthClass = 'medium';
+      this.isPasswordStrong = false;
     } else {
       this.passwordStrengthMessage = 'Débil';
       this.passwordStrengthClass = 'weak';
+      this.isPasswordStrong = false;
     }
   }
 
-  onPasswordReset(form: NgForm) {
-    const { nuevaContrasena, confirmacionContrasena } = form.value;
+  validatePasswords() {
+    this.passwordMismatch = this.nuevaContrasena !== this.confirmacionContrasena;
+  }
 
-    // Verificar si las contraseñas coinciden
-    this.passwordMismatch = nuevaContrasena !== confirmacionContrasena;
+  onPasswordReset(form: NgForm) {
+    this.validatePasswords(); // Asegura que las contraseñas coinciden antes de continuar
 
     if (this.passwordMismatch) {
       this.mensaje = 'Las contraseñas no coinciden.';
+      this.exito = false;
+      return;
+    }
+
+    if (!this.isPasswordStrong) {
+      this.mensaje = 'La contraseña no es lo suficientemente fuerte.';
+      this.exito = false;
       return;
     }
 
     this.restablecerContrasena();
   }
+
 
   constructor(private http: HttpClient, private router: Router) {}
 

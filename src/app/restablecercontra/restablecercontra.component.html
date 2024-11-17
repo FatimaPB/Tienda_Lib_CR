@@ -11,7 +11,7 @@
           id="nuevaContrasena"
           name="nuevaContrasena"
           #newPassword="ngModel"
-          (input)="checkPasswordStrength(newPassword.value)"
+          (input)="checkPasswordStrength(newPassword.value); validatePasswords()" 
           class="form-control"
           placeholder="Nueva contraseña"
           required 
@@ -39,6 +39,7 @@
           name="confirmacionContrasena"
           #confirmPassword="ngModel"
           [(ngModel)]="confirmacionContrasena" 
+          (input)="validatePasswords()"
           class="form-control"
           placeholder="Confirma tu contraseña"
           required

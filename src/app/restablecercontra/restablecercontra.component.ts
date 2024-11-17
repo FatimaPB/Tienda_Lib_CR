@@ -61,6 +61,10 @@ export class RestablecercontraComponent {
     this.passwordMismatch = this.nuevaContrasena !== this.confirmacionContrasena;
   }
 
+  onInputBlur() {
+    this.validatePasswords();
+  }
+
   onPasswordReset(form: NgForm) {
     this.validatePasswords(); // Asegura que las contraseñas coinciden antes de continuar
 

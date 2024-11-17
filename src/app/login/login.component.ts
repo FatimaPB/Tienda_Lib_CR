@@ -19,7 +19,7 @@ export class LoginComponent {
   errorMessage: string | null = null;
   isPasswordVisible = false; // Para la contraseña
 
-  private apiUrl = 'https://back-tienda-three.vercel.app/api';
+  private apiUrl = 'https://back-tienda-livid.vercel.app/api';
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 

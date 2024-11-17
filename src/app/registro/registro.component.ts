@@ -109,7 +109,7 @@ export class RegistroComponent {
       contrasena: registerForm.value.password
     };
   
-    this.http.post<any>('https://back-tienda-three.vercel.app/api/usuarios', registerData)
+    this.http.post<any>('https://back-tienda-livid.vercel.app/api/usuarios', registerData)
       .subscribe(
         (response) => {
           console.log('Registro exitoso', response);

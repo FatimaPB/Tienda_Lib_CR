@@ -84,7 +84,7 @@ export class RestablecercontraComponent {
 
   restablecerContrasena() {
     const correo = localStorage.getItem('correoguardado');
-    this.http.post('https://back-tienda-three.vercel.app/api/restablecer-contrasena', { correo, nuevaContrasena: this.nuevaContrasena })
+    this.http.post('https://back-tienda-livid.vercel.app/api/restablecer-contrasena', { correo, nuevaContrasena: this.nuevaContrasena })
       .subscribe(response => {
         this.mensaje = 'Contraseña restablecida exitosamente';
         this.exito = true;

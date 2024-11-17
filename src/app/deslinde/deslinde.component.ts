@@ -32,13 +32,13 @@ export class DeslindeComponent {
   }
 
   obtenerDocumentos() {
-    this.http.get('https://back-tienda-three.vercel.app/api/deslinde/historial').subscribe((data: any) => {
+    this.http.get('https://back-tienda-livid.vercel.app/api/deslinde/historial').subscribe((data: any) => {
       this.documentos = data;
     });
   }
 
   obtenerDocumentoVigente() {
-    this.http.get('https://back-tienda-three.vercel.app/api/deslinde/vigente').subscribe({
+    this.http.get('https://back-tienda-livid.vercel.app/api/deslinde/vigente').subscribe({
       next: (data: any) => {
         this.documentoVigente = data;
       },
@@ -58,7 +58,7 @@ export class DeslindeComponent {
       return;
     }
 
-    this.http.post('https://back-tienda-three.vercel.app/api/deslinde', this.documento).subscribe({
+    this.http.post('https://back-tienda-livid.vercel.app/api/deslinde', this.documento).subscribe({
       next: () => {
         this.obtenerDocumentos();
         this.limpiarFormulario();
@@ -78,7 +78,7 @@ export class DeslindeComponent {
 
   actualizarDocumento() {
     if (this.editingId) {
-      this.http.post(`https://back-tienda-three.vercel.app/api/deslinde/${this.editingId}/version`, this.documento).subscribe(() => {
+      this.http.post(`https://back-tienda-livid.vercel.app/api/deslinde/${this.editingId}/version`, this.documento).subscribe(() => {
         this.obtenerDocumentos();
         this.limpiarFormulario();
         this.obtenerDocumentoVigente();
@@ -87,7 +87,7 @@ export class DeslindeComponent {
   }
 
   eliminarDocumento(id: string) {
-    this.http.delete(`https://back-tienda-three.vercel.app/api/deslinde/${id}`).subscribe(() => {
+    this.http.delete(`https://back-tienda-livid.vercel.app/api/deslinde/${id}`).subscribe(() => {
       this.obtenerDocumentos();
       this.obtenerDocumentoVigente();
     });

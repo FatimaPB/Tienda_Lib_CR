@@ -37,7 +37,7 @@ export class IncidenciasComponent implements OnInit {
 
 // Método para cargar usuarios desde la API
 cargarUsuarios(): void {
-  this.http.get<Usuario[]>('https://back-tienda-three.vercel.app/api/usuarios') // Cambia la URL según tu API
+  this.http.get<Usuario[]>('https://back-tienda-livid.vercel.app/api/usuarios') // Cambia la URL según tu API
     .subscribe((data) => {
       // Filtra los usuarios para obtener solo aquellos que no están bloqueados
       this.usuarios = data.filter(usuario => !usuario.isBlocked);
@@ -59,7 +59,7 @@ cargarUsuarios(): void {
 
   // Método para obtener los usuarios bloqueados desde el servidor
   obtenerUsuariosBloqueados(): void {
-    this.http.get<Usuario[]>('https://back-tienda-three.vercel.app/api/usuarios-bloqueados?periodo=dia') // Cambia la URL según tu API
+    this.http.get<Usuario[]>('https://back-tienda-livid.vercel.app/api/usuarios-bloqueados?periodo=dia') // Cambia la URL según tu API
       .subscribe((data) => {
         this.usuariosBloqueados = data;
       }, (error) => {
@@ -69,7 +69,7 @@ cargarUsuarios(): void {
 
     // Método para obtener los usuarios bloqueados desde el servidor
     obtenerUsuariosBloqueadosmes(): void {
-      this.http.get<Usuario[]>('https://back-tienda-three.vercel.app/api/usuarios-bloqueados?periodo=mes') // Cambia la URL según tu API
+      this.http.get<Usuario[]>('https://back-tienda-livid.vercel.app/api/usuarios-bloqueados?periodo=mes') // Cambia la URL según tu API
         .subscribe((data) => {
           this.usuariosBloqueados = data;
         }, (error) => {
@@ -79,7 +79,7 @@ cargarUsuarios(): void {
 
         // Método para obtener los usuarios bloqueados desde el servidor
         obtenerUsuariosBloqueadossemana(): void {
-          this.http.get<Usuario[]>('https://back-tienda-three.vercel.app/api/usuarios-bloqueados?periodo=semana') // Cambia la URL según tu API
+          this.http.get<Usuario[]>('https://back-tienda-livid.vercel.app/api/usuarios-bloqueados?periodo=semana') // Cambia la URL según tu API
             .subscribe((data) => {
               this.usuariosBloqueados = data;
             }, (error) => {
@@ -99,7 +99,7 @@ bloquearUsuarioDesdeLista(usuario: Usuario): void {
   }
 
   // Llama a la API para bloquear al usuario
-  this.http.put(`https://back-tienda-three.vercel.app/api/usuarios/bloquear/${userId}`, {})
+  this.http.put(`https://back-tienda-livid.vercel.app/api/usuarios/bloquear/${userId}`, {})
     .subscribe((response) => {
       console.log(response);
       usuario.isBlocked = true; // Actualiza el estado localmente
@@ -121,7 +121,7 @@ guardarConfiguracionBloqueo() {
         return;
     }
 
-    this.http.post('https://back-tienda-three.vercel.app/api/configurar-intentos', { intentosLimite: this.intentosLimite })
+    this.http.post('https://back-tienda-livid.vercel.app/api/configurar-intentos', { intentosLimite: this.intentosLimite })
       .subscribe(
         () => {
             this.mensajeExito = 'Configuración guardada con éxito.';

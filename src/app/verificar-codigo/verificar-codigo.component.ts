@@ -25,7 +25,7 @@ export class VerificarCodigoComponent {
   
     const payload = { correo, codigoVerificacion: this.codigo };
   
-    this.http.post('https://back-tienda-three.vercel.app/api/usuarios/verico', payload).subscribe(
+    this.http.post('https://back-tienda-livid.vercel.app/api/usuarios/verico', payload).subscribe(
       (response: any) => {
         this.mensaje = 'Verificación exitosa, tu correo ha sido verificado.';
         this.exito = true;

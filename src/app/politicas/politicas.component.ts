@@ -34,13 +34,13 @@ export class PoliticasComponent {
   }
 
   obtenerDocumentos() {
-    this.http.get('https://back-tienda-three.vercel.app/api/documentos/historial').subscribe((data: any) => {
+    this.http.get('https://back-tienda-livid.vercel.app/api/documentos/historial').subscribe((data: any) => {
       this.documentos = data;
     });
   }
 
   obtenerDocumentoVigente() {
-    this.http.get('https://back-tienda-three.vercel.app/api/documentos/vigente').subscribe({
+    this.http.get('https://back-tienda-livid.vercel.app/api/documentos/vigente').subscribe({
       next: (data: any) => {
         this.documentoVigente = data;
       },
@@ -60,7 +60,7 @@ export class PoliticasComponent {
       return;
     }
 
-    this.http.post('https://back-tienda-three.vercel.app/api/documentos', this.documento).subscribe({
+    this.http.post('https://back-tienda-livid.vercel.app/api/documentos', this.documento).subscribe({
       next: () => {
         this.obtenerDocumentos();
         this.limpiarFormulario();
@@ -80,7 +80,7 @@ export class PoliticasComponent {
 
   actualizarDocumento() {
     if (this.editingId) {
-      this.http.post(`https://back-tienda-three.vercel.app/api/documentos/${this.editingId}/version`, this.documento).subscribe(() => {
+      this.http.post(`https://back-tienda-livid.vercel.app/api/documentos/${this.editingId}/version`, this.documento).subscribe(() => {
         this.obtenerDocumentos();
         this.limpiarFormulario();
         this.obtenerDocumentoVigente();
@@ -89,7 +89,7 @@ export class PoliticasComponent {
   }
 
   eliminarDocumento(id: string) {
-    this.http.delete(`https://back-tienda-three.vercel.app/api/documentos/${id}`).subscribe(() => {
+    this.http.delete(`https://back-tienda-livid.vercel.app/api/documentos/${id}`).subscribe(() => {
       this.obtenerDocumentos();
       this.obtenerDocumentoVigente();
     });

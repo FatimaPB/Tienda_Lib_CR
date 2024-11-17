@@ -28,7 +28,7 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('https://back-tienda-three.vercel.app/api/datos').subscribe({
+    this.http.get<Empresa>('https://back-tienda-livid.vercel.app/api/datos').subscribe({
       next: (response) => {
         this.empresaData = response; // Guarda el objeto directamente
       },

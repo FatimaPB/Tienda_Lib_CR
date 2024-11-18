@@ -172,7 +172,7 @@ isFormValid(): boolean {
 
   cancelarEdicion() {
     this.showForm = false;
-    this.perfil = { ...this.originalPerfil };
+    this.getPerfil();
   }
 
   cancelarCambioContrasena() {

@@ -91,6 +91,10 @@ export class LoginComponent {
         
       });
   }
+
+  onCaptchaResolved(captchaResponse: string) {
+    this.resolvedCaptcha = captchaResponse;
+  }
     // Métodos para mostrar/ocultar contraseñas
     togglePasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible;

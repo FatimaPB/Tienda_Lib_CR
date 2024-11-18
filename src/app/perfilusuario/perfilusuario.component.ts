@@ -150,6 +150,12 @@ isFormValid(): boolean {
           this.successMessage = 'Contraseña actualizada con éxito';
           this.errorMessage = null;
           this.showPasswordForm = false;
+          this.passwordData = {
+          currentPassword: '',
+          newPassword: '',
+          confirmNewPassword: ''
+        };
+        this.showPasswordForm = false;
 
           setTimeout(() => {
             this.successMessage = null;

@@ -4,10 +4,10 @@
     <div class="card profile-card">
         <div class="profile-info">
             <div class="profile-details">
+                <p>{{ perfil.tipoUsuario }}</p>
                 <p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
                 <p><strong>Correo:</strong> {{ perfil.correo }}</p>
                 <p><strong>Teléfono:</strong> {{ perfil.telefono }}</p>
-                <p><strong>Tipo de Usuario:</strong> {{ perfil.tipoUsuario }}</p>
             </div>
             <div class="profile-actions">
                 <button (click)="showForm = true" class="btn btn-edit">⚙️ Editar Perfil</button>

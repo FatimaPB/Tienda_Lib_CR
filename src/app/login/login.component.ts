@@ -69,13 +69,13 @@ export class LoginComponent {
               this.mensaje = '';
             }, 3000);
           } else if (err.status === 403) {
-            this.mensaje = 'Fallaste los intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
+            this.mensaje = 'Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
             this.exito = false;
             setTimeout(() => {
               this.mensaje = '';
             }, 3000);
           } else {
-            this.mensaje = 'Error al iniciar sesión ' + (err.error?.message);
+            this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message);
             this.exito = false;
             setTimeout(() => {
               this.mensaje = '';

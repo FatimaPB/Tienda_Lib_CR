@@ -58,7 +58,7 @@
   
   /* Botón de acción, mismo estilo que en login */
   .btn {
-    width: 30%;
+    width: 20%;
     padding: 10px;
     background-color: #660000;
     color: white;
@@ -70,7 +70,7 @@
   }
   
   .btn:disabled {
-    background-color: #cccccc;
+    background-color: #831d1d;
     cursor: not-allowed;
   }
   

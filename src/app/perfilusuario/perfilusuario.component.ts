@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class PerfilusuarioComponent  implements OnInit {
   private apiUrl = `https://back-tienda-livid.vercel.app/api`;
+  originalPerfil: any = null; // Nueva propiedad para guardar el perfil original
   perfil: any = null;
   errorMessage: string | null = null;
   successMessage: string | null = null;
@@ -200,9 +201,10 @@ isFormValid(): boolean {
       event.preventDefault();
     }
   }
-    // Función para verificar si los datos han cambiado
-    isFormChanged(): boolean {
-      return JSON.stringify(this.perfil) !== JSON.stringify(this.perfil);
-    }
+ // Función para verificar si los datos han cambiado
+ isFormChanged(): boolean {
+  return JSON.stringify(this.perfil) !== JSON.stringify(this.originalPerfil);
+}
+
   
 }

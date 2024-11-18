@@ -50,7 +50,9 @@ export class LoginComponent {
                 this.router.navigate(['/incidencias']);
               }, 3000);
             } else {
+              setTimeout(() => {
                 this.router.navigate(['']);
+              }, 3000);
             }
             
             
@@ -71,8 +73,11 @@ export class LoginComponent {
             this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message || 'Servidor no disponible');
             this.exito = false;
           }
-          this.mensaje = '';
+          setTimeout(() => {
+            this.mensaje = '';
+          }, 3000);
         }
+        
       });
   }
 

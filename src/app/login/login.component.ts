@@ -75,7 +75,7 @@ export class LoginComponent {
               this.mensaje = '';
             }, 3000);
           } else {
-            this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message);
+            this.mensaje = 'Error al iniciar sesión ' + (err.error?.message);
             this.exito = false;
             setTimeout(() => {
               this.mensaje = '';

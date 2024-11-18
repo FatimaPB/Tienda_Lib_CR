@@ -105,12 +105,16 @@
                     <button type="button" class="toggle-visibility" (click)="toggleConfirmPasswordVisibility()">
                         <i class="pi" [ngClass]="showConfirmPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
                     </button>
+                    <div class="error" *ngIf="!passwordsMatch">
+                        Las contraseñas no coinciden.
+                    </div>
+                    
                 </div>
             </div>
 
             <!-- Botones de acción -->
             <div class="form-actions">
-                <button type="submit" class="btn btn-update">Actualizar Contraseña</button>
+                <button type="submit" class="btn btn-update"   [disabled]="!isFormValid()">Actualizar Contraseña</button>
                 <button type="button" (click)="cancelarCambioContrasena()" class="btn btn-cancel">Cancelar</button>
             </div>
         </form>

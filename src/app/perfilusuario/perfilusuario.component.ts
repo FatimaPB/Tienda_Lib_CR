@@ -27,6 +27,7 @@ export class PerfilusuarioComponent  implements OnInit {
   showNewPassword = false;
   showConfirmPassword = false;
   passwordStrength = '';
+passwordsMatch = true;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -95,13 +96,23 @@ export class PerfilusuarioComponent  implements OnInit {
   checkPasswordStrength() {
     const password = this.passwordData.newPassword;
     if (password.length < 6) {
-      this.passwordStrength = 'Débil';
-    } else if (password.match(/[A-Z]/) && password.match(/[0-9]/) && password.length >= 8) {
-      this.passwordStrength = 'Fuerte';
+        this.passwordStrength = 'Débil';
+    } else if (password.match(/[A-Z]/) && password.match(/[0-9]/)) {
+        this.passwordStrength = 'Fuerte';
     } else {
-      this.passwordStrength = 'Media';
+        this.passwordStrength = 'Media';
     }
-  }
+}
+
+validatePasswordsMatch() {
+  this.passwordsMatch = this.passwordData.newPassword === this.passwordData.confirmNewPassword;
+}
+isFormValid(): boolean {
+  return (
+      this.passwordsMatch &&
+      this.passwordStrength === 'Fuerte'
+  );
+}
 
   cambiarContrasena() {
     if (this.passwordData.newPassword !== this.passwordData.confirmNewPassword) {

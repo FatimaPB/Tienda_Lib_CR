@@ -34,6 +34,7 @@ passwordsMatch = true;
 
   ngOnInit() {
     this.getPerfil();
+    this.originalPerfil = { ...this.perfil };
   }
 
   getPerfil() {
@@ -171,6 +172,7 @@ isFormValid(): boolean {
 
   cancelarEdicion() {
     this.showForm = false;
+    this.perfil = { ...this.originalPerfil };
   }
 
   cancelarCambioContrasena() {

@@ -206,5 +206,11 @@ isFormValid(): boolean {
   return JSON.stringify(this.perfil) !== JSON.stringify(this.originalPerfil);
 }
 
+// Validar que el teléfono sea exactamente 10 dígitos
+isValidPhoneNumber(): boolean {
+  // Verifica si el teléfono tiene exactamente 10 caracteres y son números
+  return /^[0-9]{10}$/.test(this.perfil.telefono);
+}
+
   
 }

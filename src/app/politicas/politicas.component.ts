@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';  // <-- Asegúrate de importar FormsModule
 import { CommonModule } from '@angular/common';
+import { NewlineToHtmlPipe } from '../../app/pipes/newline-to-html.pipe'; // Ajusta la ruta si es diferente
 
 
 
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-politicas',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, NewlineToHtmlPipe],
   templateUrl: './politicas.component.html',
   styleUrl: './politicas.component.css'
 })

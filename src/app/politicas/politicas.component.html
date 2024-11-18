@@ -19,12 +19,16 @@
     <h3>Documento Vigente</h3>
     <div *ngIf="documentoVigente">
       <p><strong>Título:</strong> {{ documentoVigente.titulo }}</p>
-      <div><strong>Contenido:</strong> <div [innerHTML]="documentoVigente.contenido"></div></div>
+      <div>
+        <strong>Contenido:</strong> 
+        <div [innerHTML]="documentoVigente.contenido | newlineToHtml"></div>
+      </div>
       <p><strong>Fecha de Vigencia:</strong> {{ documentoVigente.fechaVigencia | date }}</p>
     </div>
     <div *ngIf="!documentoVigente">
       <p>No hay documento vigente.</p>
     </div>
+    
     
   
     <button class="btn" (click)="toggleHistorial()">{{ mostrarHistorial ? 'Ocultar Historial' : 'Mostrar Historial' }}</button>

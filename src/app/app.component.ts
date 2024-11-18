@@ -8,6 +8,7 @@ import { HeaderaComponent } from './headera/headera.component';
 import { HeaderNormalComponent } from './header-normal/header-normal.component';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { NewlineToHtmlPipe } from './pipes/newline-to-html.pipe';
 
 export interface Empresa {
   redesSociales?: {

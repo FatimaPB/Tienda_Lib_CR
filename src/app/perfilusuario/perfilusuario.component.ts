@@ -168,6 +168,12 @@ isFormValid(): boolean {
 
   cancelarCambioContrasena() {
     this.showPasswordForm = false;
+
+    this.passwordData = {
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: ''
+    };
   }
 
   toggleCurrentPasswordVisibility() {

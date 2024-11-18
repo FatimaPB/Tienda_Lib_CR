@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
-import { RecaptchaModule } from 'ng-recaptcha';
+import { RecaptchaModule,  RecaptchaComponent   } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule],
+  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -20,6 +20,8 @@ export class LoginComponent {
   isPasswordVisible = false; // Para la contraseña
   mensaje = '';
   exito: boolean = false;
+
+    @ViewChild(RecaptchaComponent ) recaptcha: RecaptchaComponent  | undefined; // Acceder al componente de reCAPTCHA
 
   private apiUrl = 'https://back-tienda-livid.vercel.app/api';
 
@@ -82,7 +84,12 @@ export class LoginComponent {
               this.mensaje = '';
             }, 3000);
           }
-          this.resolvedCaptcha = null; 
+          this.resolvedCaptcha = null;
+
+          // Reiniciar el reCAPTCHA
+          if (this.recaptcha) {
+            this.recaptcha.reset(); // Esto reinicia el estado del CAPTCHA
+          }
         }
         
       });

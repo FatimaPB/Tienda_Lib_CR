@@ -1,4 +1,7 @@
 <div class="login-container">
+    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+        {{ mensaje }}
+      </div>
     <h2>Iniciar Sesión</h2>
     
     <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
@@ -47,9 +50,6 @@
         <p class="register-link">¿No tienes cuenta? <a href="#" routerLink="/registro">Regístrate aquí</a></p>
         
     </form>
-    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
-        {{ mensaje }}
-      </div>
  
   </div>
   

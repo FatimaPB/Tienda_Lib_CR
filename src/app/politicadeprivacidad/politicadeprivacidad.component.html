@@ -1,11 +1,10 @@
 <div class="politica-privacidad-container">
-    <h2>Política de Privacidad</h2>
   
     <div *ngIf="documentoVigente; else loading">
-      <h3>{{ documentoVigente.titulo }}</h3> <!-- Suponiendo que el documento tiene un campo 'titulo' -->
-      <p>{{ documentoVigente.contenido }}</p> <!-- Suponiendo que el documento tiene un campo 'contenido' -->
+      <h3>{{ documentoVigente.titulo }}</h3>
+      <p [innerHTML]="documentoVigente.contenido | newlineToHtml"></p>
     </div>
-  
+    
     <ng-template #loading>
       <p>Cargando documento vigente...</p>
     </ng-template>

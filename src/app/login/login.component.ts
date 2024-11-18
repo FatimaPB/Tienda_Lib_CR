@@ -29,7 +29,7 @@ export class LoginComponent {
 
     this.mensaje = '';
     this.exito = false;
-    
+
     const { email, password } = loginForm.value;
 
     if (!this.resolvedCaptcha) {
@@ -73,7 +73,7 @@ export class LoginComponent {
               this.mensaje = '';
             }, 3000);
           } else if (err.status === 403) {
-            this.mensaje = 'Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
+            this.mensaje = 'Fallaste los intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
             this.exito = false;
             setTimeout(() => {
               this.mensaje = '';
@@ -85,13 +85,11 @@ export class LoginComponent {
               this.mensaje = '';
             }, 3000);
           }
+             // Resetear reCAPTCHA para permitir múltiples intentos
+        this.resolvedCaptcha = null;
         }
         
       });
-  }
-
-  onCaptchaResolved(captchaResponse: string) {
-    this.resolvedCaptcha = captchaResponse;
   }
     // Métodos para mostrar/ocultar contraseñas
     togglePasswordVisibility() {

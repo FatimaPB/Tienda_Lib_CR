@@ -63,7 +63,7 @@
                         required
                     />
                     <button type="button" class="toggle-visibility" (click)="toggleCurrentPasswordVisibility()">
-                        {{ showCurrentPassword ? 'pi pi-eye' : 'pipi-eye-slash' }}
+                        <i class="pi" [ngClass]="showCurrentPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
                     </button>
                 </div>
             </div>
@@ -81,8 +81,8 @@
                         (input)="checkPasswordStrength()"
                         required
                     />
-                    <button type="button" class="toggle-visibility" (click)="toggleNewPasswordVisibility()">
-                        {{ showNewPassword ?'pi pi-eye' : 'pipi-eye-slash'  }}
+                    <button type="button" class="toggle-visibility" (click)="toggleCurrentPasswordVisibility()">
+                        <i class="pi" [ngClass]="showNewPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
                     </button>
                 </div>
                 <div class="password-strength">
@@ -103,7 +103,7 @@
                         required
                     />
                     <button type="button" class="toggle-visibility" (click)="toggleConfirmPasswordVisibility()">
-                        {{ showConfirmPassword ? 'pi pi-eye' : 'pipi-eye-slash' }}
+                        <i class="pi" [ngClass]="showConfirmPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
                     </button>
                 </div>
             </div>

@@ -1,8 +1,11 @@
 <div class="politicas-container">
     <h2>Gestión de Políticas</h2>
-    <button class="titulo" (click)="mostrarFormulario = !mostrarFormulario">
-      {{ mostrarFormulario ? 'Cancelar' : '+' }}
-    </button>  
+    <div class="contenedor-boton">
+      <button class="btn" (click)="mostrarFormulario = !mostrarFormulario">
+        {{ mostrarFormulario ? 'Cancelar' : '+' }}
+      </button> 
+    </div>
+  
     <form *ngIf="mostrarFormulario"  (ngSubmit)="isEditing ? actualizarDocumento() : crearDocumento()">
       <div class="form-group">
         <label for="titulo">Título:</label>
@@ -33,8 +36,10 @@
     </div>
     
     
-  
+  <div class="contenedor-boton">
     <button class="btn" (click)="toggleHistorial()">{{ mostrarHistorial ? 'Ocultar Historial' : 'Mostrar Historial' }}</button>
+  </div>
+
     
     <div *ngIf="mostrarHistorial">
       <table>

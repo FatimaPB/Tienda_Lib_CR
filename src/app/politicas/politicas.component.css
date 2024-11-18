@@ -13,6 +13,10 @@
   .titulo{
     text-align: center;
   }
+  .contenedor-boton{
+    display: flex;
+    justify-content: center;
+  }
   
   .politicas-container h2 {
     text-align: center;

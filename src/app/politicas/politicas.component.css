@@ -58,9 +58,9 @@
   
   /* Botón de acción, mismo estilo que en login */
   .btn {
-    width: 50%;
+    width: 30%;
     padding: 10px;
-    background-color: #007ad9;
+    background-color: #660000;
     color: white;
     border: none;
     border-radius: 4px;

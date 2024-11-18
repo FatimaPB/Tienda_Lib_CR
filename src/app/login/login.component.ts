@@ -46,7 +46,9 @@ export class LoginComponent {
             if (response.tipoUsuario === 'admin') {
               this.mensaje = 'Inicio de sesión exitoso!';
               this.exito= true;
-              this.router.navigate(['/incidencias']);
+              setTimeout(() => {
+                this.router.navigate(['/incidencias']);
+              }, 3000);
               this.mensaje = ''; 
             } else {
                 this.router.navigate(['']);

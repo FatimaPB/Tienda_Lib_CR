@@ -74,13 +74,7 @@ export class LoginComponent {
             setTimeout(() => {
               this.mensaje = '';
             }, 3000);
-          } else {
-            this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message || 'Servidor no disponible');
-            this.exito = false;
-            setTimeout(() => {
-              this.mensaje = '';
-            }, 3000);
-          }
+          } 
         }
         
       });

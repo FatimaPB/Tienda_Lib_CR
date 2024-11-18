@@ -16,10 +16,13 @@
       <button type="submit" class="btn">{{ isEditing ? 'Actualizar' : 'Crear' }} Documento</button>
     </form>
   
-    <h3>Documento Vigente</h3>
+    <h3 class="titulo" >Documento Vigente</h3>
     <div *ngIf="documentoVigente">
-      <p><strong>Título:</strong> {{ documentoVigente.titulo }}</p>
-      <p><strong>Contenido:</strong> {{ documentoVigente.contenido }}</p>
+      <p class="titulo"><strong>Título:</strong> {{ documentoVigente.titulo }}</p>
+      <div>
+        <strong class="titulo">Contenido:</strong> 
+        <div [innerHTML]="documentoVigente.contenido | newlineToHtml"></div>
+      </div>
       <p><strong>Fecha de Vigencia:</strong> {{ documentoVigente.fechaVigencia | date }}</p>
     </div>
     <div *ngIf="!documentoVigente">

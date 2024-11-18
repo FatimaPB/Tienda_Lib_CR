@@ -193,4 +193,11 @@ isFormValid(): boolean {
   toggleConfirmPasswordVisibility() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
+  
+  preventLetters(event: KeyboardEvent): void {
+    const input = String.fromCharCode(event.charCode);
+    if (!/[0-9]/.test(input)) {
+      event.preventDefault();
+    }
+  }
 }

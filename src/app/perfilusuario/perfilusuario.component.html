@@ -36,7 +36,8 @@
 
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
-                <input id="telefono" [(ngModel)]="perfil.telefono" name="telefono" class="form-input" type="tel" maxlength="10" required />
+                <input id="telefono" [(ngModel)]="perfil.telefono" name="telefono" class="form-input" type="tel"    maxlength="10"
+                (keypress)="preventLetters($event)" required />
             </div>
 
             <div class="form-actions">

@@ -23,6 +23,10 @@ export class PerfilusuarioComponent  implements OnInit {
     newPassword: '',
     confirmNewPassword: ''
   }; // Datos para el cambio de contraseña
+  showCurrentPassword = false;
+  showNewPassword = false;
+  showConfirmPassword = false;
+  passwordStrength = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -88,6 +92,17 @@ export class PerfilusuarioComponent  implements OnInit {
       });
   }
 
+  checkPasswordStrength() {
+    const password = this.passwordData.newPassword;
+    if (password.length < 6) {
+      this.passwordStrength = 'Débil';
+    } else if (password.match(/[A-Z]/) && password.match(/[0-9]/) && password.length >= 8) {
+      this.passwordStrength = 'Fuerte';
+    } else {
+      this.passwordStrength = 'Media';
+    }
+  }
+
   cambiarContrasena() {
     if (this.passwordData.newPassword !== this.passwordData.confirmNewPassword) {
       this.errorMessage = 'Las contraseñas no coinciden';
@@ -100,6 +115,8 @@ export class PerfilusuarioComponent  implements OnInit {
       return;
     }
 
+
+    
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     const data = {
@@ -131,5 +148,17 @@ export class PerfilusuarioComponent  implements OnInit {
 
   cancelarCambioContrasena() {
     this.showPasswordForm = false;
+  }
+
+  toggleCurrentPasswordVisibility() {
+    this.showCurrentPassword = !this.showCurrentPassword;
+  }
+
+  toggleNewPasswordVisibility() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 }

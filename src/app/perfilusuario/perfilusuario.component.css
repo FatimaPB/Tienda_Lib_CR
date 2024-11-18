@@ -135,6 +135,46 @@
   .error-toast {
     background-color: #dc3545; /* Rojo para error */
   }
+
+  .password-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-wrapper .form-input {
+    flex: 1;
+  }
+  
+  .toggle-visibility {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-left: 5px;
+  }
+  
+  .password-strength {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-update {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .btn-cancel {
+    background-color: #f44336;
+    color: white;
+  }
+  
   
   
   @keyframes fadeIn {

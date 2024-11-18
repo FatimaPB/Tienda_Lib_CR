@@ -50,31 +50,73 @@
     <h1 class="section-title">Cambiar Contraseña</h1>
     <div class="card form-card">
         <form (ngSubmit)="cambiarContrasena()">
+            <!-- Contraseña Actual -->
             <div class="form-group">
                 <label for="currentPassword">Contraseña Actual</label>
-                <input id="currentPassword" [(ngModel)]="passwordData.currentPassword" name="currentPassword" class="form-input" type="password" required />
+                <div class="password-wrapper">
+                    <input
+                        id="currentPassword"
+                        [(ngModel)]="passwordData.currentPassword"
+                        name="currentPassword"
+                        class="form-input"
+                        [type]="showCurrentPassword ? 'text' : 'password'"
+                        required
+                    />
+                    <button type="button" class="toggle-visibility" (click)="toggleCurrentPasswordVisibility()">
+                        {{ showCurrentPassword ? '👁️' : '🙈' }}
+                    </button>
+                </div>
             </div>
 
+            <!-- Nueva Contraseña -->
             <div class="form-group">
                 <label for="newPassword">Nueva Contraseña</label>
-                <input id="newPassword" [(ngModel)]="passwordData.newPassword" name="newPassword" class="form-input" type="password" required />
+                <div class="password-wrapper">
+                    <input
+                        id="newPassword"
+                        [(ngModel)]="passwordData.newPassword"
+                        name="newPassword"
+                        class="form-input"
+                        [type]="showNewPassword ? 'text' : 'password'"
+                        (input)="checkPasswordStrength()"
+                        required
+                    />
+                    <button type="button" class="toggle-visibility" (click)="toggleNewPasswordVisibility()">
+                        {{ showNewPassword ? '👁️' : '🙈' }}
+                    </button>
+                </div>
+                <div class="password-strength">
+                    Fortaleza: {{ passwordStrength }}
+                </div>
             </div>
 
+            <!-- Confirmar Nueva Contraseña -->
             <div class="form-group">
                 <label for="confirmNewPassword">Confirmar Nueva Contraseña</label>
-                <input id="confirmNewPassword" [(ngModel)]="passwordData.confirmNewPassword" name="confirmNewPassword" class="form-input" type="password" required />
+                <div class="password-wrapper">
+                    <input
+                        id="confirmNewPassword"
+                        [(ngModel)]="passwordData.confirmNewPassword"
+                        name="confirmNewPassword"
+                        class="form-input"
+                        [type]="showConfirmPassword ? 'text' : 'password'"
+                        required
+                    />
+                    <button type="button" class="toggle-visibility" (click)="toggleConfirmPasswordVisibility()">
+                        {{ showConfirmPassword ? '👁️' : '🙈' }}
+                    </button>
+                </div>
             </div>
 
+            <!-- Botones de acción -->
             <div class="form-actions">
                 <button type="submit" class="btn btn-update">Actualizar Contraseña</button>
                 <button type="button" (click)="cancelarCambioContrasena()" class="btn btn-cancel">Cancelar</button>
             </div>
         </form>
-       
     </div>
-
- 
 </div>
+
 
 
 <div class="toast success-toast" *ngIf="successMessage">{{ successMessage }}</div>

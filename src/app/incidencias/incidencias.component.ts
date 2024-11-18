@@ -114,24 +114,36 @@ intentosLimite: number = 5; // Valor por defecto
 mensajeError: string | null = null;
 mensajeExito: string | null = null;
 
-guardarConfiguracionBloqueo() {
-    if (this.intentosLimite < 1) {
-        this.mensajeError = 'El número de intentos debe ser al menos 1.';
-        this.mensajeExito = null;
-        return;
-    }
+async guardarConfiguracionBloqueo() {
+  if (this.intentosLimite < 1) {
+      this.mensajeError = 'El número de intentos debe ser al menos 1.';
+      this.mensajeExito = null;
+      return;
+  }
 
-    this.http.post('https://back-tienda-livid.vercel.app/api/configurar-intentos', { intentosLimite: this.intentosLimite })
-      .subscribe(
-        () => {
-            this.mensajeExito = 'Configuración guardada con éxito.';
-            this.mensajeError = null;
-        },
-        (error) => {
-            this.mensajeError = 'Error al guardar la configuración.';
-            this.mensajeExito = null;
-        }
-    );
+  try {
+      const response = await fetch('https://back-tienda-livid.vercel.app/api/limite-intentos', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ maxFailedAttempts: this.intentosLimite }),
+      });
+
+      if (!response.ok) {
+          throw new Error('Error al guardar la configuración.');
+      }
+
+      const data = await response.json();
+      console.log('Configuración guardada con éxito:', data);
+      this.mensajeExito = 'Configuración guardada con éxito.';
+      this.mensajeError = null;
+  } catch (error) {
+      console.error('Error al guardar la configuración:', error);
+      this.mensajeError = 'Error al guardar la configuración.';
+      this.mensajeExito = null;
+  }
 }
+
 
 }

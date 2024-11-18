@@ -1,7 +1,6 @@
 /* Estilos para el footer */
 .footer {
   background-color: #660000;
-  color: white;
   padding: 20px 0;
 }
 
@@ -23,7 +22,6 @@
 
 /* Enlaces del footer */
 .footer-info a {
-  color: white;
   text-decoration: none;
   margin: 0 10px;
   transition: color 0.3s;

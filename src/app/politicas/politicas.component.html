@@ -1,8 +1,8 @@
 <div class="politicas-container">
-    <h2>Gestión de Políticas</h2>
-    <button class="btn" (click)="mostrarFormulario = !mostrarFormulario">
+    <h2>Gestión de Políticas<button class="btn" (click)="mostrarFormulario = !mostrarFormulario">
       {{ mostrarFormulario ? 'Cancelar' : '+' }}
-    </button>  
+    </button> </h2>
+ 
     <form *ngIf="mostrarFormulario"  (ngSubmit)="isEditing ? actualizarDocumento() : crearDocumento()">
       <div class="form-group">
         <label for="titulo">Título:</label>

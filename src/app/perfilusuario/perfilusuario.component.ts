@@ -95,14 +95,23 @@ passwordsMatch = true;
 
   checkPasswordStrength() {
     const password = this.passwordData.newPassword;
-    if (password.length < 6) {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const isLongEnough = password.length >= 8;
+
+    if (!isLongEnough || !(hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar)) {
         this.passwordStrength = 'Débil';
-    } else if (password.match(/[A-Z]/) && password.match(/[0-9]/)) {
+    } else if (isLongEnough && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
         this.passwordStrength = 'Fuerte';
     } else {
         this.passwordStrength = 'Media';
     }
 }
+
+
+
 
 validatePasswordsMatch() {
   this.passwordsMatch = this.passwordData.newPassword === this.passwordData.confirmNewPassword;

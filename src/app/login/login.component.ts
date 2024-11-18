@@ -72,8 +72,9 @@ export class LoginComponent {
               this.mensaje = '';
             }, 3000);
           } else if (err.status === 403) {
-            this.mensaje = 'Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
+            this.mensaje = 'Fallaste los intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
             this.exito = false;
+            loginForm.resetForm();
             setTimeout(() => {
               this.mensaje = '';
             }, 3000);

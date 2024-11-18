@@ -120,7 +120,23 @@ label {
 .error-toast {
   background-color: #dc3545; /* Rojo para error */
 }
+.alert {
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 4px;
+  text-align: center;
+}
 
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
 /* Estilos para el modo oscuro */
 .dark-theme .login-container {
   --background-color: #121212;

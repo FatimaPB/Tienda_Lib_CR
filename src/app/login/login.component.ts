@@ -18,6 +18,8 @@ export class LoginComponent {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   isPasswordVisible = false; // Para la contraseña
+  mensaje = '';
+  exito: boolean = false;
 
   private apiUrl = 'https://back-tienda-livid.vercel.app/api';
 
@@ -42,10 +44,10 @@ export class LoginComponent {
             this.authService.login(response.tipoUsuario);
 
             if (response.tipoUsuario === 'admin') {
-              this.successMessage = 'Inicio de sesión exitoso!';
-              this.errorMessage = null;
-                this.router.navigate(['/incidencias']);
-                this.successMessage = null; 
+              this.mensaje = 'Inicio de sesión exitoso!';
+              this.exito= true;
+              this.router.navigate(['/incidencias']);
+              this.mensaje = ''; 
             } else {
                 this.router.navigate(['']);
             }
@@ -56,15 +58,19 @@ export class LoginComponent {
         },
         error: (err) => {
           if (err.status === 400) {
-            this.errorMessage = 'Error de verificación de reCAPTCHA. Intenta de nuevo.';
+            this.mensaje = 'Error de verificación de reCAPTCHA. Intenta de nuevo.';
+            this.exito = false;
           } else if (err.status === 401) {
-            this.errorMessage = 'Credenciales inválidas.';
+            this.mensaje = 'Credenciales inválidas.';
+            this.exito = false;
           } else if (err.status === 403) {
-            alert('Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.');
+            this.mensaje = 'Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
+            this.exito = false;
           } else {
-            this.errorMessage = 'Error al iniciar sesión: ' + (err.error?.message || 'Servidor no disponible');
+            this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message || 'Servidor no disponible');
+            this.exito = false;
           }
-          this.successMessage = null;
+          this.mensaje = '';
         }
       });
   }

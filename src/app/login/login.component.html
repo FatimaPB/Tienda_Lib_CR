@@ -47,14 +47,9 @@
         <p class="register-link">¿No tienes cuenta? <a href="#" routerLink="/registro">Regístrate aquí</a></p>
         
     </form>
-  
+    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+        {{ mensaje }}
+      </div>
  
   </div>
-
-
-     <!-- Toast de éxito -->
-     <div class="toast success-toast" *ngIf="successMessage">{{ successMessage }}</div>
-      
-     <!-- Toast de error -->
-     <div class="toast error-toast" *ngIf="errorMessage">{{ errorMessage }}</div>
   

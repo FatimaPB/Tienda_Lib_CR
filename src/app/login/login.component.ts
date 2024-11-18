@@ -49,7 +49,6 @@ export class LoginComponent {
               setTimeout(() => {
                 this.router.navigate(['/incidencias']);
               }, 3000);
-              this.mensaje = ''; 
             } else {
                 this.router.navigate(['']);
             }

@@ -41,7 +41,7 @@
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-update">Actualizar</button>
+                <button type="submit" class="btn btn-update" [disabled]="!perfil.telefono || !isFormChanged()">Actualizar</button>
                 <button type="button" (click)="cancelarEdicion()" class="btn btn-cancel">Cancelar</button>
             </div>
         </form>

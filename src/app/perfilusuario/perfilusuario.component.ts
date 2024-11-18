@@ -200,4 +200,9 @@ isFormValid(): boolean {
       event.preventDefault();
     }
   }
+    // Función para verificar si los datos han cambiado
+    isFormChanged(): boolean {
+      return JSON.stringify(this.perfil) !== JSON.stringify(this.perfil);
+    }
+  
 }

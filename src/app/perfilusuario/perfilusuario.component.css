@@ -183,13 +183,44 @@
     background-color: #4caf50;
     color: white;
   }
+  /* Estilo para el botón de actualizar cuando está deshabilitado */
+.btn-update:disabled {
+  background-color: #B0B0B0;  /* Color gris para indicar que está deshabilitado */
+  color: #E0E0E0;  /* Color gris claro para el texto */
+  cursor: not-allowed;
+}
+
   
   .btn-cancel {
     background-color: #f44336;
     color: white;
   }
   
-  
+  .input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilo para el campo de entrada */
+.form-input {
+    padding-left: 30px; /* Espacio a la izquierda para el icono */
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Estilo para el icono dentro del input */
+.input-wrapper i.pi-lock {
+    position: absolute;
+    left: 10px; /* Posicionar el icono a la izquierda */
+    top: 50%; /* Centrado verticalmente */
+    transform: translateY(-50%); /* Ajuste para centrar verticalmente */
+    font-size: 20px; /* Tamaño del icono */
+    color: #ccc; /* Color del icono */
+}
   
   @keyframes fadeIn {
     from { opacity: 0; }

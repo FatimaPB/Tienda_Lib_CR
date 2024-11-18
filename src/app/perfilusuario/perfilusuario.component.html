@@ -25,11 +25,13 @@
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input id="nombre" [(ngModel)]="perfil.nombre" name="nombre" class="form-input"  readonly />
+                <i class="pi pi-lock" aria-hidden="true"></i> <!-- Icono de candado -->
             </div>
 
             <div class="form-group">
                 <label for="correo">Correo</label>
                 <input id="correo" [(ngModel)]="perfil.correo" name="correo" class="form-input" type="email"  readonly />
+                <i class="pi pi-lock" aria-hidden="true"></i> <!-- Icono de candado -->
             </div>
 
             <div class="form-group">

@@ -1,54 +1,191 @@
-<div class="inicio-container">
-    <h1>Bienvenido a la Tienda de Artículos Religiosos</h1>
-  
-    <div class="product-grid">
+<div class="header-image">
+  <img src="../assets/img/rosario.jpg" alt="Imagen de Bienvenida" />
+  <div class="overlay-text">
+    <h1 class="Bienvenida">Bienvenido a la Tienda de Artículos Religiosos</h1>
+  </div>
+</div>
+
+
+<div class="carousel-container">
+  <div class="carousel">
+    <div class="carousel-track">
       <div class="product-item">
-        <img src="../assets/img/catedral1.png" alt="Biblia Sagrada" class="product-image" />
+        <img src="../assets/img/libro.jpg" alt="Biblia Sagrada" class="product-image" />
         <h2>Biblia Sagrada</h2>
         <p>Edición especial de la Biblia.</p>
         <span class="price">$300.00</span>
-        <button pButton type="button" label="Comprar" class="buy-button"></button>
+        <button class="buy-button">ver detalle</button>
       </div>
-  
       <div class="product-item">
-        <img src="../assets/img/catedral1.png" alt="Rosario de Madera" class="product-image" />
+        <img src="../assets/img/cadena.jpg" alt="Rosario de Madera" class="product-image" />
         <h2>Rosario de Madera</h2>
         <p>Rosario hecho a mano de madera.</p>
         <span class="price">$50.00</span>
-        <button pButton type="button" label="Comprar" class="buy-button"></button>
+        <button class="buy-button">ver detalle</button>
       </div>
-  
       <div class="product-item">
         <img src="../assets/img/catedral1.png" alt="Imagen de la Virgen" class="product-image" />
         <h2>Imagen de la Virgen</h2>
         <p>Imagen de la Virgen María.</p>
         <span class="price">$150.00</span>
-        <button pButton type="button" label="Comprar" class="buy-button"></button>
+        <button class="buy-button">ver detalle</button>
       </div>
-  
       <div class="product-item">
-        <img src="../assets/img/catedral1.png" alt="Cruz de Madera" class="product-image" />
+        <img src="../assets/img/rosario.jpg" alt="Cruz de Madera" class="product-image" />
         <h2>Cruz de Madera</h2>
         <p>Cruz artesanal de madera.</p>
         <span class="price">$200.00</span>
-        <button pButton type="button" label="Comprar" class="buy-button"></button>
+        <button class="buy-button">ver detalle</button>
       </div>
-  
       <div class="product-item">
         <img src="../assets/img/catedral1.png" alt="Vela Religiosa" class="product-image" />
         <h2>Vela Religiosa</h2>
         <p>Vela para oraciones y ceremonias.</p>
         <span class="price">$30.00</span>
-        <button pButton type="button" label="Comprar" class="buy-button"></button>
+        <button class="buy-button">ver detalle</button>
       </div>
-  
       <div class="product-item">
         <img src="../assets/img/catedral1.png" alt="Medalla de San Benito" class="product-image" />
         <h2>Medalla de San Benito</h2>
         <p>Medalla protectora de San Benito.</p>
         <span class="price">$80.00</span>
-        <button pButton type="button" label="Comprar" class="buy-button"></button>
+        <button class="buy-button">ver detalle</button>
       </div>
     </div>
   </div>
-  
+</div>
+
+<style>
+/* General Styles */
+
+.header-image {
+  position: relative; /* Necesario para posicionar el texto dentro del contenedor */
+  width: 100%;
+  overflow: hidden;
+
+}
+.Bienvenida{
+  color: white;
+}
+.header-image img {
+  width: 100%;
+  height: 350px; /* Ajusta este valor para modificar la altura de la imagen */
+  object-fit: cover; /* Hace que la imagen se recorte proporcionalmente para llenar el contenedor */
+ 
+}
+
+.overlay-text {
+  position: absolute; /* Para superponer el texto sobre la imagen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align:center;
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  opacity: 0; /* Oculto inicialmente */
+  animation: fadeIn 2s ease-in-out forwards; /* Animación suave */
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+.carousel-container {
+  text-align: center;
+  max-width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  animation: scroll 10s linear infinite;
+}
+
+.product-item {
+  min-width: 30%;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.product-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #4caf50;
+}
+
+.buy-button {
+  margin-left: 20px;
+  padding: 10px 15px;
+  background-color: #660000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+  background-color: #941717;
+}
+
+/* Carousel Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-33.333%);
+  }
+  45% {
+    transform: translateX(-33.333%);
+  }
+  50% {
+    transform: translateX(-66.666%);
+  }
+  70% {
+    transform: translateX(-66.666%);
+  }
+  75% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+</style>

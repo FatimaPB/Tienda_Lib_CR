@@ -44,6 +44,7 @@ export class LoginComponent {
             this.authService.login(response.tipoUsuario);
 
             if (response.tipoUsuario === 'admin') {
+              loginForm.resetForm();
               this.mensaje = 'Inicio de sesión exitoso!';
               this.exito= true;
               setTimeout(() => {
@@ -81,6 +82,7 @@ export class LoginComponent {
               this.mensaje = '';
             }, 3000);
           }
+          this.resolvedCaptcha = null; 
         }
         
       });

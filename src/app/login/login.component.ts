@@ -50,6 +50,8 @@ export class LoginComponent {
                 this.router.navigate(['/incidencias']);
               }, 3000);
             } else {
+              this.mensaje = 'Inicio de sesión exitoso!';
+              this.exito= true;
               setTimeout(() => {
                 this.router.navigate(['']);
               }, 3000);
@@ -63,19 +65,28 @@ export class LoginComponent {
           if (err.status === 400) {
             this.mensaje = 'Error de verificación de reCAPTCHA. Intenta de nuevo.';
             this.exito = false;
+            setTimeout(() => {
+              this.mensaje = '';
+            }, 3000);
           } else if (err.status === 401) {
             this.mensaje = 'Credenciales inválidas.';
             this.exito = false;
+            setTimeout(() => {
+              this.mensaje = '';
+            }, 3000);
           } else if (err.status === 403) {
             this.mensaje = 'Fallaste los 5 intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
             this.exito = false;
+            setTimeout(() => {
+              this.mensaje = '';
+            }, 3000);
           } else {
             this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message || 'Servidor no disponible');
             this.exito = false;
+            setTimeout(() => {
+              this.mensaje = '';
+            }, 3000);
           }
-          setTimeout(() => {
-            this.mensaje = '';
-          }, 3000);
         }
         
       });

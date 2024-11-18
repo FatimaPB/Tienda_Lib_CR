@@ -216,11 +216,11 @@
 /* Estilo para el icono dentro del input */
 .input-wrapper i.pi-lock {
     position: absolute;
-    left: 100px; /* Posicionar el icono a la izquierda */
+    right:10px; /* Posicionar el icono a la izquierda */
     top: 50%; /* Centrado verticalmente */
     transform: translateY(-50%); /* Ajuste para centrar verticalmente */
     font-size: 20px; /* Tamaño del icono */
-    color: #060606; /* Color del icono */
+    color: #ccc; /* Color del icono */
 }
   
   @keyframes fadeIn {

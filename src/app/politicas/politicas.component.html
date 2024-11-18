@@ -1,6 +1,9 @@
 <div class="politicas-container">
     <h2>Gestión de Políticas</h2>
-    <form (ngSubmit)="isEditing ? actualizarDocumento() : crearDocumento()">
+    <button class="btn" (click)="mostrarFormulario = !mostrarFormulario">
+      {{ mostrarFormulario ? 'Cancelar' : '+' }}
+    </button>  
+    <form *ngIf="mostrarFormulario"  (ngSubmit)="isEditing ? actualizarDocumento() : crearDocumento()">
       <div class="form-group">
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" [(ngModel)]="documento.titulo" name="titulo" class="form-control" required />

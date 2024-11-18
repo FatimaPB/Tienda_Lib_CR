@@ -26,6 +26,7 @@ export class PoliticasComponent {
   editingId: string | null = null;
   documentoVigente: any = null;
   mostrarHistorial: boolean = false; // Nueva propiedad para controlar el historial
+  mostrarFormulario: boolean = false;
 
   constructor(private http: HttpClient) {}
 

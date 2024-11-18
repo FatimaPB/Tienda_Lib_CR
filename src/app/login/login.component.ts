@@ -26,6 +26,10 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   onLogin(loginForm: NgForm) {
+
+    this.mensaje = '';
+    this.exito = false;
+    
     const { email, password } = loginForm.value;
 
     if (!this.resolvedCaptcha) {

@@ -62,8 +62,8 @@
           <td data-label="Fecha de Vigencia">{{ documento.fechaVigencia | date }}</td>
           <td data-label="Vigente">{{ documento.vigente ? 'Sí' : 'No' }}</td>
           <td data-label="Acciones">
-            <button class="btn" (click)="editarDocumento(documento)">Editar</button>
-            <button class="btn btn-danger" (click)="eliminarDocumento(documento._id)">Eliminar</button>
+            <button class="btn btn-small" (click)="editarDocumento(documento)">Editar</button>
+            <button class="btn btn-small" (click)="eliminarDocumento(documento._id)">Eliminar</button>
           </td>
         </tr>
       </tbody>

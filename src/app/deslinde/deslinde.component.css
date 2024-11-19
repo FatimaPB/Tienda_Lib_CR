@@ -103,6 +103,9 @@ min-width: 800px; /* Ancho mínimo para mantener las columnas legibles */
 thead {
 text-align:left;
 }
+.vigente{
+  background-color: #20ac3e;
+}
 
 th, td {
 padding: 12px 16px;

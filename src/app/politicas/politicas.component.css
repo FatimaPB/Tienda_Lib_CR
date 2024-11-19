@@ -126,7 +126,9 @@ th, td {
 .btn-small:hover {
   background-color: #218838;
 }
-
+.vigente{
+  background-color: #20ac3e;
+}
 .btn-edit {
   color: rgb(0, 0, 0);
   margin-right: 5px;

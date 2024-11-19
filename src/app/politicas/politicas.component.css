@@ -3,7 +3,7 @@
 /* Contenedor principal de políticas, siguiendo el estilo del login */
 .politicas-container {
     max-width: 1000px;
-    margin: 30px auto;
+    margin: 20px auto;
     padding: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;

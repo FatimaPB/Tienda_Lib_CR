@@ -102,7 +102,7 @@
             <th>Fecha</th>
             <th>IP</th>
             <th>Detalles</th>
-            <th>Correo del Usuario</th>
+            <th>ID del Usuario</th>
           </tr>
         </thead>
         <tbody>
@@ -111,11 +111,12 @@
             <td>{{ actividad.fecha | date:'short' }}</td>
             <td>{{ actividad.ip }}</td>
             <td>{{ actividad.detalles }}</td>
-            <td>{{ actividad.usuarioId.correo }}</td>
-          </tr>               
+            <td>{{ actividad.usuarioId }}</td> <!-- Mostrando el ID del usuario -->
+          </tr>
         </tbody>
       </table>
     </div>
+    
     
   </div>
   

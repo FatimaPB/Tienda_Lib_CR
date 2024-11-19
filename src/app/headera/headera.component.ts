@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service'; // Ajusta la ruta según tu estructura de carpetas
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,23 +13,21 @@ import { CommonModule } from '@angular/common';
   styleUrl: './headera.component.css'
 })
 export class HeaderaComponent {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
 
   onLogout() {
+
      // Realiza la solicitud de logout al servidor para eliminar la cookie de sesión
-     this.http.post('https://back-tienda-livid.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
+    this.http.post('https://back-tienda-livid.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
       () => {
-        console.log('Sesión cerrada exitosamente');
-        // Limpiar el token del almacenamiento local
-        localStorage.removeItem('token');
-        // Redirigir al inicio de sesión
-        this.router.navigate(['']);
-      },
-      (error) => {
-        console.error('Error al cerrar sesión:', error);
-      }
-    );
+    this.authService.logout(); // Llama al método de logout del servicio
+    this.router.navigate(['']); // Redirige a la página de inicio de sesión
+  },
+  (error) => {
+    console.error('Error al cerrar sesión:', error);
   }
+);
+}
 
   isMenuOpen: boolean = false;
 

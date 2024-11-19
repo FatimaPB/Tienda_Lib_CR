@@ -38,24 +38,40 @@ export class RestablecercontraComponent {
     const hasNumbers = /\d/.test(password);
     const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
+    // Validar longitud mínima
     if (password.length < 8) {
-      this.passwordStrengthMessage = 'Muy débil';
-      this.passwordStrengthClass = 'weak';
-      this.isPasswordStrong = false;
-    } else if (hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChars) {
-      this.passwordStrengthMessage = 'Fuerte';
-      this.passwordStrengthClass = 'strong';
-      this.isPasswordStrong = true;
-    } else if ((hasUpperCase || hasLowerCase) && hasNumbers) {
-      this.passwordStrengthMessage = 'Mediana';
-      this.passwordStrengthClass = 'medium';
-      this.isPasswordStrong = false;
-    } else {
-      this.passwordStrengthMessage = 'Débil';
-      this.passwordStrengthClass = 'weak';
-      this.isPasswordStrong = false;
+        this.passwordStrengthMessage = 'Muy débil';
+        this.passwordStrengthClass = 'weak';
+        this.isPasswordStrong = false;
+        return;
     }
-  }
+
+    // Validar secuencias (ascendentes o descendentes)
+    const hasSequence = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(password);
+
+    if (hasSequence) {
+        this.passwordStrengthMessage = 'Muy débil (contiene secuencias)';
+        this.passwordStrengthClass = 'weak';
+        this.isPasswordStrong = false;
+        return;
+    }
+
+    // Evaluar la fortaleza de la contraseña
+    if (hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChars) {
+        this.passwordStrengthMessage = 'Fuerte';
+        this.passwordStrengthClass = 'strong';
+        this.isPasswordStrong = true;
+    } else if ((hasUpperCase || hasLowerCase) && hasNumbers) {
+        this.passwordStrengthMessage = 'Mediana';
+        this.passwordStrengthClass = 'medium';
+        this.isPasswordStrong = false;
+    } else {
+        this.passwordStrengthMessage = 'Débil';
+        this.passwordStrengthClass = 'weak';
+        this.isPasswordStrong = false;
+    }
+}
+
 
   validatePasswords() {
     this.passwordMismatch = this.nuevaContrasena !== this.confirmacionContrasena;

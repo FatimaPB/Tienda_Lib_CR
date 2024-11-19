@@ -103,13 +103,17 @@ passwordsMatch = true;
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
     const isLongEnough = password.length >= 8;
 
-    if (!isLongEnough || !(hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar)) {
-        this.passwordStrength = 'Débil';
-    } else if (isLongEnough && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) {
-        this.passwordStrength = 'Fuerte';
-    } else {
-        this.passwordStrength = 'Media';
-    }
+     // Validar si tiene secuencias (ascendentes o descendentes)
+     const hasSequence = /(012|123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i.test(password);
+
+     // Determinar la fuerza de la contraseña
+     if (!isLongEnough || !(hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar) || hasSequence) {
+         this.passwordStrength = 'Débil';
+     } else if (isLongEnough && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && !hasSequence) {
+         this.passwordStrength = 'Fuerte';
+     } else {
+         this.passwordStrength = 'Media';
+     }
 }
 
 

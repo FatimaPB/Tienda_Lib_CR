@@ -85,9 +85,8 @@
 /* Contenedor de la tabla con scroll horizontal */
 .table-container {
   width: 90%;
-  margin-left: 10px;
   overflow-x: auto; /* Permite desplazamiento horizontal */
-  margin: 20px 0;
+  margin: 20px auto;
   border: 1px solid #ddd;
   border-radius: 8px;
 }

@@ -65,6 +65,8 @@
               </td>
               <td data-label="Fecha de Vigencia">{{ documento.fechaVigencia | date }}</td>
               <td data-label="Vigente">{{ documento.vigente ? 'Sí' : 'No' }}</td>
+              <td data-label="Vigente">{{ documento.version}}</td>
+              <td data-label="Vigente">{{ documento.eliminado ? 'Sí' : 'No' }}</td>
               <td data-label="Acciones">
                 <button class="btn-edit" (click)="editarDocumento(documento)"><i class="pi pi-pencil"></i></button>
                 <button class="btn-edit" (click)="eliminarDocumento(documento._id)"><i class="pi pi-trash"></i></button>

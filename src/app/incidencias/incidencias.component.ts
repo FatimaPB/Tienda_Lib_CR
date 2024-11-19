@@ -11,6 +11,12 @@ interface Usuario {
   isBlocked: boolean;
   blockedUntil: Date | null;
 }
+interface Actividad {
+  _id: string;
+  descripcion: string;
+  fecha: Date;
+  usuarioId: string; // o el tipo de usuario dependiendo de tu modelo
+}
 
 @Component({
   selector: 'app-incidencias',
@@ -20,6 +26,7 @@ interface Usuario {
   styleUrls: ['./incidencias.component.css']
 })
 export class IncidenciasComponent implements OnInit {
+  actividades: Actividad[] = [];
   usuarios: Usuario[] = [];
   usuariosBloqueados: Usuario[] = [];
   usuariosBloqueadosmes: Usuario[] = [];
@@ -30,10 +37,21 @@ export class IncidenciasComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarUsuarios(); // Cargar usuarios al inicializar el componente
+    this.obtenerActividades();
     this.obtenerUsuariosBloqueados(); // Cargar usuarios bloqueados
     this.obtenerUsuariosBloqueadosmes();
     this.obtenerUsuariosBloqueadossemana();
   }
+
+  obtenerActividades(): void {
+    this.http.get<Actividad[]>('https://tu-backend.com/api/actividad')
+      .subscribe((data) => {
+        this.actividades = data;
+      }, (error) => {
+        console.error('Error al cargar las actividades:', error);
+      });
+  }
+  
 
 // Método para cargar usuarios desde la API
 cargarUsuarios(): void {

@@ -93,5 +93,26 @@
         </tbody>
       </table>
     </div>
+
+    <h3>Actividades</h3>
+<div class="table-responsive">
+  <table>
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Usuario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let actividad of actividades">
+        <td>{{ actividad.descripcion }}</td>
+        <td>{{ actividad.fecha | date: 'short' }}</td>
+        <td>{{ actividad.usuarioId }}</td> <!-- O usa otro campo según tu modelo -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
   </div>
   

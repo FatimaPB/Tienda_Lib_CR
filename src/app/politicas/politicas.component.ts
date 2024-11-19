@@ -101,6 +101,14 @@ export class PoliticasComponent {
     });
   }
 
+  onCancelar() {
+    if (this.mostrarFormulario) {
+      this.limpiarFormulario(); // Limpia los datos del formulario
+    }
+    this.mostrarFormulario = !this.mostrarFormulario; // Cambia el estado de visibilidad
+  }
+  
+
   limpiarFormulario() {
     this.documento = {
       titulo: '',

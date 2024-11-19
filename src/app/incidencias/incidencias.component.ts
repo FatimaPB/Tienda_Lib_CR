@@ -13,9 +13,11 @@ interface Usuario {
 }
 interface Actividad {
   _id: string;
-  descripcion: string;
+  usuarioId: string;
+  tipo: string;
+  ip: string;
+  detalles: string;
   fecha: Date;
-  usuarioId: string; // o el tipo de usuario dependiendo de tu modelo
 }
 
 @Component({

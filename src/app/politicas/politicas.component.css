@@ -96,7 +96,6 @@
   margin: 20px 0;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #fff;
 }
 
 /* Estilos generales de la tabla */
@@ -109,7 +108,6 @@ table {
 }
 
 thead {
-  background-color: #007ad9;
   color: #fff;
   text-align: left;
 }
@@ -118,10 +116,6 @@ th, td {
   padding: 12px 16px;
   border: 1px solid #ddd;
   white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-}
-
-tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
 }
 
 /* Botones */
@@ -134,8 +128,7 @@ tbody tr:nth-child(even) {
 }
 
 .btn-small {
-  background-color: #28a745;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .btn-small:hover {
@@ -143,8 +136,7 @@ tbody tr:nth-child(even) {
 }
 
 .btn-edit {
-  background-color: #007ad9;
-  color: white;
+  color: rgb(0, 0, 0);
   margin-right: 5px;
 }
 

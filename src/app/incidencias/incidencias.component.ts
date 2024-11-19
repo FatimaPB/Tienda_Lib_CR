@@ -44,7 +44,7 @@ export class IncidenciasComponent implements OnInit {
   }
 
   obtenerActividades(): void {
-    this.http.get<Actividad[]>('    https://back-tienda-livid.vercel.app/api/actividad')
+    this.http.get<Actividad[]>('https://back-tienda-livid.vercel.app/api/actividad')
 
       .subscribe((data) => {
         this.actividades = data;

@@ -106,17 +106,16 @@
           </tr>
         </thead>
         <tbody>
-          <div *ngFor="let Actividad of actividades">
-            <div class="actividad">
-              <p><strong>Usuario:</strong> {{ Actividad.usuarioId.correo  }}</p>
-              <p><strong>Tipo:</strong> {{ Actividad.tipo }}</p>
-              <p><strong>IP:</strong> {{ Actividad.ip }}</p>
-              <p><strong>Detalles:</strong> {{ Actividad.detalles }}</p>
-              <p><strong>Fecha:</strong> {{ Actividad.fecha | date:'short' }}</p>
-            </div>
-          </div>               
+          <tr *ngFor="let actividad of actividades">
+            <td>{{ actividad.tipo }}</td>
+            <td>{{ actividad.fecha | date:'short' }}</td>
+            <td>{{ actividad.ip }}</td>
+            <td>{{ actividad.detalles }}</td>
+            <td>{{ actividad.usuarioId.correo }}</td>
+          </tr>               
         </tbody>
       </table>
     </div>
+    
   </div>
   

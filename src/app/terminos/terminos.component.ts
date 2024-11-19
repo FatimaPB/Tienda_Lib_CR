@@ -22,6 +22,7 @@ export class TerminosComponent {
   editingId: string | null = null;
   documentoVigente: any = null;
   mostrarHistorial: boolean = false; // Nueva propiedad para controlar el historial
+  mostrarFormulario: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -29,7 +30,9 @@ export class TerminosComponent {
     this.obtenerDocumentos();
     this.obtenerDocumentoVigente();
   }
-
+  verContenidoCompleto(contenido: string): void {
+    alert(`Contenido completo:\n\n${contenido}`);
+  }
   obtenerDocumentos() {
     this.http.get('https://back-tienda-livid.vercel.app/api/terminos/historial').subscribe((data: any) => {
       this.documentos = data;
@@ -91,7 +94,12 @@ export class TerminosComponent {
       this.obtenerDocumentoVigente();
     });
   }
-
+  onCancelar() {
+    if (this.mostrarFormulario) {
+      this.limpiarFormulario(); // Limpia los datos del formulario
+    }
+    this.mostrarFormulario = !this.mostrarFormulario; // Cambia el estado de visibilidad
+  }
   limpiarFormulario() {
     this.documento = {
       titulo: '',

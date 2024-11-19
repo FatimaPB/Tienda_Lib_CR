@@ -1,61 +1,77 @@
 <div class="politicas-container">
-    <h2>Gestión de Deslinde legal</h2>
-    <form (ngSubmit)="isEditing ? actualizarDocumento() : crearDocumento()">
-      <div class="form-group">
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" [(ngModel)]="documento.titulo" name="titulo" class="form-control" required />
-      </div>
-      <div class="form-group">
-        <label for="contenido">Contenido:</label>
-        <textarea id="contenido" [(ngModel)]="documento.contenido" name="contenido" class="form-control" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="fechaVigencia">Fecha de Vigencia:</label>
-        <input type="date" id="fechaVigencia" [(ngModel)]="documento.fechaVigencia" name="fechaVigencia" class="form-control" required />
-      </div>
-      <button type="submit" class="btn">{{ isEditing ? 'Actualizar' : 'Crear' }} Documento</button>
-    </form>
+  <h2>Gestión de Deslinde legal</h2>
+  <div class="contenedor-boton">
+    <button 
+      class="btn" 
+      (click)="onCancelar()">
+      {{ mostrarFormulario ? 'Cancelar' : 'Agregar +' }}
+    </button>
+  </div>
   
-    <h3 class="titulo" >Documento Vigente</h3>
-    <div *ngIf="documentoVigente">
-      <p class="titulo"><strong>Título:</strong> {{ documentoVigente.titulo }}</p>
-      <div>
-        <strong class="titulo">Contenido:</strong> 
-        <div [innerHTML]="documentoVigente.contenido | newlineToHtml"></div>
-      </div>
-      <p><strong>Fecha de Vigencia:</strong> {{ documentoVigente.fechaVigencia | date }}</p>
+
+  <form *ngIf="mostrarFormulario"  (ngSubmit)="isEditing ? actualizarDocumento() : crearDocumento()">
+    <div class="form-group">
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" [(ngModel)]="documento.titulo" name="titulo" class="form-control" required />
     </div>
-    <div *ngIf="!documentoVigente">
-      <p>No hay documento vigente.</p>
+    <div class="form-group">
+      <label for="contenido">Contenido:</label>
+      <textarea id="contenido" [(ngModel)]="documento.contenido" name="contenido" class="form-control" rows="10" required></textarea>
     </div>
+    <div class="form-group">
+      <label for="fechaVigencia">Fecha de Vigencia:</label>
+      <input type="date" id="fechaVigencia" [(ngModel)]="documento.fechaVigencia" name="fechaVigencia" class="form-control" required />
+    </div>
+    <button type="submit" class="btn">{{ isEditing ? 'Actualizar' : 'Crear' }} Documento</button>
+  </form>
+
+  <h3 class="titulo" >Documento Vigente</h3>
+  <div *ngIf="documentoVigente">
+    <p class="titulo"><strong>Título:</strong> {{ documentoVigente.titulo }}</p>
+    <div>
+      <strong class="titulo">Contenido:</strong> 
+      <div [innerHTML]="documentoVigente.contenido | newlineToHtml"></div>
+    </div>
+    <p><strong>Fecha de Vigencia:</strong> {{ documentoVigente.fechaVigencia | date }}</p>
+  </div>
+  <div *ngIf="!documentoVigente">
+    <p>No hay documento vigente.</p>
+  </div>
   
-    <button class="btn" (click)="toggleHistorial()">{{ mostrarHistorial ? 'Ocultar Historial' : 'Mostrar Historial' }}</button>
-    
-    <div *ngIf="mostrarHistorial">
+  
+<div class="contenedor-boton">
+  <button class="btn" (click)="toggleHistorial()">{{ mostrarHistorial ? 'Ocultar Historial' : 'Mostrar Historial' }}</button>
+</div>
+</div>
+
+<div class="table-container">
+  <div *ngIf="mostrarHistorial">
       <table>
         <thead>
           <tr>
             <th>Título</th>
             <th>Contenido</th>
             <th>Fecha de Vigencia</th>
-            <th>vigente</th>
+            <th>Vigente</th>
             <th>Acciones</th>
-          
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let documento of documentos">
-            <td>{{ documento.titulo }}</td>
-            <td>{{ documento.contenido }}</td>
-            <td>{{ documento.fechaVigencia | date }}</td>
-            <td>{{ documento.vigente }}</td>
-            <td>
-              <button class="btn" (click)="editarDocumento(documento)">Editar</button>
-              <button class="btn btn-danger" (click)="eliminarDocumento(documento._id)">Eliminar</button>
+            <td data-label="Título">{{ documento.titulo }}</td>
+            <td data-label="Contenido">
+              <span class="contenido-corto">{{ documento.contenido | slice: 0:50 }}...</span>
+              <button (click)="verContenidoCompleto(documento.contenido)" class="btn-small">Ver más</button>
+            </td>
+            <td data-label="Fecha de Vigencia">{{ documento.fechaVigencia | date }}</td>
+            <td data-label="Vigente">{{ documento.vigente ? 'Sí' : 'No' }}</td>
+            <td data-label="Acciones">
+              <button class="btn-edit" (click)="editarDocumento(documento)"><i class="pi pi-pencil"></i></button>
+              <button class="btn-edit" (click)="eliminarDocumento(documento._id)"><i class="pi pi-trash"></i></button>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
-  
+</div>
+

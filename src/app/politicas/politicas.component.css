@@ -82,58 +82,98 @@
     background-color: #005bb5;
   }
   
-  /* Estilos para la tabla de documentos */
+ /* General table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+table th, table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #007ad9;
+  color: white;
+}
+
+table td {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Button styles */
+table .btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+table .btn:hover {
+  opacity: 0.9;
+}
+
+table .btn {
+  background-color: #007ad9;
+}
+
+table .btn-danger {
+  background-color: #dc3545;
+}
+
+table .btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+    font-size: 14px;
   }
-  
+
   table th, table td {
     padding: 10px;
+  }
+
+  table th, table td {
+    display: block;
+    text-align: right;
+    border: none;
+  }
+
+  table th::after {
+    content: ":";
+    margin-left: 10px;
+  }
+
+  table td {
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
-  
-  table th {
-    background-color: #f2f2f2;
-    color: #333;
+
+  table tr {
+    margin-bottom: 15px;
+    display: block;
+    border-bottom: 2px solid #007ad9;
   }
-  
-  table td {
-    max-width: 150px; /* Limitar el ancho de las celdas */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Mostrar puntos suspensivos para texto largo */
-    white-space: nowrap;
+
+  table td:last-child {
+    text-align: center;
   }
-  
-  table td:hover {
-    overflow: visible;
-    white-space: normal; /* Expande el texto al pasar el ratón */
+
+  table .btn {
+    margin-top: 5px;
   }
-  
-  table button {
-    background-color: #007ad9;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  table button:hover {
-    background-color: #005bb5;
-  }
-  
-  table button.btn-danger {
-    background-color: #dc3545;
-  }
-  
-  table button.btn-danger:hover {
-    background-color: #c82333;
-  }
-  
+}
+
   
   /* Mensaje de error */
   .error-message {
@@ -193,19 +233,5 @@
     .politicas-container {
       width: 100%;
     }
-    table th, table td {
-      display: block;
-      text-align: right;
-    }
-  
-    table th::after {
-      content: ":";
-      margin-left: 10px;
-    }
-  
-    table td {
-      text-align: left;
-    }
-  
   }
   

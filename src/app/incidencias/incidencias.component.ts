@@ -50,6 +50,8 @@ export class IncidenciasComponent implements OnInit {
         (data) => {
           if (data.actividades) {
             this.actividades = data.actividades;
+            console.log(data); // Verifica la estructura de la respuesta
+
           } else {
             console.warn('No se encontraron actividades');
           }
@@ -59,6 +61,7 @@ export class IncidenciasComponent implements OnInit {
         }
       );
   }
+  
   
   
 

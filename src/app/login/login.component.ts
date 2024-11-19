@@ -51,7 +51,7 @@ export class LoginComponent {
               this.exito= true;
               setTimeout(() => {
                 this.router.navigate(['/incidencias']);
-              }, 3000);
+              }, 2000);
             } else {
               this.mensaje = 'Inicio de sesión exitoso!';
               this.exito= true;

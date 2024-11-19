@@ -6,7 +6,11 @@
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra */
   }
-  
+  .titulo{
+    text-align: center;
+    font-size: 25px;
+    font-style: italic;
+  }
   h2 {
     text-align: center; /* Centrado del título */
     margin-bottom: 20px; /* Margen inferior */

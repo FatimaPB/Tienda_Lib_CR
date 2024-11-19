@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NewlineToHtmlPipe } from '../../app/pipes/newline-to-html.pipe'; 
 
 @Component({
   selector: 'app-terminosycondiciones',
   standalone: true,
-  imports: [FormsModule,CommonModule ],
+  imports: [FormsModule,CommonModule, NewlineToHtmlPipe],
   templateUrl: './terminosycondiciones.component.html',
   styleUrl: './terminosycondiciones.component.css'
 })

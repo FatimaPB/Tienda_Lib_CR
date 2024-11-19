@@ -17,6 +17,10 @@
     display: flex;
     justify-content: center;
   }
+
+  .contenido{
+    height: 200px;
+  }
   
   .politicas-container h2 {
     text-align: center;

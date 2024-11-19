@@ -66,7 +66,7 @@
                 <button (click)="verContenidoCompleto(documento.contenido)" class="btn-small">Ver más</button>
               </td>
               <td data-label="Fecha de Vigencia">{{ documento.fechaVigencia | date }}</td>
-              <td class="vigente" data-label="Vigente">{{ documento.vigente ? 'Vigente' : 'No' }}</td>
+              <td :class="{'fondo-vigente': documento.vigente}" data-label="Vigente">{{documento.vigente ? 'Vigente' : 'No' }}</td>
               <td data-label="Version">{{ documento.version}}</td>
               <td data-label="Eliminado">{{ documento.eliminado ? 'Sí' : 'No' }}</td>
               <td data-label="Acciones">

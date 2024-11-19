@@ -13,7 +13,7 @@ interface Usuario {
 }
 interface Actividad {
   _id: string;
-  usuarioId: string;
+  usuarioId: Usuario;
   tipo: string;
   ip: string;
   detalles: string;
@@ -44,16 +44,15 @@ export class IncidenciasComponent implements OnInit {
     this.obtenerUsuariosBloqueadosmes();
     this.obtenerUsuariosBloqueadossemana();
   }
-
-  obtenerActividades(): void {
-    this.http.get<Actividad[]>('https://back-tienda-livid.vercel.app/api/actividad')
-
+    obtenerActividades(): void {
+    this.http.get<{ actividades: Actividad[] }>('https://back-tienda-livid.vercel.app/api/actividad')
       .subscribe((data) => {
-        this.actividades = data;
+        this.actividades = data.actividades;  // Aquí estamos extrayendo las actividades
       }, (error) => {
         console.error('Error al cargar las actividades:', error);
       });
   }
+  
   
 
 // Método para cargar usuarios desde la API

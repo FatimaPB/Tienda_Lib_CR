@@ -110,6 +110,7 @@ export class RestablecercontraComponent {
         this.exito = true;
         setTimeout(() => {
           this.router.navigate(['/login']);
+          localStorage.removeItem('correoguardado');
         }, 3000);
       }, error => {
         this.mensaje = 'Error al restablecer contraseña';

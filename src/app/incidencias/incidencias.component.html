@@ -106,13 +106,13 @@
           </tr>
         </thead>
         <tbody>
-          <div *ngFor="let actividad of actividades">
+          <div *ngFor="let Actividad of actividades">
             <div class="actividad">
-              <p><strong>Usuario:</strong> {{ actividad.usuarioId.correo }}</p>
-              <p><strong>Tipo:</strong> {{ actividad.tipo }}</p>
-              <p><strong>IP:</strong> {{ actividad.ip }}</p>
-              <p><strong>Detalles:</strong> {{ actividad.detalles }}</p>
-              <p><strong>Fecha:</strong> {{ actividad.fecha | date:'short' }}</p>
+              <p><strong>Usuario:</strong> {{ Actividad.usuarioId.correo  }}</p>
+              <p><strong>Tipo:</strong> {{ Actividad.tipo }}</p>
+              <p><strong>IP:</strong> {{ Actividad.ip }}</p>
+              <p><strong>Detalles:</strong> {{ Actividad.detalles }}</p>
+              <p><strong>Fecha:</strong> {{ Actividad.fecha | date:'short' }}</p>
             </div>
           </div>               
         </tbody>

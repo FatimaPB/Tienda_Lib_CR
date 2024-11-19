@@ -39,19 +39,18 @@ export class IncidenciasComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarUsuarios(); // Cargar usuarios al inicializar el componente
-    this.obtenerActividades();
     this.obtenerUsuariosBloqueados(); // Cargar usuarios bloqueados
     this.obtenerUsuariosBloqueadosmes();
     this.obtenerUsuariosBloqueadossemana();
+    this.obtenerActividades();
   }
   obtenerActividades(): void {
     this.http.get<{ actividades: Actividad[] }>('https://back-tienda-livid.vercel.app/api/actividad')
       .subscribe(
         (data) => {
-          if (data.actividades) {
+          if (data && data.actividades) {
             this.actividades = data.actividades;
-            console.log(data); // Verifica la estructura de la respuesta
-
+            console.log('Actividades cargadas:', this.actividades); // Revisa los datos
           } else {
             console.warn('No se encontraron actividades');
           }

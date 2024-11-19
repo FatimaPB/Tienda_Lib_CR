@@ -44,13 +44,20 @@ export class IncidenciasComponent implements OnInit {
     this.obtenerUsuariosBloqueadosmes();
     this.obtenerUsuariosBloqueadossemana();
   }
-    obtenerActividades(): void {
+  obtenerActividades(): void {
     this.http.get<{ actividades: Actividad[] }>('https://back-tienda-livid.vercel.app/api/actividad')
-      .subscribe((data) => {
-        this.actividades = data.actividades;  // Aquí estamos extrayendo las actividades
-      }, (error) => {
-        console.error('Error al cargar las actividades:', error);
-      });
+      .subscribe(
+        (data) => {
+          if (data.actividades) {
+            this.actividades = data.actividades;
+          } else {
+            console.warn('No se encontraron actividades');
+          }
+        },
+        (error) => {
+          console.error('Error al cargar las actividades:', error);
+        }
+      );
   }
   
   

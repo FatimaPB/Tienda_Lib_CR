@@ -94,7 +94,6 @@
       </table>
     </div>
 
-    <h3>Actividades</h3>
     <div class="table-responsive">
       <table>
         <thead>
@@ -112,12 +111,10 @@
             <td>{{ actividad.fecha | date: 'short' }}</td>
             <td>{{ actividad.ip }}</td>
             <td>{{ actividad.detalles }}</td>
+            <td>{{ actividad.usuarioId ? actividad.usuarioId.correo : 'No disponible' }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    
-    
-
   </div>
   

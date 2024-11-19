@@ -101,7 +101,15 @@
   }
   
   table td {
-    vertical-align: top;
+    max-width: 150px; /* Limitar el ancho de las celdas */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos para texto largo */
+    white-space: nowrap;
+  }
+  
+  table td:hover {
+    overflow: visible;
+    white-space: normal; /* Expande el texto al pasar el ratón */
   }
   
   table button {
@@ -118,13 +126,14 @@
     background-color: #005bb5;
   }
   
-  table button:nth-child(2) {
+  table button.btn-danger {
     background-color: #dc3545;
   }
   
-  table button:nth-child(2):hover {
+  table button.btn-danger:hover {
     background-color: #c82333;
   }
+  
   
   /* Mensaje de error */
   .error-message {
@@ -184,7 +193,6 @@
     .politicas-container {
       width: 100%;
     }
-  
     table th, table td {
       display: block;
       text-align: right;
@@ -198,5 +206,6 @@
     table td {
       text-align: left;
     }
+  
   }
   

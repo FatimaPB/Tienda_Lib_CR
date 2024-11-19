@@ -80,7 +80,10 @@ export class PoliticasComponent {
     this.editingId = documento._id || null;
     this.mostrarFormulario = true;
   }
-
+  verContenidoCompleto(contenido: string): void {
+    alert(`Contenido completo:\n\n${contenido}`);
+  }
+  
   actualizarDocumento() {
     if (this.editingId) {
       this.http.post(`https://back-tienda-livid.vercel.app/api/documentos/${this.editingId}/version`, this.documento).subscribe(() => {

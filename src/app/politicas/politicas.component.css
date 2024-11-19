@@ -74,12 +74,12 @@
   }
   
   .btn:disabled {
-    background-color: #831d1d;
+    background-color: #797979;
     cursor: not-allowed;
   }
   
   .btn:not(:disabled):hover {
-    background-color: #005bb5;
+    background-color: #b62f2f;
   }
   
 /* Contenedor principal */
@@ -109,7 +109,7 @@ table {
 
 thead {
   color: #000000;
-  text-align:center;
+  text-align:left;
 }
 
 th, td {
@@ -141,7 +141,7 @@ th, td {
 }
 
 .btn-edit:hover {
-  background-color: #0056a3;
+  background-color: #585d61;
 }
 
 /* Responsividad para dispositivos móviles */

@@ -53,6 +53,8 @@
             <th>Contenido</th>
             <th>Fecha de Vigencia</th>
             <th>Vigente</th>
+            <th>Versión</th>
+            <th>Eliminado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -64,7 +66,9 @@
               <button (click)="verContenidoCompleto(documento.contenido)" class="btn-small">Ver más</button>
             </td>
             <td data-label="Fecha de Vigencia">{{ documento.fechaVigencia | date }}</td>
-            <td data-label="Vigente">{{ documento.vigente ? 'Sí' : 'No' }}</td>
+            <td data-label="Vigente">{{ documento.vigente ? 'Vigente' : 'No' }}</td>
+            <td data-label="Version">{{ documento.version}}</td>
+            <td data-label="Eliminado">{{ documento.eliminado ? 'Sí' : 'No' }}</td>
             <td data-label="Acciones">
               <button class="btn-edit" (click)="editarDocumento(documento)"><i class="pi pi-pencil"></i></button>
               <button class="btn-edit" (click)="eliminarDocumento(documento._id)"><i class="pi pi-trash"></i></button>

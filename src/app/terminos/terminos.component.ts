@@ -16,7 +16,9 @@ export class TerminosComponent {
   documento: any = {
     titulo: '',
     contenido: '',
-    fechaVigencia: ''
+    fechaVigencia: '',
+    version:'',
+    eliminado:''
   };
   isEditing: boolean = false;
   editingId: string | null = null;

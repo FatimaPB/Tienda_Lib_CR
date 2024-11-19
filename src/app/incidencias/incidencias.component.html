@@ -98,24 +98,18 @@
       <table>
         <thead>
           <tr>
-            <th>Tipo</th>
-            <th>Fecha</th>
-            <th>IP</th>
-            <th>Detalles</th>
-            <th>ID del Usuario</th>
+            <th>Actividad</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let actividad of actividades">
-            <td>{{ actividad.tipo }}</td>
-            <td>{{ actividad.fecha | date:'short' }}</td>
-            <td>{{ actividad.ip }}</td>
-            <td>{{ actividad.detalles }}</td>
-            <td>{{ actividad.usuarioId }}</td> <!-- Mostrando el ID del usuario -->
+            <td>{{ actividad }}</td> <!-- Mostrará la actividad como texto en una sola línea -->
           </tr>
         </tbody>
       </table>
     </div>
+    
+    
     
     
   </div>

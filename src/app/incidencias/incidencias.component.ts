@@ -28,7 +28,7 @@ interface Actividad {
   styleUrls: ['./incidencias.component.css']
 })
 export class IncidenciasComponent implements OnInit {
-  actividades: Actividad[] = [];
+  actividades: string[] = [];
   usuarios: Usuario[] = [];
   usuariosBloqueados: Usuario[] = [];
   usuariosBloqueadosmes: Usuario[] = [];
@@ -48,12 +48,8 @@ export class IncidenciasComponent implements OnInit {
     this.http.get<{ actividades: Actividad[] }>('https://back-tienda-livid.vercel.app/api/actividad')
       .subscribe(
         (data) => {
-          console.log('Datos recibidos de la API:', data); // Verifica si los datos están llegando
           if (data && data.actividades) {
-            this.actividades = data.actividades;
-            console.log('Actividades cargadas:', this.actividades); // Verifica las actividades cargadas
-          } else {
-            console.warn('No se encontraron actividades');
+            this.actividades = data.actividades.map(actividad => JSON.stringify(actividad));
           }
         },
         (error) => {
@@ -61,6 +57,7 @@ export class IncidenciasComponent implements OnInit {
         }
       );
   }
+  
   
 // Método para cargar usuarios desde la API
 cargarUsuarios(): void {

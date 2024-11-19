@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 export interface Empresa {
   slogan?: string;
   nombre?: string;
-  logo?: string; // Asegúrate de que este campo sea correcto en el modelo
+  logo?: string;
 }
 
 @Component({
@@ -20,7 +20,7 @@ export interface Empresa {
 })
 export class HeaderuComponent {
 
-  empresaData: Empresa | null = null; // Inicializa como null
+  empresaData: Empresa | null = null; 
 
   ngOnInit(): void {
     this.getEmpresasData(); 
@@ -51,8 +51,17 @@ export class HeaderuComponent {
 
   constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
   onLogout() {
-    this.authService.logout(); // Llama al método de logout del servicio
-    this.router.navigate(['']); // Redirige a la página de inicio de sesión
+
+  
+    this.http.post('https://back-tienda-livid.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
+    () => {
+    this.authService.logout(); 
+    this.router.navigate(['']); 
+  },
+  (error) => {
+    console.error('Error al cerrar sesión:', error);
+  }
+);
   }
 
 }

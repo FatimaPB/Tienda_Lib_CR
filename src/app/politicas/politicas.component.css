@@ -84,7 +84,7 @@
   
 /* Contenedor principal */
 .contenedor-tabla {
-  width: 100%;
+  width: 90%;
   overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
   margin: 20px 0;
 }

@@ -76,6 +76,7 @@ export class TerminosComponent {
     this.documento = { ...documento };
     this.isEditing = true;
     this.editingId = documento._id || null;
+    this.mostrarFormulario = true;
   }
 
   actualizarDocumento() {

@@ -42,6 +42,7 @@
   </div>
 
   <div class="contenedor-tabla">
+    <div *ngIf="mostrarHistorial">
     <table>
       <thead>
         <tr>
@@ -61,7 +62,7 @@
           </td>
           <td data-label="Fecha de Vigencia">{{ documento.fechaVigencia | date }}</td>
           <td data-label="Vigente">{{ documento.vigente ? 'Sí' : 'No' }}</td>
-          <td data-label="Acciones">
+          <td data-label="Contenido">
             <button class="btn btn-small" (click)="editarDocumento(documento)">Editar</button>
             <button class="btn btn-small" (click)="eliminarDocumento(documento._id)">Eliminar</button>
           </td>

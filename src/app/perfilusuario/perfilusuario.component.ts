@@ -176,6 +176,9 @@ isFormValid(): boolean {
     this.errorMessage = 'Error al actualizar la contraseña';
 }
 this.successMessage = null;
+setTimeout(() => {
+  this.errorMessage = null;
+}, 3000);
         }
       });
   }

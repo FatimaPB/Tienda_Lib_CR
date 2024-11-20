@@ -95,6 +95,16 @@
     </div>
 
     <h3>Registro de actividades</h3>
+    <div>
+      <!-- Filtro de actividades -->
+      <label for="filtroActividad">Filtrar por tipo de actividad:</label>
+      <select id="filtroActividad" [(ngModel)]="filtroTipo" (change)="filtrarActividades()">
+        <option value="">Todas</option>
+        <option value="Inicio de sesión">Inicio de sesión</option>
+        <option value="Cambio de contraseña">Cambio de contraseña</option>
+      </select>
+    </div>
+    
     <div class="table-responsive">
       <table>
         <thead>
@@ -106,15 +116,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let actividad of actividades">
+          <tr *ngFor="let actividad of filtrarActividades()">
             <td>{{ actividad.tipo }}</td>
-            <td>{{ actividad.usuarioId.correo}}</td>
+            <td>{{ actividad.usuarioId.correo }}</td>
             <td>{{ actividad.ip }}</td>
             <td>{{ actividad.fecha | date:'short' }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    
     
     
   </div>

@@ -34,6 +34,7 @@ export class IncidenciasComponent implements OnInit {
   usuariosBloqueadosmes: Usuario[] = [];
   usuariosBloqueadossemana: Usuario[] = [];
   nVeces: number = 3; // Cambia según tu requerimiento
+  filtroTipo: string = '';  // Almacena el tipo de actividad seleccionado
 
   constructor(private http: HttpClient) {}
 
@@ -168,6 +169,12 @@ async guardarConfiguracionBloqueo() {
       this.mensajeExito = null;
   }
 }
-
+ // Método para filtrar las actividades según el tipo
+ filtrarActividades(): any[] {
+  if (this.filtroTipo) {
+    return this.actividades.filter(actividad => actividad.tipo === this.filtroTipo);
+  }
+  return this.actividades;  // Si no hay filtro, mostrar todas las actividades
+}
 
 }

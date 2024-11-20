@@ -28,7 +28,7 @@ interface Actividad {
   styleUrls: ['./incidencias.component.css']
 })
 export class IncidenciasComponent implements OnInit {
-  actividades: string[] = [];
+  actividades:Actividad[] = [];
   usuarios: Usuario[] = [];
   usuariosBloqueados: Usuario[] = [];
   usuariosBloqueadosmes: Usuario[] = [];
@@ -49,7 +49,7 @@ export class IncidenciasComponent implements OnInit {
       .subscribe(
         (data) => {
           if (data && data.actividades) {
-            this.actividades = data.actividades.map(actividad => JSON.stringify(actividad));
+            this.actividades = data.actividades; // Guarda las actividades como objetos
           }
         },
         (error) => {

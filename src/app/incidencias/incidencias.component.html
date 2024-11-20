@@ -98,16 +98,21 @@
       <table>
         <thead>
           <tr>
-            <th>Actividades</th>
+            <th>IP</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let actividad of actividades">
-            <td>{{ actividad }}</td>
+            <td>{{ actividad.ip }}</td>
+            <td>{{ actividad.tipo }}</td>
+            <td>{{ actividad.fecha | date:'short' }}</td> <!-- Formateo de fecha -->
           </tr>
         </tbody>
       </table>
     </div>
+    
     
   </div>
   

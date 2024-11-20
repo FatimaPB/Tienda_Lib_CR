@@ -15,6 +15,7 @@ interface Actividad {
   _id: string;
   usuarioId: Usuario;
   tipo: string;
+  correo: string;
   ip: string;
   detalles: string;
   fecha: Date;

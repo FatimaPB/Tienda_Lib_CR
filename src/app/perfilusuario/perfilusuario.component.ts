@@ -168,8 +168,14 @@ isFormValid(): boolean {
           }, 3000);
         },
         error: (err) => {
-          this.errorMessage = 'Error al actualizar la contraseña';
-          this.successMessage = null;
+  // Si el servidor envía un mensaje de error, lo mostramos
+  if (err?.error?.message) {
+    this.errorMessage = `Error: ${err.error.message}`;
+} else {
+    // Mensaje genérico si no hay detalles del servidor
+    this.errorMessage = 'Error al actualizar la contraseña';
+}
+this.successMessage = null;
         }
       });
   }

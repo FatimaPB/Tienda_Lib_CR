@@ -118,7 +118,6 @@
         <tbody>
           <tr *ngFor="let actividad of filtrarActividades()">
             <td>{{ actividad.tipo }}</td>
-            <td>{{ actividad.usuarioId.correo }}</td>
             <td>{{ actividad.ip }}</td>
             <td>{{ actividad.fecha | date:'short' }}</td>
           </tr>

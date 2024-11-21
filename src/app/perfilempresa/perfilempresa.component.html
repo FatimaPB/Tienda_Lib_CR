@@ -7,8 +7,7 @@
 
   <!-- Mostrar datos de la empresa -->
   <div class="datos-empresa">
-    <h3>Empresa</h3>
-    <h2>{{ empresaData?.nombre ||"..." || "Nombre de la Empresa" }}   <i class="pi pi-verified"></i></h2>
+    <h2 class="nombreempore">{{ empresaData?.nombre ||"..." || "Nombre de la Empresa" }}   <i class="pi pi-verified"></i></h2>
     <p><strong>Slogan:</strong> {{ empresaData?.slogan ||"..." || "Slogan no disponible" }}</p>
     <p><strong>Facebook:</strong> {{ empresaData?.redesSociales?.facebook ||"..." || "No disponible" }}</p>
     <p><strong>Instagram:</strong> {{ empresaData?.redesSociales?.instagram ||"..." || "No disponible" }}</p>
@@ -37,28 +36,28 @@
   </div>
 
  <h3>Redes sociales</h3>
-  <div   formGroupName="redesSociales" class="form-group">
+  <div formGroupName="redesSociales" class="form-group">
     <label for="facebook">Facebook  <i class="pi pi-facebook"></i></label>
     <input id="facebook" formControlName="facebook" class="form-control" />
   </div>
 
-  <div class="form-group">
+  <div formGroupName="redesSociales"  class="form-group">
     <label for="instagram">Instagram  <i class="pi pi-instagram"></i></label>
     <input id="instagram" formControlName="instagram" class="form-control" />
   </div>
 
 <h3>Contacto</h3>
-  <div   formGroupName="contacto" class="form-group">
+  <div formGroupName="contacto" class="form-group">
     <label for="direccion">Dirección  <i class="pi pi-directions"></i></label>
     <input id="direccion" formControlName="direccion" class="form-control" />
   </div>
 
-  <div class="form-group">
+  <div formGroupName="contacto" class="form-group">
     <label for="correoElectronico">Correo Electrónico  <i class="pi pi-envelope"></i></label>
     <input id="correoElectronico" type="email" formControlName="correoElectronico" required class="form-control" />
   </div>
 
-  <div class="form-group">
+  <div formGroupName="contacto" class="form-group">
     <label for="telefono">Teléfono  <i class="pi pi-phone"></i></label>
     <input id="telefono" formControlName="telefono" class="form-control" />
   </div>

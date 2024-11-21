@@ -112,12 +112,13 @@ form h3 {
   color: #333;
   margin-bottom: 20px;
 }
-.nombreempore{
+
+.nombreempore {
   text-align: center;
 }
 
-/* Responsividad: ajustar a pantallas pequeñas */
-@media (max-width: 768px) {
+/* Responsividad: ajustar a pantallas medianas */
+@media (max-width: 992px) {
   .empresa-container {
     grid-template-columns: 1fr;
     padding: 20px;
@@ -129,5 +130,54 @@ form h3 {
 
   button {
     grid-column: span 1;
+  }
+
+  .datos-empresa h2 {
+    font-size: 1.5em;
+  }
+
+  .datos-empresa p {
+    font-size: 1em;
+  }
+}
+
+/* Responsividad: ajustar a pantallas pequeñas */
+@media (max-width: 768px) {
+  .perfil-container {
+    padding: 15px;
+  }
+
+  .empresa-container {
+    padding: 15px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  button {
+    font-size: 1em;
+  }
+}
+
+/* Responsividad: ajustar a pantallas muy pequeñas */
+@media (max-width: 576px) {
+  .datos-empresa {
+    text-align: center;
+  }
+
+  .datos-empresa h2 {
+    font-size: 1.3em;
+  }
+
+  .datos-empresa p {
+    font-size: 0.9em;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 0.9em;
   }
 }

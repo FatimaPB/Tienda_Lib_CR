@@ -19,7 +19,7 @@
   </div>
 
   <!-- Botón para modificar -->
-  <button (click)="cargarDatosEmpresa(empresaData!)" class="btn">Actualizar datos</button>
+  <button (click)="cargarDatosEmpresa(empresaData!)" class="button">Actualizar datos</button>
 </div>
 
 <!-- Formulario de modificación -->
@@ -67,6 +67,6 @@
     <input id="logo" type="file" (change)="onLogoSelected($event)" class="form-control" />
   </div>
 
-  <button type="submit" [disabled]="empresaForm.invalid" class="btn">Actualizar Perfil</button>
+  <button type="submit" [disabled]="empresaForm.invalid" class="button">Actualizar Perfil</button>
 </form>
 

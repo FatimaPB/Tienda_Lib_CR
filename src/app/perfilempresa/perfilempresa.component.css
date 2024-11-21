@@ -6,130 +6,59 @@
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  max-width: 1100px;
-  width: 100%;
   margin: 20px auto;
+  max-width: 1100px;
+  width: calc(100% - 40px); /* Ajuste para evitar desbordamientos */
+  box-sizing: border-box;
 }
 
-.logo-container {
-  text-align: center;
-  margin-bottom: 30px;
+.logo-container img {
+  max-width: 100%;
+  height: auto;
 }
 
-.datos-empresa {
-  text-align: left;
-  max-width: 800px;
-  width: 100%;
-}
-
-.datos-empresa h2 {
-  font-size: 1.8em;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.datos-empresa p {
-  font-size: 1.1em;
-  margin: 8px 0;
-  color: #666;
-}
-
-/* Estilos del formulario */
 .empresa-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   max-width: 900px;
-  width: 100%;
+  width: calc(100% - 40px); /* Ajuste para evitar desbordamientos */
   margin: 0 auto;
-  padding: 30px;
+  padding: 20px;
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  font-size: 1.1em;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #333;
+  box-sizing: border-box;
 }
 
 .form-group input,
 .form-group select {
+  width: 100%;
   padding: 12px;
-  font-size: 1.1em;
+  font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fafafa;
   transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #007bff;
-  outline: none;
-  background-color: #fff;
-}
-
-.form-group input[type="file"] {
-  padding: 5px;
-  font-size: 1em;
-}
-
-button {
-  padding: 12px 20px;
-  font-size: 1.2em;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  grid-column: span 2;
-}
-
-button:disabled {
-  background-color: #cccccc;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Encabezado del formulario */
-form h3 {
-  grid-column: span 2;
-  text-align: center;
-  font-size: 1.8em;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.nombreempore {
-  text-align: center;
+  box-sizing: border-box;
 }
 
 /* Responsividad: ajustar a pantallas medianas */
 @media (max-width: 992px) {
   .empresa-container {
     grid-template-columns: 1fr;
-    padding: 20px;
+    padding: 15px;
   }
 
-  .form-group {
-    margin-bottom: 15px;
+  .form-group input,
+  .form-group select {
+    font-size: 1em;
+    padding: 10px;
   }
 
   button {
-    grid-column: span 1;
+    font-size: 1em;
+    padding: 12px;
   }
 
   .datos-empresa h2 {
@@ -144,21 +73,30 @@ form h3 {
 /* Responsividad: ajustar a pantallas pequeñas */
 @media (max-width: 768px) {
   .perfil-container {
-    padding: 15px;
+    padding: 10px;
   }
 
   .empresa-container {
-    padding: 15px;
+    padding: 10px;
   }
 
   .form-group input,
   .form-group select {
-    padding: 10px;
-    font-size: 1em;
+    padding: 8px;
+    font-size: 0.9em;
   }
 
   button {
-    font-size: 1em;
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .datos-empresa h2 {
+    font-size: 1.3em;
+  }
+
+  .datos-empresa p {
+    font-size: 0.9em;
   }
 }
 
@@ -169,15 +107,19 @@ form h3 {
   }
 
   .datos-empresa h2 {
-    font-size: 1.3em;
+    font-size: 1.1em;
   }
 
   .datos-empresa p {
-    font-size: 0.9em;
+    font-size: 0.85em;
+  }
+
+  .empresa-container {
+    gap: 15px;
   }
 
   button {
-    padding: 10px;
-    font-size: 0.9em;
+    padding: 8px;
+    font-size: 0.8em;
   }
 }

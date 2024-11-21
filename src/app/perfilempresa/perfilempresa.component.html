@@ -7,12 +7,13 @@
 
   <!-- Mostrar datos de la empresa -->
   <div class="datos-empresa">
-    <h2>{{ empresaData?.nombre || "Nombre de la Empresa" }}</h2>
-    <p><strong>Slogan:</strong> {{ empresaData?.slogan || "Slogan no disponible" }}</p>
-    <p><strong>Facebook:</strong> {{ empresaData?.redesSociales?.facebook || "No disponible" }}</p>
-    <p><strong>Instagram:</strong> {{ empresaData?.redesSociales?.instagram || "No disponible" }}</p>
-    <p><strong>Correo Electrónico:</strong> {{ empresaData?.contacto?.correoElectronico || "No disponible" }}</p>
-    <p><strong>Teléfono:</strong> {{ empresaData?.contacto?.telefono || "No disponible" }}</p>
+    <h2>Nombre Empresa: {{ empresaData?.nombre ||"..." || "Nombre de la Empresa" }}</h2>
+    <p><strong>Slogan:</strong> {{ empresaData?.slogan ||"..." || "Slogan no disponible" }}</p>
+    <p><strong>Facebook:</strong> {{ empresaData?.redesSociales?.facebook ||"..." || "No disponible" }}</p>
+    <p><strong>Instagram:</strong> {{ empresaData?.redesSociales?.instagram ||"..." || "No disponible" }}</p>
+    <p><strong>Correo Electrónico:</strong> {{ empresaData?.contacto?.correoElectronico ||"..." || "No disponible" }}</p>
+    <p><strong>Teléfono:</strong> {{ empresaData?.contacto?.telefono ||"..." || "No disponible" }}</p>
+    <p><strong>Teléfono:</strong> {{ empresaData?.contacto?.direccion || "..." ||"No disponible" }}</p>
   </div>
 
   <!-- Botón para modificar -->

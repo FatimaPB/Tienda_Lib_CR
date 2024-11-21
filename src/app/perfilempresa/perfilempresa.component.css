@@ -1,18 +1,21 @@
-/* Estilos generales del contenedor */
+/* Contenedor principal */
 .perfil-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f4f7fa;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 20px auto;
 }
 
 .logo-container {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .datos-empresa {
@@ -22,75 +25,107 @@
 }
 
 .datos-empresa h2 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .datos-empresa p {
-  font-size: 1em;
-  margin: 5px 0;
+  font-size: 1.1em;
+  margin: 8px 0;
+  color: #666;
 }
 
 /* Estilos del formulario */
 .empresa-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
   max-width: 900px;
+  width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  font-size: 1em;
-  margin-bottom: 5px;
-  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
 }
 
-.form-group input {
-  padding: 10px;
-  font-size: 1em;
+.form-group input,
+.form-group select {
+  padding: 12px;
+  font-size: 1.1em;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #fff;
 }
 
 .form-group input[type="file"] {
   padding: 5px;
+  font-size: 1em;
 }
 
 button {
-  padding: 10px 20px;
-  font-size: 1em;
+  padding: 12px 20px;
+  font-size: 1.2em;
   color: #fff;
-  background-color: #007BFF;
+  background-color: #007bff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   grid-column: span 2;
 }
 
 button:disabled {
-  background-color: #d3d3d3;
+  background-color: #cccccc;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
-/* Estilos para el encabezado del formulario */
+/* Encabezado del formulario */
 form h3 {
   grid-column: span 2;
   text-align: center;
   font-size: 1.8em;
+  color: #333;
   margin-bottom: 20px;
+}
+
+/* Responsividad: ajustar a pantallas pequeñas */
+@media (max-width: 768px) {
+  .empresa-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  button {
+    grid-column: span 1;
+  }
 }

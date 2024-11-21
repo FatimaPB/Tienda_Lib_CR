@@ -1,73 +1,64 @@
-/* Contenedor principal del formulario de empresa */
 .empresa-container {
-  max-width: 600px;
-  margin: 85px auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
   padding: 20px;
-  border: 1px solid #e0e0e0;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-.per{
-  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.empresa-container h2,
-.empresa-container h3 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* Estilos para el formulario */
 .form-group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-  display: block;
   font-weight: bold;
-  margin-bottom: 5px;
-  color: #555;
+  margin-bottom: 8px;
 }
 
-.form-control {
-  width: 100%;
+input.form-control {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
-  transition: border-color 0.3s;
-  box-sizing: border-box;
+  font-size: 14px;
 }
 
-.form-control:focus {
-  border-color: #007ad9;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 122, 217, 0.5);
-}
-
-/* Estilo del botón */
-.btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #007ad9;
+button.btn {
+  grid-column: span 2; /* Ocupa las dos columnas */
+  padding: 12px;
+  background-color: #4CAF50;
   color: white;
+  font-weight: bold;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-.btn:disabled {
-  background-color: #cccccc;
+button.btn:disabled {
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
-.btn:not(:disabled):hover {
-  background-color: #005bb5;
+button.btn:hover:not(:disabled) {
+  background-color: #45a049;
 }
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .empresa-container {
+    grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+  }
+
+  button.btn {
+    grid-column: span 1; /* Botón ocupa toda la fila */
+  }
+}
+
 
 /* Estilos para la tabla */
 table {

@@ -30,6 +30,7 @@ export class PerfilempresaComponent implements OnInit {
   empresaForm: FormGroup;
   logoFile: File | null = null;
   empresaData!: Empresa | null; // Cambia a un objeto que puede ser nulo
+  mostrarFormulario: boolean = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.empresaForm = this.fb.group({

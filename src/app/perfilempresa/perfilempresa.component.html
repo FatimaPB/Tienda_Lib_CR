@@ -7,7 +7,7 @@
 
   <!-- Mostrar datos de la empresa -->
   <div class="datos-empresa">
-    <h2 class="nombreempore">{{ empresaData?.nombre ||"..." || "Nombre de la Empresa" }}   <i class="pi pi-verified"></i></h2>
+    <h2 class="nombreempore">{{ empresaData?.nombre ||"..." || "Nombre de la Empresa" }}   <i style="font-size: px;" class="pi pi-verified"></i></h2>
     <p><strong>Slogan:</strong> {{ empresaData?.slogan ||"..." || "Slogan no disponible" }}</p>
     <p><strong>Facebook:</strong> {{ empresaData?.redesSociales?.facebook ||"..." || "No disponible" }}</p>
     <p><strong>Instagram:</strong> {{ empresaData?.redesSociales?.instagram ||"..." || "No disponible" }}</p>
@@ -17,13 +17,11 @@
   </div>
 
   <!-- Botón para modificar -->
-  <button (click)="cargarDatosEmpresa(empresaData!)" class="btn">Modificar</button>
+  <button (click)="cargarDatosEmpresa(empresaData!)" class="btn">Actualizar datos</button>
 </div>
 
 <!-- Formulario de modificación -->
 <form [formGroup]="empresaForm" (ngSubmit)="onSubmit()" class="empresa-container" *ngIf="mostrarFormulario">
-  <h3>Modificar datos de la Empresa</h3>
-
   <!-- Columna 1 -->
   <div class="form-group">
     <label for="nombre">Nombre:</label>

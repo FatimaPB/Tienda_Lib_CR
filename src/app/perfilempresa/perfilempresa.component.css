@@ -16,7 +16,9 @@
   max-width: 100%;
   height: auto;
 }
-
+.nombreempore{
+  text-align: center;
+}
 .empresa-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -57,7 +59,7 @@
   }
 
   button {
-    font-size: 1em;
+
     padding: 12px;
   }
 

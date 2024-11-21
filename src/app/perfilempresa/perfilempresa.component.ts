@@ -86,6 +86,7 @@ export class PerfilempresaComponent implements OnInit {
         telefono: empresa.contacto?.telefono
       }
     });
+    this.mostrarFormulario = true;
   }
 
   onSubmit(): void {

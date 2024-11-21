@@ -11,7 +11,22 @@
   width: calc(100% - 40px); /* Ajuste para evitar desbordamientos */
   box-sizing: border-box;
 }
-
+button {
+  background-color: #4CAF50; /* Color base */
+  color: white;
+  padding: 12px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Hover para botones */
+button:hover {
+background-color: #45a049; /* Color al pasar el mouse */
+transform: translateY(-2px); /* Efecto ligero de elevación */
+}
 .logo-container img {
   max-width: 100%;
   height: auto;

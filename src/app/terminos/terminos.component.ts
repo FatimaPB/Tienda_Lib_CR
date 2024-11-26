@@ -96,6 +96,13 @@ export class TerminosComponent {
         this.obtenerDocumentos();
         this.limpiarFormulario();
         this.obtenerDocumentoVigente();
+
+        this.mensajeExito = 'Documento actualizado exitosamente.';
+
+        setTimeout(() => {
+          this.mensajeExito = '';
+          this.mostrarFormulario = false; 
+        }, 2000);
       });
     }
   }
@@ -105,12 +112,7 @@ export class TerminosComponent {
       this.obtenerDocumentos();
       this.obtenerDocumentoVigente();
 
-      this.mensajeExito = 'Documento actualizado exitosamente.';
 
-      setTimeout(() => {
-        this.mensajeExito = '';
-        this.mostrarFormulario = false; 
-      }, 2000);
     });
   }
   onCancelar() {

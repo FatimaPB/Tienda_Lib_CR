@@ -29,6 +29,7 @@ export class PoliticasComponent {
   documentoVigente: any = null;
   mostrarHistorial: boolean = false; // Nueva propiedad para controlar el historial
   mostrarFormulario: boolean = false;
+  mensajeExito: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -69,6 +70,15 @@ export class PoliticasComponent {
         this.obtenerDocumentos();
         this.limpiarFormulario();
         this.obtenerDocumentoVigente();
+
+        this.mensajeExito = 'Documento creado exitosamente.';
+
+        setTimeout(() => {
+          this.mensajeExito = '';
+          this.mostrarFormulario = false; 
+        }, 2000);
+    
+
       },
       error: (err) => {
         console.error('Error al crear documento:', err);
@@ -92,6 +102,13 @@ export class PoliticasComponent {
         this.obtenerDocumentos();
         this.limpiarFormulario();
         this.obtenerDocumentoVigente();
+
+        this.mensajeExito = 'Documento actualizado exitosamente.';
+
+        setTimeout(() => {
+          this.mensajeExito = '';
+          this.mostrarFormulario = false; 
+        }, 2000);
       });
     }
   }

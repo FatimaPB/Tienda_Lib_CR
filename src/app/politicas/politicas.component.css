@@ -122,6 +122,14 @@ th, td {
 .btn-small {
   color: rgb(0, 0, 0);
 }
+.alert {
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid green;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 5px;
+}
 
 .btn-small:hover {
   background-color: #218838;

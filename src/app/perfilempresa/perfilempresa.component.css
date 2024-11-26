@@ -34,6 +34,12 @@ transform: translateY(-2px); /* Efecto ligero de elevación */
 .nombreempore{
   text-align: center;
 }
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
 .empresa-container {
   display: grid;
   grid-template-columns: 1fr 1fr;

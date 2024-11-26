@@ -28,37 +28,63 @@
   <div class="form-group">
     <label for="nombre">Nombre:</label>
     <input id="nombre" formControlName="nombre" required class="form-control" />
+    <div *ngIf="empresaForm.get('nombre')?.invalid && empresaForm.get('nombre')?.touched" class="error">
+      <small *ngIf="empresaForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</small>
+      <small *ngIf="empresaForm.get('nombre')?.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</small>
+    </div>
   </div>
 
   <div class="form-group">
     <label for="slogan">Slogan:</label>
     <input id="slogan" formControlName="slogan" class="form-control" />
+    <div *ngIf="empresaForm.get('slogan')?.invalid && empresaForm.get('slogan')?.touched" class="error">
+      <small>El slogan es obligatorio.</small>
+    </div>
   </div>
 
 
   <div formGroupName="redesSociales" class="form-group">
     <label for="facebook">Facebook  <i class="pi pi-facebook"></i></label>
     <input id="facebook" formControlName="facebook" class="form-control" />
+    <div *ngIf="empresaForm.get('redesSociales.facebook')?.invalid && empresaForm.get('redesSociales.facebook')?.touched" class="error">
+      <small *ngIf="empresaForm.get('redesSociales.facebook')?.errors?.['required']">El enlace de Facebook es obligatorio.</small>
+      <small *ngIf="empresaForm.get('redesSociales.facebook')?.errors?.['pattern']">Debe ser un enlace válido de Facebook.</small>
+    </div>
   </div>
 
   <div formGroupName="redesSociales"  class="form-group">
     <label for="instagram">Instagram  <i class="pi pi-instagram"></i></label>
     <input id="instagram" formControlName="instagram" class="form-control" />
+    <div *ngIf="empresaForm.get('redesSociales.instagram')?.invalid && empresaForm.get('redesSociales.instagram')?.touched" class="error">
+      <small *ngIf="empresaForm.get('redesSociales.instagram')?.errors?.['required']">El enlace de Instagram es obligatorio.</small>
+      <small *ngIf="empresaForm.get('redesSociales.instagram')?.errors?.['pattern']">Debe ser un enlace válido de Instagram.</small>
+    </div>
   </div>
 
   <div formGroupName="contacto" class="form-group">
     <label for="direccion">Dirección  <i class="pi pi-directions"></i></label>
     <input id="direccion" formControlName="direccion" class="form-control" />
+    <div *ngIf="empresaForm.get('contacto.direccion')?.invalid && empresaForm.get('contacto.direccion')?.touched" class="error">
+      <small *ngIf="empresaForm.get('contacto.direccion')?.errors?.['required']">La dirección es obligatoria.</small>
+    </div>
   </div>
 
   <div formGroupName="contacto" class="form-group">
     <label for="correoElectronico">Correo Electrónico  <i class="pi pi-envelope"></i></label>
     <input id="correoElectronico" type="email" formControlName="correoElectronico" required class="form-control" />
+    <div *ngIf="empresaForm.get('contacto.correoElectronico')?.invalid && empresaForm.get('contacto.correoElectronico')?.touched" class="error">
+      <small *ngIf="empresaForm.get('contacto.correoElectronico')?.errors?.['required']">El correo es obligatorio.</small>
+      <small *ngIf="empresaForm.get('contacto.correoElectronico')?.errors?.['email']">Debe ser un correo válido.</small>
+    </div>
   </div>
 
   <div formGroupName="contacto" class="form-group">
     <label for="telefono">Teléfono  <i class="pi pi-phone"></i></label>
     <input id="telefono" formControlName="telefono" class="form-control" />
+    <div *ngIf="empresaForm.get('contacto.telefono')?.invalid && empresaForm.get('contacto.telefono')?.touched" class="error">
+      <small *ngIf="empresaForm.get('contacto.telefono')?.errors?.['required']">El teléfono es obligatorio.</small>
+      <small *ngIf="empresaForm.get('contacto.telefono')?.errors?.['pattern']">Debe ser un número de teléfono válido (10 dígitos).</small>
+    </div>
   </div>
 
   <!-- Logo -->

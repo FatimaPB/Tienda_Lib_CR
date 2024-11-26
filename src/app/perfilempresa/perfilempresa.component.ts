@@ -34,7 +34,7 @@ export class PerfilempresaComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.empresaForm = this.fb.group({
-      nombre: ['', Validators.required],
+      nombre: ['', Validators.required, ,[Validators.minLength(3)]],
       slogan: ['', [Validators.maxLength(200)]],
       logo: [''], // Este campo puede ser utilizado para el nombre del archivo o URL
       redesSociales: this.fb.group({
@@ -42,9 +42,9 @@ export class PerfilempresaComponent implements OnInit {
         instagram: ['', [Validators.pattern(/^(https?:\/\/)?(www\.)?instagram\.com\/.*/)]]
       }),
       contacto: this.fb.group({
-        direccion: [''],
+        direccion: ['',  Validators.required],
         correoElectronico: ['', [Validators.required, Validators.email]],
-        telefono: ['']
+        telefono: ['',  [Validators.required, Validators.pattern(/^\d{10}$/)]]
       })
     });
   }

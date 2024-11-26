@@ -37,7 +37,7 @@ export class PerfilempresaComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.empresaForm = this.fb.group({
       nombre: ['',[ Validators.required,Validators.minLength(3)]],
-      slogan: ['', [Validators.maxLength(200)]],
+      slogan: ['', [Validators.required,Validators.maxLength(200)]],
       logo: [''], // Este campo puede ser utilizado para el nombre del archivo o URL
       redesSociales: this.fb.group({
         facebook: ['', [ Validators.required,Validators.pattern(/^(https?:\/\/)?(www\.)?(facebook\.com|fb\.me)\/.*/)]],

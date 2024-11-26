@@ -122,9 +122,10 @@ export class PerfilempresaComponent implements OnInit {
      setTimeout(() => {
       this.mensajeExito = false;
       this.mostrarFormulario = false; 
+      this.empresaForm.reset();
     }, 2000);
 
-        this.empresaForm.reset();
+      
 
       },
       error: (err) => {

@@ -6,8 +6,8 @@
     <div class="nav-links">
     
       <ul>
-        <li><a title="Proximamente" routerLink="/opcion1">PRODUCTOS</a></li>
-        <li><a title="Proximamente" routerLink="/opcion2">UBICACIÓN</a></li>
+        <li><a title="Proximamente" routerLink="/products">PRODUCTOS</a></li>
+        <li><a title="Proximamente" routerLink="/ubi">UBICACIÓN</a></li>
         <li><a title="Proximamente" routerLink="/opcion3">MISIÓN</a></li>
       </ul>
     </div>
@@ -37,7 +37,7 @@
   <!-- Menú desplegable para móvil -->
   <div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu">
     <ul>
-      <li><a routerLink="/opcion1" (click)="closeMenu()">PRODUCTOS</a></li>
+      <li><a routerLink="/products" (click)="closeMenu()">PRODUCTOS</a></li>
       <li><a routerLink="/opcion2" (click)="closeMenu()">UBICACIÓN</a></li>
       <li><a routerLink="/opcion3" (click)="closeMenu()">MISIÓN</a></li>
     </ul>

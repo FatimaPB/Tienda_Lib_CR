@@ -1,0 +1,132 @@
+/* Contenedor principal */
+.productos-container {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  justify-content:space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Estilo de la cuadrícula */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+/* Tarjetas de productos */
+.producto-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Imagen del producto */
+.producto-imagen {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Nombre del producto */
+.producto-nombre {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin: 5px 0;
+  line-height: 1.2;
+}
+
+/* Texto de productos vendidos */
+.producto-vendidos {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+/* Precio */
+.producto-precio {
+  margin: 10px 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.precio-descuento {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00a650;
+}
+
+.precio-original {
+  font-size: 0.9rem;
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.descuento {
+  font-size: 0.9rem;
+  color: #ff5733;
+  font-weight: bold;
+}
+
+/* Promoción */
+.promocion {
+  background-color: #ffeb3b;
+  font-size: 0.8rem;
+  padding: 3px 6px;
+  border-radius: 3px;
+  color: #555;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+/* Envío gratis */
+.envio {
+  font-size: 0.9rem;
+  color: #3483fa;
+  margin-bottom: 10px;
+}
+
+/* Botón de comprar */
+.boton-comprar {
+  color: #000000;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+  font-weight: bold;
+}
+
+.boton-comprar:hover {
+  background-color: #660000;
+}

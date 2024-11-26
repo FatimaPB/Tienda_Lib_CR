@@ -3,6 +3,8 @@ import { AuthGuard } from './auth.guard'; // Asegúrate de que la ruta sea corre
 import { LoginComponent } from './login/login.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { RegistroComponent } from './registro/registro.component';
+import { ProductosComponent } from './productos/productos.component';
+import { DetalleproductoComponent } from './detalleproducto/detalleproducto.component';
 import { InicioadminComponent } from './inicioadmin/inicioadmin.component';
 import { VerificarCodigoComponent } from './verificar-codigo/verificar-codigo.component';
 import { PoliticasComponent } from './politicas/politicas.component';
@@ -23,6 +25,8 @@ export const routes: Routes = [
 { path: '', component: InicioComponent },
 { path: 'login', component: LoginComponent },
 { path: 'registro', component: RegistroComponent },
+{ path: 'products', component: ProductosComponent },
+{ path: 'detalle', component: DetalleproductoComponent },
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },
 { path: 'deslindelegal', component: DeslindelegalComponent },
 { path: 'terminosycondiciones', component: TerminosycondicionesComponent },

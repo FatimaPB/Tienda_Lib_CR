@@ -40,8 +40,8 @@ export class PerfilempresaComponent implements OnInit {
       slogan: ['', [Validators.maxLength(200)]],
       logo: [''], // Este campo puede ser utilizado para el nombre del archivo o URL
       redesSociales: this.fb.group({
-        facebook: ['', [Validators.pattern(/^(https?:\/\/)?(www\.)?(facebook\.com|fb\.me)\/.*/)]],
-        instagram: ['', [Validators.pattern(/^(https?:\/\/)?(www\.)?instagram\.com\/.*/)]]
+        facebook: ['', [ Validators.required,Validators.pattern(/^(https?:\/\/)?(www\.)?(facebook\.com|fb\.me)\/.*/)]],
+        instagram: ['', [ Validators.required, Validators.pattern(/^(https?:\/\/)?(www\.)?instagram\.com\/.*/)]]
       }),
       contacto: this.fb.group({
         direccion: ['',  Validators.required],

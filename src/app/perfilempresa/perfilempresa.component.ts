@@ -121,10 +121,11 @@ export class PerfilempresaComponent implements OnInit {
      // Ocultar el mensaje después de 2 segundos
      setTimeout(() => {
       this.mensajeExito = false;
+      this.mostrarFormulario = false; 
     }, 2000);
 
         this.empresaForm.reset();
-        this.mostrarFormulario = false; 
+
       },
       error: (err) => {
         console.error('Error al actualizar el perfil de la empresa', err);

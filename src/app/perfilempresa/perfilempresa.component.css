@@ -40,7 +40,7 @@ transform: translateY(-2px); /* Efecto ligero de elevación */
   gap: 20px;
   max-width: 900px;
   width: calc(100% - 40px); /* Ajuste para evitar desbordamientos */
-  margin: 0 auto;
+  margin: 30px auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 12px;
@@ -63,8 +63,6 @@ transform: translateY(-2px); /* Efecto ligero de elevación */
 
 .form-group input,
 .form-group select {
-  margin-top: 30px;
-  margin-bottom: 30px;
   width: 100%;
   padding: 12px;
   font-size: 1em;

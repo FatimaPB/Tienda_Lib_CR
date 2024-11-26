@@ -80,7 +80,7 @@
 
   <div formGroupName="contacto" class="form-group">
     <label for="telefono">Teléfono  <i class="pi pi-phone"></i></label>
-    <input id="telefono" formControlName="telefono" class="form-control" />
+    <input id="telefono" formControlName="telefono" class="form-control"  maxlength="10"  (keypress)="preventLetters($event)" />
     <div *ngIf="empresaForm.get('contacto.telefono')?.invalid && empresaForm.get('contacto.telefono')?.touched" class="error">
       <small *ngIf="empresaForm.get('contacto.telefono')?.errors?.['required']">El teléfono es obligatorio.</small>
       <small *ngIf="empresaForm.get('contacto.telefono')?.errors?.['pattern']">Debe ser un número de teléfono válido (10 dígitos).</small>

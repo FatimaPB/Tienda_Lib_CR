@@ -55,6 +55,13 @@ export class PerfilempresaComponent implements OnInit {
     this.getEmpresasData(); // Obtener los datos de la empresa al inicializar el componente
   }
 
+  preventLetters(event: KeyboardEvent): void {
+    const input = String.fromCharCode(event.charCode);
+    if (!/[0-9]/.test(input)) {
+      event.preventDefault();
+    }
+  }
+
   getEmpresasData(): void {
     this.http.get<Empresa>('https://back-tienda-livid.vercel.app/api/datos').subscribe({
       next: (response) => {

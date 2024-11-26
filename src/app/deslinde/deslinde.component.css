@@ -99,6 +99,15 @@ font-family: Arial, sans-serif;
 font-size: 16px;
 min-width: 800px; /* Ancho mínimo para mantener las columnas legibles */
 }
+.alert {
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid green;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 5px;
+}
+
 
 thead {
 text-align:left;

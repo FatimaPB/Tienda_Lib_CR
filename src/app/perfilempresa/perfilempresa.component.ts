@@ -121,4 +121,8 @@ export class PerfilempresaComponent implements OnInit {
       }
     });
   }
+  cancelarEdicion(): void {
+    this.mostrarFormulario = false;
+  }
+  
 }

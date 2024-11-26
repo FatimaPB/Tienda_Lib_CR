@@ -31,10 +31,12 @@ export class PerfilempresaComponent implements OnInit {
   logoFile: File | null = null;
   empresaData!: Empresa | null; // Cambia a un objeto que puede ser nulo
   mostrarFormulario: boolean = false;
+  mensajeExito: boolean = false;
+  mensajeError: boolean = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.empresaForm = this.fb.group({
-      nombre: ['', Validators.required, ,[Validators.minLength(3)]],
+      nombre: ['',[ Validators.required, ,Validators.minLength(3)]],
       slogan: ['', [Validators.maxLength(200)]],
       logo: [''], // Este campo puede ser utilizado para el nombre del archivo o URL
       redesSociales: this.fb.group({
@@ -112,12 +114,28 @@ export class PerfilempresaComponent implements OnInit {
       next: (response) => {
         console.log('Perfil de empresa actualizado exitosamente', response);
         this.getEmpresasData(); // Actualiza los datos después de modificar
+
+          // Mostrar el mensaje de éxito
+    this.mensajeExito = true;
+
+     // Ocultar el mensaje después de 2 segundos
+     setTimeout(() => {
+      this.mensajeExito = false;
+    }, 2000);
+
         this.empresaForm.reset();
         this.mostrarFormulario = false; 
       },
       error: (err) => {
         console.error('Error al actualizar el perfil de la empresa', err);
         // Manejar el error
+
+        this.mensajeError = true;
+
+        setTimeout(() => {
+          this.mensajeError = false;
+        }, 2000);
+        
       }
     });
   }

@@ -97,3 +97,9 @@
   <button type="button" (click)="cancelarEdicion()" class="button button-cancelar">Cancelar</button>
 </form>
 
+<div *ngIf="mensajeExito" class="alert alert-success">
+  Perfil actualizado exitosamente.
+</div>
+<div *ngIf="mensajeError" class="fallo">
+  Error al actualizar perfil.
+</div>

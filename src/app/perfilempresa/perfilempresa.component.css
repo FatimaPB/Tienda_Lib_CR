@@ -40,6 +40,25 @@ transform: translateY(-2px); /* Efecto ligero de elevación */
   margin-top: 5px;
 }
 
+.alert {
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid green;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 5px;
+}
+
+.fallo{
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid rgb(219, 20, 20);
+  background-color: #d4edda;
+  color: #fc1717;
+  border-radius: 5px;
+
+}
+
 .empresa-container {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -20,6 +20,7 @@ import { DeslindelegalComponent } from './deslindelegal/deslindelegal.component'
 import { TerminosycondicionesComponent } from './terminosycondiciones/terminosycondiciones.component';
 import { PerfilusuarioComponent } from './perfilusuario/perfilusuario.component';
 import { NosotrosComponent } from './nosotros/nosotros.component';
+import { NoticiasEventosComponent } from './noticias-eventos/noticias-eventos.component';
 
 
 export const routes: Routes = [
@@ -28,6 +29,7 @@ export const routes: Routes = [
 { path: 'registro', component: RegistroComponent },
 { path: 'about', component: NosotrosComponent },
 { path: 'products', component: ProductosComponent },
+{ path: 'newsandevents', component: NoticiasEventosComponent },
 { path: 'detalle', component: DetalleproductoComponent },
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },
 { path: 'deslindelegal', component: DeslindelegalComponent },

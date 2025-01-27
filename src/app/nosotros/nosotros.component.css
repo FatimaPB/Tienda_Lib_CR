@@ -1,42 +1,94 @@
 :root {
-    --primary-color: #007bff;
-    --secondary-color: #6c757d;
-    --text-color: #333;
-    --background-color: #f9f9f9;
-  }
-  
+  --primary-color: #845ec2; /* Un tono púrpura que simboliza espiritualidad */
+  --secondary-color: #f9f9f9; /* Blanco suave para el fondo */
+  --accent-color: #ff9671; /* Tono cálido para resaltar */
+  --text-color: #333333; /* Negro suave para la tipografía */
+  --font-family: 'Georgia', serif; /* Tipografía elegante y clásica */
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--secondary-color);
+  margin: 0;
+  padding: 0;
+}
+
+.about-us-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background: var(--secondary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.about-us-container h1 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.about-us-container h2 {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-top: 20px;
+}
+
+.about-us-container p {
+  font-size: 1rem;
+  color: var(--text-color);
+  line-height: 1.6;
+  text-align: justify;
+  margin: 10px 0 20px 0;
+}
+
+.values ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.values li {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.values li:before {
+  content: "✝"; /* Icono religioso */
+  color: var(--accent-color);
+  margin-right: 10px;
+}
+
+.about-us-container section {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border: 1px solid var(--primary-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
   .about-us-container {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 20px;
-    background-color: var(--background-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
   }
-  
+
   .about-us-container h1 {
-    color: var(--primary-color);
-    text-align: center;
-    margin-bottom: 20px;
+    font-size: 2rem;
   }
-  
+
   .about-us-container h2 {
-    color: var(--secondary-color);
-    margin-top: 20px;
+    font-size: 1.5rem;
   }
-  
+
   .about-us-container p {
-    color: var(--text-color);
-    line-height: 1.6;
+    font-size: 0.9rem;
   }
-  
-  .about-us-container ul {
-    list-style-type: disc;
-    margin-left: 20px;
-    color: var(--text-color);
+
+  .values li {
+    font-size: 1rem;
   }
-  
-  .about-us-container li {
-    margin-bottom: 5px;
-  }
-  
+}

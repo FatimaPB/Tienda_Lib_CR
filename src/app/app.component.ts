@@ -9,6 +9,7 @@ import { HeaderNormalComponent } from './header-normal/header-normal.component';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { NewlineToHtmlPipe } from './pipes/newline-to-html.pipe';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 export interface Empresa {
   redesSociales?: {
@@ -20,7 +21,8 @@ export interface Empresa {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule, CommonModule, HeaderuComponent, HeaderaComponent, HeaderNormalComponent],
+  imports: [RouterOutlet, HttpClientModule, CommonModule, 
+    HeaderuComponent, HeaderaComponent, HeaderNormalComponent,BreadcrumbComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] 
 })

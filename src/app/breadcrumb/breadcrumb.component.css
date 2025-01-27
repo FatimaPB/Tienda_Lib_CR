@@ -1,0 +1,21 @@
+.breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .breadcrumb li {
+    margin-right: 10px;
+  }
+  
+  .breadcrumb li a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .breadcrumb li span {
+    color: #6c757d;
+  }
+  

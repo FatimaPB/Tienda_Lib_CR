@@ -24,13 +24,15 @@ import { NoticiasEventosComponent } from './noticias-eventos/noticias-eventos.co
 
 
 export const routes: Routes = [
-{ path: '', component: InicioComponent },
-{ path: 'login', component: LoginComponent },
-{ path: 'registro', component: RegistroComponent },
-{ path: 'about', component: NosotrosComponent },
-{ path: 'products', component: ProductosComponent },
-{ path: 'newsandevents', component: NoticiasEventosComponent },
-{ path: 'detalle', component: DetalleproductoComponent },
+{ path: '', component: InicioComponent, data: { breadcrumb: 'Inicio'} },
+{ path: 'login', component: LoginComponent, data: { breadcrumb: 'login'} },
+{ path: 'registro', component: RegistroComponent, data: { breadcrumb: 'Registro'} },
+{ path: 'about', component: NosotrosComponent, data: { breadcrumb: 'nosotros'}},
+{ path: 'products', component: ProductosComponent, data: { breadcrumb: 'Productos' }}, 
+      { path: 'detalle', component: DetalleproductoComponent, data: { breadcrumb: 'Detalle' } },
+  { path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'Noticias y Eventos' } },
+{ path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'noticias y eventos'} },
+
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },
 { path: 'deslindelegal', component: DeslindelegalComponent },
 { path: 'terminosycondiciones', component: TerminosycondicionesComponent },
@@ -48,4 +50,3 @@ export const routes: Routes = [
 
 
 ];
-

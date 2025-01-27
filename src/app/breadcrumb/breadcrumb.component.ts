@@ -23,7 +23,7 @@ export class BreadcrumbComponent implements OnInit {
       .subscribe(() => {
         // Si estamos en la página de inicio, reiniciar las migas de pan
         if (this.router.url === '/') {
-          this.breadcrumbs = [{ label: 'Inicio', url: '/' }];
+          this.breadcrumbs = [{ label: '', url: '/' }];
         } else {
           // Obtener las rutas acumuladas
           let route = this.activatedRoute.root;

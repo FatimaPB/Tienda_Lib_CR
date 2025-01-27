@@ -19,12 +19,14 @@ import { PoliticadeprivacidadComponent } from './politicadeprivacidad/politicade
 import { DeslindelegalComponent } from './deslindelegal/deslindelegal.component';
 import { TerminosycondicionesComponent } from './terminosycondiciones/terminosycondiciones.component';
 import { PerfilusuarioComponent } from './perfilusuario/perfilusuario.component';
+import { NosotrosComponent } from './nosotros/nosotros.component';
 
 
 export const routes: Routes = [
 { path: '', component: InicioComponent },
 { path: 'login', component: LoginComponent },
 { path: 'registro', component: RegistroComponent },
+{ path: 'about', component: NosotrosComponent },
 { path: 'products', component: ProductosComponent },
 { path: 'detalle', component: DetalleproductoComponent },
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },

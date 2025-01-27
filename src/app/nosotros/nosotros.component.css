@@ -1,0 +1,42 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --text-color: #333;
+    --background-color: #f9f9f9;
+  }
+  
+  .about-us-container {
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-us-container h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .about-us-container h2 {
+    color: var(--secondary-color);
+    margin-top: 20px;
+  }
+  
+  .about-us-container p {
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+  
+  .about-us-container ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    color: var(--text-color);
+  }
+  
+  .about-us-container li {
+    margin-bottom: 5px;
+  }
+  

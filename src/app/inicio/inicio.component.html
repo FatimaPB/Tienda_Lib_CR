@@ -1,12 +1,42 @@
-<div class="header-image">
-  <img src="../assets/img/rosario.jpg" alt="Imagen de Bienvenida" />
-  <div class="overlay-text">
-    <h1 class="Bienvenida">Bienvenido a la Tienda de Artículos Religiosos</h1>
+<div class="container">
+  <div class="hero-section">
+    <h1 class="hero-title">Explora Nuestros Artículos Religiosos</h1>
+    <p class="hero-description">Encuentra artículos que inspiren y eleven tu práctica.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Busca artículos, marcas o inspiración" />
+      <button>Buscar</button>
+    </div>
   </div>
+
+  <section class="categories">
+    <h2>Explorar por Categoría</h2>
+    <div class="categories-grid">
+      <div class="category-card">
+        <img src="../../assets/img/Libreria_Logo.jpg" alt="Cuentas de Oración" />
+        <p>Cuentas de Oración</p>
+      </div>
+      <div class="category-card">
+        <img src="../../assets/img/imagen1.jpeg" alt="Altar" />
+        <p>Altar</p>
+      </div>
+      <div class="category-card">
+        <img src="../../assets/img/cadena.jpg" alt="Velas" />
+        <p>Velas</p>
+      </div>
+      <div class="category-card">
+        <img src="../../assets/img/libro.jpg" alt="Cristales" />
+        <p>Cristales</p>
+      </div>
+      <div class="category-card">
+        <img src="../../assets/img/rosario.jpg" alt="Incienso" />
+        <p>Incienso</p>
+      </div>
+    </div>
+  </section>
 </div>
 
-
 <div class="carousel-container">
+  <h2 class="destacados">Productos destacados</h2>
   <div class="carousel">
     <div class="carousel-track">
       <div class="product-item">
@@ -54,138 +84,38 @@
     </div>
   </div>
 </div>
-
-<style>
-/* General Styles */
-
-.header-image {
-  position: relative; /* Necesario para posicionar el texto dentro del contenedor */
-  width: 100%;
-  overflow: hidden;
-
-}
-.Bienvenida{
-  color: white;
-}
-.header-image img {
-  width: 100%;
-  height: 350px; /* Ajusta este valor para modificar la altura de la imagen */
-  object-fit: cover; /* Hace que la imagen se recorte proporcionalmente para llenar el contenedor */
- 
-}
-
-.overlay-text {
-  position: absolute; /* Para superponer el texto sobre la imagen */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align:center;
-  font-size: 28px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  opacity: 0; /* Oculto inicialmente */
-  animation: fadeIn 2s ease-in-out forwards; /* Animación suave */
-}
-
-/* Animación de aparición */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -60%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
+<h2 class="destacados">Ubicación - Catedral Cristo Rey</h2>
+<section class="location">
+  <div class="map-container">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7442.607437567016!2d-98.42566042910924!3d21.140308100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d7269350b9f8df%3A0x542fa852c22dba8e!2sCatedral%20Cristo%20Rey!5e0!3m2!1ses!2smx!4v1737795315536!5m2!1ses!2smx" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</section>
+<section class="testimonials">
+  <h2>Lo que dicen nuestros clientes</h2>
+  <ul class="testimonials-list">
+    <li class="testimonial-item">
+      <h3>María López</h3>
+      <div class="rating">★★★★★</div>
+      <p>"Los productos son de excelente calidad, perfectos para mi altar."</p>
+    </li>
+    <li class="testimonial-item">
+      <h3>Juan Pérez</h3>
+      <div class="rating">★★★★☆</div>
+      <p>"Me encanta la variedad de artículos religiosos que ofrecen."</p>
+    </li>
+    <li class="testimonial-item">
+      <h3>Ana Rodríguez</h3>
+      <div class="rating">★★★★★</div>
+      <p>"El servicio es rápido y confiable. Muy recomendado."</p>
+    </li>
+  </ul>
+</section>
 
 
-.carousel-container {
-  text-align: center;
-  max-width: 90%;
-  margin: 0 auto;
-  overflow: hidden;
-}
 
-.carousel {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-}
 
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  animation: scroll 10s linear infinite;
-}
-
-.product-item {
-  min-width: 30%;
-  margin: 10px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.product-image {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-h2 {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-.price {
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #4caf50;
-}
-
-.buy-button {
-  margin-left: 20px;
-  padding: 10px 15px;
-  background-color: #660000;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.buy-button:hover {
-  background-color: #941717;
-}
-
-/* Carousel Animation */
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-33.333%);
-  }
-  45% {
-    transform: translateX(-33.333%);
-  }
-  50% {
-    transform: translateX(-66.666%);
-  }
-  70% {
-    transform: translateX(-66.666%);
-  }
-  75% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-</style>

@@ -7,8 +7,8 @@
     
       <ul>
         <li><a title="Proximamente" routerLink="/products">PRODUCTOS</a></li>
-        <li><a title="Proximamente" routerLink="/ubi">UBICACIÓN</a></li>
-        <li><a title="Proximamente" routerLink="/opcion3">MISIÓN</a></li>
+        <li><a title="Proximamente" routerLink="/about">NOSOTROS</a></li>
+        <li><a title="Proximamente" routerLink="/newsandevents">NOTICIAS Y EVENTOS</a></li>
       </ul>
     </div>
 
@@ -16,7 +16,7 @@
     <div class="logo-container">
       <img routerLink="/" [src]="empresaData?.logo" alt="Logo de la Empresa" width="80" height="80" *ngIf="empresaData?.logo; else noLogo" />
       <ng-template #noLogo>
-        <img src="../../assets/img/catedral1.png" alt="Logo por defecto" width="80" height="80" />
+        <img src="../../assets/img/Libreria_Logo.jpg" alt="Logo por defecto" width="80" height="80" />
       </ng-template>
     </div>
 
@@ -38,8 +38,8 @@
   <div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu">
     <ul>
       <li><a routerLink="/products" (click)="closeMenu()">PRODUCTOS</a></li>
-      <li><a routerLink="/opcion2" (click)="closeMenu()">UBICACIÓN</a></li>
-      <li><a routerLink="/opcion3" (click)="closeMenu()">MISIÓN</a></li>
+      <li><a routerLink="/about" (click)="closeMenu()">NOSOTROS</a></li>
+      <li><a routerLink="/newsandevents" (click)="closeMenu()">NOTICIAS Y EVENTOS</a></li>
     </ul>
   </div>
 </header>

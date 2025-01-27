@@ -24,7 +24,7 @@ import { NoticiasEventosComponent } from './noticias-eventos/noticias-eventos.co
 
 
 export const routes: Routes = [
-{ path: '', component: InicioComponent, data: { breadcrumb: 'Inicio'} },
+{ path: '', component: InicioComponent, data: { breadcrumb: ''} },
 { path: 'login', component: LoginComponent, data: { breadcrumb: 'login'} },
 { path: 'registro', component: RegistroComponent, data: { breadcrumb: 'Registro'} },
 { path: 'about', component: NosotrosComponent, data: { breadcrumb: 'nosotros'}},

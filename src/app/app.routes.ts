@@ -24,6 +24,7 @@ import { NoticiasEventosComponent } from './noticias-eventos/noticias-eventos.co
 import { Error400Component } from './error400/error400.component';
 import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
+import { CarritoComponent } from './carrito/carrito.component';
 
 
 export const routes: Routes = [
@@ -31,6 +32,8 @@ export const routes: Routes = [
 { path: 'login', component: LoginComponent, data: { breadcrumb: 'login'} },
 { path: 'registro', component: RegistroComponent, data: { breadcrumb: 'Registro'} },
 { path: 'about', component: NosotrosComponent, data: { breadcrumb: 'nosotros'}},
+{ path: 'carshop', component: CarritoComponent, data: { breadcrumb: 'nosotros'}},
+
 { path: 'products', component: ProductosComponent, data: { breadcrumb: 'Productos' }}, 
       { path: 'detalle', component: DetalleproductoComponent, data: { breadcrumb: 'Detalle' } },
   { path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'Noticias y Eventos' } },

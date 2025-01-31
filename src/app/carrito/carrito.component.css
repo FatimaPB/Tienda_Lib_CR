@@ -1,0 +1,134 @@
+/* Estilo general para el carrito de compras */
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto 60px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .cart-header h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .close-btn {
+    background-color: #ff3b30;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .close-btn:hover {
+    background-color: #d02b21;
+  }
+  
+  /* Estilo de los productos en el carrito */
+  .cart-items {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+  }
+  
+  .cart-item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .cart-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cart-item-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .cart-item-price span {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  .cart-item-remove {
+    background-color: #ff3b30;
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .cart-item-remove:hover {
+    background-color: #d02b21;
+  }
+  
+  /* Estilo para el mensaje cuando el carrito está vacío */
+  .empty-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    font-size: 1.5rem;
+    color: #777;
+  }
+  
+  /* Resumen del carrito */
+  .cart-summary {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+  
+  .cart-summary .total {
+    font-weight: bold;
+  }
+  
+  .checkout-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+  }
+  
+  .checkout-btn:hover {
+    background-color: #218838;
+  }
+  

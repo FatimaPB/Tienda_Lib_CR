@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // Importa HttpClient para hacer la solicitud
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -21,7 +21,7 @@ interface Product {
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
 })
-export class CarritoComponent {
+export class CarritoComponent implements OnInit  {
   cartItems: Product[] = [
     { name: 'Producto 1', description: 'Descripción del producto 1', price: 50, quantity: 2, image: 'assets/img/Libreria_Logo.jpg' },
     { name: 'Producto 2', description: 'Descripción del producto 2', price: 30, quantity: 1, image: 'assets/img/Libreria_Logo.jpg' }
@@ -41,44 +41,35 @@ export class CarritoComponent {
     this.cartItems = [];
   }
 
-  finalizarCompra(): void {
-    if (this.cartItems.length === 0) {
-      alert('Tu carrito está vacío.');
-      return;
-    }
-
-    const paymentData = {
-      items: this.cartItems.map(item => ({
-        name: item.name,
-        quantity: item.quantity,
-        price: item.price
-      })),
-      total: this.getTotalPrice()
-    };
-
-    this.http.post('https://back-tienda-livid.vercel.app/api/pagar', paymentData).pipe(
+  ngOnInit(): void {
+    this.obtenerPrecios(); 
+  }
+  
+  obtenerPrecios(): void {
+    // Realizar la solicitud GET a una URL inexistente para simular un error 404
+    this.http.get<any>('https://back-tienda-livid.vercel.app/api/precios-inexistentes').pipe(
       catchError((err: HttpErrorResponse) => {
-        console.error('Error al procesar el pago', err);
-    
-        // Redirigir a la vista de error si el código de estado es 404 (Página no encontrada)
-        if (err.status === 404) {
-          this.router.navigate(['/error404']); // Redirigir a la vista de error 404
+        console.error('Error al obtener los precios', err);
+        
+        // Redirigir según el código de estado HTTP
+        if (err.status === 400) {
+          this.router.navigate(['/error400']); // Solicitud incorrecta (Bad Request)
+        } else if (err.status === 404) {
+          this.router.navigate(['/error404']); // Página no encontrada (Not Found)
+        } else if (err.status === 500) {
+          this.router.navigate(['/error500']); // Error del servidor (Internal Server Error)
+        } else {
+          this.router.navigate(['/error500']); // Otros errores, los tratamos como error 500
         }
-    
-        // Si el error no es 404, simplemente lo dejamos pasar sin mostrar un mensaje
-        return throwError(() => new Error('Error en el proceso de pago'));
+        
+        return throwError(() => new Error('Error en la solicitud'));
       })
     ).subscribe({
-      next: (response: any) => {
-        if (response.success) {
-          alert('¡Pago exitoso! Gracias por tu compra.');
-          this.clearCart();
-        } else {
-          // Este mensaje solo aparecería si el pago falla, según la respuesta del servidor.
-          alert('Hubo un problema con el pago. Intenta nuevamente.');
-        }
+      next: (response) => {
+        // Si la solicitud es exitosa, se manejaría aquí, pero como estamos simulando el error 404 no se alcanzará
+        console.log('Precios obtenidos:', response);
       }
     });
-    
   }
+  
 }

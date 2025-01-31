@@ -1,11 +1,15 @@
 import { Component, AfterViewInit, ElementRef, ViewChild,  Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
+import { RouterLink } from '@angular/router';
+
+
+
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, CarouselModule],
+  imports: [CommonModule, CarouselModule, RouterLink],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })

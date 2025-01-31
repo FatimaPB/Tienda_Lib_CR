@@ -41,9 +41,9 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
         } else if (err.status === 404) {
           this.router.navigate(['/error404']); // Página no encontrada (Not Found)
         } else if (err.status === 500) {
-          this.router.navigate(['/error500']); // Error del servidor (Internal Server Error)
+         this.router.navigate(['/error500']); // Error del servidor (Internal Server Error)
         } else {
-          this.router.navigate(['/error500']); // Otros errores, los tratamos como error 500
+         this.router.navigate(['/error500']); // Otros errores, los tratamos como error 500
         }
         
         return throwError(() => new Error('Error en la solicitud'));

@@ -3,7 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // Importa
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+
 
 interface Product {
   name: string;
@@ -17,7 +18,7 @@ interface Product {
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
 })
@@ -42,34 +43,26 @@ export class CarritoComponent implements OnInit  {
   }
 
   ngOnInit(): void {
-    this.obtenerPrecios(); 
+    this.simularError400();
   }
-  
-  obtenerPrecios(): void {
-    // Realizar la solicitud GET a una URL inexistente para simular un error 404
-    this.http.get<any>('https://back-tienda-livid.vercel.app/api/precios-inexistentes').pipe(
+
+  simularError400(): void {
+    // Hacemos una solicitud GET que esperamos que devuelva un error 400
+    this.http.get('https://back-tienda-livid.vercel.app/api/precios-incorrectos').pipe(
       catchError((err: HttpErrorResponse) => {
         console.error('Error al obtener los precios', err);
-        
-        // Redirigir según el código de estado HTTP
-        if (err.status === 400) {
-          this.router.navigate(['/error400']); // Solicitud incorrecta (Bad Request)
-        } else if (err.status === 404) {
-          this.router.navigate(['/error404']); // Página no encontrada (Not Found)
-        } else if (err.status === 500) {
-          this.router.navigate(['/error500']); // Error del servidor (Internal Server Error)
-        } else {
-          this.router.navigate(['/error500']); // Otros errores, los tratamos como error 500
-        }
-        
+
+          
+          // Redirigir según el código de estado HTTP
+          if (err.status === 400) {
+            this.router.navigate(['/error400']); // Solicitud incorrecta (Bad Request)
+          }
+
         return throwError(() => new Error('Error en la solicitud'));
       })
-    ).subscribe({
-      next: (response) => {
-        // Si la solicitud es exitosa, se manejaría aquí, pero como estamos simulando el error 404 no se alcanzará
-        console.log('Precios obtenidos:', response);
-      }
-    });
+    ).subscribe();
   }
+ 
+  
   
 }

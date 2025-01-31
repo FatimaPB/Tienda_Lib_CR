@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // Importa
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Product {
   name: string;
@@ -26,7 +27,7 @@ export class CarritoComponent {
     { name: 'Producto 2', description: 'Descripción del producto 2', price: 30, quantity: 1, image: 'assets/img/Libreria_Logo.jpg' }
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getTotalPrice(): number {
     return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
@@ -58,18 +59,13 @@ export class CarritoComponent {
     this.http.post('https://back-tienda-livid.vercel.app/api/pagar', paymentData).pipe(
       catchError((err: HttpErrorResponse) => {
         console.error('Error al procesar el pago', err);
-
-        // Redirigir según el código de estado HTTP
-        if (err.status === 400) {
-          alert('Solicitud incorrecta. Verifica los datos y vuelve a intentarlo.');
-        } else if (err.status === 404) {
-          alert('Página no encontrada. Intenta nuevamente más tarde.');
-        } else if (err.status === 500) {
-          alert('Error en el servidor. Por favor, intenta más tarde.');
-        } else {
-          alert('Hubo un problema con el pago. Intenta nuevamente más tarde.');
+    
+        // Redirigir a la vista de error si el código de estado es 404 (Página no encontrada)
+        if (err.status === 404) {
+          this.router.navigate(['/error404']); // Redirigir a la vista de error 404
         }
-
+    
+        // Si el error no es 404, simplemente lo dejamos pasar sin mostrar un mensaje
         return throwError(() => new Error('Error en el proceso de pago'));
       })
     ).subscribe({
@@ -78,9 +74,11 @@ export class CarritoComponent {
           alert('¡Pago exitoso! Gracias por tu compra.');
           this.clearCart();
         } else {
+          // Este mensaje solo aparecería si el pago falla, según la respuesta del servidor.
           alert('Hubo un problema con el pago. Intenta nuevamente.');
         }
       }
     });
+    
   }
 }

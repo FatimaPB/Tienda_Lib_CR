@@ -31,7 +31,7 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('https://back-tienda-livid.vercel.app/api/datos').pipe(
+    this.http.get<Empresa>('https://back-tienda-livid.vercel.app/api/dato').pipe(
       catchError((err: HttpErrorResponse) => {
         console.error('Error al obtener los perfiles de empresa', err);
         

@@ -1,15 +1,32 @@
-<div class="container">
-  <div class="hero-section">
-    <h1 class="hero-title">Explora Nuestros Artículos Religiosos</h1>
-    <p class="hero-description">Encuentra artículos que inspiren y eleven tu práctica.</p>
-    <div class="search-bar">
-      <input type="text" placeholder="Busca artículos, marcas o inspiración" />
-      <button>Buscar</button>
+<div class="slider-wrapper">
+  <!-- Contenedor del slider -->
+  <div class="slider-container">
+    <div class="slider" #slider>
+      <div class="slide" *ngFor="let item of images">
+        <img [src]="item.src" [alt]="item.alt" />
+        <div class="slide-info">
+          <h2 class="info">{{ item.title }}</h2>
+          <p class="info">{{ item.description }}</p>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- Barra de búsqueda sobre el slider -->
+  <div class="search-container">
+    <input type="text" placeholder="Busca artículos, marcas o inspiración" />
+    <button>
+      <i class="pi pi-search"></i>
+    </button>
+  </div>
+
+
+
+
+
+
   <section class="categories">
-    <h2>Explorar por Categoría</h2>
+  <h2 #scrollTitle class="scroll-title">Explorar por Categoría</h2>
     <div class="categories-grid">
       <div class="category-card">
         <img src="../../assets/img/Libreria_Logo.jpg" alt="Cuentas de Oración" />
@@ -36,10 +53,6 @@
         <p>Estampas</p>
       </div>
       <div class="category-card">
-        <img src="../../assets/img/libro.jpg" alt="Cristales" />
-        <p>Imágenes de culto</p>
-      </div>
-      <div class="category-card">
         <img src="../../assets/img/imagen1.jpeg" alt="Altar" />
         <p>Accesorios</p>
       </div>
@@ -61,7 +74,7 @@
 </div>
 
 <div class="carousel-container">
-  <h2 class="destacados">Productos destacados</h2>
+  <h2 #productosDestacados class="destacados">Productos destacados</h2>
   <div class="carousel">
     <div class="carousel-track">
       <div class="product-item">
@@ -109,19 +122,14 @@
     </div>
   </div>
 </div>
-<h2 class="destacados">Ubicación - Catedral Cristo Rey</h2>
+<h2 #ubicacionLibreria class="destacados">Ubicación - Librería Cristo Rey</h2>
 <section class="location">
   <div class="map-container">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7442.607437567016!2d-98.42566042910924!3d21.140308100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d7269350b9f8df%3A0x542fa852c22dba8e!2sCatedral%20Cristo%20Rey!5e0!3m2!1ses!2smx!4v1737795315536!5m2!1ses!2smx" 
-      allowfullscreen="" 
-      loading="lazy" 
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5262.704230213554!2d-98.4223873590568!3d21.140701109354715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d726eb5d1d46d3%3A0xba50c82de105ab7e!2sPl.%20de%20la%20Revoluci%C3%B3n%20Mexicana%201%2C%20Centro%2C%2043000%20Huejutla%20de%20Reyes%2C%20Hgo.!5e0!3m2!1ses!2smx!4v1738136528079!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </section>
 <section class="testimonials">
-  <h2>Lo que dicen nuestros clientes</h2>
+  <h2 #comentariosClientes class="destacados">Lo que dicen nuestros clientes</h2>
   <ul class="testimonials-list">
     <li class="testimonial-item">
       <h3>María López</h3>

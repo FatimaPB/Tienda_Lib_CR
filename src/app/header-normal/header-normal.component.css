@@ -157,105 +157,176 @@ header {
 
 
 
+/* Mega menú */
+.menu-item {
+  position: relative;
+}
 
-.switch {
-    font-size: 10px;
-    position:absolute; /* Cambiado a fixed para posicionamiento en toda la pantalla */
-    top: 40px; /* Espaciado desde la parte superior */
-    right: 50px; /* Espaciado desde la derecha */
-    z-index: 1000; /* Asegura que esté encima de todos los elementos */
-    display: inline-block;
-    width: 54px;
-    height: 24px;
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 1000px; /* Aumenta el ancho si es necesario */
+  background: rgb(80, 32, 32);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-wrap: wrap; /* Asegura que las columnas se acomoden */
+  gap: 20px;
+  padding: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  z-index: 9999; /* Asegura que esté por encima de todo */
+}
+
+/* Mostrar mega menú al pasar el cursor sobre "PRODUCTOS" */
+.menu-item:hover .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Columnas dentro del mega menú */
+.mega-column {
+  flex: 1 1 150px; /* Define un ancho mínimo para las columnas */
+}
+
+.mega-column h4 {
+  color: #26d3d3;
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.mega-column a {
+  display: block;
+  text-decoration: none;
+  padding: 5px 0;
+  transition: color 0.3s;
+}
+
+.mega-column a:hover {
+  color: #007bff;
+}
+
+/* Estilos del contenedor principal del chat */
+#chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  display: none; /* Se oculta por defecto, será visible cuando se active */
+  z-index: 9999; /* Se asegura que esté por encima de otros elementos */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Encabezado del chat */
+#chat-header {
+  background-color: #660000;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#chat-header button {
+  background-color: #cc3e3e;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+#chat-header button:hover {
+  background-color: #b33a3a;
+}
+
+/* Contenedor de mensajes */
+#messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  max-height: 300px; /* Limita el tamaño de la sección de mensajes */
+}
+
+.message {
+  margin-bottom: 10px;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.message-text {
+  margin-left: 5px;
+  color: #333;
+}
+
+/* Estilos del input y el botón de envío */
+#chat-input {
+  display: flex;
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#message-input {
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+#message-input:focus {
+  border-color: #660000;
+}
+
+#send-message {
+  width: 20%;
+  background-color: #660000;
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#send-message:hover {
+  background-color: #cc3e3e;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  #chat-container {
+    width: 100%;
+    bottom: 10px;
+    right: 10px;
   }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  #chat-header h3 {
+    font-size: 16px;
   }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #73c0fc;
-    transition: 0.4s;
-    border-radius: 30px;
+  #send-message {
+    width: 30%;
   }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 22px;
-    width: 22px;
-    border-radius: 20px;
-    left: 1px;
-    bottom: 1px;
-    z-index: 2;
-    background-color: #e8e8e8;
-    transition: 0.4s;
+  #message-input {
+    width: 65%;
   }
-  
-  .sun svg {
-    position: absolute;
-    top: 2px;
-    left: 32px;
-    z-index: 1;
-    width: 20px;
-    height: 20px;
-  }
-  
-  .moon svg {
-    fill: #73c0fc;
-    position: absolute;
-    top: 2px;
-    left: 5px;
-    z-index: 1;
-    width: 20px;
-    height: 20px;
-  }
-  
-  .switch:hover .sun svg {
-    animation: rotate 15s linear infinite;
-  }
-  
-  @keyframes rotate {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .switch:hover .moon svg {
-    animation: tilt 5s linear infinite;
-  }
-  
-  @keyframes tilt {
-    0% {
-      transform: rotate(0deg);
-    }
-    25% {
-      transform: rotate(-10deg);
-    }
-    75% {
-      transform: rotate(10deg);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-  
-  .input:checked + .slider {
-    background-color: #183153;
-  }
-  
-  .input:checked + .slider:before {
-    transform: translateX(30px);
-  }
-  
+}

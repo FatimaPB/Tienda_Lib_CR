@@ -21,6 +21,9 @@ import { TerminosycondicionesComponent } from './terminosycondiciones/terminosyc
 import { PerfilusuarioComponent } from './perfilusuario/perfilusuario.component';
 import { NosotrosComponent } from './nosotros/nosotros.component';
 import { NoticiasEventosComponent } from './noticias-eventos/noticias-eventos.component';
+import { Error400Component } from './error400/error400.component';
+import { Error404Component } from './error404/error404.component';
+import { Error500Component } from './error500/error500.component';
 
 
 export const routes: Routes = [
@@ -40,6 +43,10 @@ export const routes: Routes = [
 { path: 'verificar', component: VerificarComponent },
 { path: 'restablecer', component: RestablecercontraComponent },
 { path: 'verificacion', component: VerificarCodigoComponent },
+{ path: 'error400', component: Error400Component },
+{ path: 'error404', component: Error404Component },
+{ path: 'error500',component: Error500Component },
+{ path: '**', component: Error404Component },// Cualquier URL incorrecta
 { path: 'inicioadmin', component: InicioadminComponent, canActivate: [AuthGuard] },
 { path: 'politicas', component: PoliticasComponent, canActivate: [AuthGuard] },
 { path: 'terminos', component: TerminosComponent, canActivate: [AuthGuard] },

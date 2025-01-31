@@ -83,4 +83,24 @@ export class AppComponent {
       }
     });
   }
+  messages: { text: string; sender: string }[] = [];
+
+  isChatOpen: boolean = false;
+
+  // Método para alternar el estado del chat
+  toggleChat() {
+    this.isChatOpen = !this.isChatOpen;
+  }
+  sendMessage() {
+    const messageInput = document.getElementById('message-input') as HTMLInputElement;
+    const message = messageInput.value;
+    
+    if (message) {
+      // Simulamos el mensaje enviado
+      this.messages.push({ text: 'Mensaje enviado', sender: 'Usuario' });
+
+      console.log('Mensaje enviado:', message);
+      messageInput.value = '';  // Limpiar el input después de enviar
+    }
+  }
 }

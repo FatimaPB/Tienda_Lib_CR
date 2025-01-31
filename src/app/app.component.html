@@ -27,7 +27,6 @@
 <app-breadcrumb></app-breadcrumb>
 <router-outlet></router-outlet>
 
-
 <!-- Footer simple -->
 <footer class="footer">
   <div class="footer-container">
@@ -85,7 +84,28 @@
 </footer>
 
 
+<!-- Botón para abrir el chat -->
+<button id="open-chat-button" (click)="toggleChat()">Chat</button>
 
+<!-- Chat Container -->
+<div *ngIf="isChatOpen" id="chat-container">
+  <div id="chat-header">
+    <h3>Chat en Vivo</h3>
+    <button id="close-chat" (click)="toggleChat()">x</button>
+  </div>
+
+  <div id="messages-container">
+    <!-- Los mensajes aparecerán aquí -->
+    <div class="message">
+      <span class="user-name">Usuario:</span> <span class="message-text">Hola, ¿cómo puedo ayudarte?</span>
+    </div>
+  </div>
+
+  <div id="chat-input">
+    <input type="text" id="message-input" placeholder="Escribe un mensaje..." />
+    <button id="send-message" (click)="sendMessage()">Enviar</button>
+  </div>
+</div>
 
 
 

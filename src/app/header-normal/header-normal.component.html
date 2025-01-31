@@ -6,10 +6,56 @@
     <div class="nav-links">
     
       <ul>
-        <li><a title="Proximamente" routerLink="/products">PRODUCTOS</a></li>
+        <li class="menu-item">
+          <a title="Proximamente" >PRODUCTOS</a>
+          <!-- Mega menú -->
+          <div class="mega-menu">
+            <div class="mega-column">
+  
+              <a class="mas" routerLink="/products">Libros</a>
+            </div>
+            <div class="mega-column">
+     
+              <a routerLink="/products">Biblias</a>
+            </div>
+            <div class="mega-column">
+              <a routerLink="/products">Litúrgicos
+              </a>
+            </div>
+            <div class="mega-column">
+      
+              <a routerLink="/products">Imágenes de culto</a>
+            </div>
+            <div class="mega-column">
+
+              <a routerLink="/products">Cuadros</a>
+            </div>
+            <div class="mega-column">
+ 
+              <a routerLink="/products">Estampas</a>
+            </div>
+            <div class="mega-column">
+
+              <a routerLink="/products">Accesorios</a>
+            </div>
+            <div class="mega-column">
+   
+              <a routerLink="/products">Catecismos</a>
+            </div>
+            <div class="mega-column">
+
+              <a routerLink="/products">Productos de recina</a>
+            </div>
+            <div class="mega-column">
+
+              <a routerLink="/products">Velas y cirios</a>
+            </div>
+          </div>
+        </li>
         <li><a title="Proximamente" routerLink="/about">NOSOTROS</a></li>
         <li><a title="Proximamente" routerLink="/newsandevents">NOTICIAS Y EVENTOS</a></li>
       </ul>
+      
     </div>
 
     <!-- Logo centrado -->
@@ -42,4 +88,5 @@
       <li><a routerLink="/newsandevents" (click)="closeMenu()">NOTICIAS Y EVENTOS</a></li>
     </ul>
   </div>
+
 </header>

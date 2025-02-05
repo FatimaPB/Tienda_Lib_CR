@@ -1,332 +1,259 @@
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Header Styling */
-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  background-color: #660000;
-  border-bottom: 1px solid #ccc;
-}
-.lib{
-  background-color: #660000;
-  color:rgb(255, 255, 255);
-  text-align: center;
-  font-style:italic;
-  font-size: 20px;
-}
-
 .main-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 20px;
-}
-
-/* Left Links */
-.nav-links {
-  margin-top: 15px;
-  flex: 1;
-  display: flex;
-}
-
-.nav-links ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  font-size: 18px;
-}
-
-/* Center Logo */
-.logo-container {
-  margin-top: 35px;
-  margin-bottom: 15px;
-  width: 100px;
-  height: 15px;
+border: none;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+
 }
 
-/* Right Icons */
-.right-icons {
-  margin-top: 15px;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+
+.logo-container {
+  flex: 1;
+}
+
+.logo {
+  width: 100px;
+}
+
+.nav-links {
+  flex: 2;
+  text-align: center;
+}
+
+.nav-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links ul li {
+  display: inline-block;
+}
+
+.nav-links ul li a {
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.icons {
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 15px;
 }
 
-.right-icons a {
-  color: rgb(255, 255, 255);
+.icons i {
   font-size: 20px;
-  text-decoration: none;
-}
-
-/* Menu Icon (hidden by default) */
-.menu-icon {
-  display: none;
-  font-size: 24px;
-  color: rgb(255, 255, 255);
   cursor: pointer;
 }
 
-/* Slogan Styling */
-.contenedor-slogan {
-  margin-top: 20px;
-  background-color: #CCB63E;
-  width: 100%;
-  overflow: hidden;
-}
-
-.slogan {
-  font-size: 14px;
-  color: #000000;
-  white-space: nowrap;
-  animation: moverSlogan 50s linear infinite;
-}
-
-@keyframes moverSlogan {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-/* Mobile Menu */
-.mobile-menu {
-  background-color: #660000;
-  width: 100%;
-}
-
-.mobile-menu ul {
-  list-style: none;
-  padding: 10px;
-}
-
-.mobile-menu li a {
+.icons .badge {
   color: white;
-  text-decoration: none;
-  display: block;
-  padding: 10px;
-  font-size: 18px;
+  background: #a38350;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  position: relative;
+  left: -8px;
 }
 
-.mobile-menu li a:hover {
-  background-color: #CCB63E;
+.menu-icon {
+  font-size: 24px;
+  padding: 5px;
+  border-radius: 50%;
+  background: #f5ebe3;
 }
 
-/* Responsive Styles */
+.mobile-menu {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .nav-links {
-    display: none; /* Ocultar enlaces de texto */
-  }
-  
-  .menu-icon {
-    display: block; /* Mostrar ícono de menú */
+    display: none;
   }
 
   .mobile-menu {
-    display: block; /* Mostrar menú móvil */
+    display: block;
+    background: #fef7f2;
+    position: absolute;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    text-align: center;
+    padding: 10px 0;
   }
-  .logo-container {
-  margin-left: 17px;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  width: 9px;
-  height: 5px;
 
+  .mobile-menu ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .mobile-menu ul li {
+    padding: 10px 0;
+  }
+
+  .menu-icon {
+    display: block;
   }
 }
 
-
-
-
-/* Mega menú */
-.menu-item {
+.mega-menu-container {
   position: relative;
 }
 
 .mega-menu {
+  display: none;
   position: absolute;
-  top: 100%;
-  left: 0;
-  width: 1000px; /* Aumenta el ancho si es necesario */
-  background: rgb(80, 32, 32);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+  width: 500px; /* Aumenté el tamaño del menú */
+  left: -100px; /* Alineado a la derecha */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px; /* Aumenté el padding para dar más espacio */
+  border-radius: 5px;
+  z-index: 1000;
+  text-align: start;
+}
+
+.mega-menu-container:hover .mega-menu {
   display: flex;
-  flex-wrap: wrap; /* Asegura que las columnas se acomoden */
-  gap: 20px;
-  padding: 15px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
-  z-index: 9999; /* Asegura que esté por encima de todo */
+  justify-content: flex-end; /* Alineado a la derecha */
+  gap: 50px; /* Aumenté el espacio entre las columnas */
+  
 }
 
-/* Mostrar mega menú al pasar el cursor sobre "PRODUCTOS" */
-.menu-item:hover .mega-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-/* Columnas dentro del mega menú */
-.mega-column {
-  flex: 1 1 150px; /* Define un ancho mínimo para las columnas */
-}
-
-.mega-column h4 {
-  color: #26d3d3;
-  font-size: 16px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-.mega-column a {
-  display: block;
-  text-decoration: none;
-  padding: 5px 0;
-  transition: color 0.3s;
-}
-
-.mega-column a:hover {
-  color: #007bff;
-}
-
-/* Estilos del contenedor principal del chat */
-#chat-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 300px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  display: none; /* Se oculta por defecto, será visible cuando se active */
-  z-index: 9999; /* Se asegura que esté por encima de otros elementos */
+.mega-menu-column {
   display: flex;
   flex-direction: column;
+  gap: 15px; /* Más espacio entre las categorías */
 }
 
-/* Encabezado del chat */
-#chat-header {
-  background-color: #660000;
-  color: white;
-  padding: 10px;
-  font-size: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
+.mega-menu-column a {
+  text-decoration: none;
 
-#chat-header button {
-  background-color: #cc3e3e;
-  color: white;
-  border: none;
+  font-weight: 500;
   font-size: 16px;
-  cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 5px;
+  transition: transform 0.3s ease-in-out, color 0.3s;
 }
 
-#chat-header button:hover {
-  background-color: #b33a3a;
+.mega-menu-column a:hover {
+  color: #a38350;
+  transform: translateX(10px); /* Efecto de desplazamiento a la derecha */
 }
 
-/* Contenedor de mensajes */
-#messages-container {
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
-  max-height: 300px; /* Limita el tamaño de la sección de mensajes */
-}
-
-.message {
-  margin-bottom: 10px;
-}
-
-.user-name {
-  font-weight: bold;
-}
-
-.message-text {
-  margin-left: 5px;
-  color: #333;
-}
-
-/* Estilos del input y el botón de envío */
-#chat-input {
-  display: flex;
-  border-top: 1px solid #ddd;
-  padding: 10px;
-  background-color: #f9f9f9;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-#message-input {
-  width: 70%;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  outline: none;
-}
-
-#message-input:focus {
-  border-color: #660000;
-}
-
-#send-message {
-  width: 20%;
-  background-color: #660000;
-  color: white;
-  border: none;
-  font-size: 16px;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#send-message:hover {
-  background-color: #cc3e3e;
-}
-
-/* Estilos para dispositivos móviles */
+/* RESPONSIVIDAD */
 @media (max-width: 768px) {
-  #chat-container {
+  .mega-menu {
     width: 100%;
-    bottom: 10px;
-    right: 10px;
+    position: static;
+    display: none;
+    flex-direction: column;
   }
-  #chat-header h3 {
-    font-size: 16px;
+
+  .mobile-menu-categorias ul {
+    display: none;
+    background: #fef7f2;
+    padding: 10px;
+    border-radius: 5px;
   }
-  #send-message {
-    width: 30%;
+
+  .mobile-menu-categorias ul li {
+    padding: 5px 0;
   }
-  #message-input {
-    width: 65%;
+}
+
+
+
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+/* Contenedor de la barra de búsqueda */
+.search-container {
+  position: relative;
+  width: 60%;
+  max-width: 600px;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+/* Input de búsqueda */
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #a38350;
+  outline: none;
+  font-size: 16px;
+}
+
+/* Botón para borrar texto */
+.clear-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #a38350;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Botón de buscar */
+.search-btn {
+  background: #a38350;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* Botón para cerrar búsqueda */
+.close-search {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #a38350;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .search-container {
+    width: 90%;
   }
 }

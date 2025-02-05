@@ -36,39 +36,6 @@ h2 {
   color: var(--primary-color);
   text-transform:uppercase;
 }
-
-.categories-container {
-  flex: 1; /* Hace que ocupe el espacio restante */
-  padding-right: 20px; /* Espacio entre categorías y productos */
-}
-
-.categories {
-  display: flex;
-  flex-direction: column; /* Acomoda las categorías en columna */
-  gap: 0px; /* Espacio entre botones */
- align-items: start;
-}
-
-.categories button {
-  padding: 14px 28px;
-  font-size: 1.2rem;
-  color: var(--button-text-color);
-  background-color: var(--button-color);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.categories button:hover {
-  background-color: var(--button-hover);
-  transform: scale(1.05);
-}
-
-.categories button.active {
-  background-color: var(--active-button-color);
-}
-
 /* Asegura que las tarjetas se muestren correctamente */
 .product-list {
   display: grid;

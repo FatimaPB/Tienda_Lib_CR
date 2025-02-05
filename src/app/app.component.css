@@ -1,6 +1,6 @@
 /* Estilos para el footer */
 .footer {
-  background-color: #660000;
+  background: rgba(0, 0, 0, 0.8);
   padding: 20px 0;
 }
 
@@ -18,6 +18,7 @@
 
 .footer-info {
   font-size: 14px;
+
 }
 
 /* Enlaces del footer */
@@ -25,7 +26,12 @@
   text-decoration: none;
   margin: 0 10px;
   transition: color 0.3s;
+  color: white;
 }
+.footer-info p {
+  color: white;
+}
+
 
 .footer-info a:hover {
   color: #FFD700;

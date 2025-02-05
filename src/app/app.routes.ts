@@ -35,8 +35,8 @@ export const routes: Routes = [
 { path: 'carshop', component: CarritoComponent, data: { breadcrumb: 'nosotros'}},
 
 { path: 'products', component: ProductosComponent, data: { breadcrumb: 'Productos' }}, 
-      { path: 'detalle', component: DetalleproductoComponent, data: { breadcrumb: 'Detalle' } },
-  { path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'Noticias y Eventos' } },
+{ path: 'detalle', component: DetalleproductoComponent, data: { breadcrumb: 'Detalle' } },
+{ path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'Noticias y Eventos' } },
 { path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'noticias y eventos'} },
 
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },

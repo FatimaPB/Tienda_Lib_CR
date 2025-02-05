@@ -1,10 +1,7 @@
-import { Component, AfterViewInit, ElementRef, ViewChild,  Renderer2 } from '@angular/core';
+import { Component, AfterViewInit, ViewChildren, QueryList, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
 import { RouterLink } from '@angular/router';
-
-
-
 
 @Component({
   selector: 'app-inicio',
@@ -13,58 +10,136 @@ import { RouterLink } from '@angular/router';
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
-export class InicioComponent {
+export class InicioComponent implements AfterViewInit {
 
-  @ViewChild('slider') slider!: ElementRef;
-  @ViewChild('scrollTitle') scrollTitle!: ElementRef;
-  @ViewChild('productosDestacados') productosDestacados!: ElementRef;
-  @ViewChild('ubicacionLibreria') ubicacionLibreria!: ElementRef;
-  @ViewChild('comentariosClientes') comentariosClientes!: ElementRef;
+  currentIndex: number = 0;
 
-  images = [
+  slides = [
     {
-      src: 'assets/img/rosario.jpg',
-      alt: 'Nueva colección de Rosarios',
-      title: 'Nueva colección de Rosarios',
-      description: 'Conoce nuestra línea de rosarios artesanales bendecidos para todas las edades.'
+      src: "../../assets/img/prueba.png",
+      subtitle: "Nueva colleccion",
+      title: "Luce los nuevos rosarios de madera",
+      link: "/deta"
     },
     {
-      src: 'assets/img/cadena.jpg',
-      alt: 'Misa Especial para Familias',
-      title: 'Misa Especial para Familias',
-      description: 'Participa en nuestra misa especial dedicada a la unión y bendición de las familias.'
-    },
-    {
-      src: 'assets/img/Libreria_Logo.jpg',
-      alt: 'Semana Santa: Eventos Litúrgicos',
-      title: 'Semana Santa: Eventos Litúrgicos',
-      description: 'Consulta el calendario de actividades para Semana Santa y acompáñanos en estas fechas tan importantes.'
+      src: "../../assets/img/pueba2.png",
+      subtitle: "Tendencias",
+      title: "Arte",
+      link: "/deta"
     }
   ];
+  constructor(private cdr: ChangeDetectorRef) {}
 
-  currentIndex = 0;
-  constructor(private renderer: Renderer2) {}
-
-  ngAfterViewInit() {
-    setInterval(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.images.length;
-      const offset = -this.currentIndex * 100;
-      this.slider.nativeElement.style.transform = `translateX(${offset}%)`;
-    }, 4000);
-
-        // Agregar evento de scroll
-        this.renderer.listen('window', 'scroll', () => {
-          const scrollY = window.scrollY; // Posición del scroll en Y
-          const titleElement = this.scrollTitle.nativeElement;
-    
-          // Asegurar que el título esté presente
-          if (titleElement) {
-            const newFontSize = Math.min(5, 2 + scrollY / 500); // Máximo tamaño de 5rem
-            titleElement.style.fontSize = `${newFontSize}rem`;
-          }
-        });
+  nextSlide(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+    this.cdr.detectChanges(); // Forzar detección de cambios
+    this.resetAnimation(); // Reiniciar animación
   }
 
+  prevSlide(): void {
+    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+    this.cdr.detectChanges(); // Forzar detección de cambios
+    this.resetAnimation(); // Reiniciar animación
+  }
+
+  resetAnimation() {
+    const element = document.querySelector('.hero-slider-content') as HTMLElement;
+    if (element) {
+      // Elimina la clase 'animate'
+      element.classList.remove('hero-slider-content'); 
+      
+      // Forzar el reflujo para que el DOM se actualice antes de volver a añadir la animación
+      void element.offsetWidth; 
+  
+      // Agregar la clase 'animate' después de un pequeño retraso
+      setTimeout(() => {
+        element.classList.add('hero-slider-content');
+      }, 0); // Ejecutarlo inmediatamente después de que el DOM se actualice
+    }
+  }
+  
   
 
+  @ViewChildren('serviceItem') serviceItems!: QueryList<ElementRef>;
+  @ViewChildren('categoria') categorias!: QueryList<ElementRef>;
+@ViewChildren('producto') productosElementos!: QueryList<ElementRef>;
+
+
+
+ngAfterViewInit() {
+  const options = {
+    root: null, // Observar el viewport
+    threshold: 0.1 // El 10% del elemento debe ser visible
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, options);
+
+  // Observa los elementos de servicio
+  this.serviceItems.toArray().forEach(item => {
+    observer.observe(item.nativeElement);
+  });
+
+  // Observa los elementos de categoría
+  this.categorias.toArray().forEach(item => {
+    observer.observe(item.nativeElement);
+  });
+
+  // Observa los elementos de producto
+  this.productosElementos.toArray().forEach(item => {
+    observer.observe(item.nativeElement);
+  });
+}
+
+  productos = [
+    {
+      nombre: 'Biblia de Estudio',
+      imagen: '../../assets/img/cadena.jpg',
+      precio: 500,
+      descuento: 50
+    },
+    {
+      nombre: 'Cirio Pascual',
+      imagen: '../../assets/img/rosario.jpg',
+      precio: 200
+    },
+    {
+      nombre: 'Estampa de San Judas',
+      imagen: '../../assets/img/catedral1.png',
+      precio: 50,
+      descuento: 10
+    },
+    {
+      nombre: 'Cuadro Religioso',
+      imagen: '../../assets/img/Libreria_Logo.jpg',
+      precio: 350
+    },
+    {
+      nombre: 'Biblia de Estudio',
+      imagen: '../../assets/img/cadena.jpg',
+      precio: 500,
+      descuento: 50
+    },
+    {
+      nombre: 'Cirio Pascual',
+      imagen: '../../assets/img/rosario.jpg',
+      precio: 200
+    },
+    {
+      nombre: 'Estampa de San Judas',
+      imagen: '../../assets/img/catedral1.png',
+      precio: 50,
+      descuento: 10
+    },
+    {
+      nombre: 'Cuadro Religioso',
+      imagen: '../../assets/img/Libreria_Logo.jpg',
+      precio: 350
+    }
+  ];
 }

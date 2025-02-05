@@ -64,7 +64,27 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   closeMenu() {
     this.isMenuOpen = false;
   }
+  isMegaMenuOpen = false;
 
+  toggleMegaMenu() {
+    this.isMegaMenuOpen = !this.isMegaMenuOpen;
+  }
+  
+  isSearchOpen: boolean = false;
+
+  openSearch() {
+    this.isSearchOpen = true;
+  }
+  
+  closeSearch() {
+    this.isSearchOpen = false;
+  }
+
+searchQuery: string = '';
+
+toggleSearch() {
+  this.isSearchOpen = !this.isSearchOpen;
+}
 
 
 

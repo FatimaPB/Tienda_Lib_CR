@@ -1,3 +1,27 @@
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #a38350; /* Color de fondo */
+  min-height: 4vh; /* Ajusta esto según tu necesidad */
+  width: 100%;
+}
+
+
+.lib, .contenedor-slogan {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 0s linear 1s; /* Desvanecimiento suave y retraso en visibility */
+}
+
+.lib.fade-in, .contenedor-slogan.fade-in {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease-in-out, visibility 0s linear 0s; /* Sin retraso en visibility cuando es visible */
+}
+
 .main-header {
 border: none;
   display: flex;

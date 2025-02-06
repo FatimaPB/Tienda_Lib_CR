@@ -28,6 +28,10 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
 
   ngOnInit(): void {
     this.getEmpresasData(); 
+
+    setInterval(() => {
+      this.isVisibleNombre = !this.isVisibleNombre;
+    }, 3000); // Cambiar cada 3 segundos
   }
 
   getEmpresasData(): void {
@@ -86,6 +90,7 @@ toggleSearch() {
   this.isSearchOpen = !this.isSearchOpen;
 }
 
+isVisibleNombre: boolean = true;
 
 
 }

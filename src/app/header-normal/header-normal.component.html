@@ -1,5 +1,14 @@
 <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
-<div class="lib">{{ empresaData?.nombre }}</div>
+
+
+<div class="contenedor">
+  <div class="lib" [class.fade-in]="isVisibleNombre">{{ empresaData?.nombre }}</div>
+  <div class="contenedor-slogan" [class.fade-in]="!isVisibleNombre">
+    <div class="slogan">{{ empresaData?.slogan }}</div>
+  </div>
+</div>
+
+
 <header class="main-header">
   <div class="header-container">
     <!-- Logo -->
@@ -57,10 +66,7 @@
     </div>
   </div>
 
-    <!-- Slogan -->
-    <div class="contenedor-slogan">
-      <div class="slogan">{{ empresaData?.slogan }}</div>
-    </div>
+
 
   <!-- Menú desplegable móvil -->
   <div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu">

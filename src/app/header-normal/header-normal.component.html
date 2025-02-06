@@ -15,7 +15,7 @@
     <div class="logo-container">
       <img routerLink="/" [src]="empresaData?.logo" alt="Logo de la Empresa" class="logo" *ngIf="empresaData?.logo; else noLogo" />
       <ng-template #noLogo>
-        <img a routerLink="/" src="../../assets/img/Libreria_Logo.jpg" alt="Logo por defecto" class="logo" />
+        <img routerLink="/" src="../../assets/img/Libreria_Logo.jpg" alt="Logo por defecto" class="logo" />
       </ng-template>
     </div>
 
@@ -58,7 +58,7 @@
     <div class="icons">
       <a routerLink="/login"><i class="pi pi-sign-in"></i></a>/
       <a routerLink="/registro"><i class="pi pi-user-plus"></i></a>
-      <a routerLink="/wishlist"><i class="pi pi-heart"></i></a>
+      <a routerLink="/carshop"><i class="pi pi-heart"></i></a>
       <a routerLink="/carshop"><i class="pi pi-shopping-cart"></i></a>
       <a (click)="openSearch()"><i class="pi pi-search"></i></a>
 
@@ -71,24 +71,24 @@
   <!-- Menú desplegable móvil -->
   <div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu">
     <ul>
-      <li><a routerLink="/" (click)="closeMenu()">HOGAR</a></li>
+      <li><a routerLink="/" (click)="closeMenu()">HOME</a></li>
       <li class="mobile-menu-categorias">
-        <a (click)="toggleMegaMenu()">CATEGORÍAS</a>
+        <a (click)="toggleMegaMenu($event)">CATEGORÍAS</a>
         <ul *ngIf="isMegaMenuOpen">
-          <li><a routerLink="/products">Libros</a></li>
-          <li><a routerLink="/products">Biblia</a></li>
-          <li><a routerLink="/products"> Litúrgico</a></li>
-          <li><a routerLink="/products">Imágenes de Culto</a></li>
-          <li><a routerLink="/products">Cuadros</a></li>
-          <li><a routerLink="/products"> Estampas</a></li>
-          <li><a routerLink="/products">Accesorios</a></li>
-          <li><a routerLink="/products">Catecismos</a></li>
-          <li><a routerLink="/products">Resina</a></li>
-          <li><a routerLink="/products">Velas y Cirios</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Libros</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Biblia</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Litúrgico</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Imágenes de Culto</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Cuadros</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Estampas</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Accesorios</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Catecismos</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Resina</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Velas y Cirios</a></li>
         </ul>
       </li>
       <li><a routerLink="/about" (click)="closeMenu()">SOBRE NOSOTROS</a></li>
-      <li><a routerLink="/contact" (click)="closeMenu()">CONTACTO</a></li>
+      <li><a routerLink="/contact" (click)="closeMenu()">CONTACTO</a></li>      
     </ul>
   </div>
 <!-- Panel de búsqueda deslizable -->

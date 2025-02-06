@@ -63,6 +63,32 @@
   </div>
 </div>
 
+<div class="productos-religiosos-section" #producto>
+  <h2 class="titulo">LOS RECIENTES LLEGADOS</h2>
+  <p class="descripcion">
+    Realice su pedido por adelantado ahora para recibir ofertas y regalos exclusivos.
+  </p>
+
+  <div class="productos-grid">
+    <div class="producto-item" *ngFor="let producto of productos" class="col-3" >
+      <div class="imagen-container">
+        <span *ngIf="producto.descuento" class="etiqueta-venta">Venta</span>
+        <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen" />
+        <div class="overlay">
+          <button class="boton-carrito">
+            <i class="pi pi-shopping-cart"></i> Añadir a la cesta
+          </button>
+        </div>
+      </div>
+      <h4 class="producto-nombre">{{ producto.nombre }}</h4>
+      <div class="producto-precio">
+        <span *ngIf="producto.descuento" class="precio-antiguo">{{ producto.precio | currency }}</span>
+        <span class="precio-actual">{{ (producto.precio - (producto.descuento || 0)) | currency }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="categorias-container">
   <a href="/productos/bar-stool" class="categoria" style="background-image: url('../../assets/img/rosario.jpg');"#categoria>
@@ -103,30 +129,6 @@
 
 
 
-<div class="productos-religiosos-section" #producto>
-  <h2 class="titulo">LOS RECIENTES LLEGADOS</h2>
-  <p class="descripcion">
-    Realice su pedido por adelantado ahora para recibir ofertas y regalos exclusivos.
-  </p>
 
-  <div class="productos-grid">
-    <div class="producto-item" *ngFor="let producto of productos" class="col-3" >
-      <div class="imagen-container">
-        <span *ngIf="producto.descuento" class="etiqueta-venta">Venta</span>
-        <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen" />
-        <div class="overlay">
-          <button class="boton-carrito">
-            <i class="pi pi-shopping-cart"></i> Añadir a la cesta
-          </button>
-        </div>
-      </div>
-      <h4 class="producto-nombre">{{ producto.nombre }}</h4>
-      <div class="producto-precio">
-        <span *ngIf="producto.descuento" class="precio-antiguo">{{ producto.precio | currency }}</span>
-        <span class="precio-actual">{{ (producto.precio - (producto.descuento || 0)) | currency }}</span>
-      </div>
-    </div>
-  </div>
-</div>
   
 

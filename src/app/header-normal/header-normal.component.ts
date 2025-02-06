@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; // Agrega OnInit para la inicialización
+import { Component, OnInit, ChangeDetectorRef  } from '@angular/core'; // Agrega OnInit para la inicialización
 import { RouterLink} from '@angular/router';
 import { HttpClient,  HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -24,13 +24,14 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
 
   empresaData: Empresa | null = null; // Inicializa como null
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getEmpresasData(); 
 
     setInterval(() => {
       this.isVisibleNombre = !this.isVisibleNombre;
+      this.cdRef.detectChanges();  // Fuerza la actualización de la vista
     }, 3000); // Cambiar cada 3 segundos
   }
 
@@ -70,7 +71,8 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   }
   isMegaMenuOpen = false;
 
-  toggleMegaMenu() {
+  toggleMegaMenu(event: Event) {
+    event.stopPropagation(); // Evita que el evento cierre el menú al hacer clic
     this.isMegaMenuOpen = !this.isMegaMenuOpen;
   }
   

@@ -46,10 +46,8 @@ export const routes: Routes = [
 { path: 'verificar', component: VerificarComponent },
 { path: 'restablecer', component: RestablecercontraComponent },
 { path: 'verificacion', component: VerificarCodigoComponent },
-{ path: 'error400', component: Error400Component },
-{ path: 'error404', component: Error404Component },
-{ path: 'error500',component: Error500Component },
-{ path: '**', component: Error404Component },// Cualquier URL incorrecta
+
+
 { path: 'inicioadmin', component: InicioadminComponent, canActivate: [AuthGuard] },
 { path: 'politicas', component: PoliticasComponent, canActivate: [AuthGuard] },
 { path: 'terminos', component: TerminosComponent, canActivate: [AuthGuard] },
@@ -57,6 +55,12 @@ export const routes: Routes = [
 { path: 'pempresa', component: PerfilempresaComponent, canActivate: [AuthGuard] },
 { path: 'incidencias', component: IncidenciasComponent, canActivate: [AuthGuard] },
 { path: 'perfil', component: PerfilusuarioComponent, canActivate: [AuthGuard] },
+
+
+{ path: 'error400', component: Error400Component },
+{ path: 'error404', component: Error404Component },
+{ path: 'error500',component: Error500Component },
+{ path: '**', component: Error404Component },// Cualquier URL incorrecta
 
 
 ];

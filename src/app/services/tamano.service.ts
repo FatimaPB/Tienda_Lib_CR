@@ -8,7 +8,7 @@ import { Tamano } from '../models/tamano.model'; // Importamos el modelo
   providedIn: 'root',
 })
 export class TamanoService {
-  private apiUrl = 'https://back-tienda-one.vercel.app//api/tamanos';
+  private apiUrl = 'https://back-tienda-one.vercel.app/api/tamanos';
 
   constructor(private http: HttpClient) {}
 

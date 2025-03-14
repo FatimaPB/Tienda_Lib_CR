@@ -11,7 +11,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router, private http: HttpClient) {}
-  private apiUrl = 'https://back-tienda-one.vercel.app//api';
+  private apiUrl = 'https://back-tienda-one.vercel.app/api';
  /* canActivate(): boolean {
     const token = localStorage.getItem('token');
     if (token) {

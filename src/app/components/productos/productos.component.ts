@@ -36,7 +36,7 @@ export class ProductosComponent implements OnInit  {
   productos: Producto[] = [];
   productoSeleccionado: Producto | null = null; // Producto seleccionado
 
-  apiUrlProductos = 'https://back-tienda-one.vercel.app//api/productos'; // Ajusta esta URL según tu backend
+  apiUrlProductos = 'https://back-tienda-one.vercel.app/api/productos'; // Ajusta esta URL según tu backend
   categoriaNombre: string = ''; // Variable para almacenar el nombre de la categoría
   constructor(private http: HttpClient, private carritoService: CarritoService,private route: ActivatedRoute) {}
 

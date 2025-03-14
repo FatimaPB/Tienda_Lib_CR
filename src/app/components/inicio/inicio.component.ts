@@ -52,7 +52,7 @@ interface Banner {
 })
 export class InicioComponent implements AfterViewInit {
   banners: Banner[] = [];
-  apiUrl: string = 'https://back-tienda-one.vercel.app//api/banners';
+  apiUrl: string = 'https://back-tienda-one.vercel.app/api/banners';
   currentIndex: number = 0;
 
   dialogoVisible: boolean = false;

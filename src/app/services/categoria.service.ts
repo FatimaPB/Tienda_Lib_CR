@@ -8,7 +8,7 @@ import { Categoria } from '../models/categoria.model'; // Importamos el modelo
   providedIn: 'root',
 })
 export class CategoriaService {
-  private apiUrl = 'https://back-tienda-one.vercel.app//api/categorias';
+  private apiUrl = 'https://back-tienda-one.vercel.app/api/categorias';
 
   constructor(private http: HttpClient) {}
 

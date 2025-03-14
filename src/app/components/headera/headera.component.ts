@@ -31,7 +31,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class HeaderaComponent  implements OnInit{
 
-  private apiUrl = `https://back-tienda-one.vercel.app//api`;
+  private apiUrl = `https://back-tienda-one.vercel.app/api`;
   originalPerfil: any = null;
   perfil: any = null;
 
@@ -70,7 +70,7 @@ export class HeaderaComponent  implements OnInit{
   onLogout() {
 
   
-    this.http.post('https://back-tienda-one.vercel.app//api/logout', {}, { withCredentials: true }).subscribe(
+    this.http.post('https://back-tienda-one.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
     () => {
     window.location.reload();
     this.authService.logout(); 

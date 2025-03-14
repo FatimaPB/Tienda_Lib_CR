@@ -25,7 +25,7 @@ export class CarritoComponent implements OnInit  {
   metodosPago: any[] = [];
   
   // URL de la API de compra
-  apiUrl: string = 'https://back-tienda-one.vercel.app//api/comprar';
+  apiUrl: string = 'https://back-tienda-one.vercel.app/api/comprar';
 
   constructor(private http: HttpClient, private carritoService: CarritoService) {}
 
@@ -52,7 +52,7 @@ export class CarritoComponent implements OnInit  {
 
   // Cargar métodos de pago desde el backend
   cargarMetodosPago(): void {
-    this.http.get<any[]>('https://back-tienda-one.vercel.app//api/metodos-pago').subscribe(metodos => {
+    this.http.get<any[]>('https://back-tienda-one.vercel.app/api/metodos-pago').subscribe(metodos => {
       this.metodosPago = metodos;
       if (metodos && metodos.length > 0) {
         this.metodoPago = metodos[0].id;

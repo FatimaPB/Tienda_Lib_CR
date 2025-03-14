@@ -46,20 +46,6 @@
   </div>
 </div>
 
-<!-- Opciones de tamaño (solo se muestran si hay un color seleccionado) -->
-<div class="product-options" *ngIf="colorSeleccionado !== null && tamanosDisponibles.length > 0">
-  <label>Tamaños disponibles:</label>
-  <div class="size-options">
-    <button *ngFor="let tamano of tamanosDisponibles" 
-            [ngClass]="{'selected': tamano.tamano_id === producto?.tamano_id}"
-            (click)="producto!.tamano_id = tamano.tamano_id">
-      {{ tamano.nombre_tamano }}
-    </button>
-  </div>
-</div>
-
-
-
       </div>
     </div>
   </mat-card>

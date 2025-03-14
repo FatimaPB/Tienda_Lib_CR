@@ -56,7 +56,7 @@ export class PerfilempresaComponent implements OnInit {
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('http://localhost:3000/api/datos').subscribe({
+    this.http.get<Empresa>('https://back-tienda-one.vercel.app//api/datos').subscribe({
       next: (response) => {
         this.empresaData = response; // Guarda el objeto directamente
       },

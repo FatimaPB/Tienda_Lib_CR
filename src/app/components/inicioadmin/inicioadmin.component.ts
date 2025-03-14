@@ -39,7 +39,7 @@ export class InicioadminComponent implements OnInit{
   categorias: Categoria[] = [];
   categoria: Categoria = { id: undefined, nombre_categoria: '' }; // Ahora tiene `id`
 
-  apiUrl = 'http://localhost:3000/api/categorias'; // URL del backend
+  apiUrl = 'https://back-tienda-one.vercel.app//api/categorias'; // URL del backend
 
   constructor(private http: HttpClient) {}
 
@@ -111,9 +111,9 @@ export class InicioadminComponent implements OnInit{
   selectedFiles: File[] = [];
 
   // URL del endpoint para crear el producto (backend)
-  apiUrlProducto: string = 'http://localhost:3000/api/productos';
+  apiUrlProducto: string = 'https://back-tienda-one.vercel.app//api/productos';
   // URL del endpoint para cargar las categorías
-  apiUrlCategorias: string = 'http://localhost:3000/api/categorias';
+  apiUrlCategorias: string = 'https://back-tienda-one.vercel.app//api/categorias';
 
   // Simulación: ID del usuario actualmente autenticado (debe obtenerse desde el contexto real)
   currentUserId: number = 1;

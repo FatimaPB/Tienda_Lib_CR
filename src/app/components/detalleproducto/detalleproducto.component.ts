@@ -48,11 +48,11 @@ export class DetalleproductoComponent implements OnInit{
   
   zoomEnabled: boolean = false;
   producto: Producto | null = null;
-  apiUrlProductos = 'http://localhost:3000/api/productos'; // URL del backend
+  apiUrlProductos = 'https://back-tienda-one.vercel.app//api/productos'; // URL del backend
 
   coloresDisponibles: Variante[] = [];
   tamanosDisponibles: Variante[] = [];
-  apiUrl = 'http://localhost:3000/api'; // URL del backend
+  apiUrl = 'https://back-tienda-one.vercel.app//api'; // URL del backend
 
   constructor(private route: ActivatedRoute, private http: HttpClient,private carritoService: CarritoService) {}
 

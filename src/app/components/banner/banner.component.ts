@@ -32,7 +32,7 @@ export class BannerComponent implements OnInit {
   selectedBanner: Banner | null = null;
   selectedFile: File | null = null;
   isEditing: boolean = false;
-  apiUrl: string = 'http://localhost:3000/api/banners';
+  apiUrl: string = 'https://back-tienda-one.vercel.app//api/banners';
   visible = false;
 
   constructor(

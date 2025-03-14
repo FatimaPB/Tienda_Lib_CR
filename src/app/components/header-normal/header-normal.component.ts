@@ -27,7 +27,7 @@ export interface Empresa {
 export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   productos: any[] = [];
   empresaData: Empresa | null = null; // Inicializa como null
-  apiUrl = 'http://localhost:3000/api/categorias';
+  apiUrl = 'https://back-tienda-one.vercel.app//api/categorias';
   categorias: Categoria[] = [];
 
   constructor(private http: HttpClient, private router: Router, private cdRef: ChangeDetectorRef) {}
@@ -50,7 +50,7 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('http://localhost:3000/api/datos').pipe(
+    this.http.get<Empresa>('https://back-tienda-one.vercel.app//api/datos').pipe(
       catchError((err: HttpErrorResponse) => {
         console.error('Error al obtener los perfiles de empresa', err);
         
@@ -110,7 +110,7 @@ toggleSearch() {
 
 isVisibleNombre: boolean = true;
 loadProductos(): void {
-  this.http.get<any[]>('http://localhost:3000/api/productos', { withCredentials: true })
+  this.http.get<any[]>('https://back-tienda-one.vercel.app//api/productos', { withCredentials: true })
     .subscribe(
       (data) => {
         this.productos = data;
@@ -127,7 +127,7 @@ buscarProductos(termino: string): void {
     return;
   }
 
-  this.http.get<any[]>(`http://localhost:3000/api/productos/buscar?q=${encodeURIComponent(termino)}`, { withCredentials: true })
+  this.http.get<any[]>(`https://back-tienda-one.vercel.app//api/productos/buscar?q=${encodeURIComponent(termino)}`, { withCredentials: true })
     .subscribe(
       (data) => this.productos = data,
       (err) => console.error('Error al buscar productos:', err)

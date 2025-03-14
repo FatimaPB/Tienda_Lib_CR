@@ -8,7 +8,7 @@ import { Color } from '../models/color.model'; // Importamos el modelo
   providedIn: 'root',
 })
 export class ColorService {
-  private apiUrl = 'http://localhost:3000/api/colores';
+  private apiUrl = 'https://back-tienda-one.vercel.app//api/colores';
 
   constructor(private http: HttpClient) {}
 

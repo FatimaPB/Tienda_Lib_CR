@@ -25,7 +25,7 @@ export class LoginComponent {
 
     @ViewChild(RecaptchaComponent ) recaptcha: RecaptchaComponent  | undefined; // Acceder al componente de reCAPTCHA
 
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://back-tienda-one.vercel.app//api';
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
   // Función personalizada para decodificar el JWT

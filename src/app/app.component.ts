@@ -41,7 +41,7 @@ export class AppComponent {
   isChatOpen = false;
   messages: { user: string, text: string }[] = [];
   userMessage = '';
-  apiUrl = 'http://localhost:3000/api/chat'; // Ruta del backend
+  apiUrl = 'https://back-tienda-one.vercel.app//api/chat'; // Ruta del backend
   getCookie(name: string): string | null {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -66,7 +66,7 @@ export class AppComponent {
     }
     
     // Llamada para verificar el estado de la autenticación
-    this.http.get<any>('http://localhost:3000/api/check-auth', { withCredentials: true })
+    this.http.get<any>('https://back-tienda-one.vercel.app//api/check-auth', { withCredentials: true })
     .subscribe({
       next: (response) => {
         if (response.authenticated) {
@@ -99,7 +99,7 @@ export class AppComponent {
   empresaData: Empresa | null = null; // Inicializa como null
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('http://localhost:3000/api/datos').subscribe({
+    this.http.get<Empresa>('https://back-tienda-one.vercel.app//api/datos').subscribe({
       next: (response) => {
         this.empresaData = response; // Guarda el objeto directamente
       },

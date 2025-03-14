@@ -1,0 +1,52 @@
+<div class="p-d-flex p-ai-center p-jc-center" style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px;">
+  <div class="card" style="width: 90%;margin: auto;">
+
+    <!-- Título de la sección -->
+    <h2 class="texto" style="margin-bottom: 20px;">Historial ventas</h2>
+
+  <div *ngIf="usuarioRol">
+
+  <p-table 
+  [value]="ventas" 
+      [tableStyle]="{ 'min-width': '50rem' }" 
+      [paginator]="true" 
+      [rows]="5" 
+      [rowsPerPageOptions]="[5, 10, 20]" 
+      class="p-shadow-2">
+  
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Cliente</th>
+      <th>Productos Comprados</th>
+      <th>Método de Pago</th>
+      <th>Total</th>
+      <th>Estado</th>
+      <th>Envio</th>
+      <th>Fecha</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-venta>
+    <tr  >
+      <td>{{ venta.id }}</td>
+      <td>{{ venta.cliente }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let producto of venta.productos">
+            {{ producto.nombre }} (x{{ producto.cantidad }}) - ${{ producto.precio_unitario }}
+          </li>
+        </ul>
+      </td>
+      <td>{{ venta.metodo_pago }}</td>
+      <td>${{ venta.total }}</td>
+      <td>{{ venta.estado }}</td>
+      <td>{{ venta.estado_envio }}</td>
+      <td>{{ venta.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+    </tr>
+  </ng-template>
+  
+
+</p-table>
+</div>
+<p *ngIf="!usuarioRol"  class="texto">No tienes permisos para ver esta información.</p>

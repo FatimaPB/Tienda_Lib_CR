@@ -1,0 +1,74 @@
+<div *ngIf="producto; else loading">
+  <mat-card class="product-detail">
+    <div class="product-detail-content">
+      
+      <!-- Sección de Imágenes -->
+      <div class="product-detail-images">
+        <!-- Contenedor de la imagen principal -->
+        <div class="zoom-container">
+          <img [src]="producto.imagenes[0]" alt="{{ producto.nombre }}" class="product-detail-image" 
+               (mousemove)="zoom($event)" (mouseleave)="resetZoom()">
+        </div>
+
+        <!-- Contenedor donde se mostrará la imagen ampliada -->
+        <div *ngIf="zoomEnabled" class="zoom-lens" [style.backgroundImage]="'url(' + producto.imagenes[0] + ')'"></div>
+      </div>
+
+      <!-- Galería de imágenes -->
+      <div *ngIf="producto.imagenes.length > 1" class="product-gallery">
+        <div *ngFor="let imagen of producto.imagenes; let i = index" class="product-gallery-item">
+          <img *ngIf="i !== 0" [src]="imagen" alt="Imagen {{ i + 1 }}" class="gallery-image" 
+               (click)="cambiarImagenProducto(producto, i)">
+        </div>
+      </div>
+
+      <!-- Información del producto -->
+      <div class="product-detail-info">
+        <h2 class="product-title">{{ producto.nombre }}</h2>
+        <p class="descripcion">{{ producto.descripcion }}</p>
+        <p class="precio">{{ producto.precio_calculado | currency }}</p>
+        <p class="stock">Disponibles: {{ producto.cantidad_stock }}</p>
+        
+
+        <button mat-raised-button color="primary" class="btn-add-to-cart" (click)="agregarAlCarrito(producto)">
+          <mat-icon>shopping_cart</mat-icon> Comprar ahora
+        </button>
+
+<!-- Opciones de color -->
+<div class="product-options" *ngIf="coloresDisponibles.length > 0">
+  <label>Colores disponibles:</label>
+  <div class="color-options">
+    <button *ngFor="let color of coloresDisponibles" 
+            [ngClass]="{'selected': color.color_id === colorSeleccionado}"
+            (click)="seleccionarColor(color.color_id)">
+      {{ color.nombre_color }}
+    </button>
+  </div>
+</div>
+
+<!-- Opciones de tamaño (solo se muestran si hay un color seleccionado) -->
+<div class="product-options" *ngIf="colorSeleccionado !== null && tamanosDisponibles.length > 0">
+  <label>Tamaños disponibles:</label>
+  <div class="size-options">
+    <button *ngFor="let tamano of tamanosDisponibles" 
+            [ngClass]="{'selected': tamano.tamano_id === producto?.tamano_id}"
+            (click)="producto!.tamano_id = tamano.tamano_id">
+      {{ tamano.nombre_tamano }}
+    </button>
+  </div>
+</div>
+
+
+
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<!-- Loader -->
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+    <p>Cargando detalles del producto...</p>
+  </div>
+</ng-template>

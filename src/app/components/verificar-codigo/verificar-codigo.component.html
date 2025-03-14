@@ -1,0 +1,27 @@
+<div class="contenedor">
+  <div class="verification-container">
+    <h3>Verificación de correo</h3>
+    
+    <form (ngSubmit)="verificarCodigo()">
+      <p>Ingresa el código de verificación enviado a tu correo:</p>
+      <div class="code-input">
+        <input type="text" maxlength="1" class="form-control" (input)="moveFocus($event, 0)" />
+        <input type="text" maxlength="1" class="form-control" (input)="moveFocus($event, 1)" />
+        <input type="text" maxlength="1" class="form-control" (input)="moveFocus($event, 2)" />
+        <input type="text" maxlength="1" class="form-control" (input)="moveFocus($event, 3)" />
+        <input type="text" maxlength="1" class="form-control" (input)="moveFocus($event, 4)" />
+        <input type="text" maxlength="1" class="form-control" (input)="moveFocus($event, 5)" />
+      </div>
+      <div class="cargador">
+        <div class="spinner" *ngIf="mostrandoSpinner"></div>
+      </div>
+   
+  
+      <button type="submit" class="btn-submit">Verificar</button>
+    </form>
+    
+    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+      {{ mensaje }}
+    </div>
+  </div>
+</div>

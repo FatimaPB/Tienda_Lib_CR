@@ -1,0 +1,112 @@
+<!--
+<div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
+  <div class="sidebar-header">
+    <i class="pi pi-bars menu-icon" (click)="toggleSidebar()"></i>
+    <span class="sidebar-title">Menú</span>
+  </div>
+
+   Sección del usuario dentro del sidebar 
+  <div class="user-profile">
+    <img src="../../../assets/img/Libreria_Logo.jpg" alt="Foto de Usuario">
+    <div class="user-details">
+      <span routerLink="/perfil" class="user-name">{{ perfil.nombre }}</span>
+      <span class="user-status active">Activo</span>
+    </div>
+  </div>
+
+  <ul class="menu-items">
+    <li><i routerLink="/inicioadmin" class="pi pi-home"></i><span routerLink="/inicioadmin" (click)="toggleSidebar()" class="texto">INICIO</span></li>
+    <li><i routerLink="/admproduts" class="pi pi-exclamation-circle"></i><span routerLink="/admproduts" (click)="toggleSidebar()" class="texto">PRODUCTOS</span></li>
+    <li><i routerLink="/categorias" class="pi pi-exclamation-circle"></i><span routerLink="/categorias" (click)="toggleSidebar()" class="texto">CATEGORIAS</span></li>
+    <li><i routerLink="/banners" class="pi pi-exclamation-circle"></i><span routerLink="/banners" (click)="toggleSidebar()" class="texto">BANNER</span></li>
+    <li><i routerLink="/incidencias" class="pi pi-exclamation-circle"></i><span routerLink="/incidencias" (click)="toggleSidebar()" class="texto">INCIDENCIAS</span></li>
+    <li><i routerLink="/politicas" class="pi pi-file"></i><span routerLink="/politicas" (click)="toggleSidebar()" class="texto">POLITICAS</span></li>
+    <li><i routerLink="/terminos" class="pi pi-book"></i><span routerLink="/terminos" (click)="toggleSidebar()" class="texto">TERMINOS</span></li>
+    <li><i routerLink="/deslinde" class="pi pi-book"></i><span routerLink="/deslinde" (click)="toggleSidebar()" class="texto">DESLINDE LEGAL</span></li>
+    <li><i routerLink="/pempresa" class="pi pi-building"></i><span routerLink="/pempresa" (click)="toggleSidebar()" class="texto">PERFIL EMPRESA</span></li>
+    <li><i (click)="onLogout()" class="pi pi-sign-out"></i><span  (click)="onLogout()" class="texto">CERRAR SESIÓN</span></li>
+  </ul>
+</div>
+
+-->
+
+
+
+<mat-toolbar class="custom-toolbar">
+  <button mat-icon-button (click)="toggleSidebar()" aria-label="Menú">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="logo">LIBRERIA CRISTO REY</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button routerLink="/perfil">
+    <mat-icon class="pi pi-user" >menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav 
+               mode="side" 
+               position="start" 
+               [opened]="!isCollapsed" 
+               class="custom-sidenav"
+               [ngClass]="{'collapsed': isCollapsed}">
+    <div class="sidenav-header">
+      <span class="sidenav-title" *ngIf="!isCollapsed">Menú</span>
+      <button mat-icon-button (click)="toggleSidebar()">
+        <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+      </button>
+    </div>
+
+    <ul class="menu-list">
+      <li routerLink="/inicioadmin" (click)="toggleSidebar()">
+        <i class="pi pi-home"></i><span *ngIf="!isCollapsed">INICIO</span>
+      </li>
+      <li routerLink="/admproduts" (click)="toggleSidebar()">
+        <i class="pi pi-box"></i><span *ngIf="!isCollapsed">PRODUCTOS</span>
+      </li>
+      <li routerLink="/admcat" (click)="toggleSidebar()">
+        <i class="pi pi-box"></i><span *ngIf="!isCollapsed">CATALOGO PRODUCTOS</span>
+      </li>
+      <li routerLink="/ventas" (click)="toggleSidebar()">
+        <i class="pi pi-list"></i><span *ngIf="!isCollapsed">VENTAS</span>
+      </li>
+      <li routerLink="/categorias" (click)="toggleSidebar()">
+        <i class="pi pi-list"></i><span *ngIf="!isCollapsed">CATEGORIAS</span>
+      </li>
+      <li routerLink="/colores" (click)="toggleSidebar()">
+        <i class="pi pi-list"></i><span *ngIf="!isCollapsed">COLORES</span>
+      </li>
+      <li routerLink="/tamaños" (click)="toggleSidebar()">
+        <i class="pi pi-list"></i><span *ngIf="!isCollapsed">TAMAÑOS</span>
+      </li>
+      <li routerLink="/banners" (click)="toggleSidebar()">
+        <i class="pi pi-image"></i><span *ngIf="!isCollapsed">BANNER</span>
+      </li>
+      <li routerLink="/incidencias" (click)="toggleSidebar()">
+        <i class="pi pi-exclamation-triangle"></i><span *ngIf="!isCollapsed">INCIDENCIAS</span>
+      </li>
+      <li routerLink="/politicas" (click)="toggleSidebar()">
+        <i class="pi pi-file"></i><span *ngIf="!isCollapsed">POLITICAS</span>
+      </li>
+      <li routerLink="/terminos" (click)="toggleSidebar()">
+        <i class="pi pi-book"></i><span *ngIf="!isCollapsed">TERMINOS</span>
+      </li>
+      <li routerLink="/deslinde" (click)="toggleSidebar()">
+        <i class="pi pi-shield"></i><span *ngIf="!isCollapsed">DESLINDE LEGAL</span>
+      </li>
+      <li routerLink="/pempresa" (click)="toggleSidebar()">
+        <i class="pi pi-building"></i><span *ngIf="!isCollapsed">PERFIL EMPRESA</span>
+      </li>
+      <li (click)="onLogout()">
+        <i class="pi pi-sign-out"></i><span *ngIf="!isCollapsed">CERRAR SESIÓN</span>
+      </li>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

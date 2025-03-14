@@ -1,0 +1,76 @@
+/* Toolbar */
+.custom-toolbar {
+
+  border-bottom: 1px solid #ddd;
+}
+
+/* Sidebar normal */
+.custom-sidenav {
+  width: 250px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease-in-out;
+}
+
+/* Sidebar colapsado */
+.custom-sidenav.collapsed {
+  width: 80px;
+}
+
+/* Estilo del header del sidebar */
+.sidenav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Lista de menú */
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list li {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  color: black;
+}
+
+.menu-list li:hover {
+  background-color: #f5f5f5;
+}
+
+/* Íconos */
+.menu-list i {
+  margin-right: 12px;
+  font-size: 1.2rem;
+  color: black;
+}
+
+/* Oculta el texto cuando el menú está colapsado */
+.custom-sidenav.collapsed .menu-list span {
+  display: none;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-family:'Times New Roman', Times, serif;
+}
+
+.mat-sidenav-content {
+  flex-grow: 1;
+  padding: 20px;
+}

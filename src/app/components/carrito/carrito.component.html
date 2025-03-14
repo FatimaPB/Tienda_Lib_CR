@@ -1,0 +1,84 @@
+<div class="carrito-container">
+  <h2>Carrito de Compras</h2>
+  <div *ngIf="carrito.length === 0">
+    <p>Tu carrito está vacío</p>
+  </div>
+  <table *ngIf="carrito.length > 0" class="tabla-carrito">
+    <thead>
+      <tr>
+        <th>Borrar</th>
+        <th>Imagen</th>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of carrito; let i = index">
+        <td>
+          <!-- Aquí podrías llamar a un método de CarritoService para eliminar el producto -->
+          <button class="btn-eliminar" >×</button>
+        </td>
+        <td>
+          <img *ngIf="item.imagenes.length" [src]="item.imagenes[0]" class="imagen-producto">
+        </td>
+        <td>{{ item.nombre }}</td>
+        <td>${{ item.precio_calculado | number:'1.2-2' }}</td>
+        <td>
+          <input type="number" [(ngModel)]="item.cantidad" min="1" (change)="actualizarTotales()">
+        </td>
+        <td>${{ (item.precio_calculado * item.cantidad) | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Resumen y formulario para completar la compra -->
+<div class="resumen-container">
+  <!-- Sección de cupón (opcional) -->
+  <div class="cupon-container">
+    <h3>CUPÓN</h3>
+    <input type="text" placeholder="Introduzca su código de cupón">
+    <button class="btn-cupon">APLICAR CUPÓN</button>
+  </div>
+
+  <!-- Sección de totales y datos de compra -->
+  <div class="totales-container">
+    <h3>TOTALES DEL CARRITO</h3>
+    <div class="total-linea">
+      <span>Total parcial</span>
+      <span>${{ totalParcial | number:'1.2-2' }}</span>
+    </div>
+    <div class="envio-section">
+      <h4>Envío</h4>
+      <span>Tarifa plana: ${{ tarifaPlana | number:'1.2-2' }}</span>
+    </div>
+    <div class="total-linea total-final">
+      <span>Total</span>
+      <span>${{ total | number:'1.2-2' }}</span>
+    </div>
+
+    <!-- Selección del método de pago -->
+    <div>
+      <label for="metodoPago">Método de Pago:</label>
+      <select id="metodoPago" [(ngModel)]="metodoPago">
+        <option *ngFor="let metodo of metodosPago" [value]="metodo.id">
+          {{ metodo.nombre }}
+        </option>
+      </select>
+    </div>
+    
+    <!-- Ingreso de la dirección de envío -->
+    <div>
+      <label for="direccionEnvio">Dirección de Envío:</label>
+      <input id="direccionEnvio" type="text" [(ngModel)]="direccionEnvio" placeholder="Ingrese su dirección">
+    </div>
+
+    <!-- Botón para confirmar la compra -->
+    <button class="btn-pagar" (click)="comprar()">PASAR POR LA CAJA</button>
+  </div>
+</div>
+
+
+

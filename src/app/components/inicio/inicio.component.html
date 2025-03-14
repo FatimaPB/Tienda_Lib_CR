@@ -1,0 +1,139 @@
+<div class="hero-slider-section">
+  <button class="btn-prev" (click)="prevSlide()">&#10094;</button>
+
+  <div *ngFor="let banner of banners; let i = index" 
+       class="hero-single-slider-item" 
+       [ngClass]="{ 'active': i === currentIndex }">
+    
+    <div class="hero-slider-bg">
+      <img [src]="banner.imagen" alt="Imagen de Slider">
+    </div>
+
+    <div class="hero-slider-wrapper">
+      <div class="hero-slider-content">
+        <h4 class="subtitle">{{ banner.descripcion }}</h4>
+        <h2 class="title">{{ banner.titulo }}</h2>
+        <a [routerLink]="['/detalles', banner.id]" class="btn">COMPRA AHORA</a>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="btn-next" (click)="nextSlide()">&#10095;</button>
+</div>
+
+
+<div class="service-promo-section">
+  <div class="row">
+    <div class="service-promo-single-item" #serviceItem>
+      <div class="icon">
+        <i class="pi pi-truck"></i>
+      </div>
+      <div class="content">
+        <h6 class="title">ENVÍO GRATIS</h6>
+        <p>¡Obtén un 10% de reembolso en efectivo, envío gratis, devoluciones gratis y más en más de 1000 minoristas líderes!</p>
+      </div>
+    </div>
+
+    <div class="service-promo-single-item" #serviceItem>
+      <div class="icon">
+        <i class="pi pi-money-bill"></i>
+      </div>
+      <div class="content">
+        <h6 class="title">30 DÍAS DE DEVOLUCIÓN DE DINERO</h6>
+        <p>¡Satisfacción 100% garantizada o recupera tu dinero en 30 días!</p>
+      </div>
+    </div>
+
+    <div class="service-promo-single-item" #serviceItem>
+      <div class="icon">
+        <i class="pi pi-shield"></i>
+      </div>
+      <div class="content">
+        <h6 class="title">PAGO SEGURO</h6>
+        <p>Pague con los métodos de pago más populares y seguros del mundo.</p>
+      </div>
+    </div>
+
+    <div class="service-promo-single-item" #serviceItem>
+      <div class="icon">
+        <i class="pi pi-id-card"></i>
+      </div>
+      <div class="content">
+        <h6 class="title">CLIENTE FIDELIZADO</h6>
+        <p>Tarjeta para el 30% restante de sus compras a razón de 1% de reembolso en efectivo.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="productos-religiosos-section" #producto>
+  <h2 class="titulo">LOS RECIENTES LLEGADOS</h2>
+  <p class="descripcion">
+    Realice su pedido por adelantado ahora para recibir ofertas y regalos exclusivos.
+  </p>
+
+  <div class="productos-grid">
+    <div class="producto-item" *ngFor="let producto of productos" class="col-3" >
+      <div class="imagen-container">
+        <span *ngIf="producto.descuento" class="etiqueta-venta">Venta</span>
+        <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen" />
+        <div class="overlay">
+          <button class="boton-carrito">
+            <i class="pi pi-shopping-cart"></i> Añadir a la cesta
+          </button>
+        </div>
+      </div>
+      <h4 class="producto-nombre">{{ producto.nombre }}</h4>
+      <div class="producto-precio">
+        <span *ngIf="producto.descuento" class="precio-antiguo">{{ producto.precio | currency }}</span>
+        <span class="precio-actual">{{ (producto.precio - (producto.descuento || 0)) | currency }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="categorias-container">
+  <a routerLink="biblias" class="categoria" style="background-image: url('../../assets/img/biblias.png');"#categoria>
+    <div class="categoria-header">
+      <h2>BIBLAS</h2>
+      <div class="arrow">→</div>
+    </div>
+    <p>20 products</p>
+  </a>
+
+  <a routerLink="velas" class="categoria" style="background-image: url('../../assets/img/velascirios.png');"#categoria>
+    <div class="categoria-header">
+      <h2>VELAS Y CIRIOS</h2>
+      <div class="arrow">→</div>
+    </div>
+    <p>20 products</p>
+  </a>
+
+  <a routerLink="estampas" class="categoria" style="background-image: url('../../assets/img/estampas.png');"#categoria>
+    <div class="categoria-header">
+      <h2>ESTAMPAS</h2>
+      <div class="arrow">→</div>
+    </div>
+    <p>20 products</p>
+  </a>
+
+  <a routerLink="resina" class="categoria" style="background-image: url('../../assets/img/recinas.png');"#categoria>
+    <div class="categoria-header">
+      <h2>RESINAS</h2>
+      <div class="arrow">→</div>
+    </div>
+    <p>20 products</p>
+  </a>
+  
+</div>
+
+
+
+
+
+
+
+  
+

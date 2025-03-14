@@ -5,20 +5,18 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private tipoUsuarioSubject = new BehaviorSubject<string | null>(null);
-  tipoUsuario$ = this.tipoUsuarioSubject.asObservable();
+  private rolSubject = new BehaviorSubject<string | null>(null);
+  rol$ = this.rolSubject.asObservable();
 
   login(type: string) {
-    this.tipoUsuarioSubject.next(type); // Emitir el tipo de usuario
+    this.rolSubject.next(type); // Emitir el tipo de usuario
   }
 
   gettipoUsuario(): string | null {
-    return this.tipoUsuarioSubject.getValue();
+    return this.rolSubject.getValue();
   }
 
   logout() {
-    this.tipoUsuarioSubject.next(null); // Limpiar el tipo de usuario al cerrar sesión
-    localStorage.removeItem('token'); // Limpiar el token
-
+    this.rolSubject.next(null); // Limpiar el tipo de usuario al cerrar sesión
   }
 }

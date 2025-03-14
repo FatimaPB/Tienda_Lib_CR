@@ -11,11 +11,11 @@
 <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
 
 
-<ng-container *ngIf="tipoUsuario === 'admin'; else clienteHeader">
+<ng-container *ngIf="rol === 'admin' || rol === 'empleado'; else clienteHeader">
   <app-headera></app-headera>
 </ng-container>
 <ng-template #clienteHeader>
-  <ng-container *ngIf="tipoUsuario === 'Cliente'; else normalHeader">
+  <ng-container *ngIf="rol === 'Cliente'; else normalHeader">
     <app-headeru></app-headeru>
   </ng-container>
 </ng-template>
@@ -26,6 +26,8 @@
 
 <app-breadcrumb></app-breadcrumb>
 <router-outlet></router-outlet>
+
+
 
 <!-- Footer simple -->
 <footer class="footer">
@@ -85,7 +87,7 @@
 
 
 <!-- Botón para abrir el chat -->
-<button id="open-chat-button" (click)="toggleChat()">Chat</button>
+<button id="open-chat-button" (click)="toggleChat()"><i class="pi pi-comments" style="font-size: 1.5rem"></i></button>
 
 <!-- Chat Container -->
 <div *ngIf="isChatOpen" id="chat-container">
@@ -95,15 +97,16 @@
   </div>
 
   <div id="messages-container">
-    <!-- Los mensajes aparecerán aquí -->
-    <div class="message">
-      <span class="user-name">Usuario:</span> <span class="message-text">Hola, ¿cómo puedo ayudarte?</span>
+    <!-- Mensajes -->
+    <div *ngFor="let message of messages" class="message">
+      <span class="user-name">{{ message.user }}:</span> 
+      <span class="message-text">{{ message.text }}</span>
     </div>
   </div>
 
   <div id="chat-input">
-    <input type="text" id="message-input" placeholder="Escribe un mensaje..." />
-    <button id="send-message" (click)="sendMessage()">Enviar</button>
+    <input type="text" [(ngModel)]="userMessage" placeholder="Escribe un mensaje..." />
+    <button (click)="sendMessage()">Enviar</button>
   </div>
 </div>
 

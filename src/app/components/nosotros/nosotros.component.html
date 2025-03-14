@@ -1,0 +1,91 @@
+
+<div class="about-us-container">
+    <h1>Sobre Nosotros</h1>
+    <section class="mission">
+      <h2>Misión</h2>
+      <p>{{ empresaData?.mision }}</p>
+    </section>
+  
+    <section class="vision">
+      <h2>Visión</h2>
+      <p>{{ empresaData?.vision }}</p>
+    </section>
+  
+    <section class="values">
+      <h2>Valores</h2>
+      <p>{{ empresaData?.valores }}</p>
+    </section>
+  </div>
+  
+
+  <div class="container">
+    <!-- Barra de búsqueda -->
+    <div class="search-bar">
+      <p-inputText placeholder="Buscar productos..." icon="pi pi-search" class="search-input"></p-inputText>
+    </div>
+  
+    <!-- Carrusel de productos destacados -->
+    <div class="card">
+      <p-carousel 
+        [value]="products" 
+        [numVisible]="4" 
+        [numScroll]="1" 
+        [circular]="true" 
+        [responsiveOptions]="responsiveOptions" 
+        autoplayInterval="3000">
+        
+        <ng-template let-product pTemplate="item">
+          <div class="product-card">
+            <div class="image-container">
+              <img 
+                [src]="product.image" 
+                [alt]="product.name" 
+                class="product-image">
+              
+              <p-tag 
+                [value]="product.inventoryStatus" 
+                [severity]="getSeverity(product.inventoryStatus)"
+                class="status-tag"></p-tag>
+            </div>
+    
+            <div class="product-name">{{ product.name }}</div>
+            
+            <div class="price-section">
+              <div class="price">{{ '$' + product.price }}</div>
+              <div class="action-buttons">
+                <p-button icon="pi pi-heart" 
+                         styleClass="p-button-rounded heart-button" 
+                         [outlined]="true"></p-button>
+                <p-button icon="pi pi-shopping-cart" 
+                         styleClass="p-button-rounded cart-button"></p-button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  
+    <!-- Pie de página -->
+    <p-divider></p-divider>
+    <footer class="footer">
+      <p>© 2025 Tienda Online de Artículos Religiosos</p>
+    </footer>
+  </div>
+  
+
+  <div class="product-card">
+    <div class="image-container">
+        <img src="../../assets/img/biblias.png" alt="Producto" class="product-image">
+        <div class="status-tag">INSTOCK</div>
+    </div>
+    
+    <div class="product-name">Bamboo Watch</div>
+    
+    <div class="price-section">
+        <div class="price">$65</div>
+        <div class="action-buttons">
+            <button class="action-button heart-button">❤</button>
+            <button class="action-button cart-button">🛒</button>
+        </div>
+    </div>
+</div>

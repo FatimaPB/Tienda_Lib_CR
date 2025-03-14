@@ -1,0 +1,115 @@
+
+
+<div class="contenedor">
+  <div class="lib" [class.fade-in]="isVisibleNombre">{{ empresaData?.nombre }}</div>
+  <div class="contenedor-slogan" [class.fade-in]="!isVisibleNombre">
+    <div class="slogan">{{ empresaData?.slogan }}</div>
+  </div>
+</div>
+<header class="main-header">
+  <div class="header-container">
+
+    
+    <!-- Logo -->
+    <div class="logo-container">
+      <img routerLink="/" [src]="empresaData?.logo" alt="Logo de la Empresa" class="logo" *ngIf="empresaData?.logo; else noLogo" />
+      <ng-template #noLogo>
+        <img routerLink="/" src="../../assets/img/Libreria_Logo.jpg" alt="Logo por defecto" class="logo" />
+      </ng-template>
+    </div>
+
+    <!-- Menú de navegación -->
+    <nav class="nav-links">
+      <ul>
+        <li><a routerLink="/">HOME</a></li>
+
+        <li class="mega-menu-container">
+          <a>CATEGORÍAS <i class="pi pi-angle-down"></i></a>
+          <div class="mega-menu">
+            <div class="mega-menu-column" *ngFor="let categoria of categorias">
+              <a [routerLink]="['/products', categoria.nombre_categoria]">{{ categoria.nombre_categoria }}</a>
+            </div>
+          </div>
+        </li>
+
+        <li><a routerLink="/about">SOBRE NOSOTROS</a></li>
+        <li><a routerLink="/contact">CONTACTO</a></li>
+      </ul>
+    </nav>
+
+    <!-- Iconos de usuario -->
+    <div class="icons">
+      <a routerLink="/carshop"><i class="pi pi-heart"></i></a>
+      <a routerLink="/carshop"><i class="pi pi-shopping-cart"></i></a>
+      <a routerLink="/perfil" class="car-link"><i class="pi pi-user"></i></a>
+      <a (click)="openSearch()"><i class="pi pi-search"></i></a>
+      <a class="out-link"(click)="onLogout()"><i class="pi pi-sign-out"></i></a>
+
+      <i class="pi pi-bars menu-icon" (click)="toggleMenu()"></i>
+    </div>
+  </div>
+
+
+
+  <!-- Menú desplegable móvil -->
+  <div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu">
+    <ul>
+      <li><a routerLink="/" (click)="closeMenu()">HOME</a></li>
+      <li class="mobile-menu-categorias">
+        <a (click)="toggleMegaMenu($event)">CATEGORÍAS</a>
+        <ul *ngIf="isMegaMenuOpen">
+          <li><a routerLink="/products" (click)="closeMenu()">Libros</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Biblia</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Litúrgico</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Imágenes de Culto</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Cuadros</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Estampas</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Accesorios</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Catecismos</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Resina</a></li>
+          <li><a routerLink="/products" (click)="closeMenu()">Velas y Cirios</a></li>
+        </ul>
+      </li>
+      <li><a routerLink="/about" (click)="closeMenu()">SOBRE NOSOTROS</a></li>
+      <li><a routerLink="/contact" (click)="closeMenu()">CONTACTO</a></li>      
+    </ul>
+  </div>
+
+
+<!-- Panel de búsqueda deslizable -->
+<div *ngIf="isSearchOpen" class="search-overlay">
+  <i class="pi pi-times close-search" (click)="toggleSearch()"></i>
+  
+  <div class="search-wrapper"> <!-- Contenedor que alinea todo -->
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Buscar productos..."
+        [(ngModel)]="searchQuery"
+        (input)="buscarProductos(searchQuery)"
+        class="search-input"
+      />
+      <button class="clear-btn" *ngIf="searchQuery" (click)="clearSearch()">
+        <i class="pi pi-times"></i>
+      </button>
+      <button class="search-btn" (click)="buscarProductos(searchQuery)">
+        <i class="pi pi-search"></i>
+      </button>
+    </div>
+  
+    <div class="reultados">
+      <div *ngIf="productos.length > 0" class="search-results">
+        <ul>
+          <li *ngFor="let producto of productos">
+            <a (click)=" closeSearch()" [routerLink]="['/products', producto.nombre_categoria]" [queryParams]="{selected: producto.id}">
+             
+            {{ producto.nombre }}
+          </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</header>

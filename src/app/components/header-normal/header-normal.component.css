@@ -1,0 +1,353 @@
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #a38350;
+  /*background: linear-gradient(to bottom, #a38350 50%, black 100%);*/
+  color: white;
+  min-height: 4vh; /* Ajusta esto según tu necesidad */
+  width: 100%;
+}
+
+
+.lib, .contenedor-slogan {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 0s linear 1s; /* Desvanecimiento suave y retraso en visibility */
+}
+
+.lib.fade-in, .contenedor-slogan.fade-in {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease-in-out, visibility 0s linear 0s; /* Sin retraso en visibility cuando es visible */
+}
+
+.main-header {
+  /*background: linear-gradient(to bottom, black 50%, #292929 100%);*/
+
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+
+.logo-container {
+  flex: 1;
+}
+
+.logo {
+  width: 100px;
+}
+
+.nav-links {
+  flex: 2;
+  text-align: center;
+}
+
+.nav-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links ul li {
+  display: inline-block;
+}
+
+.nav-links ul li a {
+  text-decoration: none;
+  font-size: 16px;
+
+}
+
+.icons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+
+}
+
+.icons i {
+  font-size: 20px;
+  cursor: pointer;
+
+}
+
+.icons .badge {
+
+
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  position: relative;
+  left: -8px;
+}
+
+.menu-icon {
+  font-size: 24px;
+  padding: 5px;
+  border-radius: 50%;
+
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+    background: #fef7f2;
+    position: absolute;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    text-align: center;
+    z-index: 1000; 
+    padding: 10px 0;
+  }
+
+  .mobile-menu ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .mobile-menu ul li {
+    padding: 10px 0;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
+
+.mega-menu-container {
+  position: relative;
+
+}
+
+.mega-menu {
+  display: none;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  width: 1200px; /* Aumenté el tamaño del menú */
+  left: -340px; /* Alineado a la derecha */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 50px; /* Aumenté el padding para dar más espacio */
+  border-radius: 5px;
+  z-index: 1000; /* Añadir un z-index alto */
+  text-align: start;
+}
+
+.mega-menu-container:hover .mega-menu {
+
+  display: flex;
+  justify-content: flex-end; /* Alineado a la derecha */
+  gap: 50px; /* Aumenté el espacio entre las columnas */
+
+  
+}
+
+.mega-menu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Más espacio entre las categorías */
+}
+
+.mega-menu-column a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  transition: transform 0.3s ease-in-out, color 0.3s;
+}
+
+.mega-menu-column a:hover {
+  color: #a38350;
+  transform: translateX(10px); /* Efecto de desplazamiento a la derecha */
+}
+
+/* RESPONSIVIDAD */
+@media (max-width: 768px) {
+  .mega-menu {
+    width: 100%;
+    position: static;
+    display: none;
+    flex-direction: column;
+  
+  }
+
+  .mobile-menu-categorias ul {
+    display: none;
+    background: #fef7f2;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .mobile-menu-categorias ul li {
+    padding: 5px 0;
+  }
+}
+
+
+
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+/* Contenedor de la barra de búsqueda */
+.search-container {
+  position: relative;
+  width: 60%;
+  max-width: 600px;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+/* Input de búsqueda */
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #a38350;
+  outline: none;
+  font-size: 16px;
+}
+
+/* Botón para borrar texto */
+.clear-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #a38350;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Botón de buscar */
+.search-btn {
+  background: #a38350;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* Botón para cerrar búsqueda */
+.close-search {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #a38350;
+}
+
+
+
+/* Estilo para la lista de productos */
+
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra tanto el input como los resultados */
+  width: 100%;
+}
+
+.reultados {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centra los resultados */
+  margin-top: 10px; /* Espacio entre el input y los resultados */
+}
+
+.search-results {
+  width: 60%; /* Mantiene el mismo ancho que el input */
+  max-width: 600px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-results a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.search-results a:hover {
+color:#a38350;
+}
+
+
+.search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.search-results li:last-child {
+  border-bottom: none;
+}
+
+.search-results li:hover {
+  background: #f5f5f5;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .search-container {
+    width: 90%;
+  }
+}

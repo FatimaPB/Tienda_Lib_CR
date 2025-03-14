@@ -1,0 +1,170 @@
+<!-- Perfil de Usuario -->
+<div class="profile-container" *ngIf="perfil && !showForm">
+    <h1 class="section-title">Perfil de Usuario</h1>
+    <div class="card profile-card">
+        <div class="profile-info">
+            <div class="profile-details">
+                <p>{{ perfil.rol }}</p>
+                <p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
+                <p><strong>Correo:</strong> {{ perfil.correo }}</p>
+                <p><strong>Teléfono:</strong> {{ perfil.telefono }}</p>
+            </div>
+            <div class="profile-actions">
+                <button (click)="showForm = true" class="btn btn-edit">⚙️ Editar Perfil</button>
+                <button (click)="showPasswordForm = true" class="btn btn-change-password">🔒 Cambiar Contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formulario de edición del perfil -->
+<div class="profile-container" *ngIf="showForm">
+    <h1 class="section-title">Editar Perfil</h1>
+    <div class="card form-card">
+        <form (ngSubmit)="actualizarPerfil()">
+            <div class="input-wrapper">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" [(ngModel)]="perfil.nombre" name="nombre" class="form-input"  readonly />
+                <i class="pi pi-lock" aria-hidden="true"></i> <!-- Icono de candado -->
+            </div>
+
+            <div class="input-wrapper">
+                <label for="correo">Correo</label>
+                <input id="correo" [(ngModel)]="perfil.correo" name="correo" class="form-input" type="email"  readonly />
+                <i class="pi pi-lock" aria-hidden="true"></i> <!-- Icono de candado -->
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input id="telefono" [(ngModel)]="perfil.telefono" name="telefono" class="form-input" type="tel"    maxlength="10"
+                (keypress)="preventLetters($event)" required />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-update"   [disabled]="!perfil.telefono || !isFormChanged() || !isValidPhoneNumber()">Actualizar</button>
+                <button type="button" (click)="cancelarEdicion()" class="btn btn-cancel">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Formulario para cambiar la contraseña -->
+<div class="profile-container" *ngIf="showPasswordForm">
+    <h1 class="section-title">Cambiar Contraseña</h1>
+    <div class="card form-card">
+        <form (ngSubmit)="cambiarContrasena()">
+            <!-- Contraseña Actual -->
+            <div class="form-group">
+                <label for="currentPassword">Contraseña Actual</label>
+                <div class="password-wrapper">
+                    <input
+                        id="currentPassword"
+                        [(ngModel)]="passwordData.currentPassword"
+                        name="currentPassword"
+                        class="form-input"
+                        [type]="showCurrentPassword ? 'text' : 'password'"
+                        required
+                    />
+                    <button type="button" class="toggle-visibility" (click)="toggleCurrentPasswordVisibility()">
+                        <i class="pi" [ngClass]="showCurrentPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Nueva Contraseña -->
+            <div class="form-group">
+                <label for="newPassword">Nueva Contraseña</label>
+                <div class="password-wrapper">
+                    <input
+                        id="newPassword"
+                        [(ngModel)]="passwordData.newPassword"
+                        name="newPassword"
+                        class="form-input"
+                        [type]="showNewPassword ? 'text' : 'password'"
+                        (input)="checkPasswordStrength()"
+                        required
+                    />
+                    <button type="button" class="toggle-visibility" (click)="toggleNewPasswordVisibility()">
+                        <i class="pi" [ngClass]="showNewPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    Fortaleza: {{ passwordStrength }}
+                </div>
+            </div>
+
+            <!-- Confirmar Nueva Contraseña -->
+            <div class="form-group">
+                <label for="confirmNewPassword">Confirmar Nueva Contraseña</label>
+                <div class="password-wrapper">
+                    <input
+                        id="confirmNewPassword"
+                        [(ngModel)]="passwordData.confirmNewPassword"
+                        name="confirmNewPassword"
+                        class="form-input"
+                        [type]="showConfirmPassword ? 'text' : 'password'"
+                        required
+                    />
+                    <button type="button" class="toggle-visibility" (click)="toggleConfirmPasswordVisibility()">
+                        <i class="pi" [ngClass]="showConfirmPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
+                    </button>
+                    <div class="error" *ngIf="!passwordsMatch">
+                        Las contraseñas no coinciden.
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-update"   [disabled]="!isFormValid()">Actualizar Contraseña</button>
+                <button type="button" (click)="cancelarCambioContrasena()" class="btn btn-cancel">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="historial-compras">
+    <h2>Historial de Compras</h2>
+    
+    <div *ngIf="ventas.length === 0">
+      <p>No tienes compras registradas.</p>
+    </div>
+    
+    <div *ngIf="ventas.length > 0">
+      <table class="tabla-historial">
+        <thead>
+          <tr>
+            <th>ID Venta</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>Método de Pago</th>
+            <th>Estado</th>
+            <th>Envio</th>
+            <th>Dirección de Envío</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let venta of ventas">
+            <td>{{ venta.id }}</td>
+            <td>{{ venta.fecha | date:'short' }}</td>
+            <td>${{ venta.total | number:'1.2-2' }}</td>
+            <td>{{ venta.metodo_pago }}</td>
+            <td>{{ venta.estado }}</td>
+            <td>{{ venta.estado_envio }}</td>
+            <td>{{ venta.direccion_envio }}</td>
+            <td>
+              <button >Ver Detalle</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+
+
+
+<div class="toast success-toast" *ngIf="successMessage">{{ successMessage }}</div>
+<div class="toast error-toast" *ngIf="errorMessage">{{ errorMessage }}</div>

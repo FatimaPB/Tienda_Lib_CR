@@ -1,0 +1,102 @@
+<div class="contact-container">
+    <!-- Mapa de Google -->
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7442.568161150652!2d-98.42083866358557!3d21.14109004118161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d726eb5d1d46d3%3A0xba50c82de105ab7e!2sPl.%20de%20la%20Revoluci%C3%B3n%20Mexicana%201%2C%20Centro%2C%2043000%20Huejutla%20de%20Reyes%2C%20Hgo.!5e0!3m2!1ses!2smx!4v1738813309168!5m2!1ses!2smx" 
+        width="600"
+        height="450"
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    </div>
+  
+    <div class="content-wrapper">
+      <!-- Información de Contacto -->
+      <div class="info-container">
+        <h2>Información de Contacto</h2>
+        <p><strong>📍 Dirección:</strong> 123 Calle Principal, Ciudad, País</p>
+        <p><strong>📞 Teléfono:</strong> +123 456 7890</p>
+        <p><strong>📧 Correo:</strong> </p>
+  
+        <h3>Síguenos en redes sociales</h3>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank" class="facebook">Facebook</a>
+          <a href="https://twitter.com" target="_blank" class="twitter">Twitter</a>
+          <a href="https://instagram.com" target="_blank" class="instagram">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+  <div class="inicio-container">
+    <!-- Sección Hero -->
+    <section class="hero">
+      <h1>Bienvenido a Librería Cristo Rey</h1>
+      <p>Descubre los mejores artículos religiosos con la mejor calidad y autenticidad.</p>
+      <button mat-raised-button color="accent" class="hero-button">
+        Explorar Tienda
+      </button>
+    </section>
+  
+    <!-- Sección de Beneficios -->
+    <section class="benefits">
+      <mat-card class="benefit-card" *ngFor="let card of cards" [@fadeIn] class="shadow-card">
+        <mat-icon class="card-icon">{{ card.icon }}</mat-icon>
+        <mat-card-title>{{ card.title }}</mat-card-title>
+        <mat-card-content>{{ card.description }}</mat-card-content>
+      </mat-card>
+    </section>
+  
+    <!-- Carrusel de productos -->
+    <section class="carousel">
+      <h2>Nuestros productos destacados</h2>
+      <mat-card class="carousel-card shadow-card" *ngFor="let producto of productos">
+        <img mat-card-image [src]="producto.img" [alt]="producto.nombre">
+        <mat-card-title>{{ producto.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ producto.precio | currency }}</mat-card-subtitle>
+        <button mat-raised-button color="primary">Ver más</button>
+      </mat-card>
+    </section>
+  
+    <!-- Sección de categorías -->
+    <section class="categories">
+      <h2>Explora por Categorías</h2>
+      <mat-chip-listbox class="chip-list">
+        <mat-chip *ngFor="let categoria of categorias" selectable="true" class="category-chip">
+          {{ categoria }}
+        </mat-chip>
+      </mat-chip-listbox>
+    </section>
+  
+    <!-- Tarjetas de estadísticas -->
+    <section class="stats">
+      <mat-card class="stat-card shadow-card">
+        <mat-card-title>Clientes Satisfechos</mat-card-title>
+        <mat-progress-bar mode="determinate" [value]="95"></mat-progress-bar>
+        <p>95% de clientes felices</p>
+      </mat-card>
+      <mat-card class="stat-card shadow-card">
+        <mat-card-title>Pedidos Entregados</mat-card-title>
+        <mat-progress-bar mode="determinate" [value]="80"></mat-progress-bar>
+        <p>+800 pedidos completados</p>
+      </mat-card>
+    </section>
+  
+    <!-- Formulario de suscripción -->
+    <section class="subscription">
+      <h2>¡Suscríbete a nuestro boletín!</h2>
+      <mat-form-field appearance="fill" class="subscription-field">
+        <mat-label>Tu correo electrónico</mat-label>
+        <input matInput type="email" placeholder="ejemplo@correo.com">
+      </mat-form-field>
+      <button mat-raised-button color="accent" class="subscribe-button">Suscribirse</button>
+    </section>
+  
+
+  </div>
+  
+  

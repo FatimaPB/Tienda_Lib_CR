@@ -242,7 +242,7 @@ ul {
   color: white;
   border: none;
   font-size: 16px;
-  padding: 10px 15px;
+  padding: 15px;
   border-radius: 50%;
   cursor: pointer;
   z-index: 9999; /* Asegura que esté por encima de otros elementos */
@@ -369,3 +369,4 @@ ul {
     width: 65%;
   }
 }
+

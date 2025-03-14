@@ -1,0 +1,65 @@
+
+  
+
+  /* Estilos generales */
+.dashboard-container {
+  padding: 30px;
+  background: #f4f4f4;
+  min-height: 100vh;
+  text-align: center;
+}
+
+/* Título */
+.dashboard-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Grid de tarjetas */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Tarjetas */
+.dashboard-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: scale(1.05);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Iconos */
+.dashboard-card i {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+/* Color especial para Cerrar Sesión */
+.logout {
+  background: #ff4d4d;
+  color: white;
+}
+
+.logout:hover {
+  background: #cc0000;
+}

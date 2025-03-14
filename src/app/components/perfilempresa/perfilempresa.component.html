@@ -1,0 +1,106 @@
+<div *ngIf="!mostrarFormulario" class="perfil-container">
+  <!-- Mostrar Logo -->
+  <div class="logo-container">
+    <img [src]="empresaData?.logo_url" alt="Logo de la Empresa" width="150" height="150" *ngIf="empresaData?.logo_url; else noLogo" />
+    <ng-template #noLogo>No disponible</ng-template>
+  </div>
+
+  <!-- Mostrar datos de la empresa -->
+  <div class="datos-empresa">
+    <h2 class="nombreempore">{{ empresaData?.nombre ||"..." || "Nombre de la Empresa" }}   <i class="pi pi-verified"></i></h2>
+    <p><strong>Slogan:</strong> {{ empresaData?.slogan ||"..." || "Slogan no disponible" }}</p>
+    <h3>Redes sociales</h3>
+    <p><strong>Facebook:</strong> {{ empresaData?.facebook ||"..." || "No disponible" }}</p>
+    <p><strong>Instagram:</strong> {{ empresaData?.instagram ||"..." || "No disponible" }}</p>
+    <h3>Contacto</h3>
+    <p><strong>Correo Electrónico:</strong> {{ empresaData?.correo_electronico ||"..." || "No disponible" }}</p>
+    <p><strong>Teléfono:</strong> {{ empresaData?.telefono ||"..." || "No disponible" }}</p>
+    <p><strong>Dirección:</strong> {{ empresaData?.direccion || "..." ||"No disponible" }}</p>
+  </div>
+
+  <!-- Botón para modificar -->
+  <button (click)="cargarDatosEmpresa(empresaData!)" class="button">Actualizar datos</button>
+</div>
+
+<!-- Formulario de modificación -->
+<form [formGroup]="empresaForm" (ngSubmit)="onSubmit()" class="empresa-container" *ngIf="mostrarFormulario">
+  <!-- Columna 1 -->
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input id="nombre" formControlName="nombre" required class="form-control" />
+    <div *ngIf="empresaForm.get('nombre')?.invalid && empresaForm.get('nombre')?.touched" class="error">
+      <small *ngIf="empresaForm.get('nombre')?.errors?.['required']">El nombre es obligatorio.</small>
+      <small *ngIf="empresaForm.get('nombre')?.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="slogan">Slogan:</label>
+    <input id="slogan" formControlName="slogan" class="form-control" />
+    <div *ngIf="empresaForm.get('slogan')?.invalid && empresaForm.get('slogan')?.touched" class="error">
+      <small>El slogan es obligatorio.</small>
+    </div>
+  </div>
+
+
+  <div  class="form-group">
+    <label for="facebook">Facebook  <i class="pi pi-facebook"></i></label>
+    <input id="facebook" formControlName="facebook" class="form-control" />
+    <div *ngIf="empresaForm.get('facebook')?.invalid && empresaForm.get('facebook')?.touched" class="error">
+      <small *ngIf="empresaForm.get('facebook')?.errors?.['required']">El enlace de Facebook es obligatorio.</small>
+      <small *ngIf="empresaForm.get('facebook')?.errors?.['pattern']">Debe ser un enlace válido de Facebook.</small>
+    </div>
+  </div>
+
+  <div  class="form-group">
+    <label for="instagram">Instagram  <i class="pi pi-instagram"></i></label>
+    <input id="instagram" formControlName="instagram" class="form-control" />
+    <div *ngIf="empresaForm.get('instagram')?.invalid && empresaForm.get('.instagram')?.touched" class="error">
+      <small *ngIf="empresaForm.get('instagram')?.errors?.['required']">El enlace de Instagram es obligatorio.</small>
+      <small *ngIf="empresaForm.get('instagram')?.errors?.['pattern']">Debe ser un enlace válido de Instagram.</small>
+    </div>
+  </div>
+
+  <div  class="form-group">
+    <label for="direccion">Dirección  <i class="pi pi-directions"></i></label>
+    <input id="direccion" formControlName="direccion" class="form-control" />
+    <div *ngIf="empresaForm.get('direccion')?.invalid && empresaForm.get('.direccion')?.touched" class="error">
+      <small *ngIf="empresaForm.get('direccion')?.errors?.['required']">La dirección es obligatoria.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="correoElectronico">Correo Electrónico  <i class="pi pi-envelope"></i></label>
+    <input id="correoElectronico" type="email" formControlName="correoElectronico" required class="form-control" />
+    <div *ngIf="empresaForm.get('correoElectronico')?.invalid && empresaForm.get('correoElectronico')?.touched" class="error">
+      <small *ngIf="empresaForm.get('correoElectronico')?.errors?.['required']">El correo es obligatorio.</small>
+      <small *ngIf="empresaForm.get('correoElectronico')?.errors?.['email']">Debe ser un correo válido.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="telefono">Teléfono  <i class="pi pi-phone"></i></label>
+    <input id="telefono" formControlName="telefono" class="form-control"  maxlength="10"  (keypress)="preventLetters($event)" />
+    <div *ngIf="empresaForm.get('telefono')?.invalid && empresaForm.get('telefono')?.touched" class="error">
+      <small *ngIf="empresaForm.get('telefono')?.errors?.['required']">El teléfono es obligatorio.</small>
+      <small *ngIf="empresaForm.get('telefono')?.errors?.['pattern']">Debe ser un número de teléfono válido (10 dígitos).</small>
+    </div>
+  </div>
+
+  <!-- Logo -->
+  <div class="form-group">
+    <label for="logo">Logo  <i class="pi pi-image"></i></label>
+    <input id="logo" type="file" (change)="onLogoSelected($event)" class="form-control" />
+  </div>
+
+  <button type="submit" [disabled]="empresaForm.invalid" class="button">Actualizar Perfil</button>
+  <button type="button" (click)="cancelarEdicion()" class="button button-cancelar">Cancelar</button>
+  <div *ngIf="mensajeExito" class="alert alert-success">
+    Perfil actualizado exitosamente.
+  </div>
+  <div *ngIf="mensajeError" class="fallo">
+    Error al actualizar perfil.
+  </div>
+</form>
+
+

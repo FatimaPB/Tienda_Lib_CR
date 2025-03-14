@@ -1,31 +1,40 @@
-import { Routes } from '@angular/router';
+import { Routes} from '@angular/router';
 import { AuthGuard } from './auth.guard'; // Asegúrate de que la ruta sea correcta
-import { LoginComponent } from './login/login.component';
-import { InicioComponent } from './inicio/inicio.component';
-import { RegistroComponent } from './registro/registro.component';
-import { ProductosComponent } from './productos/productos.component';
-import { DetalleproductoComponent } from './detalleproducto/detalleproducto.component';
-import { InicioadminComponent } from './inicioadmin/inicioadmin.component';
-import { VerificarCodigoComponent } from './verificar-codigo/verificar-codigo.component';
-import { PoliticasComponent } from './politicas/politicas.component';
-import { TerminosComponent } from './terminos/terminos.component';
-import { DeslindeComponent } from './deslinde/deslinde.component';
-import { PerfilempresaComponent } from './perfilempresa/perfilempresa.component';
-import { IncidenciasComponent } from './incidencias/incidencias.component';
-import { RecuperarcontraComponent } from './recuperarcontra/recuperarcontra.component';
-import { VerificarComponent } from './verificar/verificar.component';
-import { RestablecercontraComponent } from './restablecercontra/restablecercontra.component';
-import { PoliticadeprivacidadComponent } from './politicadeprivacidad/politicadeprivacidad.component';
-import { DeslindelegalComponent } from './deslindelegal/deslindelegal.component';
-import { TerminosycondicionesComponent } from './terminosycondiciones/terminosycondiciones.component';
-import { PerfilusuarioComponent } from './perfilusuario/perfilusuario.component';
-import { NosotrosComponent } from './nosotros/nosotros.component';
-import { NoticiasEventosComponent } from './noticias-eventos/noticias-eventos.component';
-import { Error400Component } from './error400/error400.component';
-import { Error404Component } from './error404/error404.component';
-import { Error500Component } from './error500/error500.component';
-import { CarritoComponent } from './carrito/carrito.component';
-import { ContactoComponent } from './contacto/contacto.component';
+import { LoginComponent } from './components/login/login.component';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { RegistroComponent } from './components/registro/registro.component';
+import { ProductosComponent } from './components/productos/productos.component';
+import { DetalleproductoComponent } from './components/detalleproducto/detalleproducto.component';
+import { InicioadminComponent } from './components/inicioadmin/inicioadmin.component';
+import { VerificarCodigoComponent } from './components/verificar-codigo/verificar-codigo.component';
+import { PoliticasComponent } from './components/politicas/politicas.component';
+import { TerminosComponent } from './components/terminos/terminos.component';
+import { DeslindeComponent } from './components/deslinde/deslinde.component';
+import { PerfilempresaComponent } from './components/perfilempresa/perfilempresa.component';
+import { IncidenciasComponent } from './components/incidencias/incidencias.component';
+import { RecuperarcontraComponent } from './components/recuperarcontra/recuperarcontra.component';
+import { VerificarComponent } from './components/verificar/verificar.component';
+import { RestablecercontraComponent } from './components/restablecercontra/restablecercontra.component';
+import { PoliticadeprivacidadComponent } from './components/politicadeprivacidad/politicadeprivacidad.component';
+import { DeslindelegalComponent } from './components/deslindelegal/deslindelegal.component';
+import { TerminosycondicionesComponent } from './components/terminosycondiciones/terminosycondiciones.component';
+import { PerfilusuarioComponent } from './components/perfilusuario/perfilusuario.component';
+import { NosotrosComponent } from './components/nosotros/nosotros.component';
+import { NoticiasEventosComponent } from './components/noticias-eventos/noticias-eventos.component';
+import { Error400Component } from './components/error400/error400.component';
+import { Error404Component } from './components/error404/error404.component';
+import { Error500Component } from './components/error500/error500.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { ContactoComponent } from './components/contacto/contacto.component';
+import { CategoriasComponent } from './components/categorias/categorias.component';
+import { AdminproductosComponent } from './components/adminproductos/adminproductos.component';
+import { BannerComponent } from './components/banner/banner.component';
+import { VentasComponent } from './components/ventas/ventas.component';
+import { CatalogoproductosComponent } from './components/catalogoproductos/catalogoproductos.component';
+import { ColoresComponent } from './components/colores/colores.component';
+import { TamanosComponent } from './components/tamanos/tamanos.component';
+
+
 
 
 export const routes: Routes = [
@@ -36,11 +45,9 @@ export const routes: Routes = [
 { path: 'carshop', component: CarritoComponent, data: { breadcrumb: 'nosotros'}},
 { path: 'contact', component: ContactoComponent, data: { breadcrumb: 'contacto'}},
 
-{ path: 'products', component: ProductosComponent, data: { breadcrumb: 'Productos' }}, 
-{ path: 'detalle', component: DetalleproductoComponent, data: { breadcrumb: 'Detalle' } },
+{ path: 'products/:nombreCategoria', component: ProductosComponent, data: { breadcrumb: 'Productos' }}, 
+{ path: 'detalle/:id', component: DetalleproductoComponent, data: { breadcrumb: 'Detalle' } },
 { path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'Noticias y Eventos' } },
-{ path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'noticias y eventos'} },
-
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },
 { path: 'deslindelegal', component: DeslindelegalComponent },
 { path: 'terminosycondiciones', component: TerminosycondicionesComponent },
@@ -57,7 +64,13 @@ export const routes: Routes = [
 { path: 'pempresa', component: PerfilempresaComponent, canActivate: [AuthGuard] },
 { path: 'incidencias', component: IncidenciasComponent, canActivate: [AuthGuard] },
 { path: 'perfil', component: PerfilusuarioComponent, canActivate: [AuthGuard] },
-
+{ path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },
+{ path: 'admproduts', component: AdminproductosComponent, canActivate: [AuthGuard] },
+{ path: 'banners', component: BannerComponent, canActivate: [AuthGuard] },
+{ path: 'ventas', component: VentasComponent, canActivate: [AuthGuard] },
+{ path: 'admcat', component: CatalogoproductosComponent, canActivate: [AuthGuard] },
+{ path: 'colores', component: ColoresComponent, canActivate: [AuthGuard] },
+{ path: 'tamaños', component: TamanosComponent, canActivate: [AuthGuard] },
 
 { path: 'error400', component: Error400Component },
 { path: 'error404', component: Error404Component },

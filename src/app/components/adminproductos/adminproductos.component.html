@@ -1,0 +1,144 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-d-flex p-jc-center p-ai-center" style="width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 500px;">
+  <div class="p-card p-shadow-2" style="width: 100%;">
+    <h2 class="texto" style="margin-bottom: 20px;">Gestión de Productos</h2>
+    <button pButton label="Nuevo Producto" icon="pi pi-plus" class="p-button-text p-mb-4" (click)="mostrarFormulario = !mostrarFormulario"></button>
+
+    <p-table [value]="productos" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" class="p-datatable-sm p-shadow-2">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Imagen</th> <!-- Nueva columna -->
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>SKU</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Categoría</th>
+          <th>Color</th>
+          <th>Tamaño</th>
+          <th>Usuario</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-producto>
+        <tr>
+          <td>
+            <p-carousel 
+              [value]="producto.imagenes" 
+              [numVisible]="1" 
+              [numScroll]="1" 
+              [circular]="false" 
+              [autoplayInterval]="4000" 
+              [showNavigators]="false" 
+              [showIndicators]="true" 
+              [style]="{ width: '200px' }">
+              
+              <ng-template pTemplate="item" let-image>
+                <img [src]="image" 
+                     alt="Imagen del producto" 
+                     [style]="{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '5px' }">
+              </ng-template>
+          
+            </p-carousel>
+          </td>
+          
+          
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.sku }}</td>
+          <td>{{ producto.precio_calculado | currency }}</td>
+          <td>{{ producto.cantidad_stock }}</td>
+          <td>{{ producto.nombre_categoria }}</td>
+          <td>{{ producto.nombre_color }}</td>
+          <td>{{ producto.nombre_tamano }}</td>
+          <td>{{ producto.usuario_nombre }}</td>
+          <td>{{ producto.creado_en | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td>
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text" (click)="editarProducto(producto)"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text" (click)="confirmarEliminarProducto(producto.id)"></button>
+            <button pButton icon="pi pi-plus" label="Agregar al Catálogo" class="p-button-text" (click)="agregarAlCatalogo(producto.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog header="{{ mostrarFormulario ? 'Agregar Producto' : 'Editar Producto' }}" [(visible)]="mostrarFormulario" [modal]="true" [style]="{ width: '50rem' }">
+  <!-- Barra de Progreso -->
+  <p-progressBar [value]="progreso" [showValue]="true" [style]="{ 'margin-bottom': '20px' }"></p-progressBar>
+
+  <p-stepper [(activeIndex)]="activeIndex">
+    <!-- Paso 1: Datos Básicos -->
+    <p-step label="Datos Básicos">
+      <div *ngIf="activeIndex === 0">
+        <form #productoForm="ngForm"  class="p-fluid">
+          <div class="p-field">
+            <label>Nombre</label>
+            <input pInputText type="text" [(ngModel)]="producto.nombre" name="nombre" required />
+          </div>
+          <div class="p-field">
+            <label>Descripción</label>
+            <textarea pInputTextarea [(ngModel)]="producto.descripcion" name="descripcion" required></textarea>
+          </div>
+          <div class="p-field">
+            <label>SKU</label>
+            <input pInputText type="text" [(ngModel)]="producto.sku" name="sku" required />
+          </div>
+          <div class="p-field">
+            <label>Costo</label>
+            <input pInputText type="number" [(ngModel)]="producto.costo" name="costo" step="0.01" required />
+          </div>
+          <div class="p-field">
+            <label>Porcentaje Ganancia</label>
+            <input pInputText type="number" [(ngModel)]="producto.porcentaje_ganancia" name="porcentaje_ganancia" step="0.01" required />
+          </div>
+          <div class="p-field">
+            <label>Precio Calculado</label>
+            <input pInputText type="number" [value]="calcularPrecio()" name="precio_calculado" readonly />
+          </div>
+          <div class="p-d-flex p-jc-end">
+            <button type="button" pButton label="Siguiente" class="p-button-text" (click)="siguientePaso()"></button>
+            <button type="button" pButton label="Cancelar" (click)="mostrarFormulario = !mostrarFormulario" class="p-button-text" (click)="resetForm()"></button>
+          </div>
+        </form>
+      </div>
+    </p-step>
+
+    <!-- Paso 2: Detalles Adicionales -->
+    <p-step label="Detalles Adicionales">
+      <div *ngIf="activeIndex === 1">
+        <form class="p-fluid">
+          <div class="p-field">
+            <label>Cantidad Stock</label>
+            <input pInputText type="number" [(ngModel)]="producto.cantidad_stock" name="cantidad_stock" required />
+          </div>
+          <div class="p-field">
+            <label>Categoría</label>
+            <p-dropdown [(ngModel)]="producto.categoria_id" name="categoria_id" [options]="categorias" optionLabel="nombre_categoria" optionValue="id" placeholder="Seleccione una categoría" required></p-dropdown>
+          </div>
+          <div class="p-field">
+            <label>Color</label>
+            <p-dropdown [(ngModel)]="producto.color_id" name="color_id" [options]="colores" optionLabel="nombre_color" optionValue="id" placeholder="Seleccione un color" required></p-dropdown>
+          </div>
+          <div class="p-field">
+            <label>Tamaño</label>
+            <p-dropdown [(ngModel)]="producto.tamano_id" name="tamano_id" [options]="tamanos" optionLabel="nombre_tamano" optionValue="id" placeholder="Seleccione el tamaño" required></p-dropdown>
+          </div>
+          <div class="p-field">
+            <label>Imágenes</label>
+            <p-fileUpload name="imagen" (onSelect)="onFileChange($event)" [multiple]="true" accept="image/*" chooseLabel="Agregar" cancelLabel="Cancelar"></p-fileUpload>
+          </div>
+          <div class="p-d-flex p-jc-between">
+            <button type="button" pButton label="Anterior" class="p-button-text" (click)="anteriorPaso()"></button>
+            <button type="submit" pButton label="Guardar Producto" class="p-button-text"  (click)="guardarProducto()"></button>
+            <button type="button" pButton label="Cancelar" (click)="mostrarFormulario = !mostrarFormulario" class="p-button-text" (click)="resetForm()"></button>
+          </div>
+        </form>
+      </div>
+    </p-step>
+  </p-stepper>
+</p-dialog>

@@ -7,8 +7,8 @@ import { Producto } from '../models/producto.model';
   providedIn: 'root'
 })
 export class ProductoService {
-    private apiUrlProductos = 'https://back-tienda-one.vercel.app/api/productos';
-    private apiUrlCatalogo = 'https://back-tienda-one.vercel.app/api/catalogo';
+    private apiUrlProductos = 'https://tienda-lib-cr.vercel.app/api/productos';
+    private apiUrlCatalogo = 'https://tienda-lib-cr.vercel.app/api/catalogo';
 
     constructor(private http: HttpClient) {}
   

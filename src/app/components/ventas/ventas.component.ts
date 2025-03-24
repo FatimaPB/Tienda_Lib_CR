@@ -24,7 +24,7 @@ import { TableModule } from 'primeng/table';
 })
 export class VentasComponent implements OnInit  {
   ventas: any[] = [];
-  apiUrl: string = 'https://back-tienda-one.vercel.app/api/ventas/historial-todos';
+  apiUrl: string = 'https://tienda-lib-cr.vercel.app/api/ventas/historial-todos';
   usuarioRol: string | null = null;
 
   ventasFiltradas: any[] = [];
@@ -43,7 +43,7 @@ export class VentasComponent implements OnInit  {
   }
 
   verificarUsuario(): void {
-    this.http.get<any>('https://back-tienda-one.vercel.app/api/check-auth',{withCredentials:true}).subscribe(
+    this.http.get<any>('https://tienda-lib-cr.vercel.app/api/check-auth',{withCredentials:true}).subscribe(
       res => {
         if (res.authenticated && (res.usuario.rol === 'admin' || res.usuario.rol === 'vendedor')) {
           this.usuarioRol = res.usuario.rol;

@@ -50,12 +50,24 @@
       <img *ngIf="i !== 0" [src]="imagen" alt="Imagen {{ i + 1 }}" class="gallery-image" (click)="cambiarImagenProducto(producto, i)">
     </div>
   </div>
-        <!-- Nombre del producto -->
-        <div class="product-info">
-          <h3>{{ producto.nombre }}</h3>
-          <p><strong>Precio:</strong> {{ producto.precio_calculado | currency }}</p>
-        </div>
-  
+  <!-- Nombre del producto -->
+<div class="product-info">
+  <h3>{{ producto.nombre }}</h3>
+  <p><strong>Precio:</strong> {{ producto.precio_calculado | currency }}</p>
+  <p><strong>Comentarios:</strong> {{ producto.total_resenas }}</p>
+
+<!-- Mostrar estrellas solo si la calificación promedio es mayor a 0 -->
+<p *ngIf="producto.calificacion_promedio > 0">
+  <strong>{{ producto.calificacion_promedio }} </strong>
+  <ng-container *ngFor="let star of producto.stars">
+    <i class="pi" [ngClass]="star"></i>
+  </ng-container>
+</p>
+
+
+  <p><strong> </strong></p>
+</div>
+
         
   
         <!-- Botones: Agregar al carrito y Ver detalle -->

@@ -1,0 +1,17 @@
+<div class="mfa-container">
+    <h2>Verificación MFA</h2>
+  
+    <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+      {{ mensaje }}
+    </div>
+  
+    <form (ngSubmit)="onVerify()">
+      <div class="form-group">
+        <label for="mfaToken">Código MFA</label>
+        <input type="text" id="mfaToken" [(ngModel)]="mfaToken" name="mfaToken" required class="form-control" />
+      </div>
+  
+      <button type="submit" class="btn">Verificar</button>
+    </form>
+  </div>
+  

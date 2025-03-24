@@ -8,14 +8,25 @@
                 <p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
                 <p><strong>Correo:</strong> {{ perfil.correo }}</p>
                 <p><strong>Teléfono:</strong> {{ perfil.telefono }}</p>
+                <p><strong>Autenticación Multifactor (MFA):</strong> {{ perfil.mfa_activado ? 'Activado' : 'Desactivado' }}</p> <!-- Aquí añadimos el estado MFA -->
             </div>
             <div class="profile-actions">
                 <button (click)="showForm = true" class="btn btn-edit">⚙️ Editar Perfil</button>
                 <button (click)="showPasswordForm = true" class="btn btn-change-password">🔒 Cambiar Contraseña</button>
+                <button *ngIf="!perfil.mfa_activado" (click)="activarMFA()" class="btn btn-activate-mfa">🔐 Activar MFA</button>
+                <button *ngIf="perfil.mfa_activado" (click)="desactivarMFA()" class="btn btn-activate-mfa">🔐 Desactivar MFA</button>
+            
             </div>
         </div>
     </div>
 </div>
+
+<!-- Mostrar el QR para la activación de MFA -->
+<div *ngIf="mfaQRCode">
+    <p>Escanea este código QR con tu aplicación de autenticación (Google Authenticator o similar):</p>
+    <img [src]="mfaQRCode" alt="Código QR de MFA" />
+</div>
+
 
 <!-- Formulario de edición del perfil -->
 <div class="profile-container" *ngIf="showForm">
@@ -24,8 +35,7 @@
         <form (ngSubmit)="actualizarPerfil()">
             <div class="input-wrapper">
                 <label for="nombre">Nombre</label>
-                <input id="nombre" [(ngModel)]="perfil.nombre" name="nombre" class="form-input"  readonly />
-                <i class="pi pi-lock" aria-hidden="true"></i> <!-- Icono de candado -->
+                <input id="nombre" [(ngModel)]="perfil.nombre" name="nombre" class="form-input" />
             </div>
 
             <div class="input-wrapper">

@@ -20,6 +20,9 @@ export interface Producto {
   categoria_id: number;
   imagenes: string[];  // Lista de imágenes asociadas al producto
   inventoryStatus: 'INSTOCK' | 'LOWSTOCK' | 'OUTOFSTOCK';
+  total_resenas:number;
+  calificacion_promedio: number;
+  stars?: string[];
 }
 
 
@@ -31,17 +34,19 @@ export interface Producto {
   styleUrl: './productos.component.css'
 })
 export class ProductosComponent implements OnInit  {
+  stars: string[] = [];
   layout: 'list' | 'grid' = 'list'; 
 
   productos: Producto[] = [];
   productoSeleccionado: Producto | null = null; // Producto seleccionado
 
-  apiUrlProductos = 'https://back-tienda-one.vercel.app/api/productos'; // Ajusta esta URL según tu backend
+  apiUrlProductos = 'https://tienda-lib-cr.vercel.app/api/productos'; // Ajusta esta URL según tu backend
   categoriaNombre: string = ''; // Variable para almacenar el nombre de la categoría
   constructor(private http: HttpClient, private carritoService: CarritoService,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
  // Captura el parámetro 'nombre' de la URL
+
  this.route.params.subscribe(params => {
   this.categoriaNombre = params['nombreCategoria'];
   this.cargarProductosPorCategoria(this.categoriaNombre);
@@ -52,6 +57,11 @@ export class ProductosComponent implements OnInit  {
     this.http.get<Producto[]>(`${this.apiUrlProductos}/categoria/nombre/${nombreCategoria}`).subscribe({
       next: (data) => {
         this.productos = data;
+
+        // Calcula las estrellas para cada producto basado en la calificación promedio
+        this.productos.forEach(producto => {
+          producto.stars = this.calculateStars(producto.calificacion_promedio);
+        });
         // Verifica si hay un query parameter "selected"
         const selectedId = this.route.snapshot.queryParamMap.get('selected');
         if (selectedId) {
@@ -131,5 +141,23 @@ agregarAlCarrito(producto: Producto): void {
         return undefined;
     }
   }
+// Función para calcular las estrellas
+calculateStars(rating: number): string[] {
+  if (rating === 0) {
+    return []; // No mostrar estrellas si la calificación es 0
+  }
+  
+  const fullStars = Math.floor(rating); // Estrellas llenas
+  const halfStars = rating % 1 >= 0.5 ? 1 : 0; // Estrella media si el resto es >= 0.5
+  const emptyStars = 5 - fullStars - halfStars; // Estrellas vacías
+
+  return [
+    ...Array(fullStars).fill('pi-star'), // Estrellas llenas
+    ...Array(halfStars).fill('pi-star-half'), // Estrella media
+    ...Array(emptyStars).fill('pi-star-o') // Estrellas vacías
+  ];
+}
+
+  
 
 }

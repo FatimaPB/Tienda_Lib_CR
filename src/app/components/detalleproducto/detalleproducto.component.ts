@@ -48,11 +48,11 @@ export class DetalleproductoComponent implements OnInit{
   
   zoomEnabled: boolean = false;
   producto: Producto | null = null;
-  apiUrlProductos = 'https://back-tienda-one.vercel.app/api/productos'; // URL del backend
+  apiUrlProductos = 'https://tienda-lib-cr.vercel.app/api/productos'; // URL del backend
 
   coloresDisponibles: Variante[] = [];
   tamanosDisponibles: Variante[] = [];
-  apiUrl = 'https://back-tienda-one.vercel.app/api'; // URL del backend
+  apiUrl = 'https://tienda-lib-cr.vercel.app/api'; // URL del backend
 
   constructor(private route: ActivatedRoute, private http: HttpClient,private carritoService: CarritoService) {}
 
@@ -94,7 +94,7 @@ export class DetalleproductoComponent implements OnInit{
       this.colorSeleccionado = colorId;
     
       // Realizar la consulta para obtener el producto con el color seleccionado
-      this.http.get<Producto[]>(`${this.apiUrlProductos}?nombre=${this.producto?.nombre}&color_id=${colorId}`).subscribe({
+      this.http.get<Producto[]>(`${this.apiUrlProductos}?nombre=${this.producto?.nombre}&color_id=${colorId}`, {withCredentials:true}).subscribe({
         next: (productos) => {
           if (productos.length > 0) {
             // Mostrar el producto con el color seleccionado (en este caso, tomamos el primer producto)

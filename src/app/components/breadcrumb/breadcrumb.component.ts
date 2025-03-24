@@ -1,54 +1,65 @@
-import { Component , OnInit  } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, NavigationEnd, Router, Event } from '@angular/router';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MenuItem } from 'primeng/api';
+import { filter } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-breadcrumb',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterModule, BreadcrumbModule],
   templateUrl: './breadcrumb.component.html',
   styleUrl: './breadcrumb.component.css'
 })
 export class BreadcrumbComponent implements OnInit {
-  breadcrumbs: Array<{ label: string, url: string }> = [];
+  items: MenuItem[] = [];
+  visitedRoutes: MenuItem[] = []; // Almacena las rutas visitadas
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd)
-      )
-      .subscribe(() => {
-        // Si estamos en la página de inicio, reiniciar las migas de pan
-        if (this.router.url === '/') {
-          this.breadcrumbs = [{ label: '', url: '/' }];
+      .pipe(filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.url === '/') {
+          this.visitedRoutes = []; // Vaciar rutas visitadas si se regresa a inicio
+          this.updateBreadcrumbs(event.url);
         } else {
-          // Obtener las rutas acumuladas
-          let route = this.activatedRoute.root;
-          this.breadcrumbs = this.getBreadcrumbs(route);
+          this.updateBreadcrumbs(event.url);
         }
       });
   }
 
-  // Método para acumular las migas de pan
-  private getBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: Array<{ label: string, url: string }> = []): Array<{ label: string, url: string }> {
-    const children: ActivatedRoute[] = route.children;
+  private updateBreadcrumbs(currentUrl: string) {
+    const currentBreadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
 
-    if (children.length === 0) {
-      return breadcrumbs;
+    // Si la ruta ya está en la lista, eliminar las que estén después de ella
+    const existingIndex = this.visitedRoutes.findIndex(v => v.routerLink === currentUrl);
+    if (existingIndex !== -1) {
+      this.visitedRoutes = this.visitedRoutes.slice(0, existingIndex + 1);
+    } else {
+      // Agregar solo las rutas que no estén ya en el historial
+      currentBreadcrumbs.forEach(item => {
+        if (!this.visitedRoutes.some(v => v.routerLink === item.routerLink)) {
+          this.visitedRoutes.push(item);
+        }
+      });
     }
 
-    for (const child of children) {
-      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
-      if (routeURL) {
-        url += `/${routeURL}`;
-        breadcrumbs.push({ label: routeURL, url: url });
-      }
+    this.items = [...this.visitedRoutes]; // Mostrar las rutas acumuladas
+  }
 
-      // Recursivamente agregar las rutas de los hijos
-      this.getBreadcrumbs(child, url, breadcrumbs);
+  private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
+    if (route.routeConfig?.data?.['breadcrumb']) {
+      const newUrl = url ? `${url}/${route.routeConfig.path}` : `/${route.routeConfig.path}`;
+      breadcrumbs.push({ label: route.routeConfig.data['breadcrumb'], routerLink: newUrl });
+      url = newUrl;
+    }
+
+    for (const child of route.children) {
+      this.createBreadcrumbs(child, url, breadcrumbs);
     }
 
     return breadcrumbs;

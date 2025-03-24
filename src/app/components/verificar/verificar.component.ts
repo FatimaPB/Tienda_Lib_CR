@@ -27,7 +27,7 @@ export class VerificarComponent {
 
     const payload = { correo, codigo: this.codigo };
 
-    this.http.post('https://back-tienda-livid.vercel.app/api/verificar-codigo',payload)
+    this.http.post('https://tienda-lib-cr.vercel.app/api/verificar-codigo',payload)
       .subscribe(response => {
         this.mensaje = 'Código verificado con éxito. Ahora puedes restablecer tu contraseña.';
         this.exito = true;

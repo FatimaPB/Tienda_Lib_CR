@@ -19,7 +19,7 @@ export class RecuperarcontraComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   recuperarContrasena() {
-    this.http.post('https://back-tienda-livid.vercel.app/api/recuperar-contrasena', { correo: this.correo })
+    this.http.post('https://tienda-lib-cr.vercel.app/api/recuperar-contrasena', { correo: this.correo })
       .subscribe(response => {
         this.mensaje = 'Se ha enviado un código de verificación a tu correo';
         this.exito = true;

@@ -188,3 +188,9 @@
     font-size: 0.8em;
   }
 }
+
+.pi-star, .pi-star-half, .pi-star-o {
+  color: gold; /* Estrellas de color dorado */
+  font-size: 1.5em; /* Ajustar el tamaño */
+  margin-right: 5px; /* Espaciado entre las estrellas */
+}

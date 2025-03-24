@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth.service'; // Ajusta la ruta según tu estructura de carpetas
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './perfilusuario.component.css'
 })
 export class PerfilusuarioComponent  implements OnInit {
-  private apiUrl = `https://back-tienda-one.vercel.app/api`;
+  private apiUrl = `https://tienda-lib-cr.vercel.app/api`;
   originalPerfil: any = null; // Nueva propiedad para guardar el perfil original
   perfil: any = null;
   errorMessage: string | null = null;
@@ -30,6 +30,9 @@ export class PerfilusuarioComponent  implements OnInit {
   showConfirmPassword = false;
   passwordStrength = '';
 passwordsMatch = true;
+mensaje='';
+
+mfaQRCode: string | null = null; // Variable para almacenar el QR de MFA
 
   constructor(private authService: AuthService,private http: HttpClient, private router: Router) {}
 
@@ -38,6 +41,42 @@ passwordsMatch = true;
     this.getPerfil();
     this.originalPerfil = { ...this.perfil };
   }
+
+  // Método para activar MFA
+  activarMFA() {
+    this.http.post<any>('https://tienda-lib-cr.vercel.app/api/activar-mfa', { usuarioId: this.perfil.id })
+        .subscribe(
+            (response) => {
+                this.mfaQRCode = response.qr; // El QR se pasa como base64
+                console.log('Escanea el código QR con tu aplicación de autenticación');
+            },
+            (error) => {
+                console.error('Error al activar MFA', error);
+                alert('Error al activar MFA');
+            }
+        );
+}
+
+// Método para cancelar la activación de MFA
+cancelarMFA() {
+    this.mfaQRCode = null;
+}
+
+desactivarMFA(){
+  this.http.post<any>(`${this.apiUrl}/desactivar-mfa`, { usuarioId: this.perfil.id }, { withCredentials: true })
+  .subscribe({
+    next: (response) => {
+      console.log(response.message);
+      this.mensaje = 'MFA desactivado correctamente.';
+    },
+    error: (err) => {
+      console.error('Error al desactivar MFA:', err);
+      this.mensaje = 'Error al desactivar MFA.';
+    }
+  }
+  )};
+
+
 
 
   getPerfil() {
@@ -62,16 +101,8 @@ passwordsMatch = true;
       });
   }
   actualizarPerfil() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
     // Enviar los datos modificados al servidor
-    this.http.put<any>(`${this.apiUrl}/edit`, this.perfil, { headers })
+    this.http.put<any>(`${this.apiUrl}/edit`, this.perfil,{ withCredentials: true })
       .subscribe({
         next: (response) => {
           this.successMessage = 'Perfil actualizado con éxito';
@@ -130,16 +161,6 @@ isFormValid(): boolean {
       this.errorMessage = 'Las contraseñas no coinciden';
       return;
     }
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-
-    
-    
 
     const data = {
       currentPassword: this.passwordData.currentPassword,
@@ -225,13 +246,13 @@ isValidPhoneNumber(): boolean {
 
   
 ventas: any[] = [];
-  apiUrlventas: string = 'https://back-tienda-one.vercel.app/api/ventas/historial';
+  apiUrlventas: string = 'https://tienda-lib-cr.vercel.app/api/ventas/historial';
   usuarioId: number | null = null;
 
 
 
   verificarUsuario(): void {
-    this.http.get<any>('https://back-tienda-one.vercel.app/api/check-auth',{withCredentials:true}).subscribe(
+    this.http.get<any>('https://tienda-lib-cr.vercel.app/api/check-auth',{withCredentials:true}).subscribe(
       res => {
         if (res.authenticated) {
           this.usuarioId = res.usuario.id;

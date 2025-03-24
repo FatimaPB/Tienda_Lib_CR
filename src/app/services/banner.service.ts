@@ -8,7 +8,7 @@ import { Banner } from '../models/banner.model';  // Importamos el modelo
   providedIn: 'root',
 })
 export class BannerService {
-  private baseUrl = 'https://back-tienda-one.vercel.app/api/banners'; // Cambia la URL si es necesario
+  private baseUrl = 'https://tienda-lib-cr.vercel.app/api/banners'; // Cambia la URL si es necesario
 
   constructor(private http: HttpClient) {}
 

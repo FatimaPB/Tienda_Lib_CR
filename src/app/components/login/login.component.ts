@@ -16,29 +16,33 @@ import { RecaptchaModule,  RecaptchaComponent   } from 'ng-recaptcha';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  resolvedCaptcha: string | null = null;
+   resolvedCaptcha: string | null = null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  isPasswordVisible = false; // Para la contraseña
+  isPasswordVisible = false;
   mensaje = '';
   exito: boolean = false;
 
-    @ViewChild(RecaptchaComponent ) recaptcha: RecaptchaComponent  | undefined; // Acceder al componente de reCAPTCHA
+  // Nueva propiedad para mostrar campo de MFA
+  showMFAField: boolean = false;
+  mfaToken: string = ''; // Código MFA ingresado por el usuario
+  mfaUsuarioId: string | null = null; // Para almacenar el usuarioId cuando se requiera MFA
 
-  private apiUrl = 'https://back-tienda-one.vercel.app/api';
+  @ViewChild(RecaptchaComponent) recaptcha: RecaptchaComponent | undefined;
+
+  private apiUrl = 'https://tienda-lib-cr.vercel.app/api';
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
-  // Función personalizada para decodificar el JWT
+
   customDecode(token: string) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-
+    
     return JSON.parse(jsonPayload);
   }
-
   
 
   onLogin(loginForm: NgForm) {
@@ -49,37 +53,40 @@ export class LoginComponent {
       return;
     }
 
+    // Si ya se está en flujo MFA, se evita volver a enviar las credenciales
+    if (this.showMFAField) {
+      return;
+    }
+
     this.http.post<any>(`${this.apiUrl}/login`, { correo: email, contrasena: password, recaptcha: this.resolvedCaptcha }, { withCredentials: true })
       .subscribe({
         next: (response) => {
-          if (response && response.token) {
-           // No necesitas guardar el token en localStorage
-        // localStorage.setItem('token', response.token);
-        // localStorage.setItem('rol', response.rol);
-        // localStorage.setItem('correoRegistro', response.correo);
-   
+          // Si el backend indica que se requiere MFA, se activa el campo MFA en el mismo componente
+          if (response.requiereMFA) {
+            console.log("MFA requerido, usuarioId:", response.usuarioId);
+            this.showMFAField = true;
+            this.mfaUsuarioId = response.usuarioId;
+            this.mensaje = 'Ingresa el código MFA para completar el inicio de sesión.';
+            return;
+          }
 
-        // Usar la respuesta para decodificar el JWT
-        //const decodedToken: any = this.customDecode(response.token);
-        //const userId = decodedToken.id;
-        // localStorage.setItem('usuarioId', userId);
-
-       // console.log('ID del usuario:', userId); // Solo para verificar
+          // Flujo normal sin MFA
+          if (response.token) {
             this.authService.login(response.rol);
-            if (response.rol === 'admin' ||response.rol === 'empleado') {
+            if (response.rol === 'admin' || response.rol === 'empleado') {
               loginForm.resetForm();
               this.mensaje = 'Inicio de sesión exitoso!';
-              this.exito= true;
+              this.exito = true;
               setTimeout(() => { 
                 localStorage.removeItem('_grecaptcha');
-                window.location.reload();
+                 window.location.reload();
               }, 2000);
-                this.router.navigate(['/inicioadmin']);
+              this.router.navigate(['/inicioadmin']);
               this.mensaje = '';
               this.resolvedCaptcha = null;
             } else {
               this.mensaje = 'Inicio de sesión exitoso!';
-              this.exito= true;
+              this.exito = true;
               setTimeout(() => {
                 localStorage.removeItem('_grecaptcha');
                 this.router.navigate(['']);
@@ -111,21 +118,64 @@ export class LoginComponent {
             }, 3000);
           }
           this.resolvedCaptcha = null;
-
-          // Reiniciar el reCAPTCHA
           if (this.recaptcha) {
-            this.recaptcha.reset(); // Esto reinicia el estado del CAPTCHA
+            this.recaptcha.reset();
           }
         }
-        
       });
   }
+
+  // Nuevo método para verificar el código MFA
+  onVerifyMFA() {
+    if (!this.mfaToken) {
+      this.mensaje = 'Por favor, ingresa el código MFA.';
+      return;
+    }
+  
+    this.http.post<any>(`${this.apiUrl}/verificar-mfa`, { usuarioId: this.mfaUsuarioId, tokenMFA: this.mfaToken }, { withCredentials: true })
+      .subscribe({
+        next: (response) => {
+          if (response.token) {
+            this.authService.login(response.rol);
+            if (response.rol === 'admin' || response.rol === 'empleado') {
+              this.mensaje = 'Inicio de sesión exitoso!';
+              this.exito = true;
+              setTimeout(() => { 
+                localStorage.removeItem('_grecaptcha');
+               window.location.reload();
+              }, 2000);
+              this.router.navigate(['/inicioadmin']);
+              this.mensaje = '';
+              this.resolvedCaptcha = null;
+            } else {
+              this.mensaje = 'Inicio de sesión exitoso!';
+              this.exito = true;
+              setTimeout(() => {
+                localStorage.removeItem('_grecaptcha');
+                this.router.navigate(['']);
+              }, 3000);
+              this.mensaje = '';
+              this.resolvedCaptcha = null;
+            }
+          }
+        },
+        error: (err) => {
+          console.error('Error en verificación MFA:', err);
+          this.mensaje = 'Código MFA incorrecto.';
+          this.exito = false;
+        }
+      });
+  }
+  
+  
+  
+  
 
   onCaptchaResolved(captchaResponse: string) {
     this.resolvedCaptcha = captchaResponse;
   }
-    // Métodos para mostrar/ocultar contraseñas
-    togglePasswordVisibility() {
-      this.isPasswordVisible = !this.isPasswordVisible;
-    }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
 }

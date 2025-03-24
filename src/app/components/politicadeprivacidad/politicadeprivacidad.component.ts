@@ -23,7 +23,7 @@ export class PoliticadeprivacidadComponent {
   }
 
   obtenerDocumentoVigente(): void {
-    this.http.get('https://back-tienda-livid.vercel.app/api/documentos/vigente') // Reemplaza con la URL correcta de tu API
+    this.http.get('https://tienda-lib-cr.vercel.app/api/documentos/vigente') // Reemplaza con la URL correcta de tu API
       .subscribe(
         (data) => {
           this.documentoVigente = data;

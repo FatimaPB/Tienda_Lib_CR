@@ -40,7 +40,7 @@ export class VerificarMfaComponent implements OnInit {
       return;
     }
 
-    this.http.post<any>(`https://tienda-lib-cr.vercel.app/api/verificar-mfa`, { usuarioId: this.usuarioId, tokenMFA: this.mfaToken })
+    this.http.post<any>(`https://back-tienda-one.vercel.app/api/verificar-mfa`, { usuarioId: this.usuarioId, tokenMFA: this.mfaToken })
       .subscribe({
         next: (response) => {
           this.mensaje = 'MFA verificado exitosamente!';

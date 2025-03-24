@@ -52,7 +52,7 @@ ngOnInit(): void {
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('https://tienda-lib-cr.vercel.app/api/nosotros').subscribe({
+    this.http.get<Empresa>('https://back-tienda-one.vercel.app/api/nosotros').subscribe({
       next: (response) => {
         this.empresaData = response; // Guarda el objeto directamente
       },

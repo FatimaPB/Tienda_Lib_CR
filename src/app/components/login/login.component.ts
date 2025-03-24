@@ -30,7 +30,7 @@ export class LoginComponent {
 
   @ViewChild(RecaptchaComponent) recaptcha: RecaptchaComponent | undefined;
 
-  private apiUrl = 'https://tienda-lib-cr.vercel.app/api';
+  private apiUrl = 'https://back-tienda-one.vercel.app/api';
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 

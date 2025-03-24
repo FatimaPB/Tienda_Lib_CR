@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CarritoService {
-  private apiUrl = 'https://tienda-lib-cr.vercel.app/api/carrito'; // 🔥 Ajuste en la URL base
+  private apiUrl = 'https://back-tienda-one.vercel.app/api/carrito'; // 🔥 Ajuste en la URL base
 
   constructor(private http: HttpClient) {}
 

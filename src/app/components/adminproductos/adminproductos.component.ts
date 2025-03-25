@@ -97,7 +97,8 @@ export class AdminproductosComponent implements OnInit {
   loadProductos(): void {
     this.productoService.getProductos().subscribe({
       next: (data) => this.productos = data,
-      error: (err) => console.error('Error al cargar productos:', err)
+      error: (err) => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al cargar los productos' })
+      
     });
   }
 

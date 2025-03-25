@@ -1,7 +1,6 @@
 import { Routes} from '@angular/router';
 import { AuthGuard } from './auth.guard'; // Asegúrate de que la ruta sea correcta
 import { LoginComponent } from './components/login/login.component';
-import { VerificarMfaComponent } from './components/verificar-mfa/verificar-mfa.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { ProductosComponent } from './components/productos/productos.component';
@@ -39,7 +38,6 @@ import { TamanosComponent } from './components/tamanos/tamanos.component';
 export const routes: Routes = [
 { path: '', component: InicioComponent},
 { path: 'login', component: LoginComponent, data: { breadcrumb: 'login'} },
-{ path: 'verificar-mfa', component: VerificarMfaComponent, data: { breadcrumb: 'verificar-mfa'} },
 { path: 'registro', component: RegistroComponent, data: { breadcrumb: 'Registro'} },
 { path: 'about', component: NosotrosComponent, data: { breadcrumb: 'about'}},
 { path: 'carshop', component: CarritoComponent, data: { breadcrumb: 'carshop'}},

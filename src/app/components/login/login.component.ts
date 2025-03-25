@@ -79,7 +79,7 @@ export class LoginComponent {
               this.exito = true;
               setTimeout(() => { 
                 localStorage.removeItem('_grecaptcha');
-                 window.location.reload();
+            
               }, 2000);
               this.router.navigate(['/inicioadmin']);
               this.mensaje = '';
@@ -142,7 +142,6 @@ export class LoginComponent {
               this.exito = true;
               setTimeout(() => { 
                 localStorage.removeItem('_grecaptcha');
-               window.location.reload();
               }, 2000);
               this.router.navigate(['/inicioadmin']);
               this.mensaje = '';

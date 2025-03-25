@@ -1,9 +1,10 @@
-import { Component , OnInit, ViewChild} from '@angular/core';
+import { Component , OnInit, HostListener } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth.service'; // Ajusta la ruta según tu estructura de carpetas
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs'; // Importa para gestionar la suscripción
 
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -11,10 +12,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
-
-import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
-import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -35,16 +32,20 @@ export class HeaderaComponent  implements OnInit{
   originalPerfil: any = null;
   perfil: any = null;
 
+
+
+
   constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
 
   
 
   ngOnInit() {
+    this.checkScreenWidth();
     this.getPerfil();
     this.originalPerfil = { ...this.perfil };
+
+  
   }
-
-
   getPerfil() {
     
     this.http.get<any>(`${this.apiUrl}/perfil`,{ withCredentials: true })
@@ -84,10 +85,32 @@ export class HeaderaComponent  implements OnInit{
   }
 
 
-  isCollapsed = true;
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenWidth();
+  }
+  isCollapsed: boolean = true;
+  isMobile: boolean = false;
+  sidebarOpened: boolean = false;  // Para controlar visibilidad en móvil
+ 
 
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
+  checkScreenWidth() {
+    this.isMobile = window.innerWidth < 768;
+    // En móvil, el sidebar estará oculto por defecto
+    if (this.isMobile) {
+      this.sidebarOpened = false;
+    } else {
+      // En escritorio, mantenemos la lógica de colapso
+      this.sidebarOpened = true;
+    }
   }
 
+  toggleSidebar() {
+    if (this.isMobile) {
+      this.sidebarOpened = !this.sidebarOpened;
+    } else {
+      this.isCollapsed = !this.isCollapsed;
+    }
+    console.log('isMobile:', this.isMobile, 'sidebarOpened:', this.sidebarOpened, 'isCollapsed:', this.isCollapsed);
+  }
 }

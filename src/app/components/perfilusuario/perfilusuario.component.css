@@ -332,3 +332,29 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+
+.mfa-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh; /* Centrado vertical */
+  padding: 20px;
+}
+
+.mfa-note {
+  font-size: 1.2em;
+  color: #333;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.mfa-qr {
+  width: 250px; /* Ajusta el tamaño según necesites */
+  height: 250px;
+  border: 5px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

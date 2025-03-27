@@ -21,11 +21,16 @@
     </div>
 </div>
 
-<!-- Mostrar el QR para la activación de MFA -->
-<div *ngIf="mfaQRCode">
-    <p>Escanea este código QR con tu aplicación de autenticación (Google Authenticator o similar):</p>
-    <img [src]="mfaQRCode" alt="Código QR de MFA" />
+<!-- Contenedor principal centrado -->
+<div class="mfa-container" *ngIf="mfaQRCode">
+    <p class="mfa-note">
+        Para mejorar la seguridad de tu cuenta, escanea este código QR con tu aplicación de autenticación 
+        (como Google Authenticator o Authy). Una vez escaneado, la aplicación generará códigos de verificación 
+        que deberás usar para iniciar sesión en tu cuenta.
+    </p>
+    <img [src]="mfaQRCode" alt="Código QR de MFA" class="mfa-qr"/>
 </div>
+
 
 
 <!-- Formulario de edición del perfil -->

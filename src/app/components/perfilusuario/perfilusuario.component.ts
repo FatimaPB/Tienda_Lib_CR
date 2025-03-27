@@ -40,6 +40,8 @@ mfaQRCode: string | null = null; // Variable para almacenar el QR de MFA
     this.verificarUsuario();
     this.getPerfil();
     this.originalPerfil = { ...this.perfil };
+    this.activarMFA();
+    this.desactivarMFA();
   }
 
   // Método para activar MFA

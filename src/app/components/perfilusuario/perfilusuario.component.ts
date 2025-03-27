@@ -40,8 +40,6 @@ mfaQRCode: string | null = null; // Variable para almacenar el QR de MFA
     this.verificarUsuario();
     this.getPerfil();
     this.originalPerfil = { ...this.perfil };
-    this.activarMFA();
-    this.desactivarMFA();
   }
 
   // Método para activar MFA
@@ -51,6 +49,7 @@ mfaQRCode: string | null = null; // Variable para almacenar el QR de MFA
             (response) => {
                 this.mfaQRCode = response.qr; // El QR se pasa como base64
                 console.log('Escanea el código QR con tu aplicación de autenticación');
+                this.getPerfil();
             },
             (error) => {
                 console.error('Error al activar MFA', error);
@@ -70,6 +69,7 @@ desactivarMFA(){
     next: (response) => {
       console.log(response.message);
       this.mensaje = 'MFA desactivado correctamente.';
+      this.getPerfil();
     },
     error: (err) => {
       console.error('Error al desactivar MFA:', err);

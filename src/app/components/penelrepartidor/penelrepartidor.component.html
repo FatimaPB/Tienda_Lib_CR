@@ -1,0 +1,19 @@
+<h2>Envíos Pendientes</h2>
+
+<div *ngFor="let pedido of pedidos" class="pedido-card">
+  <p><strong>ID:</strong> {{ pedido.id }}</p>
+  <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+  <p><strong>Dirección:</strong> {{ pedido.direccion_envio }}</p>
+  <p><strong>Estado actual:</strong> {{ pedido.estado_envio }}</p>
+
+  <div>
+    <label for="estado">Nuevo estado:</label>
+    <select [(ngModel)]="pedido.nuevoEstado">
+      <option value="en reparto">En reparto</option>
+      <option value="entregado">Entregado</option>
+    </select>
+
+    <input type="text" [(ngModel)]="pedido.descripcion" placeholder="Descripción (opcional)">
+    <button (click)="actualizarSeguimiento(pedido)">Actualizar</button>
+  </div>
+</div>

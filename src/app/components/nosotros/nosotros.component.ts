@@ -16,12 +16,6 @@ import { TagModule } from 'primeng/tag';
 
 
 
-
-
-
-
-
-
 export interface Empresa {
   mision?: string;
   vision?: string;

@@ -5,11 +5,6 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CardModule } from 'primeng/card';
 
-
-
-
-
-
 @Component({
   selector: 'app-inicioadmin',
   standalone: true,

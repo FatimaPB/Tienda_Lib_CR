@@ -279,5 +279,9 @@ ventas: any[] = [];
       }
     );
   }
+
+  verDetalle(ventaId: number) {
+  this.router.navigate(['/pedido-detalle'], { queryParams: { id: ventaId } });
+}
 }
 

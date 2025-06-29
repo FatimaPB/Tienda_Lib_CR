@@ -32,123 +32,115 @@
 
 
 
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer
+               [mode]="isMobile ? 'over' : 'side'"
+               [(opened)]="sidebarOpened"
+               class="sidenav"
+               [fixedInViewport]="isMobile"
+               [fixedTopGap]="64">
 
-<mat-toolbar class="custom-toolbar">
-  <button mat-icon-button (click)="toggleSidebar()" aria-label="Menú">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="spacer"></span>
-  <span class="logo">LIBRERÍA CRISTO REY</span>
-  <span class="spacer"></span>
-  <button mat-icon-button routerLink="/perfil">
-    <mat-icon class="pi pi-user"></mat-icon>
-  </button>
-</mat-toolbar>
+    <mat-toolbar class="sidenav-header">
+      <span>Menú</span>
+      <button mat-icon-button (click)="toggleSidebar()" class="close-btn" *ngIf="isMobile" aria-label="Cerrar menú">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
 
-<!-- Sidebar de escritorio (solo cuando no es móvil) -->
-<div class="fixed-sidebar" *ngIf="!isMobile"
-     [ngClass]="{
-       'collapsed': !isMobile && isCollapsed, 
-       'mobile-hidden': isMobile && !sidebarOpened, 
-       'mobile-show': isMobile && sidebarOpened
-     }">
-  <div class="sidenav-header">
-    <span class="sidenav-title" *ngIf="!isCollapsed || isMobile && sidebarOpened && !isCollapsed">Menú</span>
-    <button mat-icon-button (click)="toggleSidebar()">
-      <mat-icon>{{ isMobile ? (sidebarOpened ? 'chevron_left' : 'menu') : (isCollapsed ? 'chevron_right' : 'chevron_left') }}</mat-icon>
-    </button>
-  </div>
-  <ul class="menu-list">
-    <li routerLink="/inicioadmin" (click)="toggleSidebar()">
-      <i class="pi pi-home"></i><span *ngIf="!isMobile && !isCollapsed">INICIO</span>
-    </li>
-    <li routerLink="/admproduts" (click)="toggleSidebar()">
-      <i class="pi pi-box"></i><span *ngIf="!isMobile && !isCollapsed">PRODUCTOS</span>
-    </li>
-    <li routerLink="/admcat" (click)="toggleSidebar()">
-      <i class="pi pi-box"></i><span *ngIf="!isMobile && !isCollapsed">CATÁLOGO PRODUCTOS</span>
-    </li>
-    <li routerLink="/ventas" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span *ngIf="!isMobile && !isCollapsed">VENTAS</span>
-    </li>
-    <li routerLink="/categorias" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span *ngIf="!isMobile && !isCollapsed">CATEGORÍAS</span>
-    </li>
-    <li routerLink="/colores" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span *ngIf="!isMobile && !isCollapsed">COLORES</span>
-    </li>
-    <li routerLink="/tamaños" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span *ngIf="!isMobile && !isCollapsed">TAMAÑOS</span>
-    </li>
-    <li routerLink="/banners" (click)="toggleSidebar()">
-      <i class="pi pi-image"></i><span *ngIf="!isMobile && !isCollapsed">BANNER</span>
-    </li>
-    <li routerLink="/incidencias" (click)="toggleSidebar()">
-      <i class="pi pi-exclamation-triangle"></i><span *ngIf="!isMobile && !isCollapsed">INCIDENCIAS</span>
-    </li>
-    <li routerLink="/politicas" (click)="toggleSidebar()">
-      <i class="pi pi-file"></i><span *ngIf="!isMobile && !isCollapsed">POLÍTICAS</span>
-    </li>
-    <li routerLink="/terminos" (click)="toggleSidebar()">
-      <i class="pi pi-book"></i><span *ngIf="!isMobile && !isCollapsed">TÉRMINOS</span>
-    </li>
-    <li routerLink="/deslinde" (click)="toggleSidebar()">
-      <i class="pi pi-shield"></i><span *ngIf="!isMobile && !isCollapsed">DESLINDE LEGAL</span>
-    </li>
-    <li routerLink="/pempresa" (click)="toggleSidebar()">
-      <i class="pi pi-building"></i><span *ngIf="!isMobile && !isCollapsed">PERFIL EMPRESA</span>
-    </li>
-    <li (click)="onLogout()">
-      <i class="pi pi-sign-out"></i><span *ngIf="!isMobile && !isCollapsed">CERRAR SESIÓN</span>
-    </li>
-    
-  </ul>
-</div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/inicioadmin" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>home</mat-icon>
+        <span>INICIO</span>
+      </a>
+      <a mat-list-item routerLink="/admproduts" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>inventory_2</mat-icon>
+        <span>PRODUCTOS</span>
+      </a>
+      <a mat-list-item routerLink="/compras" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>COMPRAS</span>
+      </a>
+      <a mat-list-item routerLink="/categorias" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>category</mat-icon>
+        <span>CATEGORÍAS</span>
+      </a>
+      <a mat-list-item routerLink="/banners" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>photo</mat-icon>
+        <span>BANNERS</span>
+      </a>
+      <a mat-list-item routerLink="/ventas" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>list_alt</mat-icon>
+        <span>VENTAS</span>
+      </a>
+      <a mat-list-item routerLink="/incidencias" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>warning</mat-icon>
+        <span>INCIDENCIAS</span>
+      </a>
+      <a mat-list-item routerLink="/politicas" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>description</mat-icon>
+        <span>POLÍTICAS</span>
+      </a>
+      <a mat-list-item routerLink="/terminos" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>menu_book</mat-icon>
+        <span>TÉRMINOS</span>
+      </a>
+      <a mat-list-item routerLink="/deslinde" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>security</mat-icon>
+        <span>DESLINDE LEGAL</span>
+      </a>
+      <a mat-list-item routerLink="/pempresa" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>apartment</mat-icon>
+        <span>PERFIL EMPRESA</span>
+      </a>
+      <a mat-list-item routerLink="/usuarios" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>people</mat-icon>
+        <span>USUARIOS</span>
+      </a>
+      <a mat-list-item routerLink="/configuracion" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>settings</mat-icon>
+        <span>CONFIGURACIÓN</span>
+      </a>
+      <a mat-list-item routerLink="/repartidor" (click)="closeIfMobile()" class="menu-item">
+        <mat-icon>local_shipping</mat-icon>
+        <span>REPARTIR</span>
+      </a>
+      <a mat-list-item (click)="onLogout()" class="menu-item logout">
+        <mat-icon>logout</mat-icon>
+        <span>CERRAR SESIÓN</span>
+      </a>
+    </mat-nav-list>
 
-<!-- Sidebar móvil (solo cuando es móvil) -->
-<div class="mobile-sidebar" *ngIf="isMobile" [ngClass]="{ 'mobile-show': sidebarOpened, 'mobile-hidden': !sidebarOpened }">
-  <ul class="menu-list">
-    <li routerLink="/inicioadmin" (click)="toggleSidebar()">
-      <i class="pi pi-home"></i><span>INICIO</span>
-    </li>
-    <li routerLink="/admproduts" (click)="toggleSidebar()">
-      <i class="pi pi-box"></i><span>PRODUCTOS</span>
-    </li>
-    <li routerLink="/admcat" (click)="toggleSidebar()">
-      <i class="pi pi-box"></i><span>CATÁLOGO PRODUCTOS</span>
-    </li>
-    <li routerLink="/ventas" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span>VENTAS</span>
-    </li>
-    <li routerLink="/categorias" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span>CATEGORÍAS</span>
-    </li>
-    <li routerLink="/colores" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span>COLORES</span>
-    </li>
-    <li routerLink="/tamaños" (click)="toggleSidebar()">
-      <i class="pi pi-list"></i><span>TAMAÑOS</span>
-    </li>
-    <li routerLink="/banners" (click)="toggleSidebar()">
-      <i class="pi pi-image"></i><span>BANNER</span>
-    </li>
-    <li routerLink="/incidencias" (click)="toggleSidebar()">
-      <i class="pi pi-exclamation-triangle"></i><span>INCIDENCIAS</span>
-    </li>
-    <li routerLink="/politicas" (click)="toggleSidebar()">
-      <i class="pi pi-file"></i><span>POLÍTICAS</span>
-    </li>
-    <li routerLink="/terminos" (click)="toggleSidebar()">
-      <i class="pi pi-book"></i><span>TÉRMINOS</span>
-    </li>
-    <li routerLink="/deslinde" (click)="toggleSidebar()">
-      <i class="pi pi-shield"></i><span>DESLINDE LEGAL</span>
-    </li>
-    <li routerLink="/pempresa" (click)="toggleSidebar()">
-      <i class="pi pi-building"></i><span>PERFIL EMPRESA</span>
-    </li>
-    <li (click)="onLogout()">
-      <i class="pi pi-sign-out"></i><span>CERRAR SESIÓN</span>
-    </li>
-  </ul>
-</div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="main-toolbar">
+      <button mat-icon-button (click)="toggleSidebar()" aria-label="Menú">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="logo">LIBRERÍA CRISTO REY</span>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button aria-label="Modo oscuro" class="icon-btn">
+        <mat-icon>brightness_medium</mat-icon>
+      </button>
+
+      <button mat-icon-button aria-label="Notificaciones" class="icon-btn">
+        <mat-icon>notifications</mat-icon>
+      </button>
+
+      <button mat-icon-button aria-label="Calendario" class="icon-btn">
+        <mat-icon>calendar_today</mat-icon>
+      </button>
+
+      <button mat-icon-button routerLink="/perfil" aria-label="Perfil usuario" class="icon-btn">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,157 +1,115 @@
-/* Estilos generales del sidebar fijo */
-
-/* Toolbar */
-.custom-toolbar {
-  border-bottom: 1px solid #ddd;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1100;
+/* PALETA DE COLORES MODERNOS */
+:root {
+  --color-bg: #f9f9fb;
+  --color-sidenav: #ffffff;
+  --color-toolbar: #22335a; /* azul profundo */
+  --color-accent: #f4e7b5; /* dorado suave */
+  --color-hover: #d5e8f6; /* azul cielo */
+  --color-text-dark: #2e2e2e;
+  --color-muted: #808080;
+  --color-danger: #d32f2f;
+  --font-main: 'Segoe UI', 'Roboto', sans-serif;
 }
 
-/* Sidebar fijo */
-.fixed-sidebar {
-  position: fixed;
-  top: 64px; /* Debajo del toolbar */
-  left: 0;
-  bottom: 0;
-  width: 250px;
-  background-color: #fff;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
-  z-index: 1000;
-  overflow-y: auto; /* Permite que las opciones se muestren verticalmente */
-  overflow-x: hidden; /* Evita el desplazamiento horizontal */
+/* CONTENEDOR PRINCIPAL */
+.sidenav-container {
+  height: 100vh;
+  background-color: var(--color-bg);
+  font-family: var(--font-main);
 }
 
-.fixed-sidebar.collapsed {
-  width: 60px;
+/* SIDENAV IZQUIERDO */
+.sidenav {
+  background-color: var(--color-sidenav);
+  border-right: 1px solid #e2e2e2;
+  width: 260px;
+  padding-top: 8px;
 }
 
-/* Sidebar móvil */
-.mobile-sidebar {
-  position: fixed;
-  top: 55px;
-  left: 0;
-  bottom: 0;
-  width: 350px;
-  background-color: #fff;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-  z-index: 1000;
-  overflow: hidden;
-}
-
-/* Encabezado del sidebar */
+/* ENCABEZADO DEL SIDENAV */
 .sidenav-header {
+  background-color: var(--color-toolbar);
+  color: var(--color-accent);
+  font-size: 1.1rem;
+  font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ddd;
 }
 
-/* Título del sidebar */
-.sidenav-title {
-  margin-left: 20px;
-  font-size: 1rem; /* Reducir el tamaño de la fuente */
-  font-weight: bold;
+/* BOTÓN DE CIERRE EN MÓVIL */
+.close-btn {
+  color: var(--color-accent);
 }
 
-/* Lista de menú */
-.menu-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* ESTILO DE LOS ITEMS DE MENÚ */
+.menu-item {
+  color: var(--color-text-dark);
+  font-weight: 500;
+  padding: 10px 16px;
+  transition: background-color 0.3s ease, color 0.2s;
+  border-radius: 4px;
+  margin: 4px 8px;
 }
 
-.menu-list li {
+.menu-item mat-icon {
+  margin-right: 10px;
+  color: var(--color-toolbar);
+}
+
+.menu-item:hover {
+  background-color: var(--color-hover);
+  color: var(--color-toolbar);
+}
+
+.menu-item:hover mat-icon {
+  color: var(--color-toolbar);
+}
+
+/* CERRAR SESIÓN DIFERENCIADO */
+.logout {
+  color: var(--color-danger);
+}
+
+/* TOOLBAR PRINCIPAL */
+.main-toolbar {
+  background-color: var(--color-toolbar);
+  color: var(--color-accent);
+  font-weight: 500;
   display: flex;
   align-items: center;
-  padding: 10px 15px; /* Reducir el tamaño de los elementos */
-  font-size: 0.9rem; /* Reducir el tamaño de la fuente */
-  cursor: pointer;
-  transition: background 0.3s;
-  color: black;
+  padding: 0 16px;
+  height: 64px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-.menu-list li:hover {
-  background-color: #f5f5f5;
+/* LOGO */
+.logo {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-left: 12px;
+  color: var(--color-accent);
 }
 
-/* Íconos */
-.menu-list i {
-  font-size: 1.25rem; /* Reducir el tamaño de los iconos */
-  margin-right: 10px; /* Reducir el margen */
-  color: black;
-  display: inline-block;
-}
-
-/* Ocultar texto cuando el sidebar está colapsado */
-.fixed-sidebar.collapsed .menu-list span {
-  display: none;
-}
-
-/* En escritorio, cuando no está colapsado, se muestra el texto */
-.fixed-sidebar:not(.collapsed) .menu-list span {
-  display: inline-block;
-}
-
-/* Menú móvil */
-@media (max-width: 768px) {
-  .mobile-sidebar.mobile-hidden {
-    transform: translateX(-100%);
-  }
-
-  .mobile-sidebar.mobile-show {
-    transform: translateX(0);
-  }
-
-  .mobile-sidebar .menu-list li {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-    color: black;
-  }
-
-  .mobile-sidebar .menu-list li:hover {
-    background-color: #f5f5f5;
-  }
-
-  .mobile-sidebar .menu-list i {
-    font-size: 1.5rem;
-    margin-right: 12px;
-    color: black;
-    display: inline-block;
-  }
-
-  .mobile-sidebar .menu-list li span {
-    display: inline-block;
-  }
-}
-
-/* Control de la visibilidad del menú en móvil */
-@media (max-width: 768px) {
-  .fixed-sidebar.mobile-hidden {
-    transform: translateX(-100%);
-  }
-
-  .fixed-sidebar.mobile-show {
-    transform: translateX(0);
-    width: 250px;
-  }
-
-  .fixed-sidebar.mobile-show .menu-list li span {
-    display: inline-block;
-  }
-
-  .fixed-sidebar.mobile-hidden .menu-list li span {
-    display: none;
-  }
-}
+/* ESPACIADOR ENTRE ÍCONOS */
 .spacer {
-  flex-grow: 1;
+  flex: 1 1 auto;
+}
+
+/* BOTONES DE ÍCONOS SUPERIORES */
+.icon-btn {
+  color: var(--color-accent);
+  margin-left: 8px;
+}
+
+.icon-btn:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+  padding: 24px;
+  background-color: var(--color-bg);
+  min-height: calc(100vh - 64px);
 }

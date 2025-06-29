@@ -6,6 +6,24 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
+
+
+
 export interface Categoria {
   id?: number;
   nombre_categoria: string;
@@ -20,7 +38,16 @@ export interface Empresa {
 @Component({
   selector: 'app-header-normal',
   standalone: true,
-  imports:[FormsModule , CommonModule, RouterLink],
+  imports:[FormsModule , CommonModule, RouterLink, MatToolbarModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,MatSidenavModule,MatCardModule, MatBadgeModule,
+    MatExpansionModule,
+    MatDialogModule,],
   templateUrl: './header-normal.component.html',
   styleUrls: ['./header-normal.component.css'] // Corrige aquí de styleUrl a styleUrls
 })
@@ -29,6 +56,7 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   empresaData: Empresa | null = null; // Inicializa como null
   apiUrl = 'https://back-tienda-one.vercel.app/api/categorias';
   categorias: Categoria[] = [];
+   cantidadCarrito = 0;
 
   constructor(private http: HttpClient, private router: Router, private cdRef: ChangeDetectorRef) {}
 

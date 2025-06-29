@@ -1,0 +1,55 @@
+<div *ngIf="pedido" class="pedido-detalle">
+  <h2>Pedido #{{ pedido.id }}</h2>
+  <div class="info-pedido">
+    <p><strong>Fecha:</strong> {{ pedido.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+    <p><strong>Total:</strong> ${{ pedido.total | number:'1.2-2' }}</p>
+    <p><strong>Método de Pago:</strong> {{ pedido.metodo_pago }}</p>
+    <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+    <p><strong>Envío:</strong> {{ pedido.estado_envio }}</p>
+    <p><strong>Dirección:</strong> {{ pedido.direccion_envio }}</p>
+  </div>
+
+  <h3>Productos</h3>
+  <div class="lista-productos">
+    <div *ngFor="let producto of pedido.productos" class="producto">
+      <img [src]="producto.imagen" alt="Imagen producto" />
+      <div class="info">
+        <div class="nombre">{{ producto.nombre }}</div>
+        <div class="cantidad-precio">x{{ producto.cantidad }} - ${{ producto.precio_unitario | number:'1.2-2' }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card" *ngIf="events.length > 0">
+  <h3 class="seguimiento">Seguimiento del Envío</h3>
+  <p-timeline
+    [value]="events"
+    [layout]="isMobile ? 'vertical' : 'horizontal'"
+    align="alternate"
+  >
+    <ng-template pTemplate="marker" let-event>
+      <span class="custom-marker" [ngStyle]="{ 'background-color': event.color }">
+        <i [class]="event.icon" style="color: white;"></i>
+      </span>
+    </ng-template>
+    <!-- Contenido con mensaje condicional -->
+   <ng-template pTemplate="content" let-event>
+  <div class="seguimiento-evento" *ngIf="!event.marcadorExtra">
+    <h4>{{ event.status }}</h4>
+    <p>
+      {{
+        event.status?.toLowerCase() === 'entregado'
+          ? 'Su pedido fue entregado'
+          : (event.description || 'Su pedido está en camino')
+      }}
+    </p>
+    <small>{{ event.date }}</small>
+  </div>
+</ng-template>
+
+  </p-timeline>
+</div>
+

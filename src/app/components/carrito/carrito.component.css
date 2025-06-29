@@ -114,6 +114,7 @@
 
 /* Botón de pago */
 .btn-pagar {
+  margin-top: 20px;
   background-color: #28a745;
   color: white;
   padding: 15px;
@@ -128,6 +129,158 @@
 .btn-pagar:hover {
   background-color: #218838;
 }
+
+
+
+.sugerencias {
+  border: 1px solid #ccc;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 120px;
+  overflow-y: auto;
+  background: white;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+}
+
+.sugerencias li {
+  padding: 6px;
+  cursor: pointer;
+}
+
+.sugerencias li:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* Estilo para contenedor de dirección */
+.direccion-container {
+  margin-top: 20px;
+}
+
+.direccion-container label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #495057;
+}
+
+.direccion-container input,
+.direccion-container select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+/* Método de pago */
+.totales-container select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+/* Mensaje de dirección válida */
+.totales-container p {
+  background-color: #e9f7ef;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.95em;
+  color: #155724;
+  margin-top: 15px;
+  border: 1px solid #c3e6cb;
+}
+.btn-comprar {
+  background-color: #ffc107;
+  color: #212529;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.2em;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.btn-comprar:hover {
+  background-color: #e0a800;
+}
+
+
+.formulario-envio-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #d2d4d6;
+  border-radius: 8px;
+}
+
+.btn-comprar {
+  background-color: #ffc107;
+  color: #212529;
+  padding: 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.2em;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.btn-comprar:hover {
+  background-color: #e0a800;
+}
+
+.btn-cancelar {
+  background-color: #dc3545;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-cancelar:hover {
+  background-color: #c82333;
+}
+
+.metodos-pago-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.opcion-metodo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Estilo para agrandar las bolitas del radio */
+.opcion-metodo input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #007bff; /* color del círculo seleccionado (azul, puedes cambiarlo) */
+}
+
+
 
 /* Responsivo: en pantallas pequeñas, las columnas se apilan */
 @media (max-width: 768px) {

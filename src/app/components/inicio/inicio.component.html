@@ -67,32 +67,41 @@
   </div>
 </div>
 
-<div class="productos-religiosos-section" #producto>
-  <h2 class="titulo">LOS RECIENTES LLEGADOS</h2>
-  <p class="descripcion">
-    Realice su pedido por adelantado ahora para recibir ofertas y regalos exclusivos.
-  </p>
+<!-- Carrusel de productos recientes -->
+<div class="productos-religiosos-section">
+  <h2 class="titulo">RECIÉN LLEGADOS</h2>
+  <div class="card">
+    <p-carousel 
+      [value]="variantesComoTarjetas" 
+      [numVisible]="4" 
+      [numScroll]="1" 
+      [circular]="true" 
+      [responsiveOptions]="responsiveOptions" 
+      [autoplayInterval]="3000">
 
-  <div class="productos-grid">
-    <div class="producto-item" *ngFor="let producto of productos" class="col-3" >
-      <div class="imagen-container">
-        <span *ngIf="producto.descuento" class="etiqueta-venta">Venta</span>
-        <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen" />
-        <div class="overlay">
-          <button class="boton-carrito">
-            <i class="pi pi-shopping-cart"></i> Añadir a la cesta
-          </button>
+      <ng-template let-producto pTemplate="item">
+        <div class="product-card">
+          <div class="image-container">
+            <img [src]="producto.imagenes[0]" [alt]="producto.nombre" class="product-image">
+          </div>
+
+          <div class="product-name">{{ producto.nombre }}</div>
+
+          <div class="price-section">
+            <div class="price">{{ producto.precio_venta | currency }}</div>
+            <div class="action-buttons">
+              <p-button icon="pi pi-search" severity="secondary" [outlined]="true" [routerLink]="['/detalle', producto.id, producto.varianteId]"></p-button>
+              <p-button icon="pi pi-shopping-cart" severity="secondary" [outlined]="true"  (onClick)="agregarAlCarrito(producto.id, producto.varianteId)"></p-button>
+            </div>
+          </div>
         </div>
-      </div>
-      <h4 class="producto-nombre">{{ producto.nombre }}</h4>
-      <div class="producto-precio">
-        <span *ngIf="producto.descuento" class="precio-antiguo">{{ producto.precio | currency }}</span>
-        <span class="precio-actual">{{ (producto.precio - (producto.descuento || 0)) | currency }}</span>
-      </div>
-    </div>
+      </ng-template>
+    </p-carousel>
   </div>
 </div>
 
+
+  
 
 <div class="categorias-container">
   <a routerLink="biblias" class="categoria" style="background-image: url('../../assets/img/biblias.png');"#categoria>

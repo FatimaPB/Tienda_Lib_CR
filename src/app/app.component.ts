@@ -1,3 +1,4 @@
+import { TuiRoot } from "@taiga-ui/core";
 import { Component, inject, Renderer2 } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -7,12 +8,12 @@ import { HeaderuComponent } from './components/headeru/headeru.component';
 import { HeaderaComponent } from './components/headera/headera.component';
 import { HeaderNormalComponent } from './components/header-normal/header-normal.component';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd  } from '@angular/router';
 import { NewlineToHtmlPipe } from './components/pipes/newline-to-html.pipe';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { FormsModule } from '@angular/forms';
-
+import { filter } from 'rxjs/operators';
 
 import { ButtonModule } from 'primeng/button';
 
@@ -29,7 +30,7 @@ export interface Empresa {
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,ButtonModule, HttpClientModule, CommonModule, 
-    HeaderuComponent, HeaderaComponent, HeaderNormalComponent,BreadcrumbComponent, FormsModule,RouterModule ],
+    HeaderuComponent, HeaderaComponent, HeaderNormalComponent,BreadcrumbComponent, FormsModule,RouterModule, TuiRoot],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] 
 })
@@ -51,6 +52,12 @@ export class AppComponent {
   
 
   constructor(private router: Router, private authService: AuthService, private renderer: Renderer2, private http: HttpClient) {
+
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
     // Suscribirse al tipo de usuario
     this.authService.rol$.subscribe((tipo) => {
       this.rol = tipo;

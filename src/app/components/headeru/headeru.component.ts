@@ -6,7 +6,9 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MatBadgeModule } from '@angular/material/badge';
 import { AuthService } from '../../auth.service'; // Ajusta la ruta según tu estructura de carpetas
+import { CarritoService } from '../../services/carrito.service';
 
 export interface Empresa {
   slogan?: string;
@@ -20,7 +22,7 @@ export interface Categoria {
 @Component({
   selector: 'app-headeru',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule,MatBadgeModule],
   templateUrl: './headeru.component.html',
   styleUrl: './headeru.component.css'
 })
@@ -28,8 +30,9 @@ export class HeaderuComponent {
   productos: any[] = [];
   empresaData: Empresa | null = null; // Inicializa como null
   categorias: Categoria[] = [];
+  cantidadCarrito = 0;
   apiUrl = 'https://back-tienda-one.vercel.app/api/categorias';
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient, private cdRef: ChangeDetectorRef) {}
+  constructor(private authService: AuthService,private carritoservice: CarritoService, private router: Router, private http: HttpClient, private cdRef: ChangeDetectorRef) {}
    // Obtener todas las categorías
         cargarCategorias() {
           this.http.get<Categoria[]>(this.apiUrl, {withCredentials:true}).subscribe((data) => {
@@ -46,6 +49,14 @@ export class HeaderuComponent {
       this.cdRef.detectChanges();  // Fuerza la actualización de la vista
     }, 3000); // Cambiar cada 3 segundos
   }
+
+  ngAfterViewInit() {
+    this.carritoservice.getCarrito().subscribe((carrito) => {
+      this.cantidadCarrito = carrito.length; // Actualiza la cantidad del carrito
+      this.cdRef.detectChanges(); // Fuerza la actualización de la vista
+    });
+  }
+
 
   getEmpresasData(): void {
     this.http.get<Empresa>('https://back-tienda-one.vercel.app/api/datos').pipe(
@@ -83,11 +94,11 @@ export class HeaderuComponent {
   }
   isMegaMenuOpen = false;
 
-  toggleMegaMenu(event: Event) {
-    event.stopPropagation(); // Evita que el evento cierre el menú al hacer clic
-    this.isMegaMenuOpen = !this.isMegaMenuOpen;
-  }
-  
+ toggleMegaMenu(event: Event) {
+  event.preventDefault(); // para que no haga scroll ni siga enlace
+  this.isMegaMenuOpen = !this.isMegaMenuOpen;
+}
+
   isSearchOpen: boolean = false;
 
   openSearch() {

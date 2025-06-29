@@ -1,80 +1,124 @@
-<div class="noticias-eventos-container">
-    <h1>Noticias y Eventos</h1>
-  
-    <!-- Slider de Noticias -->
-    <div class="slider-container">
-      <div class="slider">
-        <div class="slide">
-          <img class="imagen" src="../../assets/img/rosario.jpg" alt="Nueva colección de Rosarios"/>
-          <div class="slide-info">
-            <h2 class="info">Nueva colección de Rosarios</h2>
-            <p class="info">Conoce nuestra línea de rosarios artesanales bendecidos para todas las edades.</p>
-          </div>
+<div class="container">
+  <div class="main-content">
+    <!-- Sección de categorías a la izquierda -->
+    <div class="categories-section">
+      <h2 class="categories-title">CATEGORÍAS</h2>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let categoria of categorias" class="category-item">
+          {{ categoria.nombre }}
+          <mat-icon *ngIf="categoria.tieneSubmenu" matSuffix>chevron_right</mat-icon>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+    
+    <!-- Sección principal de productos -->
+    <div class="products-section">
+      <div class="products-header">
+        <div class="view-options">
+          <button mat-icon-button 
+            [color]="vistaGrid ? 'primary' : ''" 
+            (click)="cambiarVista(true)"
+            matTooltip="Vista de cuadrícula">
+            <mat-icon>grid_view</mat-icon>
+          </button>
+          <button mat-icon-button
+            [color]="!vistaGrid ? 'primary' : ''"
+            (click)="cambiarVista(false)"
+            matTooltip="Vista de lista">
+            <mat-icon>view_list</mat-icon>
+          </button>
+          <span class="results-count">Mostrando 1–{{ productos.length }} de {{ productos.length * 3 }} resultados</span>
         </div>
-        <div class="slide">
-          <img src="../../assets/img/cadena.jpg" alt="Misa Especial para Familias" />
-          <div class="slide-info">
-            <h2 class="info">Misa Especial para Familias</h2>
-            <p class="info">Participa en nuestra misa especial dedicada a la unión y bendición de las familias.</p>
-          </div>
+        
+        <div class="sort-options">
+          <span class="sort-label">Ordenar por:</span>
+          <mat-form-field appearance="outline">
+            <mat-select 
+              [value]="ordenamientoSeleccionado" 
+              (selectionChange)="cambiarOrdenamiento($event)">
+              <mat-option *ngFor="let opcion of opcionesOrdenamiento" [value]="opcion">
+                {{ opcion }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="slide">
-          <img src="../../assets/img/Libreria_Logo.jpg" alt="Semana Santa: Eventos Litúrgicos" />
-          <div class="slide-info">
-            <h2 class="info">Semana Santa: Eventos Litúrgicos</h2>
-            <p class="info">Consulta el calendario de actividades para Semana Santa y acompáñanos en estas fechas tan importantes.</p>
-          </div>
-        </div>
-        <div class="slide">
-            <img src="../../assets/img/cadena.jpg" alt="Misa Especial para Familias" />
-            <div class="slide-info">
-              <h2 class="info">Misa Especial para Familias</h2>
-              <p class="info">Participa en nuestra misa especial dedicada a la unión y bendición de las familias.</p>
+      </div>
+      
+      <!-- Vista de cuadrícula de productos -->
+      <div class="products-grid" *ngIf="vistaGrid">
+        <mat-card class="product-card" *ngFor="let producto of productos">
+          <div class="product-image-container">
+            <img mat-card-image [src]="producto.imagen" [alt]="producto.titulo" class="product-image">
+            <div *ngIf="producto.enOferta" class="sale-badge">
+              <mat-chip color="accent" selected>VENTA</mat-chip>
             </div>
           </div>
+          
+          <mat-card-content>
+            <h3 class="product-title">{{ producto.titulo }}</h3>
+            <div class="product-rating">
+              <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                [color]="star <= producto.calificacion ? 'accent' : ''">
+                {{ star <= producto.calificacion ? 'star' : 'star_border' }}
+              </mat-icon>
+            </div>
+            <div class="product-price">${{ producto.precio }}</div>
+          </mat-card-content>
+          
+          <mat-card-actions class="product-actions">
+            <button mat-raised-button color="primary" (click)="anadirAlCarrito(producto.id)">
+              AÑADIR AL CARRITO
+            </button>
+            <div class="action-icons">
+              <button mat-icon-button (click)="verDetalles(producto.id)">
+                <mat-icon>search</mat-icon>
+              </button>
+              <button mat-icon-button (click)="anadirAFavoritos(producto.id)">
+                <mat-icon>favorite_border</mat-icon>
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
       </div>
-    </div>
-  
-    <!-- Grid de Eventos -->
-    <div class="noticias-grid">
-      <div class="noticia">
-        <div class="noticia-imagen">
-          <img src="../../assets/img/rosario.jpg" alt="Nueva colección de Rosarios" />
-          <span class="categoria">Evento</span>
-        </div>
-        <div class="noticia-contenido">
-          <h2 class="noticia-titulo">Nueva colección de Rosarios</h2>
-          <p class="noticia-descripcion">Conoce nuestra línea de rosarios artesanales bendecidos para todas las edades.</p>
-          <p class="noticia-fecha">Fecha: 2025-02-25</p>
-          <a href="#" class="btn-detalles" routerLink="/error500">Ver Detalles</a>
-        </div>
-      </div>
-  
-      <div class="noticia">
-        <div class="noticia-imagen">
-          <img src="../../assets/img/rosario.jpg" alt="Misa Especial para Familias" />
-          <span class="categoria">Evento</span>
-        </div>
-        <div class="noticia-contenido">
-          <h2 class="noticia-titulo">Misa Especial para Familias</h2>
-          <p class="noticia-descripcion">Participa en nuestra misa especial dedicada a la unión y bendición de las familias.</p>
-          <p class="noticia-fecha">Fecha: 2025-03-01</p>
-          <a href="#" class="btn-detalles" routerLink="/error500">Ver Detalles</a>
-        </div>
-      </div>
-  
-      <div class="noticia">
-        <div class="noticia-imagen">
-          <img src="../../assets/img/rosario.jpg" alt="Semana Santa: Eventos Litúrgicos" />
-          <span class="categoria">Evento</span>
-        </div>
-        <div class="noticia-contenido">
-          <h2 class="noticia-titulo">Semana Santa: Eventos Litúrgicos</h2>
-          <p class="noticia-descripcion">Consulta el calendario de actividades para Semana Santa y acompáñanos en estas fechas tan importantes.</p>
-          <p class="noticia-fecha">Fecha: 2025-03-15</p>
-          <a href="#" class="btn-detalles" routerLink="/error500">Ver Detalles</a>
-        </div>
+      
+      <!-- Vista de lista de productos -->
+      <div class="products-list" *ngIf="!vistaGrid">
+        <mat-card class="product-list-item" *ngFor="let producto of productos">
+          <div class="product-list-container">
+            <div class="product-list-image">
+              <img [src]="producto.imagen" [alt]="producto.titulo">
+              <div *ngIf="producto.enOferta" class="sale-badge">
+                <mat-chip color="accent" selected>VENTA</mat-chip>
+              </div>
+            </div>
+            
+            <div class="product-list-details">
+              <h3 class="product-title">{{ producto.titulo }}</h3>
+              <div class="product-rating">
+                <mat-icon *ngFor="let star of [1,2,3,4,5]" 
+                  [color]="star <= producto.calificacion ? 'accent' : ''">
+                  {{ star <= producto.calificacion ? 'star' : 'star_border' }}
+                </mat-icon>
+              </div>
+              <div class="product-price">${{ producto.precio }}</div>
+              
+              <div class="product-actions">
+                <button mat-raised-button color="primary" (click)="anadirAlCarrito(producto.id)">
+                  AÑADIR AL CARRITO
+                </button>
+                <div class="action-icons">
+                  <button mat-icon-button (click)="verDetalles(producto.id)">
+                    <mat-icon>search</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="anadirAFavoritos(producto.id)">
+                    <mat-icon>favorite_border</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
       </div>
     </div>
   </div>
-  
+</div>

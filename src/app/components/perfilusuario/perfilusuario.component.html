@@ -170,7 +170,7 @@
             <td>{{ venta.estado_envio }}</td>
             <td>{{ venta.direccion_envio }}</td>
             <td>
-              <button >Ver Detalle</button>
+              <button (click)="verDetalle(venta.id)">Ver Detalle</button>
             </td>
           </tr>
         </tbody>

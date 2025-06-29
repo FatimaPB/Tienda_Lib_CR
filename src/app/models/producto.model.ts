@@ -1,15 +1,12 @@
 export interface Producto {
-    id?: number;
-    nombre: string;
-    descripcion: string;
-    sku: string;
-    costo: number;
-    porcentaje_ganancia: number;
-    precio_calculado: number;
-    calificacion_promedio: number;
-    total_resenas: number;
-    cantidad_stock: number;
-    categoria_id: number;
-    color_id: number;
-    tamano_id: number;
+  id: number;
+  nombre: string;
+  descripcion: string;
+  sku: string;
+  precio_compra?:number;
+  precio_venta?: number;         // Para productos sin variantes
+  cantidad_stock?: number;       // Para productos sin variantes
+  nombre_categoria: string;
+  usuario_nombre: string;
+  creado_en: Date;
   }

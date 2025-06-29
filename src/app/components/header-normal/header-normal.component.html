@@ -37,6 +37,7 @@
 
 
         <li><a routerLink="/about">SOBRE NOSOTROS</a></li>
+        <li><a routerLink="/newsandevents">NOTICIAS Y EVENTOS</a></li>
         <li><a routerLink="/contact">CONTACTO</a></li>
       </ul>
     </nav>
@@ -45,7 +46,9 @@
     <div class="icons">
       <a title="iniciar sesion" routerLink="/login"><i class="pi pi-sign-in"></i></a>/
       <a title="registrarse" routerLink="/registro"><i class="pi pi-user-plus"></i></a>
-      <a title="carrito" routerLink="/carshop"><i class="pi pi-shopping-cart"></i></a>
+      <a routerLink="/carshop" matBadge="{{ cantidadCarrito }}" matBadgeColor="warn" matBadgeOverlap="false" aria-label="Carrito de compras">
+      <i class="pi pi-shopping-cart"></i>
+      </a>
       <a title="buscar" (click)="openSearch()"><i class="pi pi-search"></i></a>
       <i class="pi pi-bars menu-icon" (click)="toggleMenu()"></i>
     </div>
@@ -53,29 +56,25 @@
 
 
 
-  <!-- Menú desplegable móvil -->
-  <div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu">
-    <ul>
-      <li><a routerLink="/" (click)="closeMenu()">HOME</a></li>
-      <li class="mobile-menu-categorias">
-        <a (click)="toggleMegaMenu($event)">CATEGORÍAS</a>
-        <ul *ngIf="isMegaMenuOpen">
-          <li><a routerLink="/products" (click)="closeMenu()">Libros</a></li>
-          <li><a routerLink="/biblias" (click)="closeMenu()">Biblia</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Litúrgico</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Imágenes de Culto</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Cuadros</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Estampas</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Accesorios</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Catecismos</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Resina</a></li>
-          <li><a routerLink="/products" (click)="closeMenu()">Velas y Cirios</a></li>
-        </ul>
-      </li>
-      <li><a routerLink="/about" (click)="closeMenu()">SOBRE NOSOTROS</a></li>
-      <li><a routerLink="/contact" (click)="closeMenu()">CONTACTO</a></li>      
-    </ul>
-  </div>
+ <!-- Menú desplegable móvil -->
+<div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu shadow-lg">
+  <ul class="menu-list">
+    <li><a routerLink="/" (click)="closeMenu()">HOME</a></li>
+    <li class="mobile-menu-categorias" [class.open]="isMegaMenuOpen">
+      <div class="menu-item" (click)="toggleMegaMenu($event)">
+        <a>CATEGORÍAS <i class="pi pi-angle-down"></i></a>
+      </div>
+      <ul *ngIf="isMegaMenuOpen" class="submenu">
+        <li *ngFor="let categoria of categorias">
+          <a [routerLink]="['/products', categoria.nombre_categoria]" (click)="closeMenu()">{{ categoria.nombre_categoria }}</a>
+        </li>
+      </ul>
+    </li>
+    <li><a routerLink="/about" (click)="closeMenu()">SOBRE NOSOTROS</a></li>
+    <li><a routerLink="/newsandevents" (click)="closeMenu()">NOTICIAS Y EVENTOS</a></li>
+    <li><a routerLink="/contact" (click)="closeMenu()">CONTACTO</a></li>
+  </ul>
+</div>
 
   
 <!-- Panel de búsqueda deslizable -->

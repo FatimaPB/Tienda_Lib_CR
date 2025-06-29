@@ -16,10 +16,11 @@ export class CarritoService {
   }
 
   // Agregar un producto al carrito
-  agregarAlCarrito(producto_id: number, cantidad: number = 1): Observable<any> {
-    return this.http.post(`${this.apiUrl}/agregar`, { producto_id, cantidad }, { withCredentials: true });
-  }
-  
+agregarAlCarrito(producto_id: number, variante_id: number | null = null, cantidad: number = 1): Observable<any> {
+  return this.http.post(`${this.apiUrl}/agregar`, { producto_id, variante_id, cantidad }, { withCredentials: true });
+}
+
+
 
   // Vaciar el carrito
   limpiarCarrito(): Observable<any> {

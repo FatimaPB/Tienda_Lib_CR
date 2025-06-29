@@ -33,6 +33,10 @@ import { VentasComponent } from './components/ventas/ventas.component';
 import { CatalogoproductosComponent } from './components/catalogoproductos/catalogoproductos.component';
 import { ColoresComponent } from './components/colores/colores.component';
 import { TamanosComponent } from './components/tamanos/tamanos.component';
+import { ProveedorComponent } from './components/proveedor/proveedor.component';
+import { ComprasComponent } from './components/compras/compras.component';
+import { PedidodetalleComponent } from './components/pedidodetalle/pedidodetalle.component';
+import { PenelrepartidorComponent } from './components/penelrepartidor/penelrepartidor.component';
 
 
 export const routes: Routes = [
@@ -44,7 +48,7 @@ export const routes: Routes = [
 { path: 'contact', component: ContactoComponent, data: { breadcrumb: 'contact'}},
 
 { path: 'products/:nombreCategoria', component: ProductosComponent, data: { breadcrumb: '' }}, 
-{ path: 'detalle/:id', component: DetalleproductoComponent, data: { breadcrumb: 'Detail' } },
+{ path: 'detalle/:id/:varianteId', component: DetalleproductoComponent, data: { breadcrumb: '' } },
 { path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'Noticias y Eventos' } },
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },
 { path: 'deslindelegal', component: DeslindelegalComponent },
@@ -69,6 +73,10 @@ export const routes: Routes = [
 { path: 'admcat', component: CatalogoproductosComponent, canActivate: [AuthGuard] },
 { path: 'colores', component: ColoresComponent, canActivate: [AuthGuard] },
 { path: 'tamaños', component: TamanosComponent, canActivate: [AuthGuard] },
+{ path: 'proveedor', component: ProveedorComponent, canActivate: [AuthGuard] },
+{ path: 'compras', component: ComprasComponent, canActivate: [AuthGuard] },
+{ path: 'pedido-detalle', component: PedidodetalleComponent, canActivate: [AuthGuard] },
+{ path: 'repartidor', component: PenelrepartidorComponent, canActivate: [AuthGuard] },
 
 { path: 'error400', component: Error400Component },
 { path: 'error404', component: Error404Component },

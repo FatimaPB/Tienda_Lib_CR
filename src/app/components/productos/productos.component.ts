@@ -11,18 +11,34 @@ import { RatingModule } from 'primeng/rating';
 import { DataViewModule } from 'primeng/dataview';
 
 
+
+// Agrega variantes a Producto
+export interface Variante {
+  id: number;
+  nombre_color: string;
+  nombre_tamano: string;
+  precio_venta: number;
+  cantidad_stock: number;
+  imagenes: string[];
+}
+
+
 export interface Producto {
   id: number;
   nombre: string;
   descripcion: string;
-  precio_calculado: number;
+  precio_venta: number;
   cantidad_stock: number;
   categoria_id: number;
-  imagenes: string[];  // Lista de imágenes asociadas al producto
-  inventoryStatus: 'INSTOCK' | 'LOWSTOCK' | 'OUTOFSTOCK';
+  nombre_color: string;
+  tamano_id: number;
+  nombre_tamano: string;
+  color_id: number;
+  imagenes: string[];
   total_resenas:number;
   calificacion_promedio: number;
   stars?: string[];
+  variantes?: Variante[];
 }
 
 
@@ -39,6 +55,8 @@ export class ProductosComponent implements OnInit  {
 
   productos: Producto[] = [];
   productoSeleccionado: Producto | null = null; // Producto seleccionado
+  variantesComoTarjetas: any[] = [];
+
 
   apiUrlProductos = 'https://back-tienda-one.vercel.app/api/productos'; // Ajusta esta URL según tu backend
   categoriaNombre: string = ''; // Variable para almacenar el nombre de la categoría
@@ -58,10 +76,51 @@ export class ProductosComponent implements OnInit  {
       next: (data) => {
         this.productos = data;
 
+          // Aplanar variantes en tarjetas individuales
+      this.variantesComoTarjetas = [];
+
+
         // Calcula las estrellas para cada producto basado en la calificación promedio
         this.productos.forEach(producto => {
           producto.stars = this.calculateStars(producto.calificacion_promedio);
+
+          if (producto.variantes && producto.variantes.length > 0) {
+            producto.variantes.forEach(vari => {
+              this.variantesComoTarjetas.push({
+                id: producto.id,
+                nombre: producto.nombre,
+                descripcion: producto.descripcion,
+                color: vari.nombre_color,
+                tamano: vari.nombre_tamano,
+                precio_venta: vari.precio_venta,
+                cantidad_stock: vari.cantidad_stock,
+                imagenes: vari.imagenes,
+                calificacion_promedio: producto.calificacion_promedio,
+                total_resenas: producto.total_resenas,
+                stars: producto.stars,
+                varianteId: vari.id
+              });
+            });
+          } else {
+            // Productos sin variantes
+            this.variantesComoTarjetas.push({
+              id: producto.id,
+              nombre: producto.nombre,
+              descripcion: producto.descripcion,
+              color: producto.nombre_color,
+              tamano: producto.nombre_tamano,
+              precio_venta: producto.precio_venta,
+              cantidad_stock: producto.cantidad_stock,
+              imagenes: producto.imagenes,
+              calificacion_promedio: producto.calificacion_promedio,
+              total_resenas: producto.total_resenas,
+              stars: producto.stars,
+              varianteId: ''
+            });
+          }
         });
+
+
         // Verifica si hay un query parameter "selected"
         const selectedId = this.route.snapshot.queryParamMap.get('selected');
         if (selectedId) {
@@ -105,42 +164,17 @@ export class ProductosComponent implements OnInit  {
     }
 
 // Agregar producto al carrito usando el servicio
-agregarAlCarrito(producto: Producto): void {
-  this.carritoService.agregarAlCarrito(producto.id, 1).subscribe({
-    next: (respuesta) => {
-      console.log('Respuesta del backend:', respuesta);
-      alert('Producto agregado al carrito');
-    },
+agregarAlCarrito(producto_id: number, variante_id: number | null): void {
+  this.carritoService.agregarAlCarrito(producto_id, variante_id, 1).subscribe({
+    next: () => alert('Producto agregado al carrito'),
     error: (err) => {
-      if (err.status === 401) {
-        alert('Debes iniciar sesión para agregar productos al carrito.');
-      } else {
-        console.error('Error al agregar producto:', err);
-      }
+      if (err.status === 401) alert('Debes iniciar sesión para agregar productos al carrito.');
+      else console.error(err);
     }
   });
 }
 
 
-
-  // Función para ver el detalle del producto
-  verDetalle(producto: Producto): void {
-    console.log('Ver detalle del producto:');
-    // Aquí agregaríamos lógica para redirigir a una página de detalle o mostrar más información sobre el producto
-  }
-
-  getSeverity(product: Producto): 'success' | 'warning' | 'danger' | 'secondary' | 'info' | 'contrast' | undefined {
-    switch (product.inventoryStatus) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warning';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return undefined;
-    }
-  }
 // Función para calcular las estrellas
 calculateStars(rating: number): string[] {
   if (rating === 0) {

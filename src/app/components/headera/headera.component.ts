@@ -1,4 +1,5 @@
 import { Component , OnInit, HostListener } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth.service'; // Ajusta la ruta según tu estructura de carpetas
 import { Router } from '@angular/router';
@@ -15,6 +16,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 
 @Component({
@@ -22,7 +24,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   standalone: true,
   imports: [RouterLink, CommonModule,
     MatSlideToggleModule, MatIconModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatSidenavModule, MatSidenav,
-    RouterModule],
+    RouterModule, MatListModule],
   templateUrl: './headera.component.html',
   styleUrl: './headera.component.css'
 })
@@ -35,7 +37,22 @@ export class HeaderaComponent  implements OnInit{
 
 
 
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient, private breakpointObserver: BreakpointObserver) {
+   this.breakpointObserver.observe(['(max-width: 768px)']).subscribe(result => {
+    this.isMobile = result.matches;
+    this.sidebarOpened = !this.isMobile;
+  });
+  }
+
+toggleSidebar() {
+  this.sidebarOpened = !this.sidebarOpened;
+}
+
+closeIfMobile() {
+  if (this.isMobile) {
+    this.sidebarOpened = false;
+  }
+}
 
   
 
@@ -105,12 +122,4 @@ export class HeaderaComponent  implements OnInit{
     }
   }
 
-  toggleSidebar() {
-    if (this.isMobile) {
-      this.sidebarOpened = !this.sidebarOpened;
-    } else {
-      this.isCollapsed = !this.isCollapsed;
-    }
-    console.log('isMobile:', this.isMobile, 'sidebarOpened:', this.sidebarOpened, 'isCollapsed:', this.isCollapsed);
-  }
 }

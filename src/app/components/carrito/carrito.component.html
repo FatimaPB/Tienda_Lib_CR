@@ -17,33 +17,34 @@
     <tbody>
       <tr *ngFor="let item of carrito; let i = index">
         <td>
-          <!-- Aquí podrías llamar a un método de CarritoService para eliminar el producto -->
-          <button class="btn-eliminar" >×</button>
+          <button class="btn-eliminar">X</button>
         </td>
         <td>
-          <img *ngIf="item.imagenes.length" [src]="item.imagenes[0]" class="imagen-producto">
+          <img
+            *ngIf="(item.imagenes_variante?.length ? item.imagenes_variante[0] : item.imagenes_producto?.[0])"
+            [src]="item.imagenes_variante?.length ? item.imagenes_variante[0] : item.imagenes_producto?.[0]"
+            class="imagen-producto"
+          >
         </td>
         <td>{{ item.nombre }}</td>
-        <td>${{ item.precio_calculado | number:'1.2-2' }}</td>
+        <td>${{ item.precio_venta | number:'1.2-2' }}</td>
         <td>
           <input type="number" [(ngModel)]="item.cantidad" min="1" (change)="actualizarTotales()">
         </td>
-        <td>${{ (item.precio_calculado * item.cantidad) | number:'1.2-2' }}</td>
+        <td>${{ (item.precio_venta * item.cantidad) | number:'1.2-2' }}</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<!-- Resumen y formulario para completar la compra -->
+<!-- Resumen con totales y botón COMPRAR -->
 <div class="resumen-container">
-  <!-- Sección de cupón (opcional) -->
   <div class="cupon-container">
     <h3>CUPÓN</h3>
     <input type="text" placeholder="Introduzca su código de cupón">
     <button class="btn-cupon">APLICAR CUPÓN</button>
   </div>
 
-  <!-- Sección de totales y datos de compra -->
   <div class="totales-container">
     <h3>TOTALES DEL CARRITO</h3>
     <div class="total-linea">
@@ -59,26 +60,69 @@
       <span>${{ total | number:'1.2-2' }}</span>
     </div>
 
-    <!-- Selección del método de pago -->
-    <div>
-      <label for="metodoPago">Método de Pago:</label>
-      <select id="metodoPago" [(ngModel)]="metodoPago">
-        <option *ngFor="let metodo of metodosPago" [value]="metodo.id">
-          {{ metodo.nombre }}
-        </option>
-      </select>
-    </div>
-    
-    <!-- Ingreso de la dirección de envío -->
-    <div>
-      <label for="direccionEnvio">Dirección de Envío:</label>
-      <input id="direccionEnvio" type="text" [(ngModel)]="direccionEnvio" placeholder="Ingrese su dirección">
-    </div>
-
-    <!-- Botón para confirmar la compra -->
-    <button class="btn-pagar" (click)="comprar()">PASAR POR LA CAJA</button>
+    <!-- Botón para mostrar el formulario -->
+    <button class="btn-comprar" (click)="mostrarFormulario = true">COMPRAR</button>
   </div>
 </div>
 
+<!-- Sección aparte para dirección y botón PASAR POR LA CAJA -->
+<div *ngIf="mostrarFormulario" class="formulario-envio-container">
+  <h3>Seleccione su método de pago</h3>
+
+  <div class="direccion-container">
+   <p><strong></strong></p>
+<div class="metodos-pago-opciones">
+  <label *ngFor="let metodo of metodosPago" class="opcion-metodo">
+    <input
+      type="radio"
+      name="metodoPago"
+      [value]="metodo.id"
+      [(ngModel)]="metodoPago"
+    >
+    {{ metodo.nombre }}
+  </label>
+</div>
+
+  <h3>Ingrese una Dirección de Envío</h3>
 
 
+    <label for="codigoPostal">Código Postal:</label>
+    <input
+      id="codigoPostal"
+      type="text"
+      [(ngModel)]="codigoPostal"
+      (change)="buscarColoniasPorCP()"
+      placeholder="Código Postal"
+      maxlength="5"
+    >
+
+    <label for="colonia">Colonia:</label>
+    <select id="colonia" [(ngModel)]="coloniaSeleccionada">
+      <option *ngFor="let col of colonias" [value]="col">{{ col }}</option>
+    </select>
+
+    <label for="calle">Calle:</label>
+    <input id="calle" type="text" [(ngModel)]="calle" placeholder="Calle" required>
+
+    <label for="numero">Número exterior:</label>
+    <input id="numero" type="text" [(ngModel)]="numero" placeholder="Número exterior" required>
+
+      <label for="referencia">Referencia:</label>
+    <input id="referencia" type="text" [(ngModel)]="referencia" placeholder="Referencia" required>
+
+    <p *ngIf="municipio && estado">
+      Municipio: {{ municipio }}<br>
+      Estado: {{ estado }}
+    </p>
+  </div>
+
+  <p *ngIf="direccionValida()">
+    <strong>Envío a:</strong><br>
+    {{ calle }} {{ numero }}, {{ coloniaSeleccionada }}<br>
+    {{ municipio }}, {{ estado }}, CP {{ codigoPostal }},{{referencia}}
+  </p>
+
+  <button class="btn-pagar" [disabled]="!direccionValida()" (click)="comprar()">PASAR POR LA CAJA</button>
+<button class="btn-cancelar" (click)="cancelarFormulario()">CANCELAR</button>
+
+</div>

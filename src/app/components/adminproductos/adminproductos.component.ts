@@ -1,6 +1,5 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA , ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -14,10 +13,10 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { StepperModule } from 'primeng/stepper';
-import { GalleriaModule } from 'primeng/galleria';
-import { StepsModule } from 'primeng/steps';
 import { CarouselModule } from 'primeng/carousel';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TagModule } from 'primeng/tag';
 
 
 
@@ -31,37 +30,83 @@ import { ColorService } from '../../services/color.service';
 import { TamanoService } from '../../services/tamano.service';
 
 
+interface Variante {
+  color_id: number | null;
+  tamano_id: number | null;
+  cantidad_stock: number;
+  precio_compra: number;
+  precio_venta: number;
+}
+
 
 @Component({
   selector: 'app-adminproductos',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, CommonModule,
+  imports: [FormsModule, CommonModule,
      TableModule, ButtonModule,CardModule,InputTextModule,InputTextareaModule,
-     DropdownModule, PaginatorModule,FileUploadModule,DialogModule,ConfirmDialogModule,ToastModule, GalleriaModule,CarouselModule],
-     providers: [MessageService, ConfirmationService, StepperModule,InputTextareaModule,StepsModule],
+     DropdownModule, PaginatorModule,FileUploadModule,DialogModule,ConfirmDialogModule,ToastModule,CarouselModule, CheckboxModule, TagModule],
+  providers: [MessageService, ConfirmationService,InputTextareaModule, RadioButtonModule],
   templateUrl: './adminproductos.component.html',
   styleUrl: './adminproductos.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminproductosComponent implements OnInit {
 
- 
+  @ViewChild('tablaProductos') tablaProductos: any;
+
+  filtroGlobal: string = '';
+  filtros = {
+    nombre: '',
+    sku: '',
+    nombre_categoria: null,
+    nombre_color: null,
+    nombre_tamano: null
+  };
+  
+  limpiarFiltros() {
+    this.filtroGlobal = '';
+    this.filtros = { nombre: '', sku: '', nombre_categoria: null, nombre_color: null, nombre_tamano: null };
+    this.tablaProductos.reset();
+  }
+  
+  filtrarPorCategoria() {
+    // Asigna el valor seleccionado en la categoría al filtro global
+    this.filtroGlobal = this.filtros.nombre_categoria || '';
+    this.tablaProductos.filterGlobal(this.filtroGlobal, 'contains');
+  }
+  
+  filtrarPorColor() {
+    // Asigna el valor seleccionado en el color al filtro global
+    this.filtroGlobal = this.filtros.nombre_color || '';
+    this.tablaProductos.filterGlobal(this.filtroGlobal, 'contains');
+  }
+  
+  filtrarPorTamano() {
+    // Asigna el valor seleccionado en el tamaño al filtro global
+    this.filtroGlobal = this.filtros.nombre_tamano || '';
+    this.tablaProductos.filterGlobal(this.filtroGlobal, 'contains');
+  }
+  
+
+
   mostrarFormulario: boolean = false;
   productos: Producto[] = [];
-  producto: Producto = {
-    nombre: '',
-    descripcion: '',
-    sku: '',
-    costo: 0,
-    porcentaje_ganancia: 0,
-    precio_calculado: 0,
-    calificacion_promedio: 0,
-    total_resenas: 0,
-    cantidad_stock: 0,
-    categoria_id: 0,
-    color_id: 0,
-    tamano_id: 0,
-  };
+// En la clase del componente
+producto: any = {
+  nombre: '',
+  descripcion: '',
+  sku: '',
+  categoria_id: null,
+  color_id: null,
+  tamano_id: null,
+  tieneVariantes: false,
+  precio_compra: 0,
+  precio_venta: 0,
+  cantidad_stock: 0,
+  variantes: []
+};
+
+  
   colores: Color[] = [];
   categorias: Categoria[] = [];
   tamanos: Tamano[] = [];
@@ -171,6 +216,21 @@ export class AdminproductosComponent implements OnInit {
     }
   }
 
+  onVariantFileChange(event: any, varianteIndex: number): void {
+    // Si aún no existe el array para los archivos de esta variante, lo inicializamos.
+    if (!this.producto.variantes[varianteIndex].selectedFiles) {
+      this.producto.variantes[varianteIndex].selectedFiles = [];
+    }
+    
+    // Agrega los archivos seleccionados al array de la variante.
+    if (event.files && event.files.length > 0) {
+      this.producto.variantes[varianteIndex].selectedFiles = [
+        ...this.producto.variantes[varianteIndex].selectedFiles,
+        ...event.files
+      ];
+    }
+  }
+
   onUpload(event: any): void {
     for (let file of event.files) {
       this.uploadedFiles.push(file);
@@ -181,25 +241,67 @@ export class AdminproductosComponent implements OnInit {
     return this.producto.costo + (this.producto.costo * (this.producto.porcentaje_ganancia / 100));
   }
 
+  // Agregar este método
+  validarVariantes(): boolean {
+    return this.producto.variantes.every((v: Variante) => 
+      v.color_id !== null && 
+      v.tamano_id !== null && 
+      v.cantidad_stock >= 0 &&
+      v.precio_compra > 0 &&
+      v.precio_venta > 0
+    );
+  }
+
   guardarProducto(): void {
-    this.producto.precio_calculado = this.calcularPrecio();
+    if (!this.validarFormulario()) return;
+  
     const formData = new FormData();
+  
+    // Datos base
     formData.append('nombre', this.producto.nombre);
     formData.append('descripcion', this.producto.descripcion);
     formData.append('sku', this.producto.sku);
-    formData.append('costo', this.producto.costo.toString());
-    formData.append('porcentaje_ganancia', this.producto.porcentaje_ganancia.toString());
-    formData.append('precio_calculado', this.producto.precio_calculado.toString());
-    formData.append('calificacion_promedio', this.producto.calificacion_promedio.toString());
-    formData.append('total_resenas', this.producto.total_resenas.toString());
-    formData.append('cantidad_stock', this.producto.cantidad_stock.toString());
     formData.append('categoria_id', this.producto.categoria_id.toString());
-    formData.append('color_id', this.producto.color_id.toString());
-    formData.append('tamano_id', this.producto.tamano_id.toString());
+    
+    if (this.producto.color_id !== null) {
+      formData.append('color_id', this.producto.color_id.toString());
+    }
+    
+    if (this.producto.tamano_id !== null) {
+      formData.append('tamano_id', this.producto.tamano_id.toString());
+    }
+
+    formData.append('tiene_variantes', this.producto.tieneVariantes ? '1' : '0');
+  
+    // Valores por defecto
+    formData.append('calificacion_promedio', '0');
+    formData.append('total_resenas', '0');
+    formData.append('precio_compra', '0');
+    formData.append('precio_venta', '0');
+    formData.append('cantidad_stock', '0');
+  
+    if (this.producto.tieneVariantes) {
+      formData.append('variantes', JSON.stringify(this.producto.variantes.map((v: any) => {
+        const { selectedFiles, ...datosVariante } = v;
+        return datosVariante;
+      })));
+    }
+  
+    // No se agregan precio_compra, precio_venta ni cantidad_stock
+  
+    // Imágenes
     this.selectedFiles.forEach(file => {
       formData.append('images', file, file.name);
     });
 
+    this.producto.variantes.forEach((variante: any) => {
+      if (variante.selectedFiles && variante.selectedFiles.length > 0) {
+        variante.selectedFiles.forEach((file: File) => {
+          formData.append('imagenes_variantes', file, file.name);
+        });
+      }
+    });
+  
     this.productoService.saveProducto(formData, this.producto.id).subscribe({
       next: () => {
         this.messageService.add({
@@ -210,8 +312,8 @@ export class AdminproductosComponent implements OnInit {
         this.loadProductos();
         this.resetForm();
         this.mostrarFormulario = false;
-        this.activeIndex--;
-        this.progreso = (this.activeIndex / 2) * 100;
+        this.activeIndex = 0;
+        this.progreso = 0;
       },
       error: () => {
         this.messageService.add({
@@ -222,35 +324,97 @@ export class AdminproductosComponent implements OnInit {
       }
     });
   }
+  
+
+
+
+  
+  // Nueva función de validación general
+validarFormulario(): boolean {
+  // Validar campos básicos
+  if (!this.producto.nombre || !this.producto.descripcion || !this.producto.sku) {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Complete los campos básicos del producto'
+    });
+    return false;
+  }
+
+  // Validar categoría
+  if (!this.producto.categoria_id) {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Seleccione una categoría'
+    });
+    return false;
+  }
+
+  return true;
+}
+
 
   resetForm(): void {
     this.producto = {
       nombre: '',
       descripcion: '',
       sku: '',
-      costo: 0,
-      porcentaje_ganancia: 0,
-      precio_calculado: 0,
-      calificacion_promedio: 0,
-      total_resenas: 0,
+      categoria_id: null,  // Cambiar de 0 a null
+      color_id: null,
+      tamano_id: null,
+      tieneVariantes: false,
+      precio_compra: 0,
+      precio_venta: 0,
       cantidad_stock: 0,
-      categoria_id: 0,
-      color_id: 0,
-      tamano_id: 0,
+      variantes: []
     };
     if (this.fileUploader) {
       this.fileUploader.clear();
     }
     this.selectedFiles = [];
   }
+  
 
   siguientePaso() {
-    this.activeIndex++;
-    this.progreso = (this.activeIndex / 2) * 100;
+    if (this.activeIndex < 2) {
+      this.activeIndex++;
+      this.progreso = (this.activeIndex / 2) * 100;
+    }
+  }
+  
+  anteriorPaso() {
+    if (this.activeIndex > 0) {
+      this.activeIndex--;
+      this.progreso = (this.activeIndex / 2) * 100;
+    }
+  }
+  
+
+  agregarVariante(): void {
+    // Agrega una variante vacía
+    this.producto.variantes.push({
+      color_id: 0,
+      tamano_id: 0,
+      cantidad_stock: 0,
+      precio_compra: 0,  // Precio a quien se compra la variante
+      precio_venta: 0    // Precio al que se vende la variante
+    });
+  }
+  
+  eliminarVariante(index: number): void {
+    this.producto.variantes.splice(index, 1);
   }
 
-  anteriorPaso() {
-    this.activeIndex--;
-    this.progreso = (this.activeIndex / 2) * 100;
+  cambiarEstadoVariantes(valor: boolean) {
+    if (!valor) {
+      this.producto.variantes = []; // Limpiar variantes si no tiene
+    } else {
+      this.producto.cantidad_stock = 0;
+      this.producto.precio_compra = null;
+      this.producto.precio_venta = null;
+    }
   }
+  
+  checked: boolean = false;
 }

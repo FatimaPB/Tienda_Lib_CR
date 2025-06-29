@@ -1,0 +1,78 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-d-flex p-ai-center p-jc-center" style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px;margin-top: 50px;">
+    <div class="card" style="width: 90%; margin: auto;">
+  
+    <h2 class="texto">Gestión de Proveedores</h2>
+    <button pButton label="Nuevo Proveedor" icon="pi pi-plus" class="p-button-text" (click)="nuevoProveedor()"></button>
+
+    <p-table #tabla [value]="proveedores" [paginator]="true" [rows]="5" [globalFilterFields]="['nombre', 'email', 'telefono']" [rowsPerPageOptions]="[5,10,20]">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [(ngModel)]="filtroGlobal" placeholder="Buscar proveedor..." (input)="tabla.filterGlobal(filtroGlobal, 'contains')" />
+          </span>
+          <button pButton label="Limpiar Filtros" class="p-button-text" (click)="filtroGlobal=''"></button>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th>Contacto</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td>{{ rowData.nombre }}</td>
+          <td>{{ rowData.contacto }}</td>
+          <td>{{ rowData.telefono }}</td>
+          <td>{{ rowData.email }}</td>
+          <td>{{ rowData.direccion }}</td>
+          <td>
+            <button pButton icon="pi pi-pencil" class="p-button-text" (click)="editarProveedor(rowData)"></button>
+            <button pButton icon="pi pi-trash" class="p-button-text" (click)="eliminarProveedor(rowData.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      
+      
+    </p-table>
+  </div>
+</div>
+
+<p-dialog header="{{ esEditar ? 'Editar Proveedor' : 'Nuevo Proveedor' }}" [(visible)]="mostrarFormulario" [modal]="true" [closable]="false" [style]="{width: '400px'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label>Nombre</label>
+      <input pInputText [(ngModel)]="proveedor.nombre" />
+    </div>
+    <div class="p-field">
+      <label>Contacto</label>
+      <input pInputText [(ngModel)]="proveedor.contacto" />
+    </div>
+    <div class="p-field">
+      <label>Teléfono</label>
+      <input pInputText [(ngModel)]="proveedor.telefono" />
+    </div>
+    <div class="p-field">
+      <label>Email</label>
+      <input pInputText [(ngModel)]="proveedor.email" />
+    </div>
+    <div class="p-field">
+      <label>Dirección</label>
+      <input pInputText [(ngModel)]="proveedor.direccion" />
+    </div>
+  </div>
+  <div class="p-dialog-footer">
+    <button pButton label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="mostrarFormulario = false"></button>
+    <button pButton label="Guardar" icon="pi pi-check" (click)="guardarProveedor()"></button>
+  </div>
+</p-dialog>

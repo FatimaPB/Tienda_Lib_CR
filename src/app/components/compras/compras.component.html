@@ -1,0 +1,133 @@
+<!-- Toast para notificaciones -->
+<p-toast></p-toast>
+
+<!-- Diálogo de confirmación -->
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-d-flex p-ai-center p-jc-center" style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px; margin-top: 50px;">
+  <div class="card" style="width: 90%; margin: auto;">
+
+    <!-- Título de la sección -->
+    <h2 class="texto" style="margin-bottom: 20px;">Gestión de Compras</h2>
+
+    <!-- Botón para agregar una compra -->
+    <button pButton icon="pi pi-plus" label="Agregar Compra" class="p-button-text p-mb-4" (click)="showDialog('top')"></button>
+
+    <!-- Tabla de compras -->
+    <p-table 
+      [value]="compras" 
+      [tableStyle]="{ 'min-width': '50rem' }" 
+      [paginator]="true" 
+      [rows]="5" 
+      [rowsPerPageOptions]="[5, 10, 20]" 
+      class="p-shadow-2">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Proveedor</th>
+          <th>Producto</th>
+          <th>Color</th>
+          <th>Tamaño</th>
+          <th>Precio compra</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-compra>
+        <tr>
+          <td>{{ compra.id }}</td>
+          <td>{{ compra.proveedor }}</td>
+          <td>{{ compra.producto }}</td>
+          <td>{{ compra.color }}</td>
+          <td>{{ compra.tamano }}</td>
+          <td>{{ compra.precio_compra | currency }}</td>
+          <td>{{ compra.cantidad }}</td>
+          <td>{{ compra.total | currency }}</td>
+          <td>{{ compra.fecha_compra | date:'dd/MM/yyyy HH:mm:ss a'  }}</td>
+          <td class="action-buttons">
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2" (click)="editar(compra)" (click)="showDialog('top')"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger" (click)="confirmarEliminacion(compra.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+  </div>
+</div>
+
+<!-- Diálogo para agregar/editar compra -->
+<p-dialog 
+  header="{{ compra.id ? 'Editar Compra' : 'Agregar Compra' }}" 
+  [(visible)]="visible" 
+  [modal]="true" 
+  [style]="{ width: '50rem' }">
+  
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="proveedorId">Proveedor</label>
+      <p-dropdown 
+        [(ngModel)]="compra.proveedorId" 
+        [options]="proveedores" 
+        optionLabel="nombre" 
+        optionValue="id" 
+        placeholder="Seleccionar proveedor"
+        required>
+      </p-dropdown>
+    </div>
+    
+    <div class="p-field">
+      <label for="varianteId">Variante</label>
+        <p-dropdown 
+          [(ngModel)]="detalle.varianteId" 
+          [options]="variantes" 
+          optionLabel="nombre" 
+          optionValue="id" 
+          placeholder="Seleccionar variante">
+</p-dropdown>
+    </div>
+    <div class="p-field">
+        <label for="varianteId">Producto</label>
+        <p-dropdown 
+          [(ngModel)]="detalle.productoId" 
+          [options]="productos" 
+          optionLabel="nombre" 
+          optionValue="id" 
+          placeholder="Seleccionar producto">
+        </p-dropdown>
+      </div>
+    <div class="p-field">
+      <label for="cantidad">Cantidad</label>
+      <input type="number" [(ngModel)]="detalle.cantidad" name="cantidad" placeholder="Cantidad" required pInputText />
+    </div>
+
+    <div class="p-field">
+      <label for="precioCompra">Precio de Compra</label>
+      <input type="number" [(ngModel)]="detalle.precioCompra" name="precioCompra" placeholder="Precio de Compra" required pInputText />
+    </div>
+
+    <div class="p-field">
+  <label for="margenGanancia">Margen de Ganancia (%)</label>
+  <input type="number" 
+    [(ngModel)]="detalle.margenGanancia" 
+       name="margenGanancia" 
+       placeholder="Ejemplo: 80 para 80%" 
+       min="0" max="500" step="1"
+       required
+       pInputText />
+    </div>
+
+
+    <div class="p-field p-d-flex p-jc-between">
+      <button pButton label="{{ compra.id ? 'Actualizar' : 'Agregar' }}" 
+              class="p-button-text" 
+              (click)="guardarCompra()"></button>
+      <button pButton label="Cancelar" class="p-button-text" (click)="cancelarEdicion()"></button>
+    </div>
+  </div>
+
+</p-dialog>

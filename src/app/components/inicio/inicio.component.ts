@@ -28,7 +28,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 
-
+import { PreguntaFrecuenteService } from '../../services/preguntas.service';
+import { PreguntaFrecuente } from '../../models/pregunta.model';
+import { AccordionModule } from 'primeng/accordion';
 
 
 interface Banner {
@@ -74,7 +76,7 @@ export interface Producto {
   standalone: true,
   imports: [CommonModule, CarouselModule, RouterLink,CardModule,ButtonModule,DialogModule, 
     FormsModule, TooltipModule,MatSlideToggleModule, MatIconModule, MatButtonModule,MatToolbarModule,
-     MatMenuModule,MatSidenavModule, MatCardModule,MatGridListModule,MatFormFieldModule,MatInputModule
+     MatMenuModule,MatSidenavModule, MatCardModule,MatGridListModule,MatFormFieldModule,MatInputModule,AccordionModule
      ,MatProgressBarModule,MatTooltipModule
     ],
   templateUrl: './inicio.component.html',
@@ -82,16 +84,17 @@ export interface Producto {
 })
 export class InicioComponent implements AfterViewInit {
   banners: Banner[] = [];
-  apiUrl: string = 'https://back-tienda-one.vercel.app/api/banners';
-  productosUrl = 'https://back-tienda-one.vercel.app/api/productos';
+  apiUrl: string = 'https://api-libreria.vercel.app/api/banners';
+  productosUrl = 'https://api-libreria.vercel.app/api/productos';
   currentIndex: number = 0;
   productos: Producto[] = [];
-    variantesComoTarjetas: any[] = [];
+  variantesComoTarjetas: any[] = [];
+  preguntas: PreguntaFrecuente[] = [];
 
 
   dialogoVisible: boolean = false;
   articuloSeleccionado: any = null;
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private carritoService: CarritoService) { }
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private carritoService: CarritoService,private preguntaService: PreguntaFrecuenteService) { }
 
 
   // Referencia a la instancia del sidenav
@@ -109,8 +112,16 @@ export class InicioComponent implements AfterViewInit {
     
     this.loadBanners();
     this.loadProductos();
+    this.cargarPreguntas();
+
 
      
+  }
+
+  cargarPreguntas() {
+    this.preguntaService.cargarPreguntas().subscribe(data => {
+      this.preguntas = data.filter(p => p.activo); // Solo preguntas activas
+    });
   }
 loadProductos(): void {
     this.http.get<Producto[]>(`${this.productosUrl}/categoria/nombre/Biblias`).subscribe({

@@ -1,5 +1,5 @@
 import { TuiRoot } from "@taiga-ui/core";
-import { Component, inject, Renderer2 } from '@angular/core';
+import { Component,OnInit, inject, Renderer2 } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
@@ -14,8 +14,11 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { BannerComponent } from './components/banner/banner.component';
 import { FormsModule } from '@angular/forms';
 import { filter } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ButtonModule } from 'primeng/button';
+
+import { MessagingService } from './messaging.service';
 
 
 
@@ -34,7 +37,7 @@ export interface Empresa {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] 
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'cristo';
   token: string | null = null;
   rol: string | null = null;
@@ -42,7 +45,7 @@ export class AppComponent {
   isChatOpen = false;
   messages: { user: string, text: string }[] = [];
   userMessage = '';
-  apiUrl = 'https://back-tienda-one.vercel.app/api/chat'; // Ruta del backend
+  apiUrl = 'https://api-libreria.vercel.app/api/chat'; // Ruta del backend
   getCookie(name: string): string | null {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -51,7 +54,8 @@ export class AppComponent {
   }
   
 
-  constructor(private router: Router, private authService: AuthService, private renderer: Renderer2, private http: HttpClient) {
+  constructor(private router: Router, private authService: AuthService, private renderer: Renderer2,
+     private http: HttpClient,private messagingService: MessagingService,  private snackBar: MatSnackBar) {
 
     this.router.events
     .pipe(filter(event => event instanceof NavigationEnd))
@@ -64,22 +68,44 @@ export class AppComponent {
     });
   }
 
-  ngOnInit() {
-    // Recuperar el estado del modo oscuro del almacenamiento local
-    const darkModeSetting = localStorage.getItem('darkMode');
-    if (darkModeSetting === 'true') {
-      this.darkMode = true;
-      this.renderer.addClass(document.body, 'dark-theme'); // Aplicar modo oscuro
-    }
-    
-    // Llamada para verificar el estado de la autenticación
-    this.http.get<any>('https://back-tienda-one.vercel.app/api/check-auth', { withCredentials: true })
+ngOnInit() {
+  // Recuperar el estado del modo oscuro del almacenamiento local
+  const darkModeSetting = localStorage.getItem('darkMode');
+  if (darkModeSetting === 'true') {
+    this.darkMode = true;
+    this.renderer.addClass(document.body, 'dark-theme'); // Aplicar modo oscuro
+  }
+
+  // Primero: verificar la autenticación y obtener usuario
+  this.http.get<any>('https://api-libreria.vercel.app/api/check-auth', { withCredentials: true })
     .subscribe({
       next: (response) => {
         if (response.authenticated) {
           console.log('Usuario autenticado');
-          this.rol = response.rol;  // Suponiendo que el backend envía el rol
-          console.log('Usuario en sesión:', this.rol);
+          this.rol = response.rol;
+          const usuarioId = response.usuario.id;  // Guarda el id usuario
+          console.log('Usuario en sesión:', this.rol, 'ID:', usuarioId);
+
+          // Luego: pedir permiso para notificaciones y enviar token junto con usuarioId
+          this.messagingService.requestPermission()
+            .then(token => {
+              this.token = token;
+              console.log('Token recibido:', token);
+
+              // Aquí haces el POST para guardar el token asociado al usuario
+              this.http.post('https://api-libreria.vercel.app/api/guardar-token', {
+                usuario_id: usuarioId,
+                token_fcm: token
+              }).subscribe({
+                next: () => console.log('Token FCM guardado en backend'),
+                error: err => console.error('Error guardando token en backend', err)
+              });
+
+            })
+            .catch(err => {
+              console.error('No se pudo obtener permiso para notificaciones:', err);
+            });
+
         } else {
           console.log('No autenticado');
         }
@@ -88,8 +114,24 @@ export class AppComponent {
         console.log('Error al verificar la autenticación');
       }
     });
-    this.getEmpresasData(); 
-  }
+
+  this.getEmpresasData();
+
+ this.messagingService.receiveMessage(payload => {
+      const title = payload.notification?.title ?? 'Notificación';
+      const body = payload.notification?.body ?? '';
+
+      this.snackBar.open(`${title}: ${body}`, 'Cerrar', {
+        duration: 5000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+      });
+    });
+  
+
+   this.getEmpresasData();
+}
+
 
   toggleDarkMode() {
     this.darkMode = !this.darkMode;
@@ -106,7 +148,7 @@ export class AppComponent {
   empresaData: Empresa | null = null; // Inicializa como null
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('https://back-tienda-one.vercel.app/api/datos').subscribe({
+    this.http.get<Empresa>('https://api-libreria.vercel.app/api/datos').subscribe({
       next: (response) => {
         this.empresaData = response; // Guarda el objeto directamente
       },

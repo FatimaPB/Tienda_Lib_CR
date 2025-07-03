@@ -1,0 +1,66 @@
+/* Contenedor sin bordes, sin sombra */
+.breadcrumb-container {
+  width: 100%;
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.1rem;
+  border-top: 1px solid #ddd; /* ✅ Solo borde superior */
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  box-shadow: none !important;
+}
+
+
+/* Personalización total del breadcrumb */
+.breadcrumb-custom {
+  width: 100%;
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Enlaces breadcrumb */
+.breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.75rem; /* más pequeña */
+  margin-right: 0.5rem;
+}
+
+/* Texto de cada breadcrumb */
+.breadcrumb-label {
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+/* Iconos personalizados */
+.breadcrumb-icon {
+  margin-right: 0.25rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* Hover */
+.breadcrumb-link:hover .breadcrumb-label {
+  color: #007ad9;
+  text-decoration: underline;
+}
+
+/* Separador PrimeNG (>) más pequeño */
+:host ::ng-deep .p-breadcrumb-chevron {
+  font-size: 0.7rem !important;
+  margin: 0 0.35rem !important;
+  color: #aaa !important;
+}
+
+/* Eliminar fondo, borde y padding internos */
+:host ::ng-deep .p-breadcrumb {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}

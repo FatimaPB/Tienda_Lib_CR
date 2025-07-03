@@ -37,6 +37,8 @@ import { ProveedorComponent } from './components/proveedor/proveedor.component';
 import { ComprasComponent } from './components/compras/compras.component';
 import { PedidodetalleComponent } from './components/pedidodetalle/pedidodetalle.component';
 import { PenelrepartidorComponent } from './components/penelrepartidor/penelrepartidor.component';
+import { PreguntasComponent } from './components/preguntas/preguntas.component';
+import { OracionesComponent } from './components/oraciones/oraciones.component';
 
 
 export const routes: Routes = [
@@ -47,8 +49,8 @@ export const routes: Routes = [
 { path: 'carshop', component: CarritoComponent, data: { breadcrumb: 'carshop'}},
 { path: 'contact', component: ContactoComponent, data: { breadcrumb: 'contact'}},
 
-{ path: 'products/:nombreCategoria', component: ProductosComponent, data: { breadcrumb: '' }}, 
-{ path: 'detalle/:id/:varianteId', component: DetalleproductoComponent, data: { breadcrumb: '' } },
+{ path: 'products/:nombreCategoria', component: ProductosComponent, data: { breadcrumb: 'nombreCategoria' }}, 
+{ path: 'detalle/:id/:varianteId', component: DetalleproductoComponent, data: { breadcrumb: 'id' } },
 { path: 'newsandevents', component: NoticiasEventosComponent, data: { breadcrumb: 'Noticias y Eventos' } },
 { path: 'politicadeprivacidad', component: PoliticadeprivacidadComponent },
 { path: 'deslindelegal', component: DeslindelegalComponent },
@@ -64,12 +66,13 @@ export const routes: Routes = [
 { path: 'terminos', component: TerminosComponent, canActivate: [AuthGuard] },
 { path: 'deslinde', component: DeslindeComponent, canActivate: [AuthGuard] },
 { path: 'pempresa', component: PerfilempresaComponent, canActivate: [AuthGuard] },
-{ path: 'incidencias', component: IncidenciasComponent, canActivate: [AuthGuard] },
-{ path: 'perfil', component: PerfilusuarioComponent, canActivate: [AuthGuard] },
+{ path: 'incidencias', component: IncidenciasComponent, canActivate: [AuthGuard]},
+{ path: 'perfil', component: PerfilusuarioComponent,data: { breadcrumb: 'Perfil' }, canActivate: [AuthGuard] },
 { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },
 { path: 'admproduts', component: AdminproductosComponent, canActivate: [AuthGuard] },
 { path: 'banners', component: BannerComponent, canActivate: [AuthGuard] },
 { path: 'ventas', component: VentasComponent, canActivate: [AuthGuard] },
+{ path: 'ventas/:id', component: VentasComponent, canActivate: [AuthGuard] },
 { path: 'admcat', component: CatalogoproductosComponent, canActivate: [AuthGuard] },
 { path: 'colores', component: ColoresComponent, canActivate: [AuthGuard] },
 { path: 'tamaños', component: TamanosComponent, canActivate: [AuthGuard] },
@@ -77,6 +80,8 @@ export const routes: Routes = [
 { path: 'compras', component: ComprasComponent, canActivate: [AuthGuard] },
 { path: 'pedido-detalle', component: PedidodetalleComponent, canActivate: [AuthGuard] },
 { path: 'repartidor', component: PenelrepartidorComponent, canActivate: [AuthGuard] },
+{ path: 'preguntas', component: PreguntasComponent, canActivate: [AuthGuard] },
+{ path: 'oraciones', component: OracionesComponent, canActivate: [AuthGuard] },
 
 { path: 'error400', component: Error400Component },
 { path: 'error404', component: Error404Component },

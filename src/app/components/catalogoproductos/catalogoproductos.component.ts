@@ -37,7 +37,7 @@ export class CatalogoproductosComponent implements OnInit {
   }
 
   loadProductos() {
-    this.http.get<any>('https://back-tienda-one.vercel.app/api/catalogo')
+    this.http.get<any>('https://api-libreria.vercel.app/api/catalogo')
       .subscribe(
         data => this.productos = data.productos,
         error => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al cargar los productos' })
@@ -58,7 +58,7 @@ export class CatalogoproductosComponent implements OnInit {
   }
 
   eliminarProductoDelCatalogo(productoId: number) {
-    this.http.delete(`https://back-tienda-one.vercel.app/api/catalogo/${productoId}`)
+    this.http.delete(`https://api-libreria.vercel.app/api/catalogo/${productoId}`)
       .subscribe(
         () => {
           this.productos = this.productos.filter(producto => producto.id !== productoId);

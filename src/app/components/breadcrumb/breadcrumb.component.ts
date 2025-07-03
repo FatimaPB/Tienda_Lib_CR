@@ -51,17 +51,44 @@ export class BreadcrumbComponent implements OnInit {
     this.items = [...this.visitedRoutes]; // Mostrar las rutas acumuladas
   }
 
-  private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
-    if (route.routeConfig?.data?.['breadcrumb']) {
-      const newUrl = url ? `${url}/${route.routeConfig.path}` : `/${route.routeConfig.path}`;
-      breadcrumbs.push({ label: route.routeConfig.data['breadcrumb'], routerLink: newUrl });
-      url = newUrl;
+
+private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
+  if (route.routeConfig?.data?.['breadcrumb']) {
+    let path = route.routeConfig.path || '';
+
+    Object.keys(route.snapshot.params).forEach(paramKey => {
+      let paramValue = route.snapshot.params[paramKey];
+
+      // Aquí asumimos que varianteId siempre existe porque es obligatorio
+      path = path.replace(`:${paramKey}`, paramValue);
+    });
+
+    path = path.replace(/\/+/g, '/');
+
+    const newUrl = url ? `${url}/${path}` : `/${path}`;
+
+    let label = route.routeConfig.data['breadcrumb'];
+
+    if (route.snapshot.paramMap.has(label)) {
+      if (label === 'id') {
+        const id = route.snapshot.paramMap.get('id');
+        const varianteId = route.snapshot.paramMap.get('varianteId');
+        label = varianteId && varianteId !== 'null' ? `detalle ${id} / ${varianteId}` : `detalle ${id}`;
+      } else {
+        label = route.snapshot.paramMap.get(label) || label;
+      }
     }
 
-    for (const child of route.children) {
-      this.createBreadcrumbs(child, url, breadcrumbs);
-    }
-
-    return breadcrumbs;
+    breadcrumbs.push({ label, routerLink: newUrl });
+    url = newUrl;
   }
+
+  for (const child of route.children) {
+    this.createBreadcrumbs(child, url, breadcrumbs);
+  }
+
+  return breadcrumbs;
+}
+
+
 }

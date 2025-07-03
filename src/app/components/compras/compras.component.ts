@@ -47,7 +47,7 @@ export class ComprasComponent implements OnInit {
   
 
   cargarCompras() {
-    this.http.get<any[]>('https://back-tienda-one.vercel.app/api/compras')
+    this.http.get<any[]>('https://api-libreria.vercel.app/api/compras')
       .subscribe(
         (data) => {
           this.compras = data;
@@ -60,7 +60,7 @@ export class ComprasComponent implements OnInit {
   }
 
   cargarProveedores() {
-    this.http.get<any[]>('https://back-tienda-one.vercel.app/api/proveedor')
+    this.http.get<any[]>('https://api-libreria.vercel.app/api/proveedor')
       .subscribe(
         (data) => {
           this.proveedores = data;
@@ -73,7 +73,7 @@ export class ComprasComponent implements OnInit {
   }
 
   cargarVariantes() {
-    this.http.get<any[]>('https://back-tienda-one.vercel.app/api/variantes')
+    this.http.get<any[]>('https://api-libreria.vercel.app/api/variantes')
       .subscribe(
         (data) => {
           this.variantes = data;
@@ -85,7 +85,7 @@ export class ComprasComponent implements OnInit {
       );
   }
   cargarproductos() {
-    this.http.get<any[]>('https://back-tienda-one.vercel.app/api/productos-simples')
+    this.http.get<any[]>('https://api-libreria.vercel.app/api/productos-simples')
       .subscribe(
         (data) => {
           this.productos = data;
@@ -156,7 +156,7 @@ guardarCompra() {
     detallesCompra
   };
 
-  this.http.post('https://back-tienda-one.vercel.app/api/compras', compraPayload).subscribe(
+  this.http.post('https://api-libreria.vercel.app/api/compras', compraPayload).subscribe(
     (response) => {
       this.messageService.add({ severity: 'success', summary: 'Compra agregada', detail: 'La compra ha sido registrada correctamente.' });
       this.cargarCompras();
@@ -184,7 +184,7 @@ guardarCompra() {
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.http.delete(`https://back-tienda-one.vercel.app/api/compras/${compraId}`).subscribe(
+        this.http.delete(`https://api-libreria.vercel.app/api/compras/${compraId}`).subscribe(
           () => {
             this.messageService.add({ severity: 'success', summary: 'Compra eliminada', detail: 'La compra ha sido eliminada.' });
             this.cargarCompras();  // Recargar compras después de la eliminación

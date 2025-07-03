@@ -17,7 +17,8 @@ import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-
+import { MenuItem } from 'primeng/api';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 
@@ -56,13 +57,15 @@ export interface Producto {
   selector: 'app-detalleproducto',
   standalone: true,
   imports: [CurrencyPipe, CommonModule, MatCardModule, MatButtonModule,
-  MatIconModule, MatProgressSpinnerModule, NgxImageZoomModule, RouterLink, FormsModule, ReactiveFormsModule],
+  MatIconModule, MatProgressSpinnerModule, NgxImageZoomModule, RouterLink, FormsModule, ReactiveFormsModule,BreadcrumbModule],
   templateUrl: './detalleproducto.component.html',
   styleUrl: './detalleproducto.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]  // Añade esto aquí
 })
 export class DetalleproductoComponent implements OnInit {
-
+  items: MenuItem[] = [];
+    productoId: number = 0;
+  varianteId: number = 0;
 comentarios: Comentario[] = [];
 comentarioForm!: FormGroup;
 usuarioLogueado = false;
@@ -92,9 +95,9 @@ puedeComentar = false;
   precioSeleccionado: number = 0;
   cantidadStockSeleccionado: number = 0;
 
-  apiUrlProductos = 'https://back-tienda-one.vercel.app/api/productos'; // URL del backend
+  apiUrlProductos = 'https://api-libreria.vercel.app/api/productos'; // URL del backend
 
-  apiUrl = 'https://back-tienda-one.vercel.app/api'; // URL del backend
+  apiUrl = 'https://api-libreria.vercel.app/api'; // URL del backend
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private carritoService: CarritoService, 
     private comentarioService :ComentarioService,
@@ -156,7 +159,7 @@ verificarPermisoParaComentar() {
 
 // Modifica verificarUsuario para actualizar usuarioLogueado y llamar a verificarPermisoParaComentar cuando ya tengas producto cargado
 verificarUsuario(): void {
-  this.http.get<any>('https://back-tienda-one.vercel.app/api/check-auth', { withCredentials: true }).subscribe(
+  this.http.get<any>('https://api-libreria.vercel.app/api/check-auth', { withCredentials: true }).subscribe(
     res => {
       if (res.authenticated) {
         this.usuarioId = res.usuario.id;
@@ -200,7 +203,7 @@ enviarComentario() {
 }
 
   cargarProductosRelacionados(productoId: number): void {
-    this.http.get<Producto[]>(`https://back-tienda-one.vercel.app/api/relacionados/${productoId}`).subscribe({
+    this.http.get<Producto[]>(`https://api-libreria.vercel.app/api/relacionados/${productoId}`).subscribe({
       next: (relacionados) => {
         this.productosRelacionados = relacionados;
       },

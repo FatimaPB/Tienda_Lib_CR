@@ -101,6 +101,17 @@
 </div>
 
 
+
+<div class="faq-container">
+  <h2 class="faq-title">Preguntas Frecuentes</h2>
+
+  <p-accordion [multiple]="true" class="faq-accordion">
+    <p-accordionTab *ngFor="let pregunta of preguntas" [header]="pregunta.pregunta">
+      <p class="faq-answer">{{ pregunta.respuesta }}</p>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+
   
 
 <div class="categorias-container">

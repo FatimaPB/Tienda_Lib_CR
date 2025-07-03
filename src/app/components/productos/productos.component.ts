@@ -9,6 +9,9 @@ import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
 import { DataViewModule } from 'primeng/dataview';
+import { MenuItem } from 'primeng/api'; // Importa MenuItem
+
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 
@@ -45,11 +48,12 @@ export interface Producto {
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [CommonModule, RouterLink, CardModule, ButtonModule, TagModule, RatingModule, DataViewModule],
+  imports: [CommonModule, RouterLink, CardModule, ButtonModule, TagModule, RatingModule, DataViewModule,BreadcrumbModule],
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css'
 })
 export class ProductosComponent implements OnInit  {
+   items: MenuItem[] = [];
   stars: string[] = [];
   layout: 'list' | 'grid' = 'list'; 
 
@@ -58,7 +62,7 @@ export class ProductosComponent implements OnInit  {
   variantesComoTarjetas: any[] = [];
 
 
-  apiUrlProductos = 'https://back-tienda-one.vercel.app/api/productos'; // Ajusta esta URL según tu backend
+  apiUrlProductos = 'https://api-libreria.vercel.app/api/productos'; // Ajusta esta URL según tu backend
   categoriaNombre: string = ''; // Variable para almacenar el nombre de la categoría
   constructor(private http: HttpClient, private carritoService: CarritoService,private route: ActivatedRoute) {}
 
@@ -67,6 +71,12 @@ export class ProductosComponent implements OnInit  {
 
  this.route.params.subscribe(params => {
   this.categoriaNombre = params['nombreCategoria'];
+   // Actualizar el breadcrumb
+      this.items = [
+        { label: 'Inicio', route: '/' },
+        { label: this.categoriaNombre, route: `/products/${this.categoriaNombre}` }
+      ];
+
   this.cargarProductosPorCategoria(this.categoriaNombre);
 });
   }

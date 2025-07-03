@@ -28,7 +28,7 @@ export class VerificarCodigoComponent {
   
     this.mostrandoSpinner = true; // ✅ Mostrar el spinner antes de hacer la petición
   
-    this.http.post('https://back-tienda-one.vercel.app/api/usuarios/verico', payload).subscribe(
+    this.http.post('https://api-libreria.vercel.app/api/usuarios/verico', payload).subscribe(
       (response: any) => {
         setTimeout(() => { // ✅ Mostrar el mensaje después de 3 segundos
           this.mostrandoSpinner = false; // ✅ Ocultar el spinner

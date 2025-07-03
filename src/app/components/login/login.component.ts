@@ -5,13 +5,20 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
 import { RecaptchaModule,  RecaptchaComponent   } from 'ng-recaptcha';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule ],
+  providers: [MessageService],
+  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule,InputTextModule, PasswordModule, ButtonModule, FloatLabelModule, ToastModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -21,6 +28,7 @@ export class LoginComponent {
   errorMessage: string | null = null;
   isPasswordVisible = false;
   mensaje = '';
+  password: string = '';
   exito: boolean = false;
 
   // Nueva propiedad para mostrar campo de MFA
@@ -30,9 +38,9 @@ export class LoginComponent {
 
   @ViewChild(RecaptchaComponent) recaptcha: RecaptchaComponent | undefined;
 
-  private apiUrl = 'https://back-tienda-one.vercel.app/api';
+  private apiUrl = 'https://api-libreria.vercel.app/api';
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService,private messageService: MessageService) {}
 
   customDecode(token: string) {
     const base64Url = token.split('.')[1];
@@ -66,7 +74,11 @@ export class LoginComponent {
             console.log("MFA requerido, usuarioId:", response.usuarioId);
             this.showMFAField = true;
             this.mfaUsuarioId = response.usuarioId;
-            this.mensaje = 'Ingresa el código MFA para completar el inicio de sesión.';
+            this.messageService.add({
+            severity: 'info',
+            summary: 'MFA requerido',
+            detail: 'Ingresa el código MFA para completar el inicio de sesión.'
+          });
             return;
           }
 
@@ -75,7 +87,12 @@ export class LoginComponent {
             this.authService.login(response.rol);
             if (response.rol === 'admin' || response.rol === 'empleado') {
               loginForm.resetForm();
-              this.mensaje = 'Inicio de sesión exitoso!';
+             this.messageService.add({
+            severity: 'success',
+            summary: 'Inicio de sesión exitoso',
+            detail: 'Bienvenido'
+          });
+
               this.exito = true;
               setTimeout(() => { 
                 localStorage.removeItem('_grecaptcha');
@@ -84,7 +101,12 @@ export class LoginComponent {
               this.mensaje = '';
               this.resolvedCaptcha = null;
             } else {
-              this.mensaje = 'Inicio de sesión exitoso!';
+            this.messageService.add({
+            severity: 'success',
+            summary: 'Inicio de sesión exitoso',
+            detail: 'Bienvenido'
+          });
+
               this.exito = true;
               setTimeout(() => {
                 localStorage.removeItem('_grecaptcha');
@@ -127,7 +149,11 @@ export class LoginComponent {
   // Nuevo método para verificar el código MFA
   onVerifyMFA() {
     if (!this.mfaToken) {
-      this.mensaje = 'Por favor, ingresa el código MFA.';
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Código MFA',
+        detail: 'Por favor, ingresa el código MFA.'
+      });
       return;
     }
   
@@ -137,7 +163,11 @@ export class LoginComponent {
           if (response.token) {
             this.authService.login(response.rol);
             if (response.rol === 'admin' || response.rol === 'empleado') {
-              this.mensaje = 'Inicio de sesión exitoso!';
+               this.messageService.add({
+            severity: 'success',
+            summary: 'Inicio de sesión exitoso',
+            detail: 'Acceso permitido'
+          });
               this.exito = true;
               setTimeout(() => { 
                 localStorage.removeItem('_grecaptcha');

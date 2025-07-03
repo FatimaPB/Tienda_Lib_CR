@@ -454,3 +454,45 @@ background-color: beige;
       font-size: 1rem;
     }
   }
+
+
+
+
+
+
+
+  .faq-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.faq-title {
+ margin-top: 50px;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+
+.faq-accordion ::ng-deep .p-accordion-header {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e88e5;
+}
+
+.faq-answer {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+  padding: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .faq-container {
+    max-width: 95%;
+  }
+}

@@ -33,10 +33,10 @@ export class PedidodetalleComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
 
-      this.http.get(`https://back-tienda-one.vercel.app/api/pedidos/${id}`, { withCredentials: true }).subscribe(data => {
+      this.http.get(`https://api-libreria.vercel.app/api/pedidos/${id}`, { withCredentials: true }).subscribe(data => {
         this.pedido = data;
 
-        this.http.get<any>(`https://back-tienda-one.vercel.app/api/envio/seguimiento/${id}`, { withCredentials: true }).subscribe(res => {
+        this.http.get<any>(`https://api-libreria.vercel.app/api/envio/seguimiento/${id}`, { withCredentials: true }).subscribe(res => {
           const eventosManual = [
             {
               status: 'Pedido realizado',

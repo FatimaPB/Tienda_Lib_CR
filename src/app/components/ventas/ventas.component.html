@@ -18,6 +18,7 @@
     <tr>
       <th>ID</th>
       <th>Cliente</th>
+      <th>Imagen</th>
       <th>Productos Comprados</th>
       <th>Cantidad</th>
       <th>Precio unitario</th>
@@ -33,6 +34,14 @@
     <tr  >
       <td>{{ venta.id }}</td>
       <td>{{ venta.cliente }}</td>
+      <td>
+  <ul style="list-style: none; padding-left: 0;">
+    <li *ngFor="let producto of venta.productos" style="display: flex; align-items: center; gap: 0.5rem;">
+      <img [src]="producto.imagen" alt="{{ producto.nombre }}" width="50" height="50" style="object-fit: cover; border-radius: 4px;" />
+    </li>
+  </ul>
+</td>
+
       <td>
         <ul style="list-style: none; padding-left: 0;">
           <li *ngFor="let producto of venta.productos">

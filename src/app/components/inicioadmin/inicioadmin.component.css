@@ -1,79 +1,378 @@
-/* Contenedor principal */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 50px auto 300px auto;
-  padding: 40px;
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Título */
-.dashboard-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #333;
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-/* Cuadrícula de tarjetas */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 30px;
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1400px;
   margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8f9fa;
+  color: #495057;
+  line-height: 1.5;
 }
 
-/* Estilo de cada tarjeta */
-.dashboard-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+.dashboard-header {
+  margin-bottom: 2rem;
 }
 
-.dashboard-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-/* Icono de cada tarjeta */
-.card-icon {
-  color:black;
-  border-radius: 50%;
-  padding: 15px;
-  margin-bottom: 20px;
-  font-size: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Información de cada tarjeta */
-.card-info {
-  text-align: center;
-}
-
-.card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
-}
-
-/* Estilo de los iconos de las tarjetas */
-.dashboard-card i {
+.dashboard-header h1 {
+  color: #2c3e50;
   font-size: 2rem;
+  font-weight: 600;
 }
 
-/* Transiciones de los iconos */
-.dashboard-card:hover i {
-  color:burlywood; /* Cambia el color del icono al pasar el mouse */
+/* Métricas superiores */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.metric-title {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.metric-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.metric-icon.orders {
+  background-color: #bbdefb; /* Azul claro */
+  color: #0d47a1; /* Azul oscuro para el ícono */
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.metric-icon.revenue {
+  background-color: #c8e6c9; /* Verde claro */
+  color: #1b5e20; /* Verde oscuro para el ícono */
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.metric-icon.customers {
+  background-color: #fff9c4; /* Amarillo pálido */
+  color: #f57f17; /* Amarillo oscuro para el ícono */
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.metric-icon.comments {
+  background-color: #ffcdd2; /* Rojo claro */
+  color: #b71c1c; /* Rojo oscuro para el ícono */
+  border-radius: 8px;
+  padding: 8px;
+}
+
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+}
+
+.metric-change {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* Grid principal */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.chart-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  border: 1px solid #e9ecef;
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-menu {
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* Tabla de ventas recientes */
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table th {
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6c757d;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sales-table td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid #f8f9fa;
+  font-size: 0.875rem;
+}
+
+.sales-table tr:hover {
+  background: #f8f9fa;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.product-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #e9ecef;
+}
+
+.product-name {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.price {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.view-btn {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-btn:hover {
+  background: #bbdefb;
+}
+
+/* Grid inferior */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 2rem;
+}
+
+.products-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  border: 1px solid #e9ecef;
+}
+
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f8f9fa;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.product-item:hover {
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 0 -0.5rem;
+  padding: 1rem 0.5rem;
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+.product-details h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.product-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progress-bar {
+  width: 60px;
+  height: 4px;
+  background: #e9ecef;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.progress-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 30px;
+}
+
+/* Notificaciones */
+.notifications-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  border: 1px solid #e9ecef;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.notification-icon.admin { background: #28a745; }
+.notification-icon.user { background: #007bff; }
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-text {
+  font-size: 0.875rem;
+  color: #2c3e50;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e9ecef;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #6c757d;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover {
+  background: #f8f9fa;
+}
+
+.pagination button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+@media (max-width: 1200px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-container {
+    padding: 1rem;
+  }
 }

@@ -23,7 +23,7 @@ export class DeslindelegalComponent {
   }
 
   obtenerDocumentoVigente(): void {
-    this.http.get('https://back-tienda-one.vercel.app/api/deslindes/vigente') // Reemplaza con la URL correcta de tu API
+    this.http.get('https://api-libreria.vercel.app/api/deslindes/vigente') // Reemplaza con la URL correcta de tu API
       .subscribe(
         (data) => {
           this.documentoVigente = data;

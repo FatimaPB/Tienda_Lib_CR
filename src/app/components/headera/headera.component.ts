@@ -17,6 +17,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ViewEncapsulation } from '@angular/core';
+
 
 
 @Component({
@@ -24,13 +28,14 @@ import { MatListModule } from '@angular/material/list';
   standalone: true,
   imports: [RouterLink, CommonModule,
     MatSlideToggleModule, MatIconModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatSidenavModule, MatSidenav,
-    RouterModule, MatListModule],
+    RouterModule, MatListModule,MatAccordion,MatExpansionModule],
   templateUrl: './headera.component.html',
-  styleUrl: './headera.component.css'
+  styleUrl: './headera.component.css',
+  encapsulation: ViewEncapsulation.None 
 })
 export class HeaderaComponent  implements OnInit{
 
-  private apiUrl = `https://back-tienda-one.vercel.app/api`;
+  private apiUrl = `https://api-libreria.vercel.app/api`;
   originalPerfil: any = null;
   perfil: any = null;
 
@@ -88,7 +93,7 @@ closeIfMobile() {
   onLogout() {
 
   
-    this.http.post('https://back-tienda-one.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
+    this.http.post('https://api-libreria.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
     () => {
     window.location.reload();
     this.authService.logout(); 

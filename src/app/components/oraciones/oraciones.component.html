@@ -1,0 +1,62 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-d-flex p-ai-center p-jc-center" style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px; margin-top: 50px;">
+  <div class="card" style="width: 90%; margin: auto;">
+    <h2 class="texto" style="margin-bottom: 20px;">Gestión de Oraciones</h2>
+
+    <button pButton label="Agregar Oración" icon="pi pi-plus" class="p-button-text p-mb-4" (click)="showDialog('top')"></button>
+
+    <p-table
+      [value]="oraciones"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      class="p-shadow-2">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Título</th>
+          <th>Contenido</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-oracion>
+        <tr>
+          <td>{{ oracion.titulo }}</td>
+          <td>{{ oracion.contenido }}</td>
+          <td class="action-buttons">
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2" (click)="editar(oracion)"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger" (click)="confirmarEliminacion(oracion.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog
+  header="{{ oracion.id ? 'Editar Oración' : 'Agregar Nueva Oración' }}"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '50rem' }">
+
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="titulo">Título</label>
+      <input pInputText id="titulo" [(ngModel)]="oracion.titulo" style="width: 100%; padding: 10px; font-size: 1rem;" />
+    </div>
+
+    <div class="p-field">
+      <label for="contenido">Contenido</label>
+      <textarea pInputTextarea id="contenido" [(ngModel)]="oracion.contenido" rows="4" style="width: 100%; padding: 10px; font-size: 1rem;"></textarea>
+    </div>
+
+    <div class="p-field p-d-flex p-jc-between">
+      <button type="button" pButton label="{{ oracion.id ? 'Actualizar' : 'Crear' }}" class="p-button-text" (click)="guardarOracion()"></button>
+      <button type="button" pButton label="Cancelar" class="p-button-text" (click)="cancelarEdicion()"></button>
+    </div>
+  </div>
+</p-dialog>

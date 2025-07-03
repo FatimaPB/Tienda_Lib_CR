@@ -31,7 +31,7 @@ export class HeaderuComponent {
   empresaData: Empresa | null = null; // Inicializa como null
   categorias: Categoria[] = [];
   cantidadCarrito = 0;
-  apiUrl = 'https://back-tienda-one.vercel.app/api/categorias';
+  apiUrl = 'https://api-libreria.vercel.app/api/categorias';
   constructor(private authService: AuthService,private carritoservice: CarritoService, private router: Router, private http: HttpClient, private cdRef: ChangeDetectorRef) {}
    // Obtener todas las categorías
         cargarCategorias() {
@@ -59,7 +59,7 @@ export class HeaderuComponent {
 
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('https://back-tienda-one.vercel.app/api/datos').pipe(
+    this.http.get<Empresa>('https://api-libreria.vercel.app/api/datos').pipe(
       catchError((err: HttpErrorResponse) => {
         console.error('Error al obtener los perfiles de empresa', err);
         
@@ -124,7 +124,7 @@ isVisibleNombre: boolean = true;
   onLogout() {
 
   
-    this.http.post('https://back-tienda-one.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
+    this.http.post('https://api-libreria.vercel.app/api/logout', {}, { withCredentials: true }).subscribe(
     () => {
     this.authService.logout(); 
     this.router.navigate(['']); 
@@ -141,7 +141,7 @@ isVisibleNombre: boolean = true;
       return;
     }
   
-    this.http.get<any[]>(`https://back-tienda-one.vercel.app/api/productos/buscar?q=${encodeURIComponent(termino)}`, { withCredentials: true })
+    this.http.get<any[]>(`https://api-libreria.vercel.app/api/productos/buscar?q=${encodeURIComponent(termino)}`, { withCredentials: true })
       .subscribe(
         (data) => this.productos = data,
         (err) => console.error('Error al buscar productos:', err)

@@ -4,12 +4,22 @@ import { Router } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
+
 import { sha1 } from 'crypto-hash'; // Asegúrate de tener esto instalado
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule],
+  providers: [MessageService],
+  imports: [FormsModule, RouterLink, CommonModule, FloatLabelModule,InputTextModule,PasswordModule, ButtonModule, ToastModule],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
@@ -21,8 +31,10 @@ export class RegistroComponent {
   passwordMismatch = false; // Nuevo estado para controlar si las contraseñas coinciden
   isPasswordVisible = false; // Para la contraseña
   isConfirmPasswordVisible = false; // Para confirmar la contraseña
+    password: string = '';
+    confirmPassword: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private messageService: MessageService) {}
 
   async checkPasswordStrength(password: string) {
     const hasUpperCase = /[A-Z]/.test(password);
@@ -109,11 +121,15 @@ export class RegistroComponent {
       contrasena: registerForm.value.password
     };
   
-    this.http.post<any>('https://back-tienda-one.vercel.app/api/usuarios', registerData)
+    this.http.post<any>('https://api-libreria.vercel.app/api/usuarios', registerData)
       .subscribe(
         (response) => {
           console.log('Registro exitoso', response);
-          this.successMessage = 'Registro exitoso!';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Registro exitoso',
+            detail: '¡Bienvenido!'
+          });
           this.errorMessage = null;
 
           localStorage.setItem('correoRegistro', registerData.correo);
@@ -127,9 +143,17 @@ export class RegistroComponent {
   
           // Manejo de error específico del backend
           if (error.status === 400 && error.error?.message === 'El correo ya está registrado') {
-            this.errorMessage = 'El correo ya está registrado. Por favor, utiliza otro correo.';
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'El correo ya está registrado. Por favor, utiliza otro correo.'
+            });
           } else {
-            this.errorMessage = 'Error en el registro. Inténtalo de nuevo.';
+               this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error en el registro. Inténtalo de nuevo.'
+            });
           }
   
           this.successMessage = null;
@@ -168,5 +192,6 @@ export class RegistroComponent {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
 
+  
   
 }

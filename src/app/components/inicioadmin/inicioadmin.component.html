@@ -1,15 +1,155 @@
-<div class="container">
-  <div class="dashboard-container">
-    <h1 class="dashboard-title">Panel de Administración</h1>
+<div class="dashboard-container">
+  <!-- Métricas superiores -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="metric-title">Pedidos</span>
+        <div class="metric-icon orders">
+          <mat-icon>shopping_cart</mat-icon>
+        </div>
+      </div>
+      <div class="metric-value">{{ getCardCount('Ventas') || 0 }}</div>
+      <div class="metric-change">{{ getCardCount('Ventas') || 0 }} nuevos desde la última visita</div>
+    </div>
 
-    <div class="dashboard-grid">
-      <div *ngFor="let card of cards" class="dashboard-card" [routerLink]="card.link">
-        <div class="card-icon">
-          <i [class]="card.icon"></i>
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="metric-title">Ingresos</span>
+        <div class="metric-icon revenue">
+          <mat-icon>attach_money</mat-icon>
         </div>
-        <div class="card-info">
-          <span class="card-title">{{ card.title }}</span>
+      </div>
+      <div class="metric-value">${{ calculateTotalRevenue() }}</div>
+      <div class="metric-change">+52% desde la semana pasada</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="metric-title">Usuarios</span>
+        <div class="metric-icon customers">
+          <mat-icon>group</mat-icon>
         </div>
+      </div>
+      <div class="metric-value">{{ getCardCount('Usuarios') || 0 }}</div>
+      <div class="metric-change">{{ getNewUsersCount() }} recién registrados</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-header">
+        <span class="metric-title">Productos</span>
+        <div class="metric-icon comments">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
+      </div>
+      <div class="metric-value">{{ getCardCount('Productos') || 0 }}</div>
+      <div class="metric-change">{{ getCardCount('Categorías') || 0 }} categorías</div>
+    </div>
+  </div>
+
+  <!-- Grid principal -->
+  <div class="main-grid">
+    <!-- Ventas recientes -->
+    <div class="chart-section">
+      <div class="section-title">
+        Ventas Recientes
+        <mat-icon>more_vert</mat-icon>
+      </div>
+      <table class="sales-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cliente</th>
+            <th>Precio</th>
+            <th>Ver</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let venta of recentSales">
+            <td>
+            <ul style="list-style: none; padding-left: 0;">
+    <li *ngFor="let producto of venta.productos" style="display: flex; align-items: center; gap: 0.5rem;">
+      <img [src]="producto.imagen" alt="{{ producto.nombre }}" width="50" height="50" style="object-fit: cover; border-radius: 4px;" />
+      {{ producto.nombre }}
+    </li>
+  </ul>
+</td>
+            <td>{{ venta.cliente }}</td>
+            <td class="price">${{ venta.total?.toFixed(2) }}</td>
+            <td>
+              <button class="view-btn" (click)="verDetalle(venta)">👁</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <button>&lt;</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>&gt;</button>
+        <button>&gt;&gt;</button>
+      </div>
+    </div>
+
+    <!-- Gráfico de ingresos -->
+    <div class="chart-section">
+      <div class="section-title">
+        Flujo de Ingresos
+        <mat-icon>more_vert</mat-icon>
+      </div>
+      <p-chart type="bar" [data]="chartData" [options]="chartOptions" styleClass="sakai-chart"></p-chart>
+    </div>
+  </div>
+
+  <!-- Grid inferior -->
+  <div class="bottom-grid">
+    <!-- Navegación de administración -->
+    <div class="products-section">
+      <div class="section-title">
+        Módulos de Administración
+        <mat-icon>more_vert</mat-icon>
+      </div>
+      <div class="product-item" *ngFor="let card of cards" (click)="navigate(card.link)">
+        <div class="product-details">
+          <h4>{{ card.title }}</h4>
+          <div class="product-category">{{ card.count || 0 }} elementos</div>
+        </div>
+        <div class="product-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width]="getProgressWidth(card.count)" [style.background]="getRandomColor()"></div>
+          </div>
+          <span class="progress-value">{{ card.count || 0 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat/Notificaciones -->
+    <div class="notifications-section">
+      <div class="section-title">
+        Actividad Reciente
+        <mat-icon>more_vert</mat-icon>
+      </div>
+      
+      <div class="notification-time">HOY</div>
+      <div class="notification-item" *ngFor="let message of chatMessages.slice(0, 3)">
+        <div class="notification-icon" [class]="getNotificationIconClass(message.from)">
+          <mat-icon>{{ message.from === 'admin' ? 'edit' : 'person' }}</mat-icon>
+        </div>
+        <div class="notification-content">
+          <div class="notification-text">{{ message.text }}</div>
+        </div>
+      </div>
+
+      <!-- Input para chat -->
+      <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+        <input 
+          [(ngModel)]="chatInput" 
+          (keyup.enter)="sendMessage()"
+          placeholder="Escribe un mensaje..."
+          style="flex: 1; padding: 0.5rem; border: 1px solid #e9ecef; border-radius: 6px; font-size: 0.875rem;">
+        <button (click)="sendMessage()" 
+                style="padding: 0.5rem 1rem; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          Enviar
+        </button>
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ComentarioService {
-  private baseUrl = 'https://back-tienda-one.vercel.app/api';
+  private baseUrl = 'https://api-libreria.vercel.app/api';
 
   constructor(private http: HttpClient) {}
 
@@ -23,12 +23,12 @@ obtenerComentarios(producto_id: number, variante_id: number | null): Observable<
 
 
 puedeComentar(producto_id: number, variante_id: number | null): Observable<{ permitido: boolean }> {
-  const url = `https://back-tienda-one.vercel.app/api/puede-comentar?producto_id=${producto_id}&variante_id=${variante_id ?? ''}`;
+  const url = `https://api-libreria.vercel.app/api/puede-comentar?producto_id=${producto_id}&variante_id=${variante_id ?? ''}`;
   return this.http.get<{ permitido: boolean }>(url, { withCredentials: true });
 }
 
 crear(comentario: Comentario): Observable<any> {
-  const url = `https://back-tienda-one.vercel.app/api/comentario`;
+  const url = `https://api-libreria.vercel.app/api/comentario`;
   return this.http.post(url, comentario, { withCredentials: true });
 }
 

@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './perfilusuario.component.css'
 })
 export class PerfilusuarioComponent  implements OnInit {
-  private apiUrl = `https://back-tienda-one.vercel.app/api`;
+  private apiUrl = `https://api-libreria.vercel.app/api`;
   originalPerfil: any = null; // Nueva propiedad para guardar el perfil original
   perfil: any = null;
   errorMessage: string | null = null;
@@ -44,7 +44,7 @@ mfaQRCode: string | null = null; // Variable para almacenar el QR de MFA
 
   // Método para activar MFA
   activarMFA() {
-    this.http.post<any>('https://back-tienda-one.vercel.app/api/activar-mfa', { usuarioId: this.perfil.id })
+    this.http.post<any>('https://api-libreria.vercel.app/api/activar-mfa', { usuarioId: this.perfil.id })
         .subscribe(
             (response) => {
                 this.mfaQRCode = response.qr; // El QR se pasa como base64
@@ -248,13 +248,13 @@ isValidPhoneNumber(): boolean {
 
   
 ventas: any[] = [];
-  apiUrlventas: string = 'https://back-tienda-one.vercel.app/api/ventas/historial';
+  apiUrlventas: string = 'https://api-libreria.vercel.app/api/ventas/historial';
   usuarioId: number | null = null;
 
 
 
   verificarUsuario(): void {
-    this.http.get<any>('https://back-tienda-one.vercel.app/api/check-auth',{withCredentials:true}).subscribe(
+    this.http.get<any>('https://api-libreria.vercel.app/api/check-auth',{withCredentials:true}).subscribe(
       res => {
         if (res.authenticated) {
           this.usuarioId = res.usuario.id;

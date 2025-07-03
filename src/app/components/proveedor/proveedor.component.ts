@@ -40,20 +40,20 @@ export class ProveedorComponent implements OnInit{
   }
 
   obtenerProveedores() {
-    this.http.get<any[]>('https://back-tienda-one.vercel.app/api/proveedor').subscribe(data => {
+    this.http.get<any[]>('https://api-libreria.vercel.app/api/proveedor').subscribe(data => {
       this.proveedores = data;
     });
   }
 
   guardarProveedor() {
     if (this.esEditar) {
-      this.http.put(`https://back-tienda-one.vercel.app/api/editar/${this.proveedor.id}`, this.proveedor).subscribe(() => {
+      this.http.put(`https://api-libreria.vercel.app/api/editar/${this.proveedor.id}`, this.proveedor).subscribe(() => {
         this.toast.add({ severity: 'success', summary: 'Editado', detail: 'Proveedor actualizado' });
         this.obtenerProveedores();
         this.mostrarFormulario = false;
       });
     } else {
-      this.http.post('https://back-tienda-one.vercel.app/api/proveedor', this.proveedor).subscribe(() => {
+      this.http.post('https://api-libreria.vercel.app/api/proveedor', this.proveedor).subscribe(() => {
         this.toast.add({ severity: 'success', summary: 'Agregado', detail: 'Proveedor creado' });
         this.obtenerProveedores();
         this.mostrarFormulario = false;
@@ -78,7 +78,7 @@ export class ProveedorComponent implements OnInit{
     this.confirm.confirm({
       message: '¿Eliminar este proveedor?',
       accept: () => {
-        this.http.delete(`https://back-tienda-one.vercel.app/api/eliminar/${id}`).subscribe(() => {
+        this.http.delete(`https://api-libreria.vercel.app/api/eliminar/${id}`).subscribe(() => {
           this.toast.add({ severity: 'warn', summary: 'Eliminado', detail: 'Proveedor eliminado' });
           this.obtenerProveedores();
         });

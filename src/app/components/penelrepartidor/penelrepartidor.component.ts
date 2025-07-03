@@ -18,7 +18,7 @@ export class PenelrepartidorComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<any>('https://back-tienda-one.vercel.app/api/envios/pendientes', { withCredentials: true })
+    this.http.get<any>('https://api-libreria.vercel.app/api/envios/pendientes', { withCredentials: true })
       .subscribe(res => {
         this.pedidos = res.pedidos
       });
@@ -31,7 +31,7 @@ export class PenelrepartidorComponent {
       descripcion: pedido.descripcion
     };
 
-    this.http.post('https://back-tienda-one.vercel.app/api/envio/actualizar', body, { withCredentials: true }).subscribe({
+    this.http.post('https://api-libreria.vercel.app/api/envio/actualizar', body, { withCredentials: true }).subscribe({
       next: () => {
         alert('Estado actualizado correctamente');
         this.ngOnInit(); // Recarga pedidos

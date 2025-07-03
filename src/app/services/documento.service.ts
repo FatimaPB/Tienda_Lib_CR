@@ -7,7 +7,7 @@ import { Documento } from '../models/documento.model';
   providedIn: 'root'
 })
 export class DocumentoService {
-  private apiUrl = 'https://back-tienda-one.vercel.app/api';
+  private apiUrl = 'https://api-libreria.vercel.app/api';
 
   constructor(private http: HttpClient) {}
 

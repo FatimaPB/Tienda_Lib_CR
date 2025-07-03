@@ -1,3 +1,4 @@
+
 <div class="containerlista">
 
 
@@ -70,7 +71,7 @@
       <!-- Acciones -->
       <div class="product-actions">
         <button pButton pIcon="pi pi-search" class="btn-view-detail" 
-        [routerLink]="['/detalle', producto.id, producto.varianteId]">
+        [routerLink]="['/detalle', producto.id, producto.varianteId || null]">
   ver detalle <i class="pi pi-arrow-up-right"></i>
 </button>
 

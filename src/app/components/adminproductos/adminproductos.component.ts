@@ -294,13 +294,14 @@ producto: any = {
       formData.append('images', file, file.name);
     });
 
-    this.producto.variantes.forEach((variante: any) => {
+    this.producto.variantes.forEach((variante: any, index: number) => {
       if (variante.selectedFiles && variante.selectedFiles.length > 0) {
         variante.selectedFiles.forEach((file: File) => {
-          formData.append('imagenes_variantes', file, file.name);
+          formData.append(`imagenes_variantes_${index}`, file, file.name);
         });
       }
     });
+
   
     this.productoService.saveProducto(formData, this.producto.id).subscribe({
       next: () => {

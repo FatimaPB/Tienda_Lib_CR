@@ -31,4 +31,9 @@ export class ProductoService {
     addToCatalog(productoId: number): Observable<any> {
       return this.http.post(this.apiUrlCatalogo, { producto_id: productoId }, { withCredentials: true });
     }
+
+    editarVariante(varianteId: number, formData: FormData) {
+  return this.http.put(`https://api-libreria.vercel.app/api/variantes/${varianteId}`, formData, { withCredentials: true });
+}
+
   }

@@ -4,28 +4,26 @@
 <!-- Diálogo de confirmación -->
 <p-confirmDialog></p-confirmDialog>
 
-<div class="p-d-flex p-ai-center p-jc-center" style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px;margin-top: 50px;">
-  <div class="card" style="width: 90%; margin: auto;">
+<div class="p-d-flex p-ai-center p-jc-center"
+  style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px;">
+  <div class="card" style="width: 100%; margin: auto;">
 
     <!-- Título de la sección -->
     <h2 class="texto" style="margin-bottom: 20px;">Gestión de Categorías</h2>
 
     <!-- Botón para agregar una categoría -->
-    <button pButton icon="pi pi-plus" label="Agregar Categoría" class="p-button-text p-mb-4" (click)="showDialog('top')"></button>
+    <button pButton icon="pi pi-plus" label="Agregar Categoría" class="p-button-text p-mb-4"
+      (click)="showDialog('top')"></button>
 
     <!-- Tabla de categorías -->
-    <p-table 
-      [value]="categorias" 
-      [tableStyle]="{ 'min-width': '50rem' }" 
-      [paginator]="true" 
-      [rows]="5" 
-      [rowsPerPageOptions]="[5, 10, 20]" 
-      class="p-shadow-2">
-      
+    <p-table [value]="categorias" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]" class="p-shadow-2">
+
       <ng-template pTemplate="header">
         <tr>
           <th>ID</th>
           <th>Nombre</th>
+          <th>Imagen</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
@@ -34,9 +32,16 @@
         <tr>
           <td>{{ cat.id }}</td>
           <td>{{ cat.nombre_categoria }}</td>
+          <td>
+            <img *ngIf="cat.imagen_url" [src]="cat.imagen_url" alt="Imagen de la categoria" class="p-shadow-2"
+              style="max-width: 100px; border-radius: 5px;" />
+
+          </td>
           <td class="action-buttons">
-            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2" (click)="editar(cat)"  (click)="showDialog('top')"></button>
-            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger" (click)="confirmarEliminacion(cat.id)"></button>
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2" (click)="editar(cat)"
+              (click)="showDialog('top')"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger"
+              (click)="confirmarEliminacion(cat.id)"></button>
           </td>
         </tr>
       </ng-template>
@@ -47,28 +52,24 @@
 </div>
 
 <!-- Diálogo para agregar/editar categoría -->
-<p-dialog 
-  header="{{ categoria.id ? 'Editar Categoría' : 'Agregar Categoría' }}" 
-  [(visible)]="visible" 
-  [modal]="true" 
-  [style]="{ width: '50rem' }">
-  
+<p-dialog header="{{ categoria.id ? 'Editar Categoría' : 'Agregar Categoría' }}" [(visible)]="visible" [modal]="true"
+  [style]="{ width: '30rem' }">
+
   <div class="p-fluid">
     <div class="p-field">
-      <input
-        type="text"
-        [(ngModel)]="categoria.nombre_categoria"
-        name="nombre_categoria"
-        placeholder="Nombre de la categoría"
-        required
-        pInputText
-        style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;"/>
+      <input type="text" [(ngModel)]="categoria.nombre_categoria" name="nombre_categoria"
+        placeholder="Nombre de la categoría" required pInputText
+        style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;" />
     </div>
-    
+    <div class="p-field">
+      <label for="imagen">Imagen de la categoría</label>
+      <input type="file" accept="image/*" (change)="onImagenSeleccionada($event)" />
+    </div>
+
+
     <div class="p-field p-d-flex p-jc-between">
-      <button pButton label="{{ categoria.id ? 'Actualizar' : 'Agregar' }}" 
-              class="p-button-text" 
-              (click)="guardarCategoria()"></button>
+      <button pButton label="{{ categoria.id ? 'Actualizar' : 'Agregar' }}" class="p-button-text"
+        (click)="guardarCategoria()"></button>
       <button pButton label="Cancelar" class="p-button-text" (click)="cancelarEdicion()"></button>
     </div>
   </div>

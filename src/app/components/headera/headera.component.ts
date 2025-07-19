@@ -28,7 +28,7 @@ import { ViewEncapsulation } from '@angular/core';
   standalone: true,
   imports: [RouterLink, CommonModule,
     MatSlideToggleModule, MatIconModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatSidenavModule, MatSidenav,
-    RouterModule, MatListModule,MatAccordion,MatExpansionModule],
+    RouterModule, MatListModule,MatExpansionModule],
   templateUrl: './headera.component.html',
   styleUrl: './headera.component.css',
   encapsulation: ViewEncapsulation.None 

@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { CategoriaService } from '../../services/categoria.service';
 
 import { PreguntaFrecuenteService } from '../../services/preguntas.service';
 import { PreguntaFrecuente } from '../../models/pregunta.model';
@@ -83,6 +84,8 @@ export interface Producto {
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent implements AfterViewInit {
+   categorias: any[] = [];
+
   banners: Banner[] = [];
   apiUrl: string = 'https://api-libreria.vercel.app/api/banners';
   productosUrl = 'https://api-libreria.vercel.app/api/productos';
@@ -94,7 +97,11 @@ export class InicioComponent implements AfterViewInit {
 
   dialogoVisible: boolean = false;
   articuloSeleccionado: any = null;
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private carritoService: CarritoService,private preguntaService: PreguntaFrecuenteService) { }
+  constructor(private http: HttpClient,
+     private cdr: ChangeDetectorRef,
+      private carritoService: CarritoService,
+      private preguntaService: PreguntaFrecuenteService,
+    private categoriaService: CategoriaService) { }
 
 
   // Referencia a la instancia del sidenav
@@ -112,12 +119,23 @@ export class InicioComponent implements AfterViewInit {
     
     this.loadBanners();
     this.loadProductos();
+    this.cargarCategorias();
     this.cargarPreguntas();
 
 
      
   }
 
+cargarCategorias() {
+    this.categoriaService.cargarCategorias().subscribe({
+      next: (res: any) => {
+        this.categorias = res;
+      },
+      error: (err) => {
+        console.error('Error al cargar categorías', err);
+      }
+    });
+  }
   cargarPreguntas() {
     this.preguntaService.cargarPreguntas().subscribe(data => {
       this.preguntas = data.filter(p => p.activo); // Solo preguntas activas
@@ -195,7 +213,7 @@ loadProductos(): void {
   
 
   @ViewChildren('serviceItem') serviceItems!: QueryList<ElementRef>;
-  @ViewChildren('categoria') categorias!: QueryList<ElementRef>;
+  //@ViewChildren('categoria') categorias!: QueryList<ElementRef>;
 @ViewChildren('producto') productosElementos!: QueryList<ElementRef>;
 
 
@@ -220,9 +238,9 @@ ngAfterViewInit() {
   });
 
   // Observa los elementos de categoría
-  this.categorias.toArray().forEach(item => {
-    observer.observe(item.nativeElement);
-  });
+//  this.categorias.toArray().forEach(item => {
+  //  observer.observe(item.nativeElement);
+  //});
 
   // Observa los elementos de producto
   this.productosElementos.toArray().forEach(item => {

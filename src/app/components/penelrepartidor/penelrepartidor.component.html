@@ -1,19 +1,58 @@
-<h2>Envíos Pendientes</h2>
+<h2 class="seccion-titulo">📦 Envíos Pendientes</h2>
 
-<div *ngFor="let pedido of pedidos" class="pedido-card">
-  <p><strong>ID:</strong> {{ pedido.id }}</p>
-  <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
-  <p><strong>Dirección:</strong> {{ pedido.direccion_envio }}</p>
-  <p><strong>Estado actual:</strong> {{ pedido.estado_envio }}</p>
+<div class="envios-wrapper">
+  <p-card *ngFor="let pedido of pedidos" class="pedido-card">
+    <ng-template pTemplate="header">
+      <div class="pedido-header">
+        <i class="pi pi-truck icono-header"></i>
+        <span class="pedido-id">Pedido #{{ pedido.id }}</span>
+      </div>
+    </ng-template>
 
-  <div>
-    <label for="estado">Nuevo estado:</label>
-    <select [(ngModel)]="pedido.nuevoEstado">
-      <option value="en reparto">En reparto</option>
-      <option value="entregado">Entregado</option>
-    </select>
+    <div class="pedido-content">
+      <div class="pedido-detalles">
+        <div class="detalle-linea">
+          <i class="pi pi-user icono"></i>
+          <strong>Cliente:</strong> {{ pedido.cliente }}
+        </div>
+        <div class="detalle-linea">
+          <i class="pi pi-map-marker icono"></i>
+          <strong>Dirección:</strong> {{ pedido.direccion_envio }}
+        </div>
+        <div class="detalle-linea">
+          <i class="pi pi-info-circle icono"></i>
+          <strong>Estado:</strong>
+          <p-tag 
+            [value]="pedido.estado_envio" 
+            [styleClass]="pedido.estado_envio === 'entregado' ? 'estado-tag-entregado' : 'estado-tag-pendiente'">
+          </p-tag>
+        </div>
+      </div>
 
-    <input type="text" [(ngModel)]="pedido.descripcion" placeholder="Descripción (opcional)">
-    <button (click)="actualizarSeguimiento(pedido)">Actualizar</button>
-  </div>
+      <div class="pedido-form">
+        <p-dropdown 
+          [options]="estados" 
+          [(ngModel)]="pedido.nuevoEstado" 
+          placeholder="Nuevo estado"
+          class="p-inputtext-sm custom-dropdown">
+        </p-dropdown>
+
+        <input 
+          type="text" 
+          pInputText 
+          [(ngModel)]="pedido.descripcion" 
+          placeholder="Descripción (opcional)"
+          class="p-inputtext-sm custom-input" />
+        
+        <button 
+          pButton 
+          type="button" 
+          label="Actualizar" 
+          icon="pi pi-sync" 
+          class="p-button-sm p-button-primary"
+          (click)="actualizarSeguimiento(pedido)">
+        </button>
+      </div>
+    </div>
+  </p-card>
 </div>

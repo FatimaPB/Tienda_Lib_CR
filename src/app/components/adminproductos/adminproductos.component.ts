@@ -1,9 +1,6 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA , ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
@@ -42,8 +39,8 @@ interface Variante {
 @Component({
   selector: 'app-adminproductos',
   standalone: true,
-  imports: [FormsModule, CommonModule,
-     TableModule, ButtonModule,CardModule,InputTextModule,InputTextareaModule,
+  imports: [FormsModule,
+     TableModule,InputTextModule,InputTextareaModule,
      DropdownModule, PaginatorModule,FileUploadModule,DialogModule,ConfirmDialogModule,ToastModule,CarouselModule, CheckboxModule, TagModule],
   providers: [MessageService, ConfirmationService,InputTextareaModule, RadioButtonModule],
   templateUrl: './adminproductos.component.html',
@@ -55,40 +52,13 @@ export class AdminproductosComponent implements OnInit {
   @ViewChild('tablaProductos') tablaProductos: any;
 
   filtroGlobal: string = '';
-  filtros = {
-    nombre: '',
-    sku: '',
-    nombre_categoria: null,
-    nombre_color: null,
-    nombre_tamano: null
-  };
+ 
   
   limpiarFiltros() {
     this.filtroGlobal = '';
-    this.filtros = { nombre: '', sku: '', nombre_categoria: null, nombre_color: null, nombre_tamano: null };
     this.tablaProductos.reset();
   }
   
-  filtrarPorCategoria() {
-    // Asigna el valor seleccionado en la categoría al filtro global
-    this.filtroGlobal = this.filtros.nombre_categoria || '';
-    this.tablaProductos.filterGlobal(this.filtroGlobal, 'contains');
-  }
-  
-  filtrarPorColor() {
-    // Asigna el valor seleccionado en el color al filtro global
-    this.filtroGlobal = this.filtros.nombre_color || '';
-    this.tablaProductos.filterGlobal(this.filtroGlobal, 'contains');
-  }
-  
-  filtrarPorTamano() {
-    // Asigna el valor seleccionado en el tamaño al filtro global
-    this.filtroGlobal = this.filtros.nombre_tamano || '';
-    this.tablaProductos.filterGlobal(this.filtroGlobal, 'contains');
-  }
-  
-
-
   mostrarFormulario: boolean = false;
   productos: Producto[] = [];
 // En la clase del componente
@@ -100,9 +70,6 @@ producto: any = {
   color_id: null,
   tamano_id: null,
   tieneVariantes: false,
-  precio_compra: 0,
-  precio_venta: 0,
-  cantidad_stock: 0,
   variantes: []
 };
 
@@ -168,10 +135,22 @@ producto: any = {
     });
   }
 
-  editarProducto(producto: Producto): void {
-    this.producto = { ...producto }; // Copia el producto para editar
-    this.mostrarFormulario = true;
+editarProducto(producto: Producto): void {
+  this.producto = { ...producto };
+  this.mostrarFormulario = true;
+
+  // Cargar variantes del producto si tiene
+  if (producto.tieneVariantes) {
+    this.productoService.getVariantesPorProducto(producto.id).subscribe({
+      next: (data) => {
+        this.producto.variantes = data.map(v => ({ ...v, selectedFiles: [] }));
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al cargar variantes' });
+      }
+    });
   }
+}
 
   confirmarEliminarProducto(id: number): void {
     this.confirmationService.confirm({
@@ -245,10 +224,7 @@ producto: any = {
   validarVariantes(): boolean {
     return this.producto.variantes.every((v: Variante) => 
       v.color_id !== null && 
-      v.tamano_id !== null && 
-      v.cantidad_stock >= 0 &&
-      v.precio_compra > 0 &&
-      v.precio_venta > 0
+      v.tamano_id !== null 
     );
   }
 
@@ -276,13 +252,11 @@ producto: any = {
     // Valores por defecto
     formData.append('calificacion_promedio', '0');
     formData.append('total_resenas', '0');
-    formData.append('precio_compra', '0');
-    formData.append('precio_venta', '0');
-    formData.append('cantidad_stock', '0');
   
     if (this.producto.tieneVariantes) {
       formData.append('variantes', JSON.stringify(this.producto.variantes.map((v: any) => {
         const { selectedFiles, ...datosVariante } = v;
+         if (v.id) datosVariante.id = v.id
         return datosVariante;
       })));
     }
@@ -294,13 +268,13 @@ producto: any = {
       formData.append('images', file, file.name);
     });
 
-    this.producto.variantes.forEach((variante: any, index: number) => {
-      if (variante.selectedFiles && variante.selectedFiles.length > 0) {
-        variante.selectedFiles.forEach((file: File) => {
-          formData.append(`imagenes_variantes_${index}`, file, file.name);
-        });
-      }
+   this.producto.variantes.forEach((variante: any, index: number) => {
+  if (variante.selectedFiles && variante.selectedFiles.length > 0) {
+    variante.selectedFiles.forEach((file: File) => {
+      formData.append(`imagenes_variantes_${index}`, file, file.name); // ✅
     });
+  }
+});
 
   
     this.productoService.saveProducto(formData, this.producto.id).subscribe({
@@ -356,20 +330,18 @@ validarFormulario(): boolean {
 }
 
 
-  resetForm(): void {
-    this.producto = {
-      nombre: '',
-      descripcion: '',
-      sku: '',
-      categoria_id: null,  // Cambiar de 0 a null
-      color_id: null,
-      tamano_id: null,
-      tieneVariantes: false,
-      precio_compra: 0,
-      precio_venta: 0,
-      cantidad_stock: 0,
-      variantes: []
-    };
+ resetForm(): void {
+  this.producto = {
+    id: null, // ✅ añade esto
+    nombre: '',
+    descripcion: '',
+    sku: '',
+    categoria_id: null,
+    color_id: null,
+    tamano_id: null,
+    tieneVariantes: false,
+    variantes: []
+  };
     if (this.fileUploader) {
       this.fileUploader.clear();
     }
@@ -397,9 +369,6 @@ validarFormulario(): boolean {
     this.producto.variantes.push({
       color_id: 0,
       tamano_id: 0,
-      cantidad_stock: 0,
-      precio_compra: 0,  // Precio a quien se compra la variante
-      precio_venta: 0    // Precio al que se vende la variante
     });
   }
   
@@ -418,4 +387,53 @@ validarFormulario(): boolean {
   }
   
   checked: boolean = false;
+
+
+
+
+
+
+
+
+
+
+
+nuevoPrecio: number = 0;
+productoSeleccionado: any = null;
+mostrarDialogoDescuento: boolean = false;
+esVariante: boolean = false;
+
+abrirDialogoDescuento(producto: any, variante: any = null): void {
+  this.productoSeleccionado = variante || producto;
+  this.nuevoPrecio = this.productoSeleccionado.precio_venta;
+  this.esVariante = !!variante;
+  this.mostrarDialogoDescuento = true;
+}
+
+aplicarDescuento(): void {
+  if (isNaN(this.nuevoPrecio) || this.nuevoPrecio <= 0) {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El precio debe ser mayor a cero' });
+    return;
+  }
+
+  const id = this.productoSeleccionado.id;
+
+  const obs = this.esVariante
+    ? this.productoService.updatePrecioVariante(id, this.nuevoPrecio)
+    : this.productoService.updatePrecioProducto(id, this.nuevoPrecio);
+
+  obs.subscribe({
+    next: () => {
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Precio actualizado correctamente' });
+      this.mostrarDialogoDescuento = false;
+      this.loadProductos(); // Recarga los productos actualizados
+    },
+    error: () => {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo actualizar el precio' });
+    }
+  });
+}
+
+
+  
 }

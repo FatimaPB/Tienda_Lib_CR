@@ -56,7 +56,7 @@ cards: Card[] = [
 
     ngOnInit(): void {
    this.obtenerCategorias();
-  //this.obtenerUsuarios();
+  this.obtenerUsuarios();
   this.obtenerProductos();
   this.obtenerBanners();
   this.obtenerVentas();

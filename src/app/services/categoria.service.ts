@@ -10,7 +10,7 @@ import { Categoria } from '../models/categoria.model'; // Importamos el modelo
 export class CategoriaService {
   private apiUrl = 'https://api-libreria.vercel.app/api/categorias';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Obtener todas las categorías
   cargarCategorias(): Observable<Categoria[]> {
@@ -18,13 +18,14 @@ export class CategoriaService {
   }
 
   // Crear una nueva categoría
-  crearCategoria(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.apiUrl, categoria);
+  crearCategoriaConImagen(formData: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, formData);
   }
 
+
   // Actualizar una categoría
-  actualizarCategoria(id: number, categoria: Categoria): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.apiUrl}/${id}`, categoria);
+  actualizarCategoriaConImagen(id: number, formData: FormData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, formData);
   }
 
   // Eliminar una categoría

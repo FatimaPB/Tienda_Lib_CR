@@ -9,14 +9,19 @@
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 1px; /* Espacio entre las tarjetas */
-  justify-content: space-between; /* Asegura que haya espacio entre las tarjetas */
-  max-width: 1200px;  /* Max ancho de la sección */
-  width: 100%;  /* 100% para que no se estire más allá del max-width */
+  gap: 1px;
+  /* Espacio entre las tarjetas */
+  justify-content: space-between;
+  /* Asegura que haya espacio entre las tarjetas */
+  max-width: 1200px;
+  /* Max ancho de la sección */
+  width: 100%;
+  /* 100% para que no se estire más allá del max-width */
 }
 
 .product-card {
-  width: calc(25% - 20px); /* 25% para 4 tarjetas en cada fila con espacio entre ellas */
+  width: calc(25% - 20px);
+  /* 25% para 4 tarjetas en cada fila con espacio entre ellas */
   border-radius: 8px;
   text-align: center;
   position: relative;
@@ -31,6 +36,7 @@
 }
 
 .product-image-container {
+  position: relative;
   padding: 10px;
   cursor: pointer;
   margin-bottom: 10px;
@@ -48,9 +54,6 @@
   transform: scale(1.05);
 }
 
-.product-info {
-  margin-top: 10px;
-}
 
 .product-info h3 {
   font-size: 1.2em;
@@ -112,7 +115,7 @@
   padding: 10px 15px;
   border: none;
   font-size: 1em;
- text-align: center;
+  text-align: center;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
@@ -120,7 +123,7 @@
 }
 
 .btn-add-to-cart {
-  background-color:transparent;
+  background-color: transparent;
 }
 
 .btn-add-to-cart:hover {
@@ -128,7 +131,7 @@
 }
 
 .btn-view-detail {
-  background-color:transparent;
+  background-color: transparent;
 }
 
 .btn-view-detail:hover {
@@ -148,7 +151,8 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 20px; /* Espacio entre las tarjetas */
+  gap: 20px;
+  /* Espacio entre las tarjetas */
   max-width: 1200px;
   width: 100%;
 }
@@ -157,31 +161,37 @@
 /* Estilos Responsivos */
 @media (max-width: 1200px) {
   .product-card {
-    width: calc(33.333% - 20px); /* 3 tarjetas por fila */
+    width: calc(33.333% - 20px);
+    /* 3 tarjetas por fila */
   }
 }
 
 @media (max-width: 768px) {
   .product-card {
-    width: calc(50% - 20px); /* 2 tarjetas por fila */
+    width: calc(50% - 20px);
+    /* 2 tarjetas por fila */
   }
 
   .product-image {
-    height: 150px; /* Ajustar altura para pantallas medianas */
+    height: 150px;
+    /* Ajustar altura para pantallas medianas */
   }
 }
 
 @media (max-width: 480px) {
   .product-card {
-    width: 80%; /* 1 tarjeta por fila */
+    width: 80%;
+    /* 1 tarjeta por fila */
   }
 
   .product-image {
-    height: 250px; /* Ajustar altura para pantallas pequeñas */
+    height: 250px;
+    /* Ajustar altura para pantallas pequeñas */
   }
 
   .product-info h3 {
-    font-size: 1em; /* Reducir tamaño de fuente */
+    font-size: 1em;
+    /* Reducir tamaño de fuente */
   }
 
   .product-info p {
@@ -189,8 +199,253 @@
   }
 }
 
-.pi-star, .pi-star-half, .pi-star-o {
-  color: gold; /* Estrellas de color dorado */
-  font-size: 1.5em; /* Ajustar el tamaño */
-  margin-right: 5px; /* Espaciado entre las estrellas */
+.pi-star,
+.pi-star-half,
+.pi-star-o {
+  color: gold;
+  /* Estrellas de color dorado */
+  font-size: 1.5em;
+  /* Ajustar el tamaño */
+  margin-right: 5px;
+  /* Espaciado entre las estrellas */
+}
+
+
+
+
+
+
+
+/* Estructura del contenedor principal */
+.containerlista-con-filtros {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  margin: 20px auto;
+  gap: 20px;
+  height: calc(100vh - 40px);
+  /* Altura total para que el scroll funcione */
+  overflow: hidden;
+  /* Oculta scroll lateral si se sale */
+}
+
+.filtros-laterales {
+  width: 250px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  /* Mantiene fijo con espacio superior */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  /* Para que quede por encima si hay contenido cerca */
+}
+
+/* Hace que la sección de productos sea scrollable */
+.contenido-productos {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+
+/* Título de los filtros */
+.titulo-filtros {
+  font-size: 1.3em;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Bloques de filtro */
+.filtro-bloque {
+  margin-bottom: 20px;
+}
+
+.filtro-bloque label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+/* Lista de checkboxes */
+.checkbox-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.checkbox-label {
+  font-size: 0.95em;
+  color: #555;
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  margin-right: 8px;
+}
+
+/* Slider de precio */
+.slider-precio {
+  width: 100%;
+  accent-color: #333;
+}
+
+.valor-precio {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #333;
+  font-size: 0.95em;
+}
+
+/* Botones */
+.botones-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-filtrar,
+.btn-resetear {
+  padding: 10px 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-filtrar {
+  background-color: #333;
+}
+
+.btn-filtrar:hover {
+  background-color: #555;
+}
+
+.btn-resetear {
+  background-color: #999;
+}
+
+.btn-resetear:hover {
+  background-color: #777;
+}
+
+.contador-resultados {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.productos {
+  font-size: 1.2em;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Loading state styling */
+.loading-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  font-size: 1.2rem;
+}
+
+
+.loading-container p {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .containerlista-con-filtros {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    /* Ya no necesitamos altura fija aquí */
+  }
+
+  .contador-resultados {
+    display: none;
+    /* Oculta los filtros */
+  }
+
+  .filtros-laterales {
+    display: none;
+    /* Oculta los filtros */
+  }
+}
+
+
+
+.precio-anterior {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.precio-venta {
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+
+.descuento-etiqueta {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #e53935;
+  /* rojo suave */
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.sin-productos {
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-top: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.mensaje-sin-productos {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.btn-volver-home {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #660000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-volver-home:hover {
+  background-color: #622a2a;
 }

@@ -37,22 +37,35 @@ export class PedidodetalleComponent implements OnInit {
         this.pedido = data;
 
         this.http.get<any>(`https://api-libreria.vercel.app/api/envio/seguimiento/${id}`, { withCredentials: true }).subscribe(res => {
-          const eventosManual = [
-            {
-              status: 'Pedido realizado',
-              date: new Date(this.pedido.fecha).toLocaleString(),
-              rawDate: new Date(this.pedido.fecha),
-              description: 'El cliente realizó el pedido.',
-              cambio_por: this.pedido.usuario || 'Cliente'
-            },
-            {
-              status: 'Pedido pagado',
-              date: new Date(this.pedido.fecha).toLocaleString(),
-              rawDate: new Date(this.pedido.fecha),
-              description: 'Pago confirmado',
-              cambio_por: 'Sistema'
-            }
-          ];
+const eventosManual = [
+    {
+      status: 'Pedido realizado',
+      date: new Date(this.pedido.fecha).toLocaleString(),
+      rawDate: new Date(this.pedido.fecha),
+      description: 'El cliente realizó el pedido.',
+      cambio_por: this.pedido.usuario || 'Cliente'
+    }
+  ];
+
+  // Agregar el evento del pago dependiendo del estado
+  if (this.pedido.estado === 'pagado') {
+    eventosManual.push({
+      status: 'Pedido pagado',
+      date: new Date(this.pedido.fecha).toLocaleString(),
+      rawDate: new Date(this.pedido.fecha),
+      description: 'Pago confirmado',
+      cambio_por: 'Sistema'
+    });
+  } else if (this.pedido.estado === 'pendiente') {
+    eventosManual.push({
+      status: 'Pago pendiente',
+      date: new Date(this.pedido.fecha).toLocaleString(),
+      rawDate: new Date(this.pedido.fecha),
+      description: 'Aún no se ha confirmado el pago',
+      cambio_por: 'Sistema'
+    });
+  }
+  
 
 this.events = [...eventosManual, ...res.historial.map((item: any) => ({
   status: item.estado_nuevo,

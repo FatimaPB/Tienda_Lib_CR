@@ -55,25 +55,30 @@ export class CategoriasComponent implements OnInit {
   }
 
   // Guardar (crear o actualizar)
-  guardarCategoria() {
-    if (this.categoria.id) {
-      this.categoriaService
-        .actualizarCategoria(this.categoria.id, this.categoria)
-        .subscribe(() => {
-          this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Categoría actualizada correctamente' });
-          this.resetFormulario();
-          this.cargarCategorias();
-          this.visible = false;
-        });
-    } else {
-      this.categoriaService.crearCategoria(this.categoria).subscribe(() => {
-        this.messageService.add({ severity: 'success', summary: 'Agregado', detail: 'Categoría agregada correctamente' });
-        this.resetFormulario();
-        this.cargarCategorias();
-        this.visible = false;
-      });
-    }
+guardarCategoria() {
+  const formData = new FormData();
+  formData.append('nombre_categoria', this.categoria.nombre_categoria);
+  if (this.imagenSeleccionada) {
+    formData.append('imagen', this.imagenSeleccionada);
   }
+
+  if (this.categoria.id) {
+    this.categoriaService.actualizarCategoriaConImagen(this.categoria.id, formData).subscribe(() => {
+      this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Categoría actualizada correctamente' });
+      this.resetFormulario();
+      this.cargarCategorias();
+      this.visible = false;
+    });
+  } else {
+    this.categoriaService.crearCategoriaConImagen(formData).subscribe(() => {
+      this.messageService.add({ severity: 'success', summary: 'Agregado', detail: 'Categoría agregada correctamente' });
+      this.resetFormulario();
+      this.cargarCategorias();
+      this.visible = false;
+    });
+  }
+}
+
 
   // Cargar datos para edición
   editar(categoria: Categoria) {
@@ -112,9 +117,11 @@ export class CategoriasComponent implements OnInit {
 
   // Reset formulario
   resetFormulario() {
-    this.categoria = { nombre_categoria: '' };
-    this.mostrarFormulario = false; // Ocultar formulario después de agregar o editar
-  }
+  this.categoria = { nombre_categoria: '' };
+  this.imagenSeleccionada = null;
+  this.mostrarFormulario = false;
+}
+
 
   cancelarEdicion(): void {
     this.visible = false; // Ocultar el diálogo
@@ -133,6 +140,14 @@ export class CategoriasComponent implements OnInit {
     this.position = position;
     this.visible = true;
   }
-  
+  imagenSeleccionada: File | null = null;
+
+onImagenSeleccionada(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.imagenSeleccionada = file;
+  }
+}
+
 
 }

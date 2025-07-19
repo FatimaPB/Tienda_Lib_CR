@@ -45,7 +45,28 @@
   object-fit: contain;
   transition: transform 0.3s ease;
 }
+.thumbnail-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
+.thumbnail-image {
+  width: 70px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.thumbnail-image:hover {
+  border-color: #2196f3; /* color azul clarito al hacer hover */
+}
 /* Ajuste del zoom para que siga al cursor */
 .zoom-lens {
   position: absolute;
@@ -263,6 +284,7 @@
   color: #666;
   font-size: 1rem;
 }
+
 
 /* Additional features */
 .product-badges {
@@ -630,4 +652,53 @@ button[type="submit"] {
 button[type="submit"]:hover:not(:disabled) {
   background-color: #744832 !important;
   box-shadow: 0 6px 16px rgba(139, 93, 61, 0.3);
+}
+
+
+
+.precio-anterior {
+  text-decoration: line-through;
+  color: gray;
+  margin-right: 0.5rem;
+}
+.precio-venta {
+  font-weight: bold;
+  color:black;
+}
+.descuento-etiqueta {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #e53935;
+  /* rojo suave */
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.color-button {
+  margin: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.color-circle {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  transition: transform 0.2s ease;
+}
+
+.color-button.selected .color-circle {
+  border: 3px solid #000;
+  transform: scale(1.1);
 }

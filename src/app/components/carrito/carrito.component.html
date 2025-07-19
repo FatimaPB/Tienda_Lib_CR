@@ -1,10 +1,10 @@
-<div class="carrito-container">
-  <h2>Carrito de Compras</h2>
-  <div *ngIf="carrito.length === 0">
-    <p>Tu carrito está vacío</p>
-  </div>
-  <table *ngIf="carrito.length > 0" class="tabla-carrito">
-    <thead>
+<p-toast></p-toast>
+<div class="carrito-grid">
+<!-- 🛒 Carrito de Compras -->
+  <div class="carrito-left">
+<p-card *ngIf="carrito.length > 0" header="Carrito de Compras" class="mb-4">
+  <p-table [value]="carrito" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
       <tr>
         <th>Borrar</th>
         <th>Imagen</th>
@@ -13,116 +13,133 @@
         <th>Cantidad</th>
         <th>Total</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of carrito; let i = index">
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+      <tr>
         <td>
-          <button class="btn-eliminar">X</button>
+               <button class="btn-eliminar">X</button>
         </td>
         <td>
           <img
-            *ngIf="(item.imagenes_variante?.length ? item.imagenes_variante[0] : item.imagenes_producto?.[0])"
-            [src]="item.imagenes_variante?.length ? item.imagenes_variante[0] : item.imagenes_producto?.[0]"
+            [src]="item.imagenes_variante?.[0] || item.imagenes_producto?.[0]"
             class="imagen-producto"
-          >
+            style="width: 60px; height: auto;" />
         </td>
         <td>{{ item.nombre }}</td>
         <td>${{ item.precio_venta | number:'1.2-2' }}</td>
         <td>
-          <input type="number" [(ngModel)]="item.cantidad" min="1" (change)="actualizarTotales()">
+          <p-inputNumber [(ngModel)]="item.cantidad" [min]="1" [showButtons]="true"
+                         (onBlur)="actualizarTotales()" inputStyleClass="w-6rem"></p-inputNumber>
         </td>
-        <td>${{ (item.precio_venta * item.cantidad) | number:'1.2-2' }}</td>
+        <td>${{ item.precio_venta * item.cantidad | number:'1.2-2' }}</td>
       </tr>
-    </tbody>
-  </table>
+    </ng-template>
+  </p-table>
+</p-card>
+
+
+<p-card *ngIf="carrito.length === 0">
+  <p>Tu carrito está vacío</p>
+</p-card>
 </div>
 
-<!-- Resumen con totales y botón COMPRAR -->
-<div class="resumen-container">
-  <div class="cupon-container">
-    <h3>CUPÓN</h3>
-    <input type="text" placeholder="Introduzca su código de cupón">
-    <button class="btn-cupon">APLICAR CUPÓN</button>
-  </div>
 
-  <div class="totales-container">
-    <h3>TOTALES DEL CARRITO</h3>
-    <div class="total-linea">
-      <span>Total parcial</span>
-      <span>${{ totalParcial | number:'1.2-2' }}</span>
-    </div>
-    <div class="envio-section">
-      <h4>Envío</h4>
-      <span>Tarifa plana: ${{ tarifaPlana | number:'1.2-2' }}</span>
-    </div>
-    <div class="total-linea total-final">
-      <span>Total</span>
-      <span>${{ total | number:'1.2-2' }}</span>
-    </div>
-
-    <!-- Botón para mostrar el formulario -->
-    <button class="btn-comprar" (click)="mostrarFormulario = true">COMPRAR</button>
+<!-- 🧾 Totales del Carrito -->
+ <div class="carrito-right">
+<p-card *ngIf="carrito.length > 0" header="Resumen de compra" class="mb-4">
+  <div class="p-d-flex p-jc-between p-mb-2">
+    <span>Total parcial:</span>
+    <strong>${{ totalParcial | number:'1.2-2' }}</strong>
   </div>
+  <div class="p-d-flex p-jc-between p-mb-2">
+    <span>Envío:</span>
+    <strong>${{ tarifaPlana | number:'1.2-2' }}</strong>
+  </div>
+  <div class="p-d-flex p-jc-between p-mb-2">
+    <span>Total:</span>
+    <strong style="color: #007ad9;">${{ total | number:'1.2-2' }}</strong>
+  </div>
+  <button pButton label="Continuar compra" class="p-button-success w-full" (click)="mostrarFormulario = true"></button>
+</p-card>
+</div>
 </div>
 
-<!-- Sección aparte para dirección y botón PASAR POR LA CAJA -->
-<div *ngIf="mostrarFormulario" class="formulario-envio-container">
-  <h3>Seleccione su método de pago</h3>
-
-  <div class="direccion-container">
-   <p><strong></strong></p>
-<div class="metodos-pago-opciones">
-  <label *ngFor="let metodo of metodosPago" class="opcion-metodo">
-    <input
-      type="radio"
-      name="metodoPago"
-      [value]="metodo.id"
-      [(ngModel)]="metodoPago"
-    >
-    {{ metodo.nombre }}
-  </label>
-</div>
-
-  <h3>Ingrese una Dirección de Envío</h3>
 
 
-    <label for="codigoPostal">Código Postal:</label>
-    <input
-      id="codigoPostal"
-      type="text"
-      [(ngModel)]="codigoPostal"
-      (change)="buscarColoniasPorCP()"
-      placeholder="Código Postal"
-      maxlength="5"
-    >
 
-    <label for="colonia">Colonia:</label>
-    <select id="colonia" [(ngModel)]="coloniaSeleccionada">
-      <option *ngFor="let col of colonias" [value]="col">{{ col }}</option>
-    </select>
 
-    <label for="calle">Calle:</label>
-    <input id="calle" type="text" [(ngModel)]="calle" placeholder="Calle" required>
+<!-- 📦 Formulario de Envío centrado -->
+<div class="formulario-envio-wrapper">
+  <p-card *ngIf="mostrarFormulario" class="formulario-envio-card">
+    <div class="formulario-envio-bonito">
 
-    <label for="numero">Número exterior:</label>
-    <input id="numero" type="text" [(ngModel)]="numero" placeholder="Número exterior" required>
+      <h2 class="form-title">📦 Dirección de Envío</h2>
 
-      <label for="referencia">Referencia:</label>
-    <input id="referencia" type="text" [(ngModel)]="referencia" placeholder="Referencia" required>
+      <!-- 💳 Método de pago -->
+      <section class="form-section">
+        <label class="section-label">Método de pago</label>
+        <div class="metodos-pago-row">
+          <div *ngFor="let metodo of metodosPago" class="metodo-radio">
+            <p-radioButton
+              name="metodoPago"
+              [value]="metodo.id"
+              [(ngModel)]="metodoPago"
+              inputId="{{ metodo.id }}">
+            </p-radioButton>
+            <label for="{{ metodo.id }}">{{ metodo.nombre }}</label>
+          </div>
+        </div>
+      </section>
 
-    <p *ngIf="municipio && estado">
-      Municipio: {{ municipio }}<br>
-      Estado: {{ estado }}
-    </p>
-  </div>
+      <!-- 📮 Campos de dirección -->
+      <section class="form-section">
+        <div class="campo">
+          <label for="codigoPostal">Código Postal</label>
+          <input pInputText id="codigoPostal" [(ngModel)]="codigoPostal" (change)="buscarColoniasPorCP()" maxlength="5" />
+        </div>
 
-  <p *ngIf="direccionValida()">
-    <strong>Envío a:</strong><br>
-    {{ calle }} {{ numero }}, {{ coloniaSeleccionada }}<br>
-    {{ municipio }}, {{ estado }}, CP {{ codigoPostal }},{{referencia}}
-  </p>
+        <div class="campo">
+          <label for="colonia">Colonia</label>
+          <p-dropdown
+            id="colonia"
+            [options]="colonias"
+            [(ngModel)]="coloniaSeleccionada"
+            placeholder="Selecciona una colonia">
+          </p-dropdown>
+        </div>
 
-  <button class="btn-pagar" [disabled]="!direccionValida()" (click)="comprar()">PASAR POR LA CAJA</button>
-<button class="btn-cancelar" (click)="cancelarFormulario()">CANCELAR</button>
+        <div class="campo">
+          <label for="calle">Calle</label>
+          <input pInputText id="calle" [(ngModel)]="calle" />
+        </div>
 
+        <div class="campo">
+          <label for="numero">Número</label>
+          <input pInputText id="numero" [(ngModel)]="numero" />
+        </div>
+
+        <div class="campo">
+          <label for="referencia">Referencia (opcional)</label>
+          <input pInputText id="referencia" [(ngModel)]="referencia" />
+        </div>
+      </section>
+
+      <!-- 🗺️ Vista previa dirección -->
+      <div class="resumen-direccion" *ngIf="direccionValida()">
+        <strong>Dirección completa:</strong><br />
+        {{ calle }} {{ numero }}, {{ coloniaSeleccionada }}<br />
+        {{ municipio }}, {{ estado }}<br />
+        CP {{ codigoPostal }}<br />
+        {{ referencia }}
+      </div>
+
+      <!-- ✅ Botones -->
+      <div class="form-botones">
+        <button pButton label="Pasar por la caja" class="p-button-success"
+                (click)="comprar()" [disabled]="!direccionValida()"></button>
+        <button pButton label="Cancelar" class="p-button-secondary"
+                (click)="cancelarFormulario()"></button>
+      </div>
+    </div>
+  </p-card>
 </div>

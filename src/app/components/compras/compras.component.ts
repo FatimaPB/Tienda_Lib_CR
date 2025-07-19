@@ -24,7 +24,7 @@ export class ComprasComponent implements OnInit {
 
   compras: any[] = [];  // Aquí almacenamos las compras
   compra: any = {};  // Objeto de compra para agregar o editar
-  detalle: any = { varianteId: null, productoId: null, cantidad: 0, precioCompra: 0 , margenGanancia: 0 };  // Detalle de compra
+  detalle: any = { varianteId: null, productoId: null, cantidad: 0, precioCompra: 0 , precioVenta: 0 };  // Detalle de compra
   proveedores: any[] = [];  // Proveedores cargados desde el backend
   variantes: any[] = [];  // Variantes cargadas desde el backend
   productos: any[] = [];
@@ -103,9 +103,8 @@ export class ComprasComponent implements OnInit {
 
 guardarCompra() {
   const { proveedorId } = this.compra;
-  const { varianteId, productoId, cantidad, precioCompra, margenGanancia } = this.detalle;
+  const { varianteId, productoId, cantidad, precioCompra, precioVenta } = this.detalle;
 
-  // Validaciones
   if (!proveedorId || (!varianteId && !productoId)) {
     this.messageService.add({ 
       severity: 'warn', 
@@ -115,7 +114,7 @@ guardarCompra() {
     return;
   }
 
-    if (varianteId && productoId) {
+  if (varianteId && productoId) {
     this.messageService.add({ 
       severity: 'warn', 
       summary: 'Selección inválida', 
@@ -124,7 +123,7 @@ guardarCompra() {
     return;
   }
 
-    if (!cantidad || !precioCompra) {
+  if (!cantidad || !precioCompra) {
     this.messageService.add({ 
       severity: 'warn', 
       summary: 'Campos incompletos', 
@@ -132,23 +131,22 @@ guardarCompra() {
     });
     return;
   }
-    
-    if (!margenGanancia) {
+
+  if (!precioVenta) {
     this.messageService.add({ 
       severity: 'warn', 
       summary: 'Campo obligatorio', 
-      detail: 'Margen de ganancia es obligatorio.' 
+      detail: 'El precio de venta es obligatorio.' 
     });
     return;
   }
 
   const detallesCompra = [{
-  varianteId: this.detalle.varianteId || null,
-  productoId: this.detalle.productoId || null,
-  cantidad: this.detalle.cantidad,
-  precioCompra: this.detalle.precioCompra,
-  margenGanancia: (this.detalle.margenGanancia || 0) / 100  // convierte 80 → 0.8
-
+    varianteId: varianteId || null,
+    productoId: productoId || null,
+    cantidad,
+    precioCompra,
+    precioVenta  // ✅ esto se va al backend
   }];
 
   const compraPayload = {
@@ -158,18 +156,33 @@ guardarCompra() {
 
   this.http.post('https://api-libreria.vercel.app/api/compras', compraPayload).subscribe(
     (response) => {
-      this.messageService.add({ severity: 'success', summary: 'Compra agregada', detail: 'La compra ha sido registrada correctamente.' });
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Compra agregada',
+        detail: 'La compra ha sido registrada correctamente.'
+      });
       this.cargarCompras();
       this.compra = {};
-      this.detalle = { varianteId: null, productoId: null, cantidad: 0, precioCompra: 0 , margenGanancia: 0 };
+      this.detalle = {
+        varianteId: null,
+        productoId: null,
+        cantidad: 0,
+        precioCompra: 0,
+        precioVenta: 0
+      };
       this.visible = false;
     },
     (error) => {
       console.error('Error al registrar compra:', error);
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un error al agregar la compra.' });
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Hubo un error al agregar la compra.'
+      });
     }
   );
 }
+
 
   
 

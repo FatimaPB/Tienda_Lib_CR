@@ -1,31 +1,70 @@
-
 <div *ngIf="producto; else loading">
   <mat-card class="product-detail">
     <div class="product-detail-content">
 
       <!-- Sección de Imágenes -->
       <div class="product-detail-images">
-        <div class="zoom-container">
-          <img [src]="variante ? variante.imagenes[0] : producto.imagenes[0]" alt="{{ producto.nombre }}"
-            class="product-detail-image" (mousemove)="zoom($event)" (mouseleave)="resetZoom()">
+        <!-- Imagen principal con zoom -->
+        <div class="zoom-container" style="position: relative;">
+          <!-- Etiqueta descuento -->
+          <div class="descuento-etiqueta" *ngIf="
+        (variante && variante.precio_anterior && variante.precio_anterior > variante.precio_venta) ||
+        (!variante && producto?.precio_anterior && producto.precio_anterior > producto.precio_venta)
+      ">
+            ¡Descuento!
+          </div>
+
+          <img [src]="imagenPrincipal" alt="{{ producto.nombre }}" class="product-detail-image"
+            (mousemove)="zoom($event)" (mouseleave)="resetZoom()">
           <div class="zoom-lens" [class.visible]="zoomEnabled"></div>
         </div>
+
+        <!-- Miniaturas -->
+        <div class="thumbnail-container">
+          <img *ngFor="let imagen of (variante ? variante.imagenes : producto.imagenes)" [src]="imagen"
+            alt="{{ producto.nombre }}" class="thumbnail-image" (click)="seleccionarImagen(imagen)">
+        </div>
       </div>
+
+
+
+
+
 
       <!-- Información general del producto o variante -->
       <div class="product-detail-info">
         <h2 class="product-title">{{ producto.nombre }}</h2>
         <p class="descripcion">{{ producto.descripcion }}</p>
         <p class="precio">
-          {{ variante ? (variante.precio_venta | currency) : (producto.precio_venta | currency) }}
+          <ng-container *ngIf="variante; else precioProducto">
+            <span *ngIf="variante.precio_anterior !== null && variante.precio_anterior > 0" class="precio-anterior">
+              {{ variante.precio_anterior | currency }}
+            </span>
+            <span class="precio-venta">
+              {{ variante.precio_venta | currency }}
+            </span>
+          </ng-container>
+
+          <ng-template #precioProducto>
+            <span *ngIf="producto.precio_anterior !== null && producto.precio_anterior > 0" class="precio-anterior">
+              {{ producto.precio_anterior | currency }}
+            </span>
+            <span class="precio-venta">
+              {{ producto.precio_venta | currency }}
+            </span>
+          </ng-template>
         </p>
+
+
+
+
 
         <!-- Mostrar stock -->
         <p class="stock" *ngIf="variante">
           {{ variante.cantidad_stock === 0 ? 'Agotado' : 'Disponibles: ' + variante.cantidad_stock }}
         </p>
         <p class="stock" *ngIf="!variante">
-          {{ producto.cantidad_stock === 0 ? 'Agotado' : 'Disponibles: ' + producto.cantidad_stock  }}
+          {{ producto.cantidad_stock === 0 ? 'Agotado' : 'Disponibles: ' + producto.cantidad_stock }}
         </p>
 
         <!-- Información de entrega -->
@@ -39,10 +78,12 @@
           <div class="variant-selectors">
             <div class="variant-buttons">
               <label>Colores disponibles:</label>
-              <button mat-button *ngFor="let color of coloresDisponibles" (click)="onSelectColor(color)"
-                [class.selected]="color === selectedColor">
-                {{ color }}
+              <button mat-button *ngFor="let color of coloresDisponibles" (click)="onSelectColor(color.nombre_color)"
+                [class.selected]="color.nombre_color === selectedColor" class="color-button">
+                <span class="color-circle" [ngStyle]="{ 'background-color': color.codigo_color }"
+                  [title]="color.nombre_color"></span>
               </button>
+
             </div>
 
             <div class="variant-buttons" *ngIf="availableSizesForColor.length > 0">
@@ -57,36 +98,34 @@
 
 
         <!-- Botón para comprar -->
-       <button mat-raised-button class="btn-add-to-cart" (click)="comprar()">
-  <mat-icon>shopping_cart</mat-icon> Comprar ahora
-</button>
+        <button mat-raised-button class="btn-add-to-cart" (click)="comprar()">
+          <mat-icon>shopping_cart</mat-icon> Comprar ahora
+        </button>
 
-  <!-- Formulario para comentar -->
-  <div *ngIf="usuarioLogueado && puedeComentar">
-   <form [formGroup]="comentarioForm" (ngSubmit)="enviarComentario()" class="comentario-formulario">
-      <mat-form-field appearance="fill">
-        <mat-label>Tu comentario</mat-label>
-        <textarea matInput formControlName="comentario"></textarea>
-      </mat-form-field>
+        <!-- Formulario para comentar -->
+        <div *ngIf="usuarioLogueado && puedeComentar">
+          <form [formGroup]="comentarioForm" (ngSubmit)="enviarComentario()" class="comentario-formulario">
+            <mat-form-field appearance="fill">
+              <mat-label>Tu comentario</mat-label>
+              <textarea matInput formControlName="comentario"></textarea>
+            </mat-form-field>
 
-      <!-- Selector de calificación por estrellas -->
-      <div class="star-rating">
-        <label>Calificación:</label>
-        <div class="stars">
-          <mat-icon
-            *ngFor="let star of [1,2,3,4,5]"
-            [class.filled]="star <= comentarioForm.get('calificacion')?.value"
-            (click)="comentarioForm.get('calificacion')?.setValue(star)">
-            {{ star <= comentarioForm.get('calificacion')?.value ? 'star' : 'star_border' }}
-          </mat-icon>
+            <!-- Selector de calificación por estrellas -->
+            <div class="star-rating">
+              <label>Calificación:</label>
+              <div class="stars">
+                <mat-icon *ngFor="let star of [1,2,3,4,5]"
+                  [class.filled]="star <= comentarioForm.get('calificacion')?.value"
+                  (click)="comentarioForm.get('calificacion')?.setValue(star)">
+                  {{ star <= comentarioForm.get('calificacion')?.value ? 'star' : 'star_border' }} </mat-icon>
+              </div>
+            </div>
+
+            <button mat-raised-button type="submit" [disabled]="comentarioForm.invalid">
+              Enviar opinión
+            </button>
+          </form>
         </div>
-      </div>
-
-      <button mat-raised-button type="submit" [disabled]="comentarioForm.invalid">
-        Enviar opinión
-      </button>
-    </form>
-  </div>
 
 
 
@@ -104,27 +143,27 @@
       </div>
 
     </div>
-    
-  <!-- Mensajes si no se puede comentar -->
-  <p *ngIf="!usuarioLogueado" class="texto">Inicia sesión para dejar tu comentario.</p>
-  <p *ngIf="usuarioLogueado && !puedeComentar" class="texto">Solo puedes comentar si ya compraste este producto.</p>
+
+    <!-- Mensajes si no se puede comentar -->
+    <p *ngIf="!usuarioLogueado" class="texto">Inicia sesión para dejar tu comentario.</p>
+    <p *ngIf="usuarioLogueado && !puedeComentar" class="texto">Solo puedes comentar si ya compraste este producto.</p>
   </mat-card>
 
-<!-- Comentarios -->
-<div class="comentarios-section">
-  <h3>Opiniones de los clientes</h3>
+  <!-- Comentarios -->
+  <div class="comentarios-section">
+    <h3>Opiniones de los clientes</h3>
 
-  <!-- Mostrar comentarios existentes -->
-  <div *ngFor="let com of comentarios" class="comentario">
-    <p><strong>{{ com.nombre_usuario }}</strong> ({{ com.fecha | date:'shortDate' }})</p>
-    <p>
-      <span *ngFor="let star of [1,2,3,4,5]">
-        <mat-icon color="warn">{{ star <= com.calificacion ? 'star' : 'star_border' }}</mat-icon>
-      </span>
-    </p>
-    <p>{{ com.comentario }}</p>
-    <hr />
-  </div>
+    <!-- Mostrar comentarios existentes -->
+    <div *ngFor="let com of comentarios" class="comentario">
+      <p><strong>{{ com.nombre_usuario }}</strong> ({{ com.fecha | date:'shortDate' }})</p>
+      <p>
+        <span *ngFor="let star of [1,2,3,4,5]">
+          <mat-icon color="warn">{{ star <= com.calificacion ? 'star' : 'star_border' }}</mat-icon>
+        </span>
+      </p>
+      <p>{{ com.comentario }}</p>
+      <hr />
+    </div>
   </div>
 </div>
 
@@ -137,12 +176,7 @@
     <ng-container *ngFor="let prod of productosRelacionados">
       <ng-container *ngIf="!prod.variantes?.length">
         <mat-card class="carousel-card">
-          <img
-            *ngIf="prod.imagenes?.length"
-            [src]="prod.imagenes[0]"
-            alt="{{ prod.nombre }}"
-            class="card-image"
-          />
+          <img *ngIf="prod.imagenes?.length" [src]="prod.imagenes[0]" alt="{{ prod.nombre }}" class="card-image" />
 
           <div class="card-content">
             <h4 class="product-name">{{ prod.nombre }}</h4>
@@ -150,7 +184,7 @@
             <div class="variant-info">
               <p>Color: {{ prod.nombre_color }}</p>
               <p>Tamaño: {{ prod.nombre_tamano }}</p>
-              {{ prod.cantidad_stock === 0 ? 'Agotado' : 'Disponibles: ' + prod.cantidad_stock  }}
+              {{ prod.cantidad_stock === 0 ? 'Agotado' : 'Disponibles: ' + prod.cantidad_stock }}
             </div>
             <a mat-raised-button color="" [routerLink]="['/detalle', prod.id, variante?.id]">
               Ver producto
@@ -162,12 +196,8 @@
       <!-- Producto con variantes: se muestra cada variante -->
       <ng-container *ngIf="prod.variantes?.length">
         <mat-card *ngFor="let variante of prod.variantes" class="carousel-card">
-          <img
-            *ngIf="variante.imagenes?.length"
-            [src]="variante.imagenes[0]"
-            alt="{{ prod.nombre }} - {{ variante.nombre_color }} {{ variante.nombre_tamano }}"
-            class="card-image"
-          />
+          <img *ngIf="variante.imagenes?.length" [src]="variante.imagenes[0]"
+            alt="{{ prod.nombre }} - {{ variante.nombre_color }} {{ variante.nombre_tamano }}" class="card-image" />
 
           <div class="card-content">
             <h4 class="product-name">{{ prod.nombre }}</h4>
@@ -199,7 +229,3 @@
     <p>Cargando detalles del producto...</p>
   </div>
 </ng-template>
-
-
-
-

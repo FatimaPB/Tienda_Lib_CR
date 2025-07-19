@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,14 +10,28 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
+
+import { Router } from '@angular/router';
+
+interface Empresa {
+  direccion?: string;
+  telefono?: string;
+  correo_electronico?: string;
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
+}
 
 
 @Component({
   selector: 'app-contacto',
   standalone: true,
   imports: [CommonModule,MatButtonModule,MatCardModule,MatIconModule,MatChipsModule,MatFormFieldModule,
-    MatProgressBarModule,MatTooltipModule,MatInputModule
+    MatProgressBarModule,MatTooltipModule,MatInputModule,MatProgressSpinner
   ],
   templateUrl: './contacto.component.html',
   styleUrl: './contacto.component.css',
@@ -30,19 +45,32 @@ import { MatInputModule } from '@angular/material/input';
     ]
 })
 export class ContactoComponent {
+ loading = true;
+  empresaData: Empresa | null = null;
 
-  cards = [
-    { icon: 'book', title: 'Gran colección', description: 'Explora nuestra variedad de libros religiosos.' },
-    { icon: 'local_shipping', title: 'Envío rápido', description: 'Recibe tus pedidos sin demoras en casa.' },
-    { icon: 'verified', title: 'Calidad garantizada', description: 'Productos 100% originales y certificados.' }
-  ];
+  constructor(private http: HttpClient, private router: Router) {}
 
-  productos = [
-    { nombre: 'Biblia Católica', precio: 299.99, img: '../../assets/img/biblias.png' },
-    { nombre: 'Rosario de Madera', precio: 149.99, img: '../../assets/img/biblias.png' },
-    { nombre: 'Crucifijo Dorado', precio: 199.99, img: '../../assets/img/biblias.png' }
-  ];
+  ngOnInit(): void {
+    this.getEmpresasData();
+  }
 
-  categorias = ['Biblias', 'Crucifijos', 'Santos', 'Velas', 'Rosarios'];
+  getEmpresasData(): void {
+    this.http.get<Empresa>('https://api-libreria.vercel.app/api/datos').pipe(
+      catchError((err: HttpErrorResponse) => {
+        console.error('Error al obtener los datos de empresa', err);
+        this.loading = false;
 
+        if (err.status === 400) this.router.navigate(['/error400']);
+        else if (err.status === 404) this.router.navigate(['/error404']);
+        else this.router.navigate(['/error500']);
+
+        return throwError(() => new Error('Error en la solicitud'));
+      })
+    ).subscribe({
+      next: (response) => {
+        this.empresaData = response;
+        this.loading = false;
+      }
+    });
+  }
 }

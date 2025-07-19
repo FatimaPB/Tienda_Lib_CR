@@ -1,208 +1,244 @@
-
-.container {
+/* Contenedor principal para noticias y eventos (igual que productos) */
+.containerlista-noticias-eventos {
+  display: flex;
+  align-items: flex-start;
   width: 100%;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 20px auto;
+  gap: 20px;
+  height: calc(100vh - 40px);
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Filtros laterales igual que productos pero clase diferente */
+.filtros-laterales-noticias {
+  width: 250px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
   background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 10;
 }
 
-.main-content {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.categories-section {
-  width: 25%;
-  padding-right: 20px;
-}
-
-.categories-title {
+/* Título filtros */
+.titulo-filtros-noticias {
+  font-size: 1.3em;
+  margin-bottom: 15px;
   color: #333;
-  font-size: 20px;
-  font-weight: bold;
+}
+
+/* Bloques de filtro */
+.filtro-bloque-noticias {
   margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #c1a36e;
 }
 
-.category-item {
+.filtro-bloque-noticias label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+/* Lista checkbox */
+.checkbox-lista-noticias {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-  color: #333;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.checkbox-label-noticias {
+  font-size: 0.95em;
+  color: #555;
   cursor: pointer;
-  
-  &:hover {
-    color: #c1a36e;
-  }
 }
 
-.products-section {
-  width: 75%;
+.checkbox-label-noticias input {
+  margin-right: 8px;
 }
 
-.products-header {
+/* Inputs date igual */
+input[type="date"].p-inputtext-sm {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Botones filtros */
+.botones-filtros-noticias {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.view-options {
-  display: flex;
-  align-items: center;
+.btn-filtrar-noticias,
+.btn-resetear-noticias {
+  padding: 10px 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.results-count {
-  color: #666;
-  margin-left: 10px;
+.btn-filtrar-noticias {
+  background-color: #333;
 }
 
-.sort-options {
-  display: flex;
-  align-items: center;
+.btn-filtrar-noticias:hover {
+  background-color: #555;
 }
 
-.sort-label {
-  color: #666;
-  margin-right: 10px;
+.btn-resetear-noticias {
+  background-color: #999;
 }
 
-.products-grid {
+.btn-resetear-noticias:hover {
+  background-color: #777;
+}
+
+/* Contenedor contenido noticias y eventos (igual que productos) */
+.contenido-noticias-eventos {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Contador resultados */
+.contador-resultados-noticias {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Mensaje sin resultados */
+.productos-noticias {
+  font-size: 1.2em;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Contenedor tarjetas noticias y eventos (como productos) */
+.card-container-noticias {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -10px;
+  gap: 20px;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
 }
 
-.product-card {
-  width: calc(33.33% - 20px);
-  margin: 10px;
+/* Cambia el ancho de las tarjetas a 50% menos el gap */
+.product-card-noticias {
+  width: calc(50% - 10px); /* 2 tarjetas por fila, considerando gap */
+  border-radius: 8px;
+  text-align: center;
   position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
 }
 
-.product-image-container {
-  position: relative;
-  background-color: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.product-card-noticias:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-.product-image {
-  max-width: 100%;
-  max-height: 220px;
-  object-fit: contain;
+.product-image-container-noticias {
+  padding: 10px;
+  cursor: default;
+  margin-bottom: 10px;
 }
 
-.sale-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.product-image-noticias {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
 }
 
-.product-title {
-  font-size: 16px;
+.product-card-noticias:hover .product-image-noticias {
+  transform: scale(1.05);
+}
+
+.product-info-noticias h3 {
+  font-size: 1.2em;
   color: #333;
-  margin-bottom: 5px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.product-rating {
-  color: #c1a36e;
-  margin-bottom: 5px;
-}
-
-.product-price {
-  font-size: 18px;
-  color: #666;
-  text-align: right;
   font-weight: bold;
 }
 
-.product-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-}
-
-.action-icons {
-  display: flex;
-}
-
-.products-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.product-list-item {
-  margin-bottom: 20px;
-}
-
-.product-list-container {
-  display: flex;
-}
-
-.product-list-image {
-  width: 150px;
-  position: relative;
-  margin-right: 20px;
-  
-  img {
-    width: 100%;
-    height: auto;
-  }
-}
-
-.product-list-details {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.product-info-noticias p {
+  color: #777;
+  font-size: 0.9em;
 }
 
 
-@media (max-width: 960px) {
-  .categories-section {
-    width: 30%;
-  }
-  
-  .products-section {
-    width: 70%;
-  }
-  
-  .product-card {
-    width: calc(50% - 20px);
-  }
-}
 
 @media (max-width: 768px) {
-  .categories-section {
+  .containerlista-noticias-eventos {
     width: 100%;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
   }
-  
-  .products-section {
-    width: 100%;
+
+  .contador-resultados-noticias {
+    display: none;
   }
+
+  .filtros-laterales-noticias {
+    display: none;
+  }
+
+  .product-card-noticias {
+    width: 100%; /* En pantallas pequeñas, 1 tarjeta por fila */
+  }
+
 }
 
-@media (max-width: 600px) {
-  .product-card {
-    width: 100%;
+/* Loading state styling */
+.loading-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  font-size: 1.2rem;
+}
+
+
+.loading-container p {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .product-card-noticias {
+    width: 80%;
   }
-  
-  .product-list-container {
-    flex-direction: column;
+
+  .product-image-noticias {
+    height: 250px;
   }
-  
-  .product-list-image {
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 10px;
+
+  .product-info-noticias h3 {
+    font-size: 1em;
+  }
+
+  .product-info-noticias p {
+    font-size: 0.8em;
   }
 }

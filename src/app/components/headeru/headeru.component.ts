@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef  } from '@angular/core'; // Agrega OnInit para la inicialización
+import { Component, OnInit, ChangeDetectorRef,HostListener, ElementRef  } from '@angular/core'; // Agrega OnInit para la inicialización
 import { RouterLink} from '@angular/router';
 import { HttpClient,  HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -7,14 +7,13 @@ import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatBadgeModule } from '@angular/material/badge';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { AuthService } from '../../auth.service'; // Ajusta la ruta según tu estructura de carpetas
 import { CarritoService } from '../../services/carrito.service';
+import { EmpresaService } from '../../services/empresa.service';
+import { Empresa } from '../../models/empresa.model';
+import { BadgeModule } from 'primeng/badge';
 
-export interface Empresa {
-  slogan?: string;
-  nombre?: string;
-  logo?: string;
-}
 export interface Categoria {
   id?: number;
   nombre_categoria: string;
@@ -22,17 +21,40 @@ export interface Categoria {
 @Component({
   selector: 'app-headeru',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule,MatBadgeModule],
+  imports: [RouterLink, CommonModule, FormsModule,MatBadgeModule,BadgeModule],
   templateUrl: './headeru.component.html',
-  styleUrl: './headeru.component.css'
+  styleUrl: './headeru.component.css',
+    animations: [
+      trigger('listAnimation', [
+        transition('* => *', [ // cada vez que cambia placeholderIndex
+          query(':enter', [], { optional: true }), // no hacemos nada con entradas nuevas
+          query('.animated-placeholder.visible', [
+            style({ opacity: 0, transform: 'translateY(20px)' }),
+            stagger(500, [
+              animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ])
+          ], { optional: true })
+        ])
+      ])
+    ]
 })
 export class HeaderuComponent {
   productos: any[] = [];
   empresaData: Empresa | null = null; // Inicializa como null
   categorias: Categoria[] = [];
   cantidadCarrito = 0;
+  mostrarNombre: boolean = true;
   apiUrl = 'https://api-libreria.vercel.app/api/categorias';
-  constructor(private authService: AuthService,private carritoservice: CarritoService, private router: Router, private http: HttpClient, private cdRef: ChangeDetectorRef) {}
+
+
+  constructor(private authService: AuthService,
+    private carritoservice: CarritoService,
+     private router: Router, 
+     private http: HttpClient, 
+     private cdRef: ChangeDetectorRef,
+    private empresaService: EmpresaService,
+        private elRef: ElementRef
+    ) {}
    // Obtener todas las categorías
         cargarCategorias() {
           this.http.get<Categoria[]>(this.apiUrl, {withCredentials:true}).subscribe((data) => {
@@ -40,14 +62,26 @@ export class HeaderuComponent {
           });
         }
 
+          // Este método se dispara en cada clic global
+          @HostListener('document:click', ['$event'])
+          onClickOutside(event: MouseEvent) {
+            // Si el clic no fue dentro del área del buscador...
+            if (!this.elRef.nativeElement.contains(event.target)) {
+              this.closerSearch(); // Cierra la búsqueda y resultados
+            }
+          }
+
   ngOnInit(): void {
     this.getEmpresasData(); 
     this.cargarCategorias();
 
-    setInterval(() => {
-      this.isVisibleNombre = !this.isVisibleNombre;
-      this.cdRef.detectChanges();  // Fuerza la actualización de la vista
-    }, 3000); // Cambiar cada 3 segundos
+        setInterval(() => {
+      this.mostrarNombre = !this.mostrarNombre;
+    }, 4000);
+
+        setInterval(() => {
+      this.placeholderIndex = (this.placeholderIndex + 1) % this.placeholders.length;
+    }, 3000);
   }
 
   ngAfterViewInit() {
@@ -153,5 +187,25 @@ isVisibleNombre: boolean = true;
       this.searchQuery = '';  // Limpia el input
       this.productos = [];     // Limpia los resultados
     }
+      closerSearch() {
+    this.isSearchOpen = false;
+    this.productos = [];     // Limpia los resultados
+  }
 
+
+
+      placeholders: string[] = [
+    'Biblia latinoamericana',
+    'Libros de espiritualidad',
+    'Estampas religiosas',
+    'Biblias para niños',
+    'Rosarios de madera',
+    'Libros de catequesis',
+    'Estampas de santos',
+    'Biblias en tapa dura',
+  ];
+
+  placeholderActual: string = this.placeholders[0];
+  placeholderIndex: number = 0;
+  placeholderVisible = true;
 }

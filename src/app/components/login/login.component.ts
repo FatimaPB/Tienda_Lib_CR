@@ -1,4 +1,4 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component,ViewChild, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 
@@ -18,11 +19,11 @@ import { MessageService } from 'primeng/api';
   selector: 'app-login',
   standalone: true,
   providers: [MessageService],
-  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule,InputTextModule, PasswordModule, ButtonModule, FloatLabelModule, ToastModule],
+  imports: [FormsModule, RouterLink, CommonModule, RecaptchaModule,InputTextModule, PasswordModule, ButtonModule, FloatLabelModule, ToastModule,MatProgressSpinner],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
    resolvedCaptcha: string | null = null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
@@ -30,6 +31,8 @@ export class LoginComponent {
   mensaje = '';
   password: string = '';
   exito: boolean = false;
+
+  loading: boolean = true;
 
   // Nueva propiedad para mostrar campo de MFA
   showMFAField: boolean = false;
@@ -51,6 +54,14 @@ export class LoginComponent {
     
     return JSON.parse(jsonPayload);
   }
+
+  ngOnInit() {
+  // Aquí puedes esperar 300ms o lo que creas necesario para simular la carga real (como cookies, reCAPTCHA o autenticación).
+  setTimeout(() => {
+    this.loading = false;
+  }, 300); // o más si estás esperando algo del servidor
+}
+
   
 
   onLogin(loginForm: NgForm) {
@@ -124,6 +135,12 @@ export class LoginComponent {
             setTimeout(() => {
               this.mensaje = '';
             }, 3000);
+
+           this.messageService.add({
+            severity: 'warn',
+            summary: 'Credenciales inválidas.',
+            detail: 'Revisa tu correo y contraseña.'
+          });
           } else if (err.status === 403) {
             this.mensaje = 'Fallaste los intentos permitidos. Cuenta bloqueada. Intenta más tarde.';
             this.exito = false;
@@ -133,10 +150,13 @@ export class LoginComponent {
             }, 3000);
           } else {
             this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message);
-            this.exito = false;
-            setTimeout(() => {
-              this.mensaje = '';
-            }, 3000);
+           
+           this.messageService.add({
+            severity: 'error',
+            summary: 'Credenciales inválidas.',
+            detail: 'Revisa tu correo y contraseña.'
+          });
+          
           }
           this.resolvedCaptcha = null;
           if (this.recaptcha) {

@@ -3,22 +3,26 @@ import { CarritoService } from '../../services/carrito.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
+import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 
+
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableModule, ButtonModule, InputTextModule, CardModule, DropdownModule, RadioButtonModule],
+  imports: [CommonModule, FormsModule, TableModule, ButtonModule, CardModule, DropdownModule, RadioButtonModule,InputNumberModule,ToastModule],
   templateUrl: './carrito.component.html',
-  styleUrl: './carrito.component.css'
+  styleUrl: './carrito.component.css',
+  providers: [MessageService, ConfirmationService],
 })
 export class CarritoComponent implements OnInit  {
 
@@ -47,7 +51,7 @@ mostrarFormulario = false;
   // URL de la API de compra
   apiUrl: string = 'https://api-libreria.vercel.app/api/comprar';
 
-  constructor(private http: HttpClient, private carritoService: CarritoService) {}
+  constructor(private http: HttpClient, private carritoService: CarritoService,  private messageService: MessageService,) {}
 
 // Se llama una vez al iniciar
 cargarCodigosPostales(): void {

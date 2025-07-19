@@ -1,0 +1,55 @@
+<!-- Toast para notificaciones -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-d-flex p-ai-center p-jc-center" style="padding: 20px;">
+  <div class="card" style="width: 100%; margin: auto;">
+
+    <h2 class="texto">Gestión de Usuarios</h2>
+
+    <!-- Tabla de usuarios -->
+    <p-table 
+      [value]="usuarios" 
+      [tableStyle]="{ 'min-width': '50rem' }" 
+      [paginator]="true" 
+      [rows]="5" 
+      [rowsPerPageOptions]="[5, 10, 20]" 
+      class="p-shadow-2">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Rol</th>
+          <th>Verificado</th>
+          <th>Bloqueado</th>
+          <th>Creado en</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.nombre }}</td>
+          <td>{{ user.correo }}</td>
+          <td>{{ user.telefono }}</td>
+          <td>{{ user.rol }}</td>
+          <td>
+            <span class="badge" [ngClass]="user.verificado ? 'verificado' : 'no-verificado'">
+              {{ user.verificado ? 'Sí' : 'No' }}
+            </span>
+          </td>
+          <td>
+            <span class="badge" [ngClass]="user.bloqueado ? 'bloqueado' : 'no-bloqueado'">
+              {{ user.bloqueado ? 'Sí' : 'No' }}
+            </span>
+          </td>
+          <td>{{ user.creado_en | date: 'short' }}</td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+</div>

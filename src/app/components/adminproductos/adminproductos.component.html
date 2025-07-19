@@ -1,17 +1,23 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 
-<div class="p-d-flex p-jc-center p-ai-center" style="width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 500px; margin-top: 50px;">
-  <div class="p-card p-shadow-2" style="width: 90%;">
+<div class="p-d-flex p-jc-center p-ai-center"
+  style="width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 500px; margin-top: 10px;">
+  <div class="p-card p-shadow-2" style="width: 100%;">
     <h2 class="texto" style="margin-bottom: 20px;">Gestión de Productos</h2>
-    <button pButton label="Nuevo Producto" icon="pi pi-plus" class="p-button-text p-mb-4" (click)="mostrarFormulario = !mostrarFormulario"></button>
+    <button pButton label="Nuevo Producto" icon="pi pi-plus" class="p-button-text p-mb-4"
+      (click)="mostrarFormulario = !mostrarFormulario"></button>
 
-    <p-table #tablaProductos [value]="productos" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [globalFilterFields]="['nombre', 'sku', 'nombre_categoria', 'nombre_color', 'nombre_tamano']" class="p-datatable-sm p-shadow-2">
+    <p-table #tablaProductos [value]="productos" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]"
+      [globalFilterFields]="['nombre', 'sku', 'nombre_categoria', 'nombre_color', 'nombre_tamano']"
+      class="p-datatable-sm">
+
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-jc-between p-ai-center">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" [(ngModel)]="filtroGlobal" placeholder="Buscar producto..." (input)="tablaProductos.filterGlobal(filtroGlobal, 'contains')" />
+            <input pInputText type="text" [(ngModel)]="filtroGlobal" placeholder="Buscar producto..."
+              (input)="tablaProductos.filterGlobal(filtroGlobal, 'contains')" />
           </span>
           <button pButton label="Limpiar Filtros" class="p-button-text" (click)="limpiarFiltros()"></button>
         </div>
@@ -32,44 +38,16 @@
           <th pSortableColumn="creado_en">Fecha <p-sortIcon field="creado_en"></p-sortIcon></th>
           <th>Acciones</th>
         </tr>
-        <tr>
-          <th></th>
-          <th><input pInputText type="text" [(ngModel)]="filtros.nombre" (input)="tablaProductos.filter(filtros.nombre, 'nombre', 'contains')" placeholder="Filtrar nombre"/></th>
-          <th></th>
-          <th><input pInputText type="text" [(ngModel)]="filtros.sku" (input)="tablaProductos.filter(filtros.sku, 'sku', 'contains')" placeholder="Filtrar SKU"/></th>
-          <th></th>
-          <th></th>
-          <th>
-            <p-dropdown [(ngModel)]="filtros.nombre_categoria" [options]="categorias" optionLabel="nombre_categoria" placeholder="Categoría"
-              (onChange)="tablaProductos.filter(filtros.nombre_categoria, 'nombre_categoria', 'equals')"></p-dropdown>
-          </th>
-          <th>
-            <p-dropdown [(ngModel)]="filtros.nombre_color" [options]="colores" optionLabel="nombre_color" placeholder="Color"
-              (onChange)="tablaProductos.filter(filtros.nombre_color, 'nombre_color', 'equals')"></p-dropdown>
-          </th>
-          <th>
-            <p-dropdown [(ngModel)]="filtros.nombre_tamano" [options]="tamanos" optionLabel="nombre_tamano" placeholder="Tamaño"
-              (onChange)="tablaProductos.filter(filtros.nombre_tamano, 'nombre_tamano', 'equals')"></p-dropdown>
-          </th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
       </ng-template>
+
       <ng-template pTemplate="body" let-producto>
         <!-- Productos CON variantes -->
         <ng-container *ngIf="producto.variantes && producto.variantes.length > 0">
           <tr *ngFor="let variante of producto.variantes">
             <td>
-              <p-carousel [value]="variante.imagenes" [numVisible]="1" [numScroll]="1" 
-                         [circular]="false" [autoplayInterval]="4000" 
-                         [showNavigators]="false" [showIndicators]="true">
-                <ng-template pTemplate="item" let-image>
-                  <p-tag severity="info" value="Variante"/>
-                  <img [src]="image" alt="Imagen de variante" 
-                       style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
-                </ng-template>
-              </p-carousel>
+              <p-tag severity="info" value="Variante"></p-tag>
+              <img [src]="variante.imagenes[0]" alt="Imagen variante"
+                style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px;" />
             </td>
             <td>{{ producto.nombre }}</td>
             <td>{{ producto.descripcion }}</td>
@@ -82,28 +60,25 @@
             <td>{{ producto.usuario_nombre }}</td>
             <td>{{ producto.creado_en | date:'dd/MM/yyyy HH:mm:ss a' }}</td>
             <td>
-              <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text" 
-                     (click)="editarProducto(producto)"></button>
-              <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text" 
-                     (click)="confirmarEliminarProducto(producto.id)"></button>
-              <button pButton icon="pi pi-plus" label="Agregar al Catálogo" class="p-button-text" 
-                     (click)="agregarAlCatalogo(producto.id)"></button>
+              <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text"
+                (click)="editarProducto(producto)"></button>
+              <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text"
+                (click)="confirmarEliminarProducto(producto.id)"></button>
+              <button pButton icon="pi pi-plus" label="Agregar al Catálogo" class="p-button-text"
+                (click)="agregarAlCatalogo(producto.id)"></button>
+                <button pButton icon="pi pi-percentage" label="Descuento" class="p-button-text"
+  (click)="abrirDialogoDescuento(producto, variante)"></button>
+
             </td>
           </tr>
         </ng-container>
-      
+
         <!-- Productos SIN variantes -->
         <tr *ngIf="!producto.variantes || producto.variantes.length === 0">
           <td>
-            <p-carousel [value]="producto.imagenes" [numVisible]="1" [numScroll]="1" 
-                       [circular]="false" [autoplayInterval]="4000" 
-                       [showNavigators]="false" [showIndicators]="true">
-              <ng-template pTemplate="item" let-images>
-                <p-tag severity="success" value="Producto"/>
-                <img [src]="images" alt="Imagen del producto" 
-                     style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
-              </ng-template>
-            </p-carousel>
+            <p-tag severity="success" value="Producto"></p-tag>
+            <img [src]="producto.imagenes[0]" alt="Imagen producto"
+              style="width: 80px; height: 80px; object-fit: cover; border-radius: 5px;" />
           </td>
           <td>{{ producto.nombre }}</td>
           <td>{{ producto.descripcion }}</td>
@@ -111,143 +86,168 @@
           <td>{{ producto.precio_venta | currency }}</td>
           <td>{{ producto.cantidad_stock }}</td>
           <td>{{ producto.nombre_categoria }}</td>
-          <td>{{ producto.nombre_color}}</td>
-          <td>{{ producto.nombre_tamano}}</td>
+          <td>{{ producto.nombre_color }}</td>
+          <td>{{ producto.nombre_tamano }}</td>
           <td>{{ producto.usuario_nombre }}</td>
           <td>{{ producto.creado_en | date:'dd/MM/yyyy HH:mm:ss a' }}</td>
           <td>
-            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text" 
-                   (click)="editarProducto(producto)"></button>
-            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text" 
-                   (click)="confirmarEliminarProducto(producto.id)"></button>
-            <button pButton icon="pi pi-plus" label="Agregar al Catálogo" class="p-button-text" 
-                   (click)="agregarAlCatalogo(producto.id)"></button>
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text"
+              (click)="editarProducto(producto)"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text"
+              (click)="confirmarEliminarProducto(producto.id)"></button>
+            <button pButton icon="pi pi-plus" label="Agregar al Catálogo" class="p-button-text"
+              (click)="agregarAlCatalogo(producto.id)"></button>
+              <button pButton icon="pi pi-percentage" label="Descuento" class="p-button-text"
+  (click)="abrirDialogoDescuento(producto)"></button>
+
           </td>
         </tr>
-      </ng-template> <!-- Cierre único del ng-template -->
+      </ng-template>
+
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-           En total hay {{ productos ? productos.length : 0 }} productos.
+          En total hay {{ productos ? productos.length : 0 }} productos.
         </div>
-    </ng-template>
+      </ng-template>
+
     </p-table>
   </div>
 </div>
 
-
-<p-dialog header="{{ mostrarFormulario ? 'Agregar Producto' : 'Editar Producto' }}" [(visible)]="mostrarFormulario" [modal]="true" [style]="{ width: '50rem' }">
+<p-dialog header="{{ mostrarFormulario ? 'Agregar Producto' : 'Editar Producto' }}" [(visible)]="mostrarFormulario"
+  [modal]="true" [style]="{ width: '35rem' }">
   <!-- Barra de Progreso -->
   <p-progressBar [value]="progreso" [showValue]="true" [style]="{ 'margin-bottom': '20px' }"></p-progressBar>
   <p-stepper [(activeIndex)]="activeIndex">
 
-<!-- Paso 1: Datos Básicos -->
-<p-step label="Datos Básicos">
-  <div *ngIf="activeIndex === 0">
-    <form #productoForm="ngForm" class="p-fluid">
-      <div class="p-field">
-        <label>Nombre</label>
-        <input pInputText type="text" [(ngModel)]="producto.nombre" name="nombre" required />
-      </div>
-      <div class="p-field">
-        <label>Descripción</label>
-        <textarea pInputTextarea [(ngModel)]="producto.descripcion" name="descripcion" required></textarea>
-      </div>
-      <div class="p-field">
-        <label>SKU</label>
-        <input pInputText type="text" [(ngModel)]="producto.sku" name="sku" required />
-      </div>
-      <div class="p-field-checkbox">
-        <label>¿Tiene variantes? </label>
-        <p-checkbox 
-        [(ngModel)]="producto.tieneVariantes" 
-        [binary]="true"
-        name="tieneVariantes">
-      </p-checkbox>
-      
-      </div>
-      
+    <!-- Paso 1: Datos Básicos -->
+    <p-step label="Datos Básicos">
+      <div *ngIf="activeIndex === 0">
+        <form #productoForm="ngForm" class="p-fluid">
+          <div class="p-field">
+            <label>Nombre</label>
+            <input pInputText type="text" [(ngModel)]="producto.nombre" name="nombre" required />
+          </div>
+          <div class="p-field">
+            <label>Descripción</label>
+            <textarea pInputTextarea [(ngModel)]="producto.descripcion" name="descripcion" required></textarea>
+          </div>
+          <div class="p-field">
+            <label>SKU</label>
+            <input pInputText type="text" [(ngModel)]="producto.sku" name="sku" required />
+          </div>
+          <div class="p-field-checkbox">
+            <label>¿Tiene variantes? </label>
+            <p-checkbox [(ngModel)]="producto.tieneVariantes" [binary]="true" name="tieneVariantes">
+            </p-checkbox>
 
-      <div class="p-d-flex p-jc-end">
-        <button type="button" pButton label="Siguiente" class="p-button-text" (click)="siguientePaso()"></button>
-        <button type="button" pButton label="Cancelar" class="p-button-text" (click)="mostrarFormulario = false; resetForm()"></button>
-      </div>
-    </form>
-  </div>
-</p-step>
+          </div>
 
-    
+
+          <div class="p-d-flex p-jc-end">
+            <button type="button" pButton label="Siguiente" class="p-button-text" (click)="siguientePaso()"></button>
+            <button type="button" pButton label="Cancelar" class="p-button-text"
+              (click)="mostrarFormulario = false; resetForm()"></button>
+          </div>
+        </form>
+      </div>
+    </p-step>
+
+
     <!-- Paso 2: Detalles Adicionales -->
     <p-step label="Detalles Adicionales">
       <div *ngIf="activeIndex === 1">
         <form class="p-fluid">
-    
-  <!-- Sección para productos SIN variantes -->
-<div *ngIf="!producto.tieneVariantes">
-  <h3>Datos del Producto</h3>
 
-  <div class="p-field">
-    <label>Categoría</label>
-    <p-dropdown [(ngModel)]="producto.categoria_id" name="categoria_id" [options]="categorias" optionLabel="nombre_categoria" optionValue="id" placeholder="Seleccione una categoría" required></p-dropdown>
-  </div>
+          <!-- Sección para productos SIN variantes -->
+          <div *ngIf="!producto.tieneVariantes">
+            <h3>Datos del Producto</h3>
 
-  <div class="p-field">
-    <label>Color</label>
-    <p-dropdown [(ngModel)]="producto.color_id" name="color_id" [options]="colores" optionLabel="nombre_color" optionValue="id" placeholder="Seleccione color" required></p-dropdown>
-  </div>
-  <div class="p-field">
-    <label>Tamaño</label>
-    <p-dropdown [(ngModel)]="producto.tamano_id" name="tamano_id" [options]="tamanos" optionLabel="nombre_tamano" optionValue="id" placeholder="Seleccione tamaño" required></p-dropdown>
-  </div>
-  <div class="p-field">
-    <label>Imágenes</label>
-    <p-fileUpload name="images" (onSelect)="onFileChange($event)" [multiple]="true" accept="image/*" chooseLabel="Agregar" cancelLabel="Cancelar"></p-fileUpload>
-  </div>
-</div>
-    
+            <div class="p-field">
+              <label>Categoría</label>
+              <p-dropdown [(ngModel)]="producto.categoria_id" name="categoria_id" [options]="categorias"
+                optionLabel="nombre_categoria" optionValue="id" placeholder="Seleccione una categoría"
+                required></p-dropdown>
+            </div>
+
+            <div class="p-field">
+              <label>Color</label>
+              <p-dropdown [(ngModel)]="producto.color_id" name="color_id" [options]="colores" optionLabel="nombre_color"
+                optionValue="id" placeholder="Seleccione color" required></p-dropdown>
+            </div>
+            <div class="p-field">
+              <label>Tamaño</label>
+              <p-dropdown [(ngModel)]="producto.tamano_id" name="tamano_id" [options]="tamanos"
+                optionLabel="nombre_tamano" optionValue="id" placeholder="Seleccione tamaño" required></p-dropdown>
+            </div>
+            <div class="p-field">
+              <label>Imágenes</label>
+              <p-fileUpload name="images" (onSelect)="onFileChange($event)" [multiple]="true" accept="image/*"
+                chooseLabel="Agregar" cancelLabel="Cancelar"></p-fileUpload>
+            </div>
+          </div>
+
           <!-- Mostrar si SÍ tiene variantes -->
           <div *ngIf="producto.tieneVariantes">
             <div class="p-field">
               <label>Categoría</label>
-              <p-dropdown [(ngModel)]="producto.categoria_id" name="categoria_id" [options]="categorias" optionLabel="nombre_categoria" optionValue="id" placeholder="Seleccione una categoría" required></p-dropdown>
+              <p-dropdown [(ngModel)]="producto.categoria_id" name="categoria_id" [options]="categorias"
+                optionLabel="nombre_categoria" optionValue="id" placeholder="Seleccione una categoría"
+                required></p-dropdown>
             </div>
             <h3>Variantes</h3>
             <div *ngFor="let variante of producto.variantes; let i = index" class="p-mb-3 p-shadow-2 p-p-2">
               <div class="p-field">
                 <label>Color</label>
-                <p-dropdown [(ngModel)]="producto.variantes[i].color_id" name="variantes{{i}}Color" [options]="colores" optionLabel="nombre_color" optionValue="id" placeholder="Seleccione color" required></p-dropdown>
+                <p-dropdown [(ngModel)]="producto.variantes[i].color_id" name="variantes{{i}}Color" [options]="colores"
+                  optionLabel="nombre_color" optionValue="id" placeholder="Seleccione color" required></p-dropdown>
               </div>
               <div class="p-field">
                 <label>Tamaño</label>
-                <p-dropdown [(ngModel)]="producto.variantes[i].tamano_id" name="variantes{{i}}Tamano" [options]="tamanos" optionLabel="nombre_tamano" optionValue="id" placeholder="Seleccione tamaño" required></p-dropdown>
+                <p-dropdown [(ngModel)]="producto.variantes[i].tamano_id" name="variantes{{i}}Tamano"
+                  [options]="tamanos" optionLabel="nombre_tamano" optionValue="id" placeholder="Seleccione tamaño"
+                  required></p-dropdown>
               </div>
               <div class="p-field">
                 <label>Imágenes de variantes</label>
-                <p-fileUpload name="imagenes_variantes" (onSelect)="onVariantFileChange($event,i)" [multiple]="true" accept="image/*" chooseLabel="Agregar" cancelLabel="Cancelar"></p-fileUpload>
+                <p-fileUpload name="imagenes_variantes" (onSelect)="onVariantFileChange($event,i)" [multiple]="true"
+                  accept="image/*" chooseLabel="Agregar" cancelLabel="Cancelar"></p-fileUpload>
               </div>
 
-              <button pButton type="button" label="Eliminar Variante" icon="pi pi-times" class="p-button-text p-mt-1" (click)="eliminarVariante(i)"></button>
+              <button pButton type="button" label="Eliminar Variante" icon="pi pi-times" class="p-button-text p-mt-1"
+                (click)="eliminarVariante(i)"></button>
               <hr />
             </div>
-            <button pButton type="button" label="Agregar Variante" icon="pi pi-plus" class="p-button-outlined" (click)="agregarVariante()"></button>
+            <button pButton type="button" label="Agregar Variante" icon="pi pi-plus" class="p-button-outlined"
+              (click)="agregarVariante()"></button>
           </div>
           <div class="p-d-flex p-jc-between">
             <button type="button" pButton label="Anterior" class="p-button-text" (click)="anteriorPaso()"></button>
-            <button type="submit" pButton label="Guardar Producto" class="p-button-text" (click)="guardarProducto()"></button>
-            <button type="button" pButton label="Cancelar" class="p-button-text" (click)="mostrarFormulario = false; resetForm()"></button>
+            <button type="submit" pButton label="Guardar Producto" class="p-button-text"
+              (click)="guardarProducto()"></button>
+            <button type="button" pButton label="Cancelar" class="p-button-text"
+              (click)="mostrarFormulario = false; resetForm()"></button>
           </div>
         </form>
       </div>
     </p-step>
-    
+
   </p-stepper>
 </p-dialog>
 
 
 
 
+<p-dialog header="Aplicar Descuento" [(visible)]="mostrarDialogoDescuento" [modal]="true" [style]="{ width: '25rem' }">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="nuevoPrecio">Nuevo Precio</label>
+      <input id="nuevoPrecio" pInputText type="number" [(ngModel)]="nuevoPrecio" />
+    </div>
 
-
-
-
-
-
+    <div class="p-d-flex p-jc-end">
+      <button pButton label="Cancelar" class="p-button-text" (click)="mostrarDialogoDescuento = false"></button>
+      <button pButton label="Aplicar" class="p-button-text" (click)="aplicarDescuento()"></button>
+    </div>
+  </div>
+</p-dialog>

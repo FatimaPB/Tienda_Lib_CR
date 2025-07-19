@@ -4,8 +4,8 @@
 <!-- Diálogo de confirmación -->
 <p-confirmDialog></p-confirmDialog>
 
-<div class="p-d-flex p-ai-center p-jc-center" style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px; margin-top: 50px;">
-  <div class="card" style="width: 90%; margin: auto;">
+<div class="p-d-flex p-ai-center p-jc-center" style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px;">
+  <div class="card" style="width: 100%; margin: auto;">
 
     <!-- Título de la sección -->
     <h2 class="texto" style="margin-bottom: 20px;">Gestión de Compras</h2>
@@ -65,9 +65,11 @@
   header="{{ compra.id ? 'Editar Compra' : 'Agregar Compra' }}" 
   [(visible)]="visible" 
   [modal]="true" 
-  [style]="{ width: '50rem' }">
+  [style]="{ width: '35rem' }">
   
   <div class="p-fluid">
+
+    <!-- PROVEEDOR -->
     <div class="p-field">
       <label for="proveedorId">Proveedor</label>
       <p-dropdown 
@@ -79,55 +81,57 @@
         required>
       </p-dropdown>
     </div>
-    
+
+    <!-- VARIANTE -->
     <div class="p-field">
       <label for="varianteId">Variante</label>
-        <p-dropdown 
-          [(ngModel)]="detalle.varianteId" 
-          [options]="variantes" 
-          optionLabel="nombre" 
-          optionValue="id" 
-          placeholder="Seleccionar variante">
-</p-dropdown>
+      <p-dropdown 
+        [(ngModel)]="detalle.varianteId" 
+        [options]="variantes" 
+        optionLabel="nombre" 
+        optionValue="id" 
+        placeholder="Seleccionar variante">
+      </p-dropdown>
     </div>
+
+    <!-- PRODUCTO -->
     <div class="p-field">
-        <label for="varianteId">Producto</label>
-        <p-dropdown 
-          [(ngModel)]="detalle.productoId" 
-          [options]="productos" 
-          optionLabel="nombre" 
-          optionValue="id" 
-          placeholder="Seleccionar producto">
-        </p-dropdown>
-      </div>
+      <label for="productoId">Producto</label>
+      <p-dropdown 
+        [(ngModel)]="detalle.productoId" 
+        [options]="productos" 
+        optionLabel="nombre" 
+        optionValue="id" 
+        placeholder="Seleccionar producto">
+      </p-dropdown>
+    </div>
+
+    <!-- CANTIDAD -->
     <div class="p-field">
       <label for="cantidad">Cantidad</label>
       <input type="number" [(ngModel)]="detalle.cantidad" name="cantidad" placeholder="Cantidad" required pInputText />
     </div>
 
+    <!-- PRECIO DE COMPRA -->
     <div class="p-field">
       <label for="precioCompra">Precio de Compra</label>
       <input type="number" [(ngModel)]="detalle.precioCompra" name="precioCompra" placeholder="Precio de Compra" required pInputText />
     </div>
 
+    <!-- PRECIO DE VENTA (nuevo) -->
     <div class="p-field">
-  <label for="margenGanancia">Margen de Ganancia (%)</label>
-  <input type="number" 
-    [(ngModel)]="detalle.margenGanancia" 
-       name="margenGanancia" 
-       placeholder="Ejemplo: 80 para 80%" 
-       min="0" max="500" step="1"
-       required
-       pInputText />
+      <label for="precioVenta">Precio de Venta</label>
+      <input type="number" [(ngModel)]="detalle.precioVenta" name="precioVenta" placeholder="Precio de Venta" required pInputText />
     </div>
 
-
+    <!-- BOTONES -->
     <div class="p-field p-d-flex p-jc-between">
       <button pButton label="{{ compra.id ? 'Actualizar' : 'Agregar' }}" 
               class="p-button-text" 
               (click)="guardarCompra()"></button>
       <button pButton label="Cancelar" class="p-button-text" (click)="cancelarEdicion()"></button>
     </div>
+
   </div>
 
 </p-dialog>

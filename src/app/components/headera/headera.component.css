@@ -24,6 +24,7 @@
 }
 
 mat-nav-list a {
+  margin-top: 50px;
   font-size: 0.9rem;
   color: #37474f;
   border-radius: 6px;
@@ -49,7 +50,6 @@ mat-nav-list a:hover {
   font-size: 1.1rem;
   font-weight: 600;
   margin-left: 1rem;
-  color: #3f51b5;
 }
 
 .spacer {

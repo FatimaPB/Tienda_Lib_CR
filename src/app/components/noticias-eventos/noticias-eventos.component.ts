@@ -1,172 +1,77 @@
 import { Component, OnInit } from '@angular/core';
+import { NoticiaEvento } from '../../models/noticia-evento.model';
+import { NoticiaEventoService } from '../../services/noticia-evento.service';
 import { CommonModule } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSelectChange } from '@angular/material/select';
-
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTooltipModule } from '@angular/material/tooltip';
-
-
-interface Producto {
-  id: number;
-  titulo: string;
-  precio: number;
-  calificacion: number;
-  imagen: string;
-  enOferta: boolean;
-}
-
-interface Categoria {
-  nombre: string;
-  tieneSubmenu: boolean;
-}
-
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-noticias-eventos',
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, MatListModule, MatIconModule, MatDividerModule, MatSliderModule,MatButtonModule,
-    MatCardModule, MatChipsModule, MatSelectModule, MatFormFieldModule, MatTooltipModule
-  ],
+  imports: [CommonModule,FormsModule,DropdownModule,ToastModule,TableModule,InputTextModule,MatProgressSpinner],
   templateUrl: './noticias-eventos.component.html',
   styleUrl: './noticias-eventos.component.css'
 })
-export class NoticiasEventosComponent implements OnInit {
- // Opciones de vista
- vistaGrid = true;
-  
- // Opciones de ordenamiento
- opcionesOrdenamiento = [
-   'Ordenar por novedad',
-   'Ordenar por precio: menor a mayor',
-   'Ordenar por precio: mayor a menor',
-   'Ordenar por popularidad'
- ];
- ordenamientoSeleccionado = this.opcionesOrdenamiento[0];
- 
- // Categorías
- categorias: Categoria[] = [
-   { nombre: 'Hombres', tieneSubmenu: true },
-   { nombre: 'Fútbol americano', tieneSubmenu: false },
-   { nombre: 'de los hombres', tieneSubmenu: false },
-   { nombre: 'Audio portátil', tieneSubmenu: false },
-   { nombre: 'Relojes inteligentes', tieneSubmenu: false },
-   { nombre: 'Tenis', tieneSubmenu: false },
-   { nombre: 'Sin categorizar', tieneSubmenu: false },
-   { nombre: 'Juegos de video', tieneSubmenu: false },
-   { nombre: 'De las mujeres', tieneSubmenu: false }
- ];
- 
- // Productos
- productos: Producto[] = [
-   {
-     id: 1,
-     titulo: 'EPICURO POR LA LETRA',
-     precio: 68,
-     calificacion: 4,
-     imagen: '../../../assets/img/rosario.jpg',
-     enOferta: false
-   },
-   {
-     id: 2,
-     titulo: 'LA CAJA ESTÁ VACÍA.',
-     precio: 95,
-     calificacion: 4,
-     imagen: '../../../assets/img/rosario.jpg',
-     enOferta: true
-   },
-   {
-     id: 3,
-     titulo: 'PONLE EL CONDIMENTO.',
-     precio: 115,
-     calificacion: 4,
-     imagen: '../../../assets/img/rosario.jpg',
-     enOferta: true
-   },
-   {
-    id: 4,
-    titulo: 'EPICURO POR LA LETRA',
-    precio: 68,
-    calificacion: 4,
-    imagen: '../../../assets/img/rosario.jpg',
-    enOferta: false
-  },
-  {
-    id: 5,
-    titulo: 'LA CAJA ESTÁ VACÍA.',
-    precio: 95,
-    calificacion: 4,
-    imagen: '../../../assets/img/rosario.jpg',
-    enOferta: true
-  },
-  {
-    id: 6,
-    titulo: 'PONLE EL CONDIMENTO.',
-    precio: 115,
-    calificacion: 4,
-    imagen: '../../../assets/img/rosario.jpg',
-    enOferta: true
+export class NoticiasEventosComponent  implements OnInit {
+  noticiasOriginal: NoticiaEvento[] = [];
+  noticiasFiltradas: NoticiaEvento[] = [];
+  loading: boolean = true;
+fechaMinima: string = '';
+
+
+filtros: {
+  tipo: {
+    [key: string]: boolean;
+  };
+} = {
+  tipo: {
+    noticia: false,
+    evento: false
   }
- ];
- 
- constructor() { }
- 
- ngOnInit(): void { }
- 
- // Cambiar vista entre grid y lista
- cambiarVista(esGrid: boolean): void {
-   this.vistaGrid = esGrid;
- }
- 
- // Cambiar ordenamiento
- cambiarOrdenamiento(event: MatSelectChange): void {
-   this.ordenamientoSeleccionado = event.value;
-   this.ordenarProductos();
- }
- 
- // Ordenar productos según el criterio seleccionado
- ordenarProductos(): void {
-   switch (this.ordenamientoSeleccionado) {
-     case 'Ordenar por precio: menor a mayor':
-       this.productos.sort((a, b) => a.precio - b.precio);
-       break;
-     case 'Ordenar por precio: mayor a menor':
-       this.productos.sort((a, b) => b.precio - a.precio);
-       break;
-     case 'Ordenar por popularidad':
-       // Aquí iría la lógica para ordenar por popularidad
-       break;
-     default:
-       // Por novedad (podría ser por ID si es secuencial)
-       this.productos.sort((a, b) => a.id - b.id);
-   }
- }
- 
- // Añadir al carrito
- anadirAlCarrito(productoId: number): void {
-   console.log(`Producto ${productoId} añadido al carrito`);
-   // Aquí iría la lógica para añadir al carrito
- }
- 
- // Ver detalles
- verDetalles(productoId: number): void {
-   console.log(`Ver detalles del producto ${productoId}`);
-   // Aquí iría la lógica para ver detalles
- }
- 
- // Añadir a favoritos
- anadirAFavoritos(productoId: number): void {
-   console.log(`Producto ${productoId} añadido a favoritos`);
-   // Aquí iría la lógica para añadir a favoritos
- }
+};
+
+  constructor(private noticiaService: NoticiaEventoService) {}
+
+  ngOnInit(): void {
+    this.cargarNoticias();
+  }
+
+  cargarNoticias(): void {
+    this.loading = true;
+    this.noticiaService.getNoticias().subscribe({
+      next: (data) => {
+        this.noticiasOriginal = data;
+        this.aplicarFiltros(); // Aplica filtros iniciales
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+ aplicarFiltros(): void {
+  const tiposSeleccionados = Object.keys(this.filtros.tipo).filter(t => this.filtros.tipo[t]);
+
+  if (tiposSeleccionados.length === 0) {
+    // Si no hay ningún tipo seleccionado, mostrar TODO
+    this.noticiasFiltradas = [...this.noticiasOriginal];
+  } else {
+    // Filtrar por tipos seleccionados
+    this.noticiasFiltradas = this.noticiasOriginal.filter(n => tiposSeleccionados.includes(n.tipo));
+  }
+}
+
+resetearFiltros(): void {
+  this.filtros.tipo = {
+    noticia: false,
+    evento: false
+  };
+  this.aplicarFiltros();
+}
 }

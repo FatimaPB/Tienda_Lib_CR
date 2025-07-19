@@ -1,8 +1,14 @@
 <p-toast></p-toast>
 
-<div class="login-container">
-  <h2 class="login-title">Iniciar Sesión</h2>
+<!-- Spinner de carga centrado -->
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner diameter="60" color="primary"></mat-spinner>
+  <p>Cargando...</p>
+</div>
 
+
+<div class="login-container" *ngIf="!loading">
+  <h2 class="login-title">Iniciar Sesión</h2>
   <!-- Formulario normal -->
   <form *ngIf="!showMFAField" (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm" class="p-fluid">
 

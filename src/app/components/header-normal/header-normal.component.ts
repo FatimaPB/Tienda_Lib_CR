@@ -1,107 +1,104 @@
-import { Component, OnInit, ChangeDetectorRef  } from '@angular/core'; // Agrega OnInit para la inicialización
-import { RouterLink} from '@angular/router';
-import { HttpClient,  HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core'; // Agrega OnInit para la inicialización
+import { RouterLink } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDialogModule } from '@angular/material/dialog';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+import { Categoria } from '../../models/categoria.model';
+import { CategoriaService } from '../../services/categoria.service';
+import { EmpresaService } from '../../services/empresa.service';
+import { Empresa } from '../../models/empresa.model';
+import { BadgeModule } from 'primeng/badge';
 
-
-
-
-
-export interface Categoria {
-  id?: number;
-  nombre_categoria: string;
-}
-
-export interface Empresa {
-  slogan?: string;
-  nombre?: string;
-  logo_url?: string; // Asegúrate de que este campo sea correcto en el modelo
-}
 
 @Component({
   selector: 'app-header-normal',
   standalone: true,
-  imports:[FormsModule , CommonModule, RouterLink, MatToolbarModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatListModule,MatSidenavModule,MatCardModule, MatBadgeModule,
-    MatExpansionModule,
-    MatDialogModule,],
+  imports: [FormsModule, CommonModule, RouterLink, MatBadgeModule,BadgeModule],
   templateUrl: './header-normal.component.html',
-  styleUrls: ['./header-normal.component.css'] // Corrige aquí de styleUrl a styleUrls
+  styleUrls: ['./header-normal.component.css'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [ // cada vez que cambia placeholderIndex
+        query(':enter', [], { optional: true }), // no hacemos nada con entradas nuevas
+        query('.animated-placeholder.visible', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger(500, [
+            animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
+
+
+
 })
 export class HeaderNormalComponent implements OnInit { // Implementa OnInit
   productos: any[] = [];
   empresaData: Empresa | null = null; // Inicializa como null
   apiUrl = 'https://api-libreria.vercel.app/api/categorias';
   categorias: Categoria[] = [];
-   cantidadCarrito = 0;
+  cantidadCarrito = 0;
+  mostrarNombre: boolean = true;
+  intervalId: any;
 
-  constructor(private http: HttpClient, private router: Router, private cdRef: ChangeDetectorRef) {}
+  constructor(private http: HttpClient,
+    private router: Router,
+    private cdRef: ChangeDetectorRef,
+    private elRef: ElementRef,
+    private categoriaService: CategoriaService,
+    private empresaService: EmpresaService) { }
 
-    // Obtener todas las categorías
-      cargarCategorias() {
-        this.http.get<Categoria[]>(this.apiUrl, {withCredentials:true}).subscribe((data) => {
-          this.categorias = data;
-        });
-      }
+  cargarCategorias(): void {
+    this.categoriaService.cargarCategorias().subscribe({
+      next: (data) => this.categorias = data,
+      error: (err) => console.error('Error al cargar categorías', err)
+    });
+  }
 
+  // Este método se dispara en cada clic global
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    // Si el clic no fue dentro del área del buscador...
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.closerSearch(); // Cierra la búsqueda y resultados
+    }
+  }
   ngOnInit(): void {
-    this.getEmpresasData(); 
+    this.getEmpresasData();
     this.cargarCategorias();
 
     setInterval(() => {
-      this.isVisibleNombre = !this.isVisibleNombre;
-      this.cdRef.detectChanges();  // Fuerza la actualización de la vista
-    }, 3000); // Cambiar cada 3 segundos
+      this.mostrarNombre = !this.mostrarNombre;
+    }, 4000);
+
+
+    setInterval(() => {
+      this.placeholderIndex = (this.placeholderIndex + 1) % this.placeholders.length;
+    }, 3000);
   }
 
   getEmpresasData(): void {
-    this.http.get<Empresa>('https://api-libreria.vercel.app/api/datos').pipe(
-      catchError((err: HttpErrorResponse) => {
-        console.error('Error al obtener los perfiles de empresa', err);
-        
-        // Redirigir según el código de estado HTTP
-        if (err.status === 400) {
-          this.router.navigate(['/error400']); // Solicitud incorrecta (Bad Request)
-        } else if (err.status === 404) {
-          this.router.navigate(['/error404']); // Página no encontrada (Not Found)
-        } else if (err.status === 500) {
-         this.router.navigate(['/error500']); // Error del servidor (Internal Server Error)
-        } else {
-         this.router.navigate(['/error500']); // Otros errores, los tratamos como error 500
-        }
-        
-        return throwError(() => new Error('Error en la solicitud'));
-      })
-    ).subscribe({
+    this.empresaService.obtenerDatosEmpresa().subscribe({
       next: (response) => {
-        this.empresaData = response; // Guarda el objeto directamente
+        this.empresaData = response;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error al obtener los perfiles de empresa', err);
+        switch (err.status) {
+          case 400: this.router.navigate(['/error400']); break;
+          case 404: this.router.navigate(['/error404']); break;
+          case 500:
+          default: this.router.navigate(['/error500']); break;
+        }
       }
     });
   }
-  
+
+
   isMenuOpen = false;
 
   toggleMenu() {
@@ -117,50 +114,55 @@ export class HeaderNormalComponent implements OnInit { // Implementa OnInit
     event.stopPropagation(); // Evita que el evento cierre el menú al hacer clic
     this.isMegaMenuOpen = !this.isMegaMenuOpen;
   }
-  
+
   isSearchOpen: boolean = false;
 
   openSearch() {
     this.isSearchOpen = true;
   }
-  
+
   closeSearch() {
     this.isSearchOpen = false;
     this.searchQuery = '';  // Limpia el input
     this.productos = [];     // Limpia los resultados
   }
 
-searchQuery: string = '';
-
-toggleSearch() {
-  this.isSearchOpen = !this.isSearchOpen;
-}
-
-isVisibleNombre: boolean = true;
-loadProductos(): void {
-  this.http.get<any[]>('https://api-libreria.vercel.app/api/productos', { withCredentials: true })
-    .subscribe(
-      (data) => {
-        this.productos = data;
-        this.cdRef.detectChanges(); // Fuerza la actualización de la vista
-      },
-      (err) => console.error('Error al cargar productos:', err)
-    );
-}
-
-
-buscarProductos(termino: string): void {
-  if (!termino.trim()) {
-
-    return;
+  closerSearch() {
+    this.isSearchOpen = false;
+    this.productos = [];     // Limpia los resultados
   }
 
-  this.http.get<any[]>(`https://api-libreria.vercel.app/api/productos/buscar?q=${encodeURIComponent(termino)}`, { withCredentials: true })
-    .subscribe(
-      (data) => this.productos = data,
-      (err) => console.error('Error al buscar productos:', err)
-    );
-}
+  searchQuery: string = '';
+
+  toggleSearch() {
+    this.isSearchOpen = !this.isSearchOpen;
+  }
+
+  isVisibleNombre: boolean = true;
+  loadProductos(): void {
+    this.http.get<any[]>('https://api-libreria.vercel.app/api/productos', { withCredentials: true })
+      .subscribe(
+        (data) => {
+          this.productos = data;
+          this.cdRef.detectChanges(); // Fuerza la actualización de la vista
+        },
+        (err) => console.error('Error al cargar productos:', err)
+      );
+  }
+
+
+  buscarProductos(termino: string): void {
+    if (!termino.trim()) {
+
+      return;
+    }
+
+    this.http.get<any[]>(`https://api-libreria.vercel.app/api/productos/buscar?q=${encodeURIComponent(termino)}`, { withCredentials: true })
+      .subscribe(
+        (data) => this.productos = data,
+        (err) => console.error('Error al buscar productos:', err)
+      );
+  }
 
   // Método para limpiar la búsqueda
   clearSearch() {
@@ -168,5 +170,18 @@ buscarProductos(termino: string): void {
     this.productos = [];     // Limpia los resultados
   }
 
+  placeholders: string[] = [
+    'Biblia latinoamericana',
+    'Libros de espiritualidad',
+    'Estampas religiosas',
+    'Biblias para niños',
+    'Rosarios de madera',
+    'Libros de catequesis',
+    'Estampas de santos',
+    'Biblias en tapa dura',
+  ];
 
+  placeholderActual: string = this.placeholders[0];
+  placeholderIndex: number = 0;
+  placeholderVisible = true;
 }

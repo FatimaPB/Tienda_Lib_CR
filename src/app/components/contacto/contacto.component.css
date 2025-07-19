@@ -1,108 +1,155 @@
 .contact-container {
-    max-width: 1200px;
-    margin: 50px auto auto;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .map-container iframe {
-    width: 100%;
-    height: 350px;
-    border: none;
-    display: block;
-  }
-  
-  .content-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .form-container, .info-container {
-    flex: 1;
-    min-width: 300px;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  h2, h3 {
-    color: #333;
-    margin-bottom: 15px;
-  }
-  
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input, textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  small {
-    color: red;
-    font-size: 12px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  button:hover {
-    background: #0056b3;
-  }
-  
-  .success-message {
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .info-container p {
-    margin: 5px 0;
-  }
-  
-  .social-icons {
-    margin-top: 10px;
-  }
-  
-  .social-icons a {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .facebook { background: #1877F2; }
-  .twitter { background: #1DA1F2; }
-  .instagram { background: #E4405F; }
-  
-  .facebook:hover { background: #0d6efd; }
-  .twitter:hover { background: #0a95dd; }
-  .instagram:hover { background: #d92e58; }
+  max-width: 1200px;
+  margin: 50px auto auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 350px;
+  border: none;
+  display: block;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.form-container, .info-container {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h2, h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+small {
+  color: red;
+  font-size: 12px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* === INFO DE CONTACTO (con íconos) === */
+.info-container p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.info-icon {
+  color: #3f51b5;
+  font-size: 22px;
+}
+
+/* === CARGANDO === */
+.loading-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  font-size: 1.2rem;
+}
+
+
+.loading-container p {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* === REDES SOCIALES === */
+.social-icons {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  color: white;
+}
+
+.social-btn mat-icon {
+  font-size: 20px;
+}
+
+/* Colores personalizados */
+.social-btn.facebook {
+  background-color: #3b5998;
+}
+
+.social-btn.twitter {
+  background-color: #1da1f2;
+}
+
+.social-btn.instagram {
+  background-color: #e4405f;
+}
+
+.social-btn:hover {
+  opacity: 0.9;
+}

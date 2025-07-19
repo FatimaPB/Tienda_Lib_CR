@@ -1,182 +1,286 @@
-<!-- Perfil de Usuario -->
-<div class="profile-container" *ngIf="perfil && !showForm">
-    <h1 class="section-title">Perfil de Usuario</h1>
-    <div class="card profile-card">
-        <div class="profile-info">
-            <div class="profile-details">
-                <p>{{ perfil.rol }}</p>
-                <p><strong>Nombre:</strong> {{ perfil.nombre }}</p>
-                <p><strong>Correo:</strong> {{ perfil.correo }}</p>
-                <p><strong>Teléfono:</strong> {{ perfil.telefono }}</p>
-                <p><strong>Autenticación Multifactor (MFA):</strong> {{ perfil.mfa_activado ? 'Activado' : 'Desactivado' }}</p> <!-- Aquí añadimos el estado MFA -->
-            </div>
-            <div class="profile-actions">
-                <button (click)="showForm = true" class="btn btn-edit">⚙️ Editar Perfil</button>
-                <button (click)="showPasswordForm = true" class="btn btn-change-password">🔒 Cambiar Contraseña</button>
-                <button *ngIf="!perfil.mfa_activado" (click)="activarMFA()" class="btn btn-activate-mfa">🔐 Activar MFA</button>
-                <button *ngIf="perfil.mfa_activado" (click)="desactivarMFA()" class="btn btn-activate-mfa">🔐 Desactivar MFA</button>
-            
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Contenedor principal centrado -->
-<div class="mfa-container" *ngIf="mfaQRCode">
-    <p class="mfa-note">
-        Para mejorar la seguridad de tu cuenta, escanea este código QR con tu aplicación de autenticación 
-        (como Google Authenticator o Authy). Una vez escaneado, la aplicación generará códigos de verificación 
-        que deberás usar para iniciar sesión en tu cuenta.
-    </p>
-    <img [src]="mfaQRCode" alt="Código QR de MFA" class="mfa-qr"/>
-</div>
-
-
-
-<!-- Formulario de edición del perfil -->
-<div class="profile-container" *ngIf="showForm">
-    <h1 class="section-title">Editar Perfil</h1>
-    <div class="card form-card">
-        <form (ngSubmit)="actualizarPerfil()">
-            <div class="input-wrapper">
-                <label for="nombre">Nombre</label>
-                <input id="nombre" [(ngModel)]="perfil.nombre" name="nombre" class="form-input" />
-            </div>
-
-            <div class="input-wrapper">
-                <label for="correo">Correo</label>
-                <input id="correo" [(ngModel)]="perfil.correo" name="correo" class="form-input" type="email"  readonly />
-                <i class="pi pi-lock" aria-hidden="true"></i> <!-- Icono de candado -->
-            </div>
-
-            <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input id="telefono" [(ngModel)]="perfil.telefono" name="telefono" class="form-input" type="tel"    maxlength="10"
-                (keypress)="preventLetters($event)" required />
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-update"   [disabled]="!perfil.telefono || !isFormChanged() || !isValidPhoneNumber()">Actualizar</button>
-                <button type="button" (click)="cancelarEdicion()" class="btn btn-cancel">Cancelar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Formulario para cambiar la contraseña -->
-<div class="profile-container" *ngIf="showPasswordForm">
-    <h1 class="section-title">Cambiar Contraseña</h1>
-    <div class="card form-card">
-        <form (ngSubmit)="cambiarContrasena()">
-            <!-- Contraseña Actual -->
-            <div class="form-group">
-                <label for="currentPassword">Contraseña Actual</label>
-                <div class="password-wrapper">
-                    <input
-                        id="currentPassword"
-                        [(ngModel)]="passwordData.currentPassword"
-                        name="currentPassword"
-                        class="form-input"
-                        [type]="showCurrentPassword ? 'text' : 'password'"
-                        required
-                    />
-                    <button type="button" class="toggle-visibility" (click)="toggleCurrentPasswordVisibility()">
-                        <i class="pi" [ngClass]="showCurrentPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Nueva Contraseña -->
-            <div class="form-group">
-                <label for="newPassword">Nueva Contraseña</label>
-                <div class="password-wrapper">
-                    <input
-                        id="newPassword"
-                        [(ngModel)]="passwordData.newPassword"
-                        name="newPassword"
-                        class="form-input"
-                        [type]="showNewPassword ? 'text' : 'password'"
-                        (input)="checkPasswordStrength()"
-                        required
-                    />
-                    <button type="button" class="toggle-visibility" (click)="toggleNewPasswordVisibility()">
-                        <i class="pi" [ngClass]="showNewPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
-                    </button>
-                </div>
-                <div class="password-strength">
-                    Fortaleza: {{ passwordStrength }}
-                </div>
-            </div>
-
-            <!-- Confirmar Nueva Contraseña -->
-            <div class="form-group">
-                <label for="confirmNewPassword">Confirmar Nueva Contraseña</label>
-                <div class="password-wrapper">
-                    <input
-                        id="confirmNewPassword"
-                        [(ngModel)]="passwordData.confirmNewPassword"
-                        name="confirmNewPassword"
-                        class="form-input"
-                        [type]="showConfirmPassword ? 'text' : 'password'"
-                        required
-                    />
-                    <button type="button" class="toggle-visibility" (click)="toggleConfirmPasswordVisibility()">
-                        <i class="pi" [ngClass]="showConfirmPassword ? 'pi-eye-slash' : 'pi-eye'"></i>
-                    </button>
-                    <div class="error" *ngIf="!passwordsMatch">
-                        Las contraseñas no coinciden.
-                    </div>
-                    
-                </div>
-            </div>
-
-            <!-- Botones de acción -->
-            <div class="form-actions">
-                <button type="submit" class="btn btn-update"   [disabled]="!isFormValid()">Actualizar Contraseña</button>
-                <button type="button" (click)="cancelarCambioContrasena()" class="btn btn-cancel">Cancelar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="historial-compras">
-    <h2>Historial de Compras</h2>
-    
-    <div *ngIf="ventas.length === 0">
-      <p>No tienes compras registradas.</p>
-    </div>
-    
-    <div *ngIf="ventas.length > 0">
-      <table class="tabla-historial">
-        <thead>
-          <tr>
-            <th>ID Venta</th>
-            <th>Fecha</th>
-            <th>Total</th>
-            <th>Método de Pago</th>
-            <th>Estado</th>
-            <th>Envio</th>
-            <th>Dirección de Envío</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let venta of ventas">
-            <td>{{ venta.id }}</td>
-            <td>{{ venta.fecha | date:'short' }}</td>
-            <td>${{ venta.total | number:'1.2-2' }}</td>
-            <td>{{ venta.metodo_pago }}</td>
-            <td>{{ venta.estado }}</td>
-            <td>{{ venta.estado_envio }}</td>
-            <td>{{ venta.direccion_envio }}</td>
-            <td>
-              <button (click)="verDetalle(venta.id)">Ver Detalle</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div class="container" *ngIf="perfil">
+  <div class="profile-header">
+    <div class="header-content">
+      <div class="avatar">{{ perfil.nombre?.charAt(0) || 'U' }}</div>
+      <div class="user-info">
+        <h1>{{ perfil.nombre }}</h1>
+        <p>Gestiona tu información personal</p>
+      </div>
     </div>
   </div>
+
+  <div class="main-grid">
+    <!-- 🧾 FORMULARIO PERFIL -->
+    <div class="profile-form">
+      <div class="form-header">
+        <h2>Información Personal</h2>
+      </div>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre Completo</label>
+        <div class="input-group">
+          <mat-icon class="input-icon">person</mat-icon>
+          <input
+            type="text"
+            id="nombre"
+            [(ngModel)]="perfil.nombre"
+            [readonly]="!showForm"
+            name="nombre"
+            (ngModelChange)="onInputChange()"
+          />
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <div class="input-group" style="position: relative;">
+          <mat-icon class="input-icon-left">mail</mat-icon>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="perfil.correo"
+            readonly
+            name="email"
+            class="input-with-icons locked-input"
+          />
+          <mat-icon class="input-icon-right">lock</mat-icon>
+        </div>
+      </div>
+
+      <!-- Teléfono -->
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <div class="input-group">
+          <mat-icon class="input-icon">phone</mat-icon>
+          <input
+            type="tel"
+            id="telefono"
+            [(ngModel)]="perfil.telefono"
+            [readonly]="!showForm"
+            name="telefono"
+            maxlength="10"
+            (keypress)="preventLetters($event)"
+            (ngModelChange)="onInputChange()"
+          />
+        </div>
+      </div>
+
+      <button class="btn"
+              [ngClass]="showForm ? 'btn-success' : 'btn-primary'"
+              (click)="toggleEditarGuardar()"
+              [disabled]="showForm && (!isFormChanged() || !isValidPhoneNumber())">
+        <mat-icon>{{ showForm ? 'save' : 'edit' }}</mat-icon>
+        {{ showForm ? 'Guardar Cambios' : 'Editar Perfil' }}
+      </button>
+
+      <button *ngIf="showForm" class="btn btn-secondary" (click)="cancelarEdicion()">
+        <mat-icon>cancel</mat-icon> Cancelar
+      </button>
+    </div>
+
+    <!-- 📦 SIDEBAR DERECHA -->
+    <div class="sidebar">
+      <!-- SEGURIDAD -->
+      <div class="card">
+        <div class="card-header">
+          <mat-icon class="icon">security</mat-icon>
+          <h3>Seguridad</h3>
+        </div>
+
+        <div class="security-option">
+          <div class="security-content">
+            <div class="security-info">
+              <h4>Autenticación de Dos Factores</h4>
+              <p>Agrega una capa extra de seguridad</p>
+            </div>
+            <div
+            class="toggle-switch"
+            [class.active]="perfil.mfa_activado == 1"
+            (click)="perfil.mfa_activado == 1 ? desactivarMFA() : activarMFA()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Mostrar estado -->
+        <div style="text-align: center;">
+          <span [ngClass]="perfil.mfa_activado == 1 ? 'status-badge active' : 'status-badge inactive'">
+            {{ perfil.mfa_activado == 1 ? 'Activado' : 'Desactivado' }}
+          </span>
+        </div>
+
+        <!-- Mostrar QR al activar MFA -->
+        <div *ngIf="mfaQRCode" class="qr-section">
+          <h4>Escanea este código con tu app:</h4>
+          <img [src]="mfaQRCode" alt="QR MFA" style="max-width: 200px; margin: 10px auto; display: block;" />
+          <button class="btn btn-light" (click)="cancelarMFA()">Cerrar</button>
+        </div>
+      </div>
+
+      <!-- ACCIONES -->
+      <div class="card">
+        <div class="card-header">
+          <mat-icon class="icon">settings</mat-icon>
+          <h3>Acciones</h3>
+        </div>
+
+        <div class="actions-list">
+          <button class="btn btn-primary" (click)="showPasswordForm = true">
+            <mat-icon>lock_reset</mat-icon> Cambiar Contraseña
+          </button>
+  
+                <!-- Botón para mostrar/ocultar historial de compras -->
+            <button class="btn btn-light" (click)="mostrarCompras = !mostrarCompras">
+            <mat-icon>shopping_cart_checkout</mat-icon>
+            {{ mostrarCompras ? 'Ocultar Compras' : 'Ver Compras' }}
+            </button>
+        </div>
+      </div>
+
+      <!-- ESTADO DE LA CUENTA -->
+      <div class="card status-card">
+        <h3>Estado de la Cuenta</h3>
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span>Cuenta Verificada</span>
+        </div>
+        <p>Tu cuenta está completamente verificada y segura</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Cambiar Contraseña" [(visible)]="showPasswordForm" modal [closable]="false" [style]="{width: '400px'}">
+  <form>
+    <!-- Contraseña actual -->
+    <div class="form-group" style="margin-bottom: 1.5rem;">
+      <label for="currentPassword">Contraseña Actual</label>
+      <p-password 
+        id="currentPassword"
+        name="currentPassword"
+        [(ngModel)]="passwordData.currentPassword"
+        required
+        [toggleMask]="true"
+        inputStyleClass="w-full"
+        [feedback]="false"
+      ></p-password>
+    </div>
+
+    <!-- Nueva contraseña -->
+    <div class="form-group" style="margin-bottom: 1.5rem;">
+      <label for="newPassword">Nueva Contraseña</label>
+      <p-password 
+        id="newPassword"
+        name="newPassword"
+        [(ngModel)]="passwordData.newPassword"
+        required
+        [toggleMask]="true"
+        inputStyleClass="w-full"
+        [feedback]="true"
+        (input)="checkPasswordStrength(); validatePasswordsMatch()"
+      ></p-password>
+      <small [ngClass]="passwordStrength === 'Fuerte' ? 'text-success' : 'text-danger'">
+        Fortaleza: {{ passwordStrength }}
+      </small>
+    </div>
+
+    <!-- Confirmar nueva contraseña -->
+    <div class="form-group" style="margin-bottom: 1.5rem;">
+      <label for="confirmNewPassword">Confirmar Nueva Contraseña</label>
+      <p-password 
+        id="confirmNewPassword"
+        name="confirmNewPassword"
+        [(ngModel)]="passwordData.confirmNewPassword"
+        required
+        [toggleMask]="true"
+        inputStyleClass="w-full"
+        [feedback]="false"
+        (input)="validatePasswordsMatch()"
+      ></p-password>
+      <small *ngIf="!passwordsMatch" class="text-danger">Las contraseñas no coinciden</small>
+    </div>
+
+    <!-- Mensajes de error o éxito -->
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert" style="margin-top: 0.5rem;">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success" role="alert" style="margin-top: 0.5rem;">
+      {{ successMessage }}
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
+<button
+  type="button"
+  class="btn btn-success"
+  [disabled]="!isFormValid()"
+  (click)="cambiarContrasena()"
+>
+  <mat-icon>save</mat-icon> Guardar
+</button>
+
+      <button class="btn btn-secondary" (click)="showPasswordForm = false">
+        <mat-icon>cancel</mat-icon> Cancelar
+      </button>
+    </div>
+  </form>
+</p-dialog>
+
+
+
+<!-- 🟠 TOAST DE MENSAJE -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+
+
+<div *ngIf="mostrarCompras" class="card historial-compras">
+  <div class="card-header">
+    <mat-icon class="icon">shopping_bag</mat-icon>
+    <h3>Historial de Compras</h3>
+  </div>
+
+  <div *ngIf="ventas.length === 0" class="sin-compras">
+    <p>No tienes compras registradas.</p>
+  </div>
+
+  <div class="compras-grid" *ngIf="ventas.length > 0">
+    <div class="compra-item" *ngFor="let venta of ventas">
+      <div class="compra-info">
+        <div class="compra-header">
+          <span class="compra-id">#{{ venta.id }}</span>
+          <span class="compra-fecha">{{ venta.fecha | date: 'short' }}</span>
+        </div>
+
+        <div class="compra-detalles">
+          <p><strong>Total:</strong> ${{ venta.total | number:'1.2-2' }}</p>
+          <p><strong>Método:</strong> {{ venta.metodo_pago }}</p>
+          <p>
+            <strong>Estado:</strong>
+            <span  [ngClass]="venta.estado === 'completado' ? 'active' : 'inactive'">
+              {{ venta.estado }}
+            </span>
+          </p>
+          <p>
+            <strong>Envío:</strong>
+            <span  [ngClass]="venta.estado_envio === 'Entregado' ? 'active' : 'inactive'">
+              {{ venta.estado_envio }}
+            </span>
+          </p>
+          <p><strong>Dirección:</strong> {{ venta.direccion_envio }}</p>
+        </div>
+      </div>
+
+      <div class="compra-acciones">
+        <button class="btn btn-light" (click)="verDetalle(venta.id)">
+         Ver Detalle
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
   
 
 

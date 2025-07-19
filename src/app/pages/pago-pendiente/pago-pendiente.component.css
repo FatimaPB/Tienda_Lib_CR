@@ -1,0 +1,39 @@
+.pantalla-superpuesta {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pago-card {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.pago-card .icono {
+  margin-bottom: 1rem;
+}
+
+.pago-card .icono i {
+  font-size: 4rem;
+}
+
+.pago-card.exito .icono i {
+  color: #28a745;
+}
+
+.pago-card.pendiente .icono i {
+  color: #ffc107;
+}
+
+.pago-card.fallido .icono i {
+  color: #dc3545;
+}

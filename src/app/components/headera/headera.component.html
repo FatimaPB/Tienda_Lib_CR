@@ -73,6 +73,9 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-nav-list>
+          <a mat-list-item routerLink="/proveedor" (click)="closeIfMobile()">
+            <mat-icon>store</mat-icon><span>PROVEEDORES</span>
+          </a>
           <a mat-list-item routerLink="/categorias" (click)="closeIfMobile()">
             <mat-icon>category</mat-icon><span>CATEGORÍAS</span>
           </a>
@@ -118,6 +121,9 @@
       <a mat-list-item routerLink="/pempresa" (click)="closeIfMobile()">
         <mat-icon>apartment</mat-icon><span>PERFIL EMPRESA</span>
       </a>
+      <a mat-list-item routerLink="/noticias" (click)="closeIfMobile()">
+        <mat-icon>campaign</mat-icon><span>NOTICIAS Y EVENTOS</span>
+      </a>
       <a mat-list-item routerLink="/usuarios" (click)="closeIfMobile()">
         <mat-icon>people</mat-icon><span>USUARIOS</span>
       </a>
@@ -140,10 +146,9 @@
       <span class="logo">LIBRERÍA CRISTO REY</span>
       <span class="spacer"></span>
 
-      <button mat-icon-button aria-label="Modo oscuro"><mat-icon>brightness_medium</mat-icon></button>
+  
       <button mat-icon-button aria-label="Notificaciones"><mat-icon>notifications</mat-icon></button>
-      <button mat-icon-button aria-label="Calendario"><mat-icon>calendar_today</mat-icon></button>
-      <button mat-icon-button routerLink="/perfil" aria-label="Perfil"><mat-icon>account_circle</mat-icon></button>
+      <button mat-icon-button routerLink="/perfiladm" aria-label="Perfil"><mat-icon>account_circle</mat-icon></button>
     </mat-toolbar>
 
     <div class="main-content">
@@ -151,4 +156,12 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+
+
+
+
+
+
+
 

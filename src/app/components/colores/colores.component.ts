@@ -109,13 +109,13 @@ export class ColoresComponent implements OnInit {
 
   // Reset formulario
   resetFormulario() {
-    this.color = { nombre_color: '' };
+    this.color = { nombre_color: '', codigo_color: '#000000' }; // Valor por defecto
     this.mostrarFormulario = false; // Ocultar formulario después de agregar o editar
   }
 
   cancelarEdicion(): void {
     this.visible = false; // Ocultar el diálogo
-    this.color = { id: undefined, nombre_color: '' }; // Limpiar los datos de la categoría
+    this.color = { id: undefined, nombre_color: '', codigo_color: '#000000' };
   }
 
   mostrarFormularioAgregar() {

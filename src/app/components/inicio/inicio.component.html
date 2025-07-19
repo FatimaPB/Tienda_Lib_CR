@@ -1,10 +1,9 @@
 <div class="hero-slider-section">
   <button class="btn-prev" (click)="prevSlide()">&#10094;</button>
 
-  <div *ngFor="let banner of banners; let i = index" 
-       class="hero-single-slider-item" 
-       [ngClass]="{ 'active': i === currentIndex }">
-    
+  <div *ngFor="let banner of banners; let i = index" class="hero-single-slider-item"
+    [ngClass]="{ 'active': i === currentIndex }">
+
     <div class="hero-slider-bg">
       <img [src]="banner.imagen" alt="Imagen de Slider">
     </div>
@@ -13,7 +12,6 @@
       <div class="hero-slider-content">
         <h4 class="subtitle">{{ banner.descripcion }}</h4>
         <h2 class="title">{{ banner.titulo }}</h2>
-        <a [routerLink]="['/detalles', banner.id]" class="btn">COMPRA AHORA</a>
       </div>
     </div>
 
@@ -31,7 +29,8 @@
       </div>
       <div class="content">
         <h6 class="title">ENVÍO GRATIS</h6>
-        <p>¡Obtén un 10% de reembolso en efectivo, envío gratis, devoluciones gratis y más en más de 1000 minoristas líderes!</p>
+        <p>¡Obtén un 10% de reembolso en efectivo, envío gratis, devoluciones gratis y más en más de 1000 minoristas
+          líderes!</p>
       </div>
     </div>
 
@@ -69,15 +68,10 @@
 
 <!-- Carrusel de productos recientes -->
 <div class="productos-religiosos-section">
-  <h2 class="titulo">RECIÉN LLEGADOS</h2>
+  <h2 class="titulo-seccion">RECIÉN LLEGADOS</h2>
   <div class="card">
-    <p-carousel 
-      [value]="variantesComoTarjetas" 
-      [numVisible]="4" 
-      [numScroll]="1" 
-      [circular]="true" 
-      [responsiveOptions]="responsiveOptions" 
-      [autoplayInterval]="3000">
+    <p-carousel [value]="variantesComoTarjetas" [numVisible]="4" [numScroll]="1" [circular]="true"
+      [responsiveOptions]="responsiveOptions" [autoplayInterval]="3000">
 
       <ng-template let-producto pTemplate="item">
         <div class="product-card">
@@ -90,8 +84,10 @@
           <div class="price-section">
             <div class="price">{{ producto.precio_venta | currency }}</div>
             <div class="action-buttons">
-              <p-button icon="pi pi-search" severity="secondary" [outlined]="true" [routerLink]="['/detalle', producto.id, producto.varianteId]"></p-button>
-              <p-button icon="pi pi-shopping-cart" severity="secondary" [outlined]="true"  (onClick)="agregarAlCarrito(producto.id, producto.varianteId)"></p-button>
+              <p-button icon="pi pi-search" severity="secondary" [outlined]="true"
+                [routerLink]="['/detalle', producto.id, producto.varianteId]"></p-button>
+              <p-button icon="pi pi-shopping-cart" severity="secondary" [outlined]="true"
+                (onClick)="agregarAlCarrito(producto.id, producto.varianteId)"></p-button>
             </div>
           </div>
         </div>
@@ -101,9 +97,52 @@
 </div>
 
 
+<section class="seccion-categorias">
+  <h2 class="titulo-seccion" id="categorias">Explora nuestras categorías</h2>
+
+  <div class="categorias-container">
+    <a
+      *ngFor="let categoria of categorias"
+      [routerLink]="['/products', categoria.nombre_categoria]"
+      class="categoria"
+      [style.backgroundImage]="
+        'url(' + (categoria.imagen_url ? categoria.imagen_url : 'assets/img/logosinfondo.png') + ')'
+      "
+    >
+      <div class="categoria-header">
+        <h2>{{ categoria.nombre_categoria | uppercase }}</h2>
+        <div class="arrow">→</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+
+<section class="seccion-historia">
+  <h2 class="titulo-seccion">Nuestra Historia</h2>
+
+  <div class="nuestra-historia-container">
+    <div class="historia-sidebar">
+      <h3>Desde el corazón de la fé</h3>
+      <p>
+        Desde nuestros inicios, en la Librería Cristo Rey hemos trabajado con pasión y compromiso para brindar artículos religiosos de calidad a cada familia y comunidad.
+      </p>
+      <p>
+        Nuestra misión es evangelizar a través de cada libro, imagen, vela o estampa que llega a tus manos. Gracias por ser parte de esta historia que continúa creciendo contigo.
+      </p>
+    </div>
+    <div class="historia-imagen-full">
+      <img src="assets/img/logosinfondo.png" alt="Nuestra Historia" />
+    </div>
+  </div>
+</section>
+
+
+
 
 <div class="faq-container">
-  <h2 class="faq-title">Preguntas Frecuentes</h2>
+  <h2 class="titulo-seccion">Preguntas Frecuentes</h2>
 
   <p-accordion [multiple]="true" class="faq-accordion">
     <p-accordionTab *ngFor="let pregunta of preguntas" [header]="pregunta.pregunta">
@@ -111,49 +150,3 @@
     </p-accordionTab>
   </p-accordion>
 </div>
-
-  
-
-<div class="categorias-container">
-  <a routerLink="biblias" class="categoria" style="background-image: url('../../assets/img/biblias.png');"#categoria>
-    <div class="categoria-header">
-      <h2>BIBLAS</h2>
-      <div class="arrow">→</div>
-    </div>
-    <p>20 products</p>
-  </a>
-
-  <a routerLink="velas" class="categoria" style="background-image: url('../../assets/img/velascirios.png');"#categoria>
-    <div class="categoria-header">
-      <h2>VELAS Y CIRIOS</h2>
-      <div class="arrow">→</div>
-    </div>
-    <p>20 products</p>
-  </a>
-
-  <a routerLink="estampas" class="categoria" style="background-image: url('../../assets/img/estampas.png');"#categoria>
-    <div class="categoria-header">
-      <h2>ESTAMPAS</h2>
-      <div class="arrow">→</div>
-    </div>
-    <p>20 products</p>
-  </a>
-
-  <a routerLink="resina" class="categoria" style="background-image: url('../../assets/img/recinas.png');"#categoria>
-    <div class="categoria-header">
-      <h2>RESINAS</h2>
-      <div class="arrow">→</div>
-    </div>
-    <p>20 products</p>
-  </a>
-  
-</div>
-
-
-
-
-
-
-
-  
-

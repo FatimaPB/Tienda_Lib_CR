@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 
 import { sha1 } from 'crypto-hash'; // Asegúrate de tener esto instalado
@@ -19,11 +20,11 @@ import { sha1 } from 'crypto-hash'; // Asegúrate de tener esto instalado
   selector: 'app-registro',
   standalone: true,
   providers: [MessageService],
-  imports: [FormsModule, RouterLink, CommonModule, FloatLabelModule,InputTextModule,PasswordModule, ButtonModule, ToastModule],
+  imports: [FormsModule, RouterLink, CommonModule, FloatLabelModule,InputTextModule,PasswordModule, ButtonModule, ToastModule,MatProgressSpinner],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   passwordStrengthMessage = '';
@@ -34,7 +35,17 @@ export class RegistroComponent {
     password: string = '';
     confirmPassword: string = '';
 
+      loading: boolean = true;
+
   constructor(private http: HttpClient, private router: Router, private messageService: MessageService) {}
+
+    ngOnInit() {
+  // Aquí puedes esperar 300ms o lo que creas necesario para simular la carga real (como cookies, reCAPTCHA o autenticación).
+  setTimeout(() => {
+    this.loading = false;
+  }, 300); // o más si estás esperando algo del servidor
+}
+
 
   async checkPasswordStrength(password: string) {
     const hasUpperCase = /[A-Z]/.test(password);

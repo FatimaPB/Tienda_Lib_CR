@@ -68,3 +68,19 @@
 .strength-bar.strong {
   background-color: #4caf50;
 }
+/* Loading state styling */
+.loading-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  font-size: 1.2rem;
+}
+
+.loading-container p {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 1rem;
+}

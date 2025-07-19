@@ -1,113 +1,119 @@
+<link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
 
-
-<div class="contenedor">
-  <div class="lib" [class.fade-in]="isVisibleNombre">{{ empresaData?.nombre }}</div>
-  <div class="contenedor-slogan" [class.fade-in]="!isVisibleNombre">
-    <div class="slogan">{{ empresaData?.slogan }}</div>
-  </div>
+<div class="top-banner">
+  <div class="lib fade-in" *ngIf="mostrarNombre">{{ empresaData?.nombre }}</div>
+  <div class="slogan fade-in" *ngIf="!mostrarNombre">{{ empresaData?.slogan }}</div>
 </div>
+
 <header class="main-header">
-  <div class="header-container">
-
-    
+  <div class="header-wrapper">
     <!-- Logo -->
-    <div class="logo-container">
-      <img routerLink="/" [src]="empresaData?.logo" alt="Logo de la Empresa" class="logo" *ngIf="empresaData?.logo; else noLogo" />
-      <ng-template #noLogo>
-        <img routerLink="/" src="../../assets/img/Libreria_Logo.jpg" alt="Logo por defecto" class="logo" />
-      </ng-template>
+    <div class="logo-area">
+      <a routerLink="/">
+        <img [src]="empresaData?.logo_url || '../../assets/img/Libreria_Logo.jpg'" alt="Logo" class="logo" />
+      </a>
     </div>
 
-    <!-- Menú de navegación -->
-    <nav class="nav-links">
-      <ul>
-        <li><a routerLink="/">HOME</a></li>
+    <!-- Buscador fijo al centro -->
+    <div class="search-area">
+      <div class="search-input-wrapper">
+        <input type="text" [(ngModel)]="searchQuery" (input)="buscarProductos(searchQuery)" class="search-input" />
 
-        <li class="mega-menu-container">
-          <a>CATEGORÍAS <i class="pi pi-angle-down"></i></a>
-          <div class="mega-menu">
-            <div class="mega-menu-column" *ngFor="let categoria of categorias">
-              <a [routerLink]="['/products', categoria.nombre_categoria]">{{ categoria.nombre_categoria }}</a>
-            </div>
+        <!-- 🔄 Placeholder animado sobre el input -->
+        <div class="placeholder-container" *ngIf="!searchQuery" [@listAnimation]>
+          <div *ngFor="let ph of placeholders; let i = index" class="animated-placeholder"
+            [class.visible]="i === placeholderIndex">
+            {{ ph }}
           </div>
-        </li>
-
-        <li><a routerLink="/about">SOBRE NOSOTROS</a></li>
-        <li><a routerLink="/newsandevents">NOTICIAS Y EVENTOS</a></li>
-        <li><a routerLink="/contact">CONTACTO</a></li>
-      </ul>
-    </nav>
-
-    <!-- Iconos de usuario -->
-    <div class="icons">
-      <a routerLink="/carshop" matBadge="{{ cantidadCarrito }}" matBadgeColor="warn" matBadgeOverlap="false" aria-label="Carrito de compras">
-  <i class="pi pi-shopping-cart"></i>
-</a>
-      <a routerLink="/perfil" class="car-link"><i class="pi pi-user"></i></a>
-      <a (click)="openSearch()"><i class="pi pi-search"></i></a>
-      <a class="out-link"(click)="onLogout()"><i class="pi pi-sign-out"></i></a>
-
-      <i class="pi pi-bars menu-icon" (click)="toggleMenu()"></i>
-    </div>
-  </div>
+        </div>
 
 
-<!-- Menú desplegable móvil -->
-<div *ngIf="isMenuOpen" id="mobile-menu" class="mobile-menu shadow-lg">
-  <ul class="menu-list">
-    <li><a routerLink="/" (click)="closeMenu()">HOME</a></li>
-    <li class="mobile-menu-categorias" [class.open]="isMegaMenuOpen">
-      <div class="menu-item" (click)="toggleMegaMenu($event)">
-        <a>CATEGORÍAS <i class="pi pi-angle-down"></i></a>
+
+
+        <i class="pi pi-search search-icon"></i>
       </div>
-      <ul *ngIf="isMegaMenuOpen" class="submenu">
-        <li *ngFor="let categoria of categorias">
-          <a [routerLink]="['/products', categoria.nombre_categoria]" (click)="closeMenu()">{{ categoria.nombre_categoria }}</a>
-        </li>
-      </ul>
-    </li>
-    <li><a routerLink="/about" (click)="closeMenu()">SOBRE NOSOTROS</a></li>
-    <li><a routerLink="/newsandevents" (click)="closeMenu()">NOTICIAS Y EVENTOS</a></li>
-    <li><a routerLink="/contact" (click)="closeMenu()">CONTACTO</a></li>
-  </ul>
-</div>
 
-
-
-<!-- Panel de búsqueda deslizable -->
-<div *ngIf="isSearchOpen" class="search-overlay">
-  <i class="pi pi-times close-search" (click)="toggleSearch()"></i>
-  
-  <div class="search-wrapper"> <!-- Contenedor que alinea todo -->
-    <div class="search-container">
-      <input
-        type="text"
-        placeholder="Buscar productos..."
-        [(ngModel)]="searchQuery"
-        (input)="buscarProductos(searchQuery)"
-        class="search-input"
-      />
-      <button class="clear-btn" *ngIf="searchQuery" (click)="clearSearch()">
-        <i class="pi pi-times"></i>
-      </button>
-      <button class="search-btn" (click)="buscarProductos(searchQuery)">
-        <i class="pi pi-search"></i>
-      </button>
-    </div>
-  
-    <div class="reultados">
-      <div *ngIf="productos.length > 0" class="search-results">
+      <div class="search-results" *ngIf="productos.length > 0">
         <ul>
           <li *ngFor="let producto of productos">
-            <a (click)=" closeSearch()" [routerLink]="['/products', producto.nombre_categoria]" [queryParams]="{selected: producto.id}">
-             
-            {{ producto.nombre }}
-          </a>
+            <a [routerLink]="['/products', producto.nombre_categoria]" [queryParams]="{ selected: producto.id }"
+              (click)="closeSearch()">
+              {{ producto.nombre }}
+            </a>
           </li>
         </ul>
       </div>
     </div>
+
+
+    <!-- Icons & Mega Menu -->
+    <div class="actions-area">
+      <nav class="nav-links">
+        <ul>
+          <li><a routerLink="/">HOME</a></li>
+          <li class="mega-menu-container">
+            <a>CATEGORÍAS <i class="pi pi-angle-down"></i></a>
+            <div class="mega-menu">
+              <div class="mega-menu-column" *ngFor="let categoria of categorias">
+                <a [routerLink]="['/products', categoria.nombre_categoria]">{{ categoria.nombre_categoria }}</a>
+              </div>
+            </div>
+          </li>
+          <li><a routerLink="/about">SOBRE NOSOTROS</a></li>
+          <li><a routerLink="/newsandevents">NOTICIAS</a></li>
+          <li><a routerLink="/contact">CONTACTO</a></li>
+        </ul>
+      </nav>
+
+      <div class="icons">
+        <a class="icon-hide-mobile" routerLink="/perfil"><i class="pi pi-user"></i></a>
+
+        <a routerLink="/carshop" title="Carrito">
+          <i class="pi pi-shopping-cart custom-badge" pBadge value="{{cantidadCarrito}}"></i>
+        </a>
+        <!-- 👤 Iniciar sesión: Visible siempre -->
+        <a class="icon-hide-mobile" (click)="onLogout()"><i class="pi pi-sign-out"></i></a>
+
+
+
+        <!-- 🍔 Menú móvil -->
+        <i class="pi pi-bars mobile-menu-icon" (click)="toggleMenu()"></i>
+      </div>
+
+
+    </div>
   </div>
-</div>
+
+
+  <!-- Menú Móvil -->
+  <div class="mobile-menu" *ngIf="isMenuOpen">
+    <button class="close-btn" (click)="closeMenu()">&times;</button>
+    <ul>
+      <li><a routerLink="/" (click)="closeMenu()">HOME</a></li>
+
+      <li (click)="toggleMegaMenu($event)" class="mobile-categorias">
+        CATEGORÍAS <i class="pi pi-angle-down"></i>
+        <ul *ngIf="isMegaMenuOpen">
+          <li *ngFor="let c of categorias">
+            <a [routerLink]="['/products', c.nombre_categoria]" (click)="closeMenu()">
+              {{ c.nombre_categoria }}
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li><a routerLink="/about" (click)="closeMenu()">SOBRE NOSOTROS</a></li>
+      <li><a routerLink="/newsandevents" (click)="closeMenu()">NOTICIAS</a></li>
+      <li><a routerLink="/contact" (click)="closeMenu()">CONTACTO</a></li>
+      <li><a routerLink="/perfil" title="perfil" (click)="closeMenu()">PERFIL <i class="pi pi pi-user"></i></a></li>
+      <li><a (click)="onLogout()">CERRAR SESION
+          <i class="pi pi-sign-out"></i></a></li>
+
+
+
+
+    </ul>
+  </div>
+
 
 </header>

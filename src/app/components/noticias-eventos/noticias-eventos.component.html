@@ -1,124 +1,68 @@
-<div class="container">
-  <div class="main-content">
-    <!-- Sección de categorías a la izquierda -->
-    <div class="categories-section">
-      <h2 class="categories-title">CATEGORÍAS</h2>
-      <mat-nav-list>
-        <mat-list-item *ngFor="let categoria of categorias" class="category-item">
-          {{ categoria.nombre }}
-          <mat-icon *ngIf="categoria.tieneSubmenu" matSuffix>chevron_right</mat-icon>
-        </mat-list-item>
-      </mat-nav-list>
+<!-- Spinner -->
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner diameter="60"></mat-spinner>
+  <p>Cargando noticias y eventos...</p>
+</div>
+
+<!-- Contenedor con filtros laterales -->
+<div class="containerlista-noticias-eventos" *ngIf="!loading">
+  <!-- ASIDE: Filtros -->
+  <aside class="filtros-laterales-noticias">
+    <h3 class="titulo-filtros-noticias">Filtrar por</h3>
+
+    <!-- Tipo -->
+    <div class="filtro-bloque-noticias">
+      <label>Tipo:</label>
+      <div class="checkbox-lista-noticias">
+        <label class="checkbox-label-noticias">
+          <input type="checkbox" [(ngModel)]="filtros.tipo['noticia']" />
+          Noticia
+        </label>
+        <label class="checkbox-label-noticias">
+          <input type="checkbox" [(ngModel)]="filtros.tipo['evento']" />
+          Evento
+        </label>
+      </div>
     </div>
-    
-    <!-- Sección principal de productos -->
-    <div class="products-section">
-      <div class="products-header">
-        <div class="view-options">
-          <button mat-icon-button 
-            [color]="vistaGrid ? 'primary' : ''" 
-            (click)="cambiarVista(true)"
-            matTooltip="Vista de cuadrícula">
-            <mat-icon>grid_view</mat-icon>
-          </button>
-          <button mat-icon-button
-            [color]="!vistaGrid ? 'primary' : ''"
-            (click)="cambiarVista(false)"
-            matTooltip="Vista de lista">
-            <mat-icon>view_list</mat-icon>
-          </button>
-          <span class="results-count">Mostrando 1–{{ productos.length }} de {{ productos.length * 3 }} resultados</span>
+
+    <!-- Fecha mínima -->
+    <div class="filtro-bloque-noticias">
+      <label for="fechaMin">Desde fecha:</label>
+      <input id="fechaMin" type="date" [(ngModel)]="fechaMinima" class="p-inputtext-sm" />
+    </div>
+
+    <!-- Botones -->
+    <div class="botones-filtros-noticias">
+      <button class="btn-filtrar-noticias" (click)="aplicarFiltros()">Aplicar filtros</button>
+      <button class="btn-resetear-noticias" (click)="resetearFiltros()">Resetear</button>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO: Noticias y eventos -->
+  <div class="contenido-noticias-eventos">
+    <p class="contador-resultados-noticias" *ngIf="noticiasFiltradas.length > 0">
+      {{ noticiasFiltradas.length }} resultados
+    </p>
+
+    <div class="card-container-noticias" *ngIf="noticiasFiltradas.length > 0">
+      <div class="product-card-noticias" *ngFor="let noticia of noticiasFiltradas">
+        <div class="product-image-container-noticias">
+          <img *ngIf="noticia.imagen" [src]="noticia.imagen" [alt]="noticia.titulo" class="product-image-noticias" />
         </div>
-        
-        <div class="sort-options">
-          <span class="sort-label">Ordenar por:</span>
-          <mat-form-field appearance="outline">
-            <mat-select 
-              [value]="ordenamientoSeleccionado" 
-              (selectionChange)="cambiarOrdenamiento($event)">
-              <mat-option *ngFor="let opcion of opcionesOrdenamiento" [value]="opcion">
-                {{ opcion }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+
+        <div class="product-info-noticias">
+          <h3>{{ noticia.titulo }}</h3>
+          <p><strong>Tipo:</strong> {{ noticia.tipo | titlecase }}</p>
+          <p><strong>Descripción:</strong> {{ noticia.descripcion }}</p>
+          <p *ngIf="noticia.fecha_evento">
+            <strong>Fecha evento:</strong> {{ noticia.fecha_evento | date:'mediumDate' }}
+          </p>
         </div>
       </div>
-      
-      <!-- Vista de cuadrícula de productos -->
-      <div class="products-grid" *ngIf="vistaGrid">
-        <mat-card class="product-card" *ngFor="let producto of productos">
-          <div class="product-image-container">
-            <img mat-card-image [src]="producto.imagen" [alt]="producto.titulo" class="product-image">
-            <div *ngIf="producto.enOferta" class="sale-badge">
-              <mat-chip color="accent" selected>VENTA</mat-chip>
-            </div>
-          </div>
-          
-          <mat-card-content>
-            <h3 class="product-title">{{ producto.titulo }}</h3>
-            <div class="product-rating">
-              <mat-icon *ngFor="let star of [1,2,3,4,5]" 
-                [color]="star <= producto.calificacion ? 'accent' : ''">
-                {{ star <= producto.calificacion ? 'star' : 'star_border' }}
-              </mat-icon>
-            </div>
-            <div class="product-price">${{ producto.precio }}</div>
-          </mat-card-content>
-          
-          <mat-card-actions class="product-actions">
-            <button mat-raised-button color="primary" (click)="anadirAlCarrito(producto.id)">
-              AÑADIR AL CARRITO
-            </button>
-            <div class="action-icons">
-              <button mat-icon-button (click)="verDetalles(producto.id)">
-                <mat-icon>search</mat-icon>
-              </button>
-              <button mat-icon-button (click)="anadirAFavoritos(producto.id)">
-                <mat-icon>favorite_border</mat-icon>
-              </button>
-            </div>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-      
-      <!-- Vista de lista de productos -->
-      <div class="products-list" *ngIf="!vistaGrid">
-        <mat-card class="product-list-item" *ngFor="let producto of productos">
-          <div class="product-list-container">
-            <div class="product-list-image">
-              <img [src]="producto.imagen" [alt]="producto.titulo">
-              <div *ngIf="producto.enOferta" class="sale-badge">
-                <mat-chip color="accent" selected>VENTA</mat-chip>
-              </div>
-            </div>
-            
-            <div class="product-list-details">
-              <h3 class="product-title">{{ producto.titulo }}</h3>
-              <div class="product-rating">
-                <mat-icon *ngFor="let star of [1,2,3,4,5]" 
-                  [color]="star <= producto.calificacion ? 'accent' : ''">
-                  {{ star <= producto.calificacion ? 'star' : 'star_border' }}
-                </mat-icon>
-              </div>
-              <div class="product-price">${{ producto.precio }}</div>
-              
-              <div class="product-actions">
-                <button mat-raised-button color="primary" (click)="anadirAlCarrito(producto.id)">
-                  AÑADIR AL CARRITO
-                </button>
-                <div class="action-icons">
-                  <button mat-icon-button (click)="verDetalles(producto.id)">
-                    <mat-icon>search</mat-icon>
-                  </button>
-                  <button mat-icon-button (click)="anadirAFavoritos(producto.id)">
-                    <mat-icon>favorite_border</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </mat-card>
-      </div>
+    </div>
+
+    <div *ngIf="noticiasFiltradas.length === 0">
+      <p class="productos-noticias">No hay noticias ni eventos que coincidan.</p>
     </div>
   </div>
 </div>

@@ -1,0 +1,105 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-d-flex p-jc-center p-ai-center" style="width: 100%; margin-top: 10px;">
+  <div class="card" style="width: 100%; margin: auto;">
+    <h2 class="texto" style="margin-bottom: 20px;">Gestión de Noticias y Eventos</h2>
+
+    <button pButton label="Agregar Noticia/Evento" icon="pi pi-plus" class="p-button-text p-mb-4" (click)="visible = true; isEditing = false;"></button>
+
+    <p-table [value]="noticias" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [tableStyle]="{ 'min-width': '50rem' }" class="p-shadow-2">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Título</th>
+          <th>Tipo</th>
+          <th>Descripción</th>
+          <th>Fecha Evento</th>
+          <th>Imagen</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-noticia>
+        <tr>
+          <td>{{ noticia.titulo }}</td>
+          <td>{{ noticia.tipo }}</td>
+          <td>{{ noticia.descripcion }}</td>
+          <td>{{ noticia.fecha_evento ? (noticia.fecha_evento | date:'medium') : 'N/A' }}</td>
+          <td>
+            <img *ngIf="noticia.imagen" [src]="noticia.imagen" alt="Imagen" class="p-shadow-2" style="max-width: 100px; border-radius: 5px;" />
+          </td>
+          <td class="action-buttons">
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2" (click)="editNoticia(noticia); visible = true; isEditing = true;"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger" (click)="confirmDelete(noticia)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog 
+  header="{{ isEditing ? 'Editar Noticia/Evento' : 'Agregar Noticia/Evento' }}" 
+  [(visible)]="visible" 
+  [modal]="true" 
+  [style]="{ width: '35rem' }">
+  <form [formGroup]="noticiaForm">
+    <div class="p-fluid">
+   <div class="p-field">
+  <label for="titulo">Título <span style="color: red">*</span></label>
+  <input pInputText type="text" id="titulo" formControlName="titulo"
+         [ngClass]="{'ng-invalid ng-dirty': noticiaForm.get('titulo')?.invalid && noticiaForm.get('titulo')?.touched}"
+         style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;" />
+  <small *ngIf="noticiaForm.get('titulo')?.invalid && noticiaForm.get('titulo')?.touched" style="color: red;">
+    El título es obligatorio.
+  </small>
+</div>
+
+
+      <div class="p-field">
+        <label for="descripcion">Descripción</label>
+        <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="3" style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+      </div>
+
+      <div class="p-field">
+        <label for="tipo">Tipo</label>
+        <p-dropdown 
+          [options]="tipos" 
+          optionLabel="label" 
+          optionValue="value" 
+          formControlName="tipo"
+          placeholder="Seleccione un tipo"
+        ></p-dropdown>
+      </div>
+
+      <div class="p-field">
+        <label for="fecha_evento">Fecha del Evento</label>
+        <input type="datetime-local" pInputText id="fecha_evento" formControlName="fecha_evento" style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;" />
+      </div>
+
+      <div class="p-field">
+        <label for="imagen">Imagen</label>
+        <p-fileUpload #fileUploader
+          name="imagen" 
+          (onSelect)="onFileChange($event)" 
+          [multiple]="false" 
+          accept="image/*" 
+          maxFileSize="1000000"
+          chooseLabel="Agregar" 
+          cancelLabel="Cancelar">
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">
+                {{ file.name }} - {{ file.size }} bytes
+              </li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+
+      <div class="p-field p-d-flex p-jc-between">
+        <button type="button" pButton label="{{ isEditing ? 'Actualizar' : 'Crear' }}" class="p-button-text" (click)="submitNoticia()"></button>
+        <button type="button" pButton label="Cancelar" class="p-button-text" (click)="resetForm()"></button>
+      </div>
+    </div>
+  </form>
+</p-dialog>

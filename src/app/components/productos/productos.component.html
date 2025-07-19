@@ -1,91 +1,123 @@
+<!-- Spinner -->
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner diameter="60"></mat-spinner>
+  <p>Cargando productos...</p>
+</div>
 
-<div class="containerlista">
+<div class="containerlista-con-filtros" *ngIf="!loading">
 
+  <aside class="filtros-laterales">
 
-      <!-- Mostrar el producto seleccionado en primer plano -->
-  <div *ngIf="productoSeleccionado" class="card-container">
+    <h3 class="titulo-filtros">Filtrar por</h3>
 
-    <div class="product-card">
-        <h2>Resultado</h2>
-      <div class="product-image-container" (click)="cambiarImagen(productoSeleccionado)">
-        <img *ngIf="productoSeleccionado.imagenes.length > 0" 
-             [src]="productoSeleccionado.imagenes[0]" 
-             alt="{{ productoSeleccionado.nombre }}" 
-             class="product-image">
+    <!-- Filtro: Precio -->
+    <div class="filtro-bloque">
+      <label for="sliderPrecio">Precio máximo:</label>
+      <input id="sliderPrecio" type="range" [(ngModel)]="precioMaximo" min="0" max="1000" step="50"
+        class="slider-precio" />
+      <p class="valor-precio">Hasta: {{ precioMaximo | currency }}</p>
+    </div>
+
+    <!-- Filtro: Tamaño -->
+    <div class="filtro-bloque">
+      <label>Tamaño:</label>
+      <div class="checkbox-lista">
+        <label *ngFor="let tam of tamanosDisponibles" class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="filtros.tamanos[tam]" />
+          {{ tam }}
+        </label>
       </div>
+    </div>
 
-      <div *ngIf="productoSeleccionado.imagenes.length > 1" class="product-gallery">
-        <div *ngFor="let imagen of productoSeleccionado.imagenes; let i = index" 
-             class="product-gallery-item">
-          <img *ngIf="i !== 0" [src]="imagen" alt="Imagen {{ i + 1 }}" 
-               class="gallery-image" (click)="cambiarImagenProducto(productoSeleccionado, i)">
+    <!-- Filtro: Color -->
+    <div class="filtro-bloque">
+      <label>Color:</label>
+      <div class="checkbox-lista">
+        <label *ngFor="let color of coloresDisponibles" class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="filtros.colores[color]" />
+          {{ color }}
+        </label>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="botones-filtros">
+      <button class="btn-filtrar" (click)="aplicarFiltros()">Aplicar filtros</button>
+      <button class="btn-resetear" (click)="resetearFiltros()">Resetear</button>
+    </div>
+  </aside>
+
+
+  <!-- Productos -->
+  <div class="contenido-productos">
+    <p class="contador-resultados" *ngIf="variantesComoTarjetas.length > 0">
+      {{ variantesComoTarjetas.length | number }} resultados
+    </p>
+    <div class="card-container" *ngIf="variantesComoTarjetas.length > 0">
+      <div class="product-card" *ngFor="let producto of variantesComoTarjetas">
+        <div class="product-image-container" (click)="cambiarImagen(producto)">
+          <div class="product-image-container" (click)="cambiarImagen(producto)">
+            <div *ngIf="producto.precio_anterior && producto.precio_anterior > producto.precio_venta"
+              class="descuento-etiqueta">
+              ¡Descuento!
+            </div>
+            <img *ngIf="producto.imagenes.length > 0" [src]="producto.imagenes[0]" alt="{{ producto.nombre }}"
+              class="product-image" />
+          </div>
+
+
+          <div *ngIf="producto.imagenes.length > 1" class="product-gallery">
+            <div *ngFor="let imagen of producto.imagenes; let i = index" class="product-gallery-item">
+              <img *ngIf="i !== 0" [src]="imagen" alt="Imagen {{ i + 1 }}" class="gallery-image"
+                (click)="cambiarImagenProducto(producto, i)" />
+            </div>
+          </div>
+
+          <div class="product-info">
+            <h3>{{ producto.nombre }}</h3>
+            <p *ngIf="producto.color"><strong>Color:</strong> {{ producto.color }}</p>
+            <p *ngIf="producto.tamano"><strong>Tamaño:</strong> {{ producto.tamano }}</p>
+            <p><strong>Precio: </strong>
+              <ng-container *ngIf="producto.precio_anterior; else soloPrecioVenta">
+                <span class="precio-anterior">{{ producto.precio_anterior | currency }}</span>
+                <span class="precio-venta">{{ producto.precio_venta | currency }}</span>
+              </ng-container>
+              <ng-template #soloPrecioVenta>
+                <span class="precio-venta">{{ producto.precio_venta | currency }}</span>
+              </ng-template>
+            </p>
+
+            <p><strong>Comentarios:</strong> {{ comentariosPorProducto[producto.id + '_' + (producto.varianteId ||
+              'null')] || 0 }}</p>
+            <!-- Mostrar estrellas -->
+            <p>
+              <i *ngFor="let star of calculateStars(promedioCalificacionesPorProducto[producto.id + '_' + (producto.varianteId || 'null')] || 0)"
+                class="pi" [ngClass]="star" style="color: orange;"></i>
+            </p>
+          </div>
+
+          <div class="product-actions">
+            <button pButton pIcon="pi pi-search" class="btn-view-detail"
+              [routerLink]="['/detalle', producto.id, producto.varianteId || null]">
+              ver detalle <i class="pi pi-arrow-up-right"></i>
+            </button>
+            <button class="btn-add-to-cart" (click)="agregarAlCarrito(producto.id, producto.varianteId || null)">
+              <i class="pi pi-shopping-cart"></i>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="product-info">
-        <h3>{{ productoSeleccionado.nombre }}</h3>
-        <p><strong>Precio:</strong> {{ productoSeleccionado.precio_venta | currency }}</p>
-      </div>
-
-      <div class="product-actions">
-        <button pButton pIcon="pi pi-search" class="btn-view-detail" [routerLink]="['/detalle', productoSeleccionado.id , productoSeleccionado.id]">ver detalle <i class="pi pi-arrow-up-right"></i></button>
-      <button class="btn-add-to-cart" (click)="agregarAlCarrito(productoSeleccionado.id, productoSeleccionado.id || null)">
-  <i class="pi pi-shopping-cart"></i>
-</button>
-      </div>
     </div>
-  </div>
 
-  <h2>{{categoriaNombre}}</h2>
-  
-  <div class="card-container" *ngIf="variantesComoTarjetas.length > 0">
-    <div class="product-card" *ngFor="let producto of variantesComoTarjetas">
-      <!-- Imagen principal -->
-      <div class="product-image-container" (click)="cambiarImagen(producto)">
-        <img *ngIf="producto.imagenes.length > 0" [src]="producto.imagenes[0]" alt="{{ producto.nombre }}" class="product-image">
-      </div>
-  
-      <!-- Galería -->
-      <div *ngIf="producto.imagenes.length > 1" class="product-gallery">
-        <div *ngFor="let imagen of producto.imagenes; let i = index" class="product-gallery-item">
-          <img *ngIf="i !== 0" [src]="imagen" alt="Imagen {{ i + 1 }}" class="gallery-image" (click)="cambiarImagenProducto(producto, i)">
-        </div>
-      </div>
-  
-      <!-- Info -->
-      <div class="product-info">
-        <h3>{{ producto.nombre }}</h3>
-        <p *ngIf="producto.color"><strong>Color:</strong> {{ producto.color }}</p>
-        <p *ngIf="producto.tamano"><strong>Tamaño:</strong> {{ producto.tamano }}</p>
-        <p><strong>Precio:</strong> {{ producto.precio_venta | currency }}</p>
-        <p><strong>Comentarios:</strong> {{ producto.total_resenas }}</p>
-  
-        <p *ngIf="producto.calificacion_promedio > 0">
-          <strong>{{ producto.calificacion_promedio }}</strong>
-          <ng-container *ngFor="let star of producto.stars">
-            <i class="pi" [ngClass]="star"></i>
-          </ng-container>
-        </p>
-      </div>
-  
-      <!-- Acciones -->
-      <div class="product-actions">
-        <button pButton pIcon="pi pi-search" class="btn-view-detail" 
-        [routerLink]="['/detalle', producto.id, producto.varianteId || null]">
-  ver detalle <i class="pi pi-arrow-up-right"></i>
-</button>
 
-   <button class="btn-add-to-cart" (click)="agregarAlCarrito(producto.id, producto.varianteId || null)">
-  <i class="pi pi-shopping-cart"></i>
-</button>
+<div *ngIf="variantesComoTarjetas.length === 0" class="sin-productos">
+  <p class="mensaje-sin-productos">No hay productos disponibles en esta categoría.</p>
+  <a (click)="irACategorias()"  class="btn-volver-home">
+    Explora nuestras categorías
+    <i class="pi pi-arrow-right"></i>
+  </a>
+</div>
 
-      </div>
-    </div>
+
   </div>
-  
-    <!-- Si no hay productos, mostrar un mensaje -->
-    <div *ngIf="productos.length === 0">
-      <p>No hay productos disponibles en esta categoría.</p>
-    </div>
-  </div>
-  

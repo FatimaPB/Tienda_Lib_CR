@@ -1,6 +1,13 @@
 <p-toast></p-toast>
 
-<div class="register-container">
+<!-- Spinner de carga centrado -->
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner diameter="60" color="primary"></mat-spinner>
+  <p>Cargando...</p>
+</div>
+
+
+<div class="register-container" *ngIf="!loading">
   <h2 class="login-title">Registro de Usuario</h2>
 
   <form (ngSubmit)="onRegister(registerForm)" #registerForm="ngForm" class="p-fluid">

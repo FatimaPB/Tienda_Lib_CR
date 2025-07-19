@@ -27,17 +27,7 @@ html, body {
   z-index: 9999; /* Se asegura de estar por encima de todo */
 }
 
-/* Imagen de fondo que ocupa toda la pantalla sin desbordarse */
-.error-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: url('../../../assets/img/roto.jpg') no-repeat center center;
-  background-size: cover;
-  z-index: -1; /* Mantiene la imagen en el fondo */
-}
+
 
 /* Contenedor del mensaje con fondo semitransparente */
 .error-content {

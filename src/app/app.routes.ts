@@ -19,6 +19,7 @@ import { PoliticadeprivacidadComponent } from './components/politicadeprivacidad
 import { DeslindelegalComponent } from './components/deslindelegal/deslindelegal.component';
 import { TerminosycondicionesComponent } from './components/terminosycondiciones/terminosycondiciones.component';
 import { PerfilusuarioComponent } from './components/perfilusuario/perfilusuario.component';
+import { PerfiladminComponent } from './perfiladmin/perfiladmin.component';
 import { NosotrosComponent } from './components/nosotros/nosotros.component';
 import { NoticiasEventosComponent } from './components/noticias-eventos/noticias-eventos.component';
 import { Error400Component } from './components/error400/error400.component';
@@ -39,15 +40,35 @@ import { PedidodetalleComponent } from './components/pedidodetalle/pedidodetalle
 import { PenelrepartidorComponent } from './components/penelrepartidor/penelrepartidor.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
 import { OracionesComponent } from './components/oraciones/oraciones.component';
-
+import { GestionusuariosComponent } from './components/gestionusuarios/gestionusuarios.component';
+import { GestionnoticiasComponent } from './components/gestionnoticias/gestionnoticias.component';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { PagoExitosoComponent } from './pages/pago-exitoso/pago-exitoso.component';
+import { PagoFallidoComponent } from './pages/pago-fallido/pago-fallido.component';
+import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
 
 export const routes: Routes = [
+
+    { 
+        path: '',
+        component: PublicLayoutComponent, // Asegúrate de que este componente maneje las rutas hijas
+        children: [
 { path: '', component: InicioComponent},
 { path: 'login', component: LoginComponent, data: { breadcrumb: 'login'} },
 { path: 'registro', component: RegistroComponent, data: { breadcrumb: 'Registro'} },
 { path: 'about', component: NosotrosComponent, data: { breadcrumb: 'about'}},
 { path: 'carshop', component: CarritoComponent, data: { breadcrumb: 'carshop'}},
 { path: 'contact', component: ContactoComponent, data: { breadcrumb: 'contact'}},
+{ path: 'perfil', component: PerfilusuarioComponent, data: { breadcrumb: 'Perfil' } },
+{ path: 'pago-exitoso', component: PagoExitosoComponent},
+{ path: 'pago-fallido', component: PagoFallidoComponent},
+{ path: 'pago-pendiente', component: PagoPendienteComponent},
+
+
+
+{ path: 'pedido-detalle', component: PedidodetalleComponent, data: { breadcrumb: 'Pedido Detalle' } },
+
 
 { path: 'products/:nombreCategoria', component: ProductosComponent, data: { breadcrumb: 'nombreCategoria' }}, 
 { path: 'detalle/:id/:varianteId', component: DetalleproductoComponent, data: { breadcrumb: 'id' } },
@@ -59,15 +80,20 @@ export const routes: Routes = [
 { path: 'verificar', component: VerificarComponent },
 { path: 'restablecer', component: RestablecercontraComponent },
 { path: 'verificacion', component: VerificarCodigoComponent },
-
-
+        ]
+    },
+{
+  path: '',
+  component: AdminLayoutComponent,
+  canActivate: [AuthGuard],
+  children: [
 { path: 'inicioadmin', component: InicioadminComponent, canActivate: [AuthGuard] },
 { path: 'politicas', component: PoliticasComponent, canActivate: [AuthGuard] },
 { path: 'terminos', component: TerminosComponent, canActivate: [AuthGuard] },
 { path: 'deslinde', component: DeslindeComponent, canActivate: [AuthGuard] },
 { path: 'pempresa', component: PerfilempresaComponent, canActivate: [AuthGuard] },
 { path: 'incidencias', component: IncidenciasComponent, canActivate: [AuthGuard]},
-{ path: 'perfil', component: PerfilusuarioComponent,data: { breadcrumb: 'Perfil' }, canActivate: [AuthGuard] },
+{ path: 'perfiladm', component: PerfiladminComponent, canActivate: [AuthGuard] },
 { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },
 { path: 'admproduts', component: AdminproductosComponent, canActivate: [AuthGuard] },
 { path: 'banners', component: BannerComponent, canActivate: [AuthGuard] },
@@ -82,7 +108,10 @@ export const routes: Routes = [
 { path: 'repartidor', component: PenelrepartidorComponent, canActivate: [AuthGuard] },
 { path: 'preguntas', component: PreguntasComponent, canActivate: [AuthGuard] },
 { path: 'oraciones', component: OracionesComponent, canActivate: [AuthGuard] },
-
+{ path: 'usuarios', component: GestionusuariosComponent, canActivate: [AuthGuard] },
+{ path: 'noticias', component: GestionnoticiasComponent, canActivate: [AuthGuard] },
+  ]
+},
 { path: 'error400', component: Error400Component },
 { path: 'error404', component: Error404Component },
 { path: 'error500',component: Error500Component },

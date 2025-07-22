@@ -66,7 +66,7 @@
   </div>
 </div>
 
-<!-- Carrusel de productos recientes -->
+<!-- Carrusel de productos recientes 
 <div class="productos-religiosos-section">
   <h2 class="titulo-seccion">RECIÉN LLEGADOS</h2>
   <div class="card">
@@ -95,6 +95,53 @@
     </p-carousel>
   </div>
 </div>
+-->
+<div *ngIf="recomendacionesDetalles.length > 0" class="productos-recomendados-section">
+  <h2 class="titulo-seccion">También te puede interesar</h2>
+
+  <div class="card">
+    <p-carousel [value]="recomendacionesDetalles" [numVisible]="4" [numScroll]="1" [circular]="true"
+      [responsiveOptions]="responsiveOptions" [autoplayInterval]="3000">
+
+      <ng-template let-prod pTemplate="item">
+        <div class="product-card">
+          <div class="image-container">
+            <img *ngIf="prod.variantes?.length === 0" [src]="prod.imagenes_producto?.[0]" [alt]="prod.nombre" class="product-image" />
+            <img *ngIf="prod.variantes?.length > 0" [src]="prod.variantes[0]?.imagenes_variante?.[0]" [alt]="prod.nombre" class="product-image" />
+          </div>
+
+          <div class="product-name">{{ prod.nombre }}</div>
+
+          <div class="price-section">
+            <div class="price">
+              {{
+                prod.variantes?.length > 0
+                  ? (prod.variantes[0].precio_venta | currency:'MXN')
+                  : (prod.precio_venta | currency:'MXN')
+              }}
+            </div>
+
+            <div class="action-buttons">
+              <p-button icon="pi pi-search" severity="secondary" [outlined]="true"
+                [routerLink]="
+                  prod.variantes?.length > 0
+                    ? ['/detalle', prod.id, prod.variantes[0].id]
+                    : ['/detalle', prod.id]
+                ">
+              </p-button>
+
+              <p-button icon="pi pi-shopping-cart" severity="secondary" [outlined]="true"
+              >
+              </p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+    </p-carousel>
+  </div>
+</div>
+
 
 
 <section class="seccion-categorias">

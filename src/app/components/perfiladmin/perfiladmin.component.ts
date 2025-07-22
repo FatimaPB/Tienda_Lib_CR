@@ -1,7 +1,7 @@
 import { Component , OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth.service'; // Ajusta la ruta según tu estructura de carpetas
+import { AuthService } from '../../auth.service'; // Ajusta la ruta según tu estructura de carpetas
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';

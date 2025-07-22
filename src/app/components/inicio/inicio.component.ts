@@ -8,6 +8,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { RecomendacionService } from '../../services/recomendacion.service';
+import { ProductoService } from '../../services/producto.service';
 
 
 
@@ -85,6 +87,7 @@ export interface Producto {
 })
 export class InicioComponent implements AfterViewInit {
    categorias: any[] = [];
+   usuarioLogueado: boolean = false;
 
   banners: Banner[] = [];
   apiUrl: string = 'https://api-libreria.vercel.app/api/banners';
@@ -101,7 +104,9 @@ export class InicioComponent implements AfterViewInit {
      private cdr: ChangeDetectorRef,
       private carritoService: CarritoService,
       private preguntaService: PreguntaFrecuenteService,
-    private categoriaService: CategoriaService) { }
+    private categoriaService: CategoriaService,
+   private recomendacionService: RecomendacionService,
+  private productoService: ProductoService) { }
 
 
   // Referencia a la instancia del sidenav
@@ -121,6 +126,8 @@ export class InicioComponent implements AfterViewInit {
     this.loadProductos();
     this.cargarCategorias();
     this.cargarPreguntas();
+    this.verificarUsuario()
+    this.cargarRecomendacionesDesdeHistorial([]); 
 
 
      
@@ -309,5 +316,74 @@ calculateStars(rating: number): string[] {
       numScroll: 1
     }
   ];
+
+
+usuarioId: number | null = null;
+recomendacionesDetalles: any[] = [];
+
+verificarUsuario(): void {
+  this.http.get<any>('https://api-libreria.vercel.app/api/check-auth', { withCredentials: true }).subscribe({
+    next: res => {
+      if (res.authenticated) {
+        this.usuarioId = res.usuario.id;
+        console.log('Usuario autenticado para recomendaciones:', this.usuarioId);
+        this.obtenerHistorial();
+      }
+    },
+    error: err => {
+      console.error('Error al verificar autenticación:', err);
+    }
+  });
+}
+
+obtenerHistorial(): void {
+  this.http.get<any>(`https://api-libreria.vercel.app/api/ventas/productos-comprados/${this.usuarioId}`, { withCredentials: true }).subscribe({
+    next: res => {
+      console.log('Historial de ventas:', res);
+      
+      const nombresComprados: string[] = res.productosComprados || [];
+
+      this.cargarRecomendacionesDesdeHistorial(nombresComprados);
+      console.log('Nombres comprados para recomendar:', nombresComprados);
+    },
+    error: err => {
+      console.error('Error al obtener historial:', err);
+    }
+  });
+}
+
+cargarRecomendacionesDesdeHistorial(nombresProductos: string[]) {
+  if (nombresProductos.length === 0) {
+    this.recomendacionesDetalles = [];
+    return;
+  }
+
+  this.recomendacionService.obtenerRecomendaciones(nombresProductos).subscribe({
+    next: nombresRecomendados => {
+      console.log('Nombres recomendados (desde historial):', nombresRecomendados);
+
+      if (nombresRecomendados.length === 0) {
+        this.recomendacionesDetalles = [];
+        return;
+      }
+
+      this.http.post<any[]>('https://api-libreria.vercel.app/api/productos/recomendados-detalle', { nombres: nombresRecomendados })
+        .subscribe({
+          next: detalles => {
+            this.recomendacionesDetalles = detalles;
+            console.log('Detalles recomendados:', this.recomendacionesDetalles);
+          },
+          error: err => {
+            console.error('Error obteniendo detalles recomendados', err);
+            this.recomendacionesDetalles = [];
+          }
+        });
+    },
+    error: err => {
+      console.error('Error obteniendo nombres recomendados', err);
+      this.recomendacionesDetalles = [];
+    }
+  });
+}
 
 }

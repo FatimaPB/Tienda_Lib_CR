@@ -1,73 +1,65 @@
 <p-toast></p-toast>
 <div class="carrito-grid">
-<!-- 🛒 Carrito de Compras -->
+  <!-- 🛒 Carrito de Compras -->
   <div class="carrito-left">
-<p-card *ngIf="carrito.length > 0" header="Carrito de Compras" class="mb-4">
-  <p-table [value]="carrito" responsiveLayout="scroll">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Borrar</th>
-        <th>Imagen</th>
-        <th>Producto</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Total</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item let-i="rowIndex">
-      <tr>
-        <td>
-               <button class="btn-eliminar">X</button>
-        </td>
-        <td>
-          <img
-            [src]="item.imagenes_variante?.[0] || item.imagenes_producto?.[0]"
-            class="imagen-producto"
-            style="width: 60px; height: auto;" />
-        </td>
-        <td>{{ item.nombre }}</td>
-        <td>${{ item.precio_venta | number:'1.2-2' }}</td>
-        <td>
-          <p-inputNumber [(ngModel)]="item.cantidad" [min]="1" [showButtons]="true"
-                         (onBlur)="actualizarTotales()" inputStyleClass="w-6rem"></p-inputNumber>
-        </td>
-        <td>${{ item.precio_venta * item.cantidad | number:'1.2-2' }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</p-card>
+    <p-card *ngIf="carrito.length > 0" header="Carrito de Compras" class="mb-4">
+      <p-table [value]="carrito" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Borrar</th>
+            <th>Imagen</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-i="rowIndex">
+          <tr>
+            <td>
+              <button class="btn-eliminar" (click)="eliminarDelCarrito(item.producto_id, item.variante_id)">X</button>
+            </td>
+            <td>
+              <img [src]="item.imagenes_variante?.[0] || item.imagenes_producto?.[0]" class="imagen-producto"
+                style="width: 60px; height: auto;" />
+            </td>
+            <td>{{ item.nombre }}</td>
+            <td>${{ item.precio_venta | number:'1.2-2' }}</td>
+            <td>
+              <p-inputNumber [(ngModel)]="item.cantidad" [min]="1" [showButtons]="true" (onBlur)="actualizarTotales()"
+                inputStyleClass="w-6rem"></p-inputNumber>
+            </td>
+            <td>${{ item.precio_venta * item.cantidad | number:'1.2-2' }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
 
-
-<p-card *ngIf="carrito.length === 0">
-  <p>Tu carrito está vacío</p>
-</p-card>
-</div>
-
-
-<!-- 🧾 Totales del Carrito -->
- <div class="carrito-right">
-<p-card *ngIf="carrito.length > 0" header="Resumen de compra" class="mb-4">
-  <div class="p-d-flex p-jc-between p-mb-2">
-    <span>Total parcial:</span>
-    <strong>${{ totalParcial | number:'1.2-2' }}</strong>
+    <p-card *ngIf="carrito.length === 0">
+      <p>Tu carrito está vacío</p>
+    </p-card>
   </div>
-  <div class="p-d-flex p-jc-between p-mb-2">
-    <span>Envío:</span>
-    <strong>${{ tarifaPlana | number:'1.2-2' }}</strong>
+
+  <!-- 🧾 Totales del Carrito -->
+  <div class="carrito-right">
+    <p-card *ngIf="carrito.length > 0" header="Resumen de compra" class="mb-4">
+      <div class="p-d-flex p-jc-between p-mb-2">
+        <span>Total parcial:</span>
+        <strong>${{ totalParcial | number:'1.2-2' }}</strong>
+      </div>
+      <div class="p-d-flex p-jc-between p-mb-2">
+        <span>Envío:</span>
+        <strong>${{ tarifaPlana | number:'1.2-2' }}</strong>
+      </div>
+      <div class="p-d-flex p-jc-between p-mb-2">
+        <span>Total:</span>
+        <strong style="color: #007ad9;">${{ total | number:'1.2-2' }}</strong>
+      </div>
+      <button pButton label="Continuar compra" class="p-button-success w-full"
+        (click)="mostrarFormulario = true"></button>
+    </p-card>
   </div>
-  <div class="p-d-flex p-jc-between p-mb-2">
-    <span>Total:</span>
-    <strong style="color: #007ad9;">${{ total | number:'1.2-2' }}</strong>
-  </div>
-  <button pButton label="Continuar compra" class="p-button-success w-full" (click)="mostrarFormulario = true"></button>
-</p-card>
 </div>
-</div>
-
-
-
-
-
 <!-- 📦 Formulario de Envío centrado -->
 <div class="formulario-envio-wrapper">
   <p-card *ngIf="mostrarFormulario" class="formulario-envio-card">
@@ -80,11 +72,7 @@
         <label class="section-label">Método de pago</label>
         <div class="metodos-pago-row">
           <div *ngFor="let metodo of metodosPago" class="metodo-radio">
-            <p-radioButton
-              name="metodoPago"
-              [value]="metodo.id"
-              [(ngModel)]="metodoPago"
-              inputId="{{ metodo.id }}">
+            <p-radioButton name="metodoPago" [value]="metodo.id" [(ngModel)]="metodoPago" inputId="{{ metodo.id }}">
             </p-radioButton>
             <label for="{{ metodo.id }}">{{ metodo.nombre }}</label>
           </div>
@@ -95,15 +83,13 @@
       <section class="form-section">
         <div class="campo">
           <label for="codigoPostal">Código Postal</label>
-          <input pInputText id="codigoPostal" [(ngModel)]="codigoPostal" (change)="buscarColoniasPorCP()" maxlength="5" />
+          <input pInputText id="codigoPostal" [(ngModel)]="codigoPostal" (change)="buscarColoniasPorCP()"
+            maxlength="5" />
         </div>
 
         <div class="campo">
           <label for="colonia">Colonia</label>
-          <p-dropdown
-            id="colonia"
-            [options]="colonias"
-            [(ngModel)]="coloniaSeleccionada"
+          <p-dropdown id="colonia" [options]="colonias" [(ngModel)]="coloniaSeleccionada"
             placeholder="Selecciona una colonia">
           </p-dropdown>
         </div>
@@ -135,11 +121,55 @@
 
       <!-- ✅ Botones -->
       <div class="form-botones">
-        <button pButton label="Pasar por la caja" class="p-button-success"
-                (click)="comprar()" [disabled]="!direccionValida()"></button>
-        <button pButton label="Cancelar" class="p-button-secondary"
-                (click)="cancelarFormulario()"></button>
+        <button pButton label="Pasar por la caja" class="p-button-success" (click)="comprar()"
+          [disabled]="!direccionValida()"></button>
+        <button pButton label="Cancelar" class="p-button-secondary" (click)="cancelarFormulario()"></button>
       </div>
     </div>
   </p-card>
+</div>
+
+
+<div *ngIf="recomendacionesDetalles.length > 0" class="productos-recomendados-section">
+  <h2 class="titulo">También te puede interesar</h2>
+
+  <div class="card">
+    <p-carousel [value]="recomendacionesDetalles" [numVisible]="4" [numScroll]="1" [circular]="true"
+      [responsiveOptions]="responsiveOptions" [autoplayInterval]="3000">
+
+      <ng-template let-prod pTemplate="item">
+        <div class="product-card">
+          <div class="image-container">
+            <img *ngIf="prod.variantes?.length === 0" [src]="prod.imagenes_producto?.[0]" [alt]="prod.nombre"
+              class="product-image" />
+            <img *ngIf="prod.variantes?.length > 0" [src]="prod.variantes[0]?.imagenes_variante?.[0]"
+              [alt]="prod.nombre" class="product-image" />
+          </div>
+
+          <div class="product-name">{{ prod.nombre }}</div>
+
+          <div class="price-section">
+            <div class="price">
+              {{
+              prod.variantes?.length > 0
+              ? (prod.variantes[0].precio_venta | currency:'MXN')
+              : (prod.precio_venta | currency:'MXN')
+              }}
+            </div>
+
+            <div class="action-buttons">
+              <p-button icon="pi pi-search" severity="secondary" [outlined]="true"
+                [routerLink]="['/detalle', prod.id, prod.varianteId || null]">
+
+              </p-button>
+
+              <p-button icon="pi pi-shopping-cart" severity="secondary" [outlined]="true">
+              </p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+    </p-carousel>
+  </div>
 </div>

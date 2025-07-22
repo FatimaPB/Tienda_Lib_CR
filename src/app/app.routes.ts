@@ -19,7 +19,7 @@ import { PoliticadeprivacidadComponent } from './components/politicadeprivacidad
 import { DeslindelegalComponent } from './components/deslindelegal/deslindelegal.component';
 import { TerminosycondicionesComponent } from './components/terminosycondiciones/terminosycondiciones.component';
 import { PerfilusuarioComponent } from './components/perfilusuario/perfilusuario.component';
-import { PerfiladminComponent } from './perfiladmin/perfiladmin.component';
+import { PerfiladminComponent } from './components/perfiladmin/perfiladmin.component';
 import { NosotrosComponent } from './components/nosotros/nosotros.component';
 import { NoticiasEventosComponent } from './components/noticias-eventos/noticias-eventos.component';
 import { Error400Component } from './components/error400/error400.component';

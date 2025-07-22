@@ -48,5 +48,14 @@ updatePrecioVariante(id: number, nuevoPrecio: number): Observable<any> {
 }
 
 
+getProductosComprados(usuario_id: number) {
+  return this.http.get<{ productosComprados: string[] }>(
+    `https://api-libreria.vercel.app/api/ventas/productos-comprados/${usuario_id}`,
+    { withCredentials: true }
+  );
+}
+
+
+
 
 }

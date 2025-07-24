@@ -216,7 +216,10 @@ loadProductos(): void {
   }
 
 
-  
+  isVideo(url: string): boolean {
+  return url?.match(/\.(mp4|webm|ogg)$/i) !== null;
+}
+
   
 
   @ViewChildren('serviceItem') serviceItems!: QueryList<ElementRef>;

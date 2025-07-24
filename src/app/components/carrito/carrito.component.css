@@ -149,7 +149,7 @@
 
 /* Tarjeta */
 :host ::ng-deep .formulario-envio-card {
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
   padding: 2rem 2.5rem;
   border-radius: 16px;
@@ -461,3 +461,66 @@ label {
   }
 }
 
+.icono-carrito-vacio {
+  font-size: 6rem; /* Ajusta según lo que necesites */
+  color: #ccc;     /* O el color que se adapte a tu diseño */
+  margin-bottom: 1rem;
+}
+
+
+.btn-volver-home {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #660000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-volver-home:hover {
+  background-color: #622a2a;
+}
+
+
+
+/* Estilo base para los campos */
+.formulario-envio-card .campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+/* Estilo para las etiquetas */
+.formulario-envio-card .campo label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+/* Estilo para los inputs de texto */
+.formulario-envio-card .campo input {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+/* Efecto al enfocar */
+.formulario-envio-card .campo input:focus {
+  outline: none;
+  border-color: #007ad9;
+  box-shadow: 0 0 0 2px rgba(0, 122, 217, 0.2);
+}
+
+/* Para que el formulario sea más responsive si hay muchas columnas */
+@media (min-width: 768px) {
+  .formulario-envio-card .form-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+  }
+}

@@ -2,24 +2,21 @@
 
 <!-- Diálogo de confirmación -->
 <p-confirmDialog></p-confirmDialog>
-<div class="p-d-flex p-jc-center p-ai-center" style="width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 500px; margin-top: 10px;">
+<div class="p-d-flex p-jc-center p-ai-center"
+  style="width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 500px; margin-top: 10px;">
   <div class="card" style="width: 100%; margin: auto;">
 
     <!-- Título de la sección -->
     <h2 class="texto" style="margin-bottom: 20px;">Gestión de Banners</h2>
 
     <!-- Botón para agregar un nuevo banner -->
-    <button pButton label="Agregar Banner" icon="pi pi-plus" class="p-button-text p-mb-4" (click)="visible = true; isEditing = false;"></button>
+    <button pButton label="Agregar Banner" icon="pi pi-plus" class="p-button-text p-mb-4"
+      (click)="visible = true; isEditing = false;"></button>
 
     <!-- Tabla de banners -->
-    <p-table 
-      [value]="banners" 
-      [tableStyle]="{ 'min-width': '50rem' }" 
-      [paginator]="true" 
-      [rows]="5" 
-      [rowsPerPageOptions]="[5, 10, 20]" 
-      class="p-shadow-2">
-      
+    <p-table [value]="banners" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]" class="p-shadow-2">
+
       <ng-template pTemplate="header">
         <tr>
           <th>Título</th>
@@ -34,11 +31,14 @@
           <td>{{ banner.titulo }}</td>
           <td>{{ banner.descripcion }}</td>
           <td>
-            <img *ngIf="banner.imagen" [src]="banner.imagen" alt="Imagen del Banner" class="p-shadow-2" style="max-width: 100px; border-radius: 5px;" />
+            <img *ngIf="banner.imagen" [src]="banner.imagen" alt="Imagen del Banner" class="p-shadow-2"
+              style="max-width: 100px; border-radius: 5px;" />
           </td>
           <td class="action-buttons">
-            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2" (click)="editBanner(banner); visible = true; isEditing = true;"></button>
-            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger" (click)="confirmDelete(banner)"></button>
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2"
+              (click)="editBanner(banner); visible = true; isEditing = true;"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger"
+              (click)="confirmDelete(banner)"></button>
           </td>
         </tr>
       </ng-template>
@@ -47,33 +47,30 @@
 </div>
 
 <!-- Diálogo para agregar/editar banner -->
-<p-dialog 
-  header="{{ isEditing ? 'Editar Banner' : 'Agregar Nuevo Banner' }}" 
-  [(visible)]="visible" 
-  [modal]="true" 
+<p-dialog header="{{ isEditing ? 'Editar Banner' : 'Agregar Nuevo Banner' }}" [(visible)]="visible" [modal]="true"
   [style]="{ width: '35rem' }">
   <form [formGroup]="bannerForm">
     <div class="p-fluid">
       <div class="p-field">
         <label for="titulo">Título</label>
-        <input pInputText type="text" id="titulo" formControlName="titulo" required style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;" />
+        <input pInputText type="text" id="titulo" formControlName="titulo" required
+          style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;" />
       </div>
 
       <div class="p-field">
         <label for="descripcion">Descripción</label>
-        <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="3" style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+        <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="3"
+          style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;"></textarea>
       </div>
 
+      <!-- En banner.component.html -->
+
       <div class="p-field">
-        <label for="imagen">Imagen Principal</label>
-        <!-- Aquí utilizamos el p-fileUpload en lugar de input type="file" -->
-        <p-fileUpload #fileUploader
-          name="imagen" 
-          (onSelect)="onFileChange($event)" 
-          [multiple]="false" 
-          accept="image/*" 
-          maxFileSize="1000000"
-          chooseLabel="Agregar" 
+        <label for="archivo">Archivo</label>
+        <p-fileUpload #fileUploader name="archivo" (onSelect)="onFileChange($event)" [multiple]="false"
+          accept="image/*,video/*" 
+           maxFileSize="104857600" 
+          chooseLabel="Agregar"
           cancelLabel="Cancelar">
           <ng-template pTemplate="content">
             <ul *ngIf="uploadedFiles.length">
@@ -85,9 +82,11 @@
         </p-fileUpload>
       </div>
 
+
       <div class="p-field p-d-flex p-jc-between">
-        <button type="button" pButton label="{{ isEditing ? 'Actualizar' : 'Crear' }}" class="p-button-text" (click)="submitBanner()"></button>
-        <button type="button" pButton label="Cancelar" class="p-button-text" (click)="resetForm()" ></button>
+        <button type="button" pButton label="{{ isEditing ? 'Actualizar' : 'Crear' }}" class="p-button-text"
+          (click)="submitBanner()"></button>
+        <button type="button" pButton label="Cancelar" class="p-button-text" (click)="resetForm()"></button>
       </div>
     </div>
   </form>

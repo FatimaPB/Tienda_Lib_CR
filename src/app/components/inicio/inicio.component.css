@@ -1,16 +1,15 @@
-/* Estilos para el slider */
+/* Slider principal */
 .hero-slider-section {
   position: relative;
-  height: 100vh;
-  /* Ocupa el 100% de la altura de la pantalla */
+  width: 100%;
+  height: 80vh; /* Ajusta esta altura si quieres menos o más */
   overflow: hidden;
-  /* Evita que el contenido se desborde */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Oculta todos los banners excepto el actual */
+/* Cada slide */
 .hero-single-slider-item {
   position: absolute;
   width: 100%;
@@ -20,14 +19,15 @@
   transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
 }
 
-/* Solo el banner activo será visible */
+/* Slide activo */
 .hero-single-slider-item.active {
   opacity: 1;
   visibility: visible;
 }
 
-/* Imagen de fondo del slider */
-.hero-slider-bg img {
+/* Imagen o video de fondo */
+.hero-slider-bg img,
+.hero-slider-bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -37,7 +37,7 @@
   z-index: -1;
 }
 
-/* Contenedor para el texto */
+/* Contenido sobre el slider */
 .hero-slider-wrapper {
   position: absolute;
   top: 50%;
@@ -46,7 +46,6 @@
   text-align: left;
 }
 
-/* Ajuste del contenido del slider */
 .hero-slider-content {
   position: relative;
   opacity: 0;
@@ -56,40 +55,36 @@
   margin-left: 100px;
 }
 
-/* Solo el contenido del banner activo se mostrará */
 .hero-single-slider-item.active .hero-slider-content {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Estilos para los textos */
-.hero-slider-content h4,
-.hero-slider-content h2,
-.hero-slider-content .btn {
-  color: white;
-}
-
+/* Texto */
 .hero-slider-content h4 {
   font-size: 24px;
+  color: white;
 }
 
 .hero-slider-content h2 {
   font-size: 48px;
   margin: 10px 0;
+  color: white;
 }
 
 .hero-slider-content .btn {
   background-color: transparent;
   padding: 10px 20px;
-  border: 2px solid #000000;
-  color: #000000;
+  border: 2px solid white;
+  color: white;
   text-decoration: none;
 }
 
 .hero-slider-content .btn:hover {
   color: #a38350;
-  border: 2px solid #a38350;
+  border-color: #a38350;
 }
+
 
 /* Animación para el texto */
 @keyframes slideUp {

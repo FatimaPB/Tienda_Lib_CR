@@ -9,6 +9,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
+import { FileUpload } from 'primeng/fileupload';
 
 export interface Banner {
   id: number;
@@ -68,7 +69,7 @@ export class BannerComponent implements OnInit {
     formData.append('descripcion', this.bannerForm.get('descripcion')?.value);
 
     if (this.selectedFile) {
-      formData.append('imagen', this.selectedFile, this.selectedFile.name);
+      formData.append('archivo', this.selectedFile, this.selectedFile.name);
     } else {
       this.messageService.add({ severity: 'warn', summary: '', detail: 'Debes seleccionar una imagen.' });
       return;
@@ -139,18 +140,22 @@ export class BannerComponent implements OnInit {
     }
   }
 
-  onFileChange(event: any): void {
-    const file = event.files && event.files[0];
-    if (file) {
-      this.selectedFile = file;
-    }
-  }
 
   uploadedFiles: any[] = [];
 
-  onUpload(event: any): void {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
-    }
+  onFileChange(event: any): void {
+  const file = event.files && event.files[0];
+  if (file) {
+    this.selectedFile = file;
   }
+}
+
+// Agregar función para manejar la subida de archivos (incluyendo videos si es necesario)
+onUpload(event: any): void {
+  for (let file of event.files) {
+    this.uploadedFiles.push(file);
+  }
+}
+
+
 }

@@ -5,14 +5,21 @@
     [ngClass]="{ 'active': i === currentIndex }">
 
     <div class="hero-slider-bg">
-      <img [src]="banner.imagen" alt="Imagen de Slider">
+      <ng-container *ngIf="isVideo(banner.imagen); else imagenBanner">
+        <video [src]="banner.imagen" autoplay muted loop playsinline class="video-banner"></video>
+      </ng-container>
+      <ng-template #imagenBanner>
+        <img [src]="banner.imagen" alt="Imagen de Slider">
+      </ng-template>
     </div>
 
+
     <div class="hero-slider-wrapper">
-      <div class="hero-slider-content">
-        <h4 class="subtitle">{{ banner.descripcion }}</h4>
-        <h2 class="title">{{ banner.titulo }}</h2>
-      </div>
+<div class="hero-slider-content" *ngIf="!isVideo(banner.imagen)">
+  <h4 class="subtitle">{{ banner.descripcion }}</h4>
+  <h2 class="title">{{ banner.titulo }}</h2>
+</div>
+
     </div>
 
   </div>
@@ -106,8 +113,10 @@
       <ng-template let-prod pTemplate="item">
         <div class="product-card">
           <div class="image-container">
-            <img *ngIf="prod.variantes?.length === 0" [src]="prod.imagenes_producto?.[0]" [alt]="prod.nombre" class="product-image" />
-            <img *ngIf="prod.variantes?.length > 0" [src]="prod.variantes[0]?.imagenes_variante?.[0]" [alt]="prod.nombre" class="product-image" />
+            <img *ngIf="prod.variantes?.length === 0" [src]="prod.imagenes_producto?.[0]" [alt]="prod.nombre"
+              class="product-image" />
+            <img *ngIf="prod.variantes?.length > 0" [src]="prod.variantes[0]?.imagenes_variante?.[0]"
+              [alt]="prod.nombre" class="product-image" />
           </div>
 
           <div class="product-name">{{ prod.nombre }}</div>
@@ -115,23 +124,21 @@
           <div class="price-section">
             <div class="price">
               {{
-                prod.variantes?.length > 0
-                  ? (prod.variantes[0].precio_venta | currency:'MXN')
-                  : (prod.precio_venta | currency:'MXN')
+              prod.variantes?.length > 0
+              ? (prod.variantes[0].precio_venta | currency:'MXN')
+              : (prod.precio_venta | currency:'MXN')
               }}
             </div>
 
             <div class="action-buttons">
-              <p-button icon="pi pi-search" severity="secondary" [outlined]="true"
-                [routerLink]="
+              <p-button icon="pi pi-search" severity="secondary" [outlined]="true" [routerLink]="
                   prod.variantes?.length > 0
                     ? ['/detalle', prod.id, prod.variantes[0].id]
                     : ['/detalle', prod.id]
                 ">
               </p-button>
 
-              <p-button icon="pi pi-shopping-cart" severity="secondary" [outlined]="true"
-              >
+              <p-button icon="pi pi-shopping-cart" severity="secondary" [outlined]="true">
               </p-button>
             </div>
           </div>
@@ -148,14 +155,10 @@
   <h2 class="titulo-seccion" id="categorias">Explora nuestras categorías</h2>
 
   <div class="categorias-container">
-    <a
-      *ngFor="let categoria of categorias"
-      [routerLink]="['/products', categoria.nombre_categoria]"
-      class="categoria"
+    <a *ngFor="let categoria of categorias" [routerLink]="['/products', categoria.nombre_categoria]" class="categoria"
       [style.backgroundImage]="
         'url(' + (categoria.imagen_url ? categoria.imagen_url : 'assets/img/logosinfondo.png') + ')'
-      "
-    >
+      ">
       <div class="categoria-header">
         <h2>{{ categoria.nombre_categoria | uppercase }}</h2>
         <div class="arrow">→</div>
@@ -173,14 +176,16 @@
     <div class="historia-sidebar">
       <h3>Desde el corazón de la fé</h3>
       <p>
-        Desde nuestros inicios, en la Librería Cristo Rey hemos trabajado con pasión y compromiso para brindar artículos religiosos de calidad a cada familia y comunidad.
+        Desde nuestros inicios, en la Librería Cristo Rey hemos trabajado con pasión y compromiso para brindar artículos
+        religiosos de calidad a cada familia y comunidad.
       </p>
       <p>
-        Nuestra misión es evangelizar a través de cada libro, imagen, vela o estampa que llega a tus manos. Gracias por ser parte de esta historia que continúa creciendo contigo.
+        Nuestra misión es evangelizar a través de cada libro, imagen, vela o estampa que llega a tus manos. Gracias por
+        ser parte de esta historia que continúa creciendo contigo.
       </p>
     </div>
     <div class="historia-imagen-full">
-      <img src="assets/img/logosinfondo.png" alt="Nuestra Historia" />
+      <img src="assets/img/libreriafoto.jpg" alt="Nuestra Historia" />
     </div>
   </div>
 </section>

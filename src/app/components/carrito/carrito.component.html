@@ -35,9 +35,22 @@
       </p-table>
     </p-card>
 
-    <p-card *ngIf="carrito.length === 0">
-      <p>Tu carrito está vacío</p>
-    </p-card>
+<p-card *ngIf="carrito.length === 0" class="carrito-vacio">
+  <div class="carrito-vacio-contenido">
+
+    <!-- Ícono en lugar de imagen -->
+    <i class="pi pi-shopping-cart icono-carrito-vacio"></i>
+
+    <h3>Tu carrito está vacío</h3>
+    <p>¡Explora nuestros productos y encuentra algo que te encante!</p>
+   <a (click)="irACategorias()"  class="btn-volver-home">
+    Explora nuestras categorías
+    <i class="pi pi-arrow-right"></i>
+  </a>
+  </div>
+</p-card>
+
+
   </div>
 
   <!-- 🧾 Totales del Carrito -->

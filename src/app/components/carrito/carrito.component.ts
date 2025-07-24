@@ -16,6 +16,8 @@ import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
+import { ViewportScroller } from '@angular/common';
+
 
 import { RecomendacionService } from '../../services/recomendacion.service';
 
@@ -74,7 +76,8 @@ export class CarritoComponent implements OnInit {
     private carritoService: CarritoService,
     private messageService: MessageService,
     private router: Router,
-    private recomendacionService: RecomendacionService) { }
+    private recomendacionService: RecomendacionService,
+   private scroller: ViewportScroller) { }
 
   // Se llama una vez al iniciar
   cargarCodigosPostales(): void {
@@ -279,5 +282,15 @@ export class CarritoComponent implements OnInit {
       numScroll: 1
     }
   ];
+
+  
+  irACategorias() {
+    this.router.navigate(['/']).then(() => {
+      // Esperamos un poco para asegurar que se cargue el home antes de hacer scroll
+      setTimeout(() => {
+        this.scroller.scrollToAnchor('categorias');
+      }, 500);
+    });
+  }
 
 }

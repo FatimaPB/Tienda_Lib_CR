@@ -47,6 +47,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { PagoExitosoComponent } from './pages/pago-exitoso/pago-exitoso.component';
 import { PagoFallidoComponent } from './pages/pago-fallido/pago-fallido.component';
 import { PagoPendienteComponent } from './pages/pago-pendiente/pago-pendiente.component';
+import { InsigniasComponent } from './components/insignias/insignias.component';
 
 export const routes: Routes = [
 
@@ -110,6 +111,7 @@ export const routes: Routes = [
 { path: 'oraciones', component: OracionesComponent, canActivate: [AuthGuard] },
 { path: 'usuarios', component: GestionusuariosComponent, canActivate: [AuthGuard] },
 { path: 'noticias', component: GestionnoticiasComponent, canActivate: [AuthGuard] },
+{path: 'insignias', component: InsigniasComponent, canActivate: [AuthGuard]},
   ]
 },
 { path: 'error400', component: Error400Component },

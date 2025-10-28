@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../auth.service'; // Ajusta la ruta según tu estructura de carpetas
@@ -21,13 +21,19 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-perfilusuario',
   standalone: true,
-  imports: [CommonModule,FormsModule, DialogModule,ConfirmDialogModule, ToastModule,PasswordModule, FloatLabelModule, MatIconModule, AvatarModule, DividerModule, InputTextModule, InputGroupModule],
+  imports: [CommonModule, FormsModule, DialogModule, ConfirmDialogModule, ToastModule, PasswordModule, FloatLabelModule, MatIconModule, AvatarModule, DividerModule, InputTextModule, InputGroupModule],
   templateUrl: './perfilusuario.component.html',
   styleUrl: './perfilusuario.component.css',
-  providers: [MessageService,ConfirmationService] 
+  providers: [MessageService, ConfirmationService]
 })
-export class PerfilusuarioComponent  implements OnInit {
- private apiUrl = `https://api-libreria.vercel.app/api`;
+export class PerfilusuarioComponent implements OnInit {
+  private apiUrl = `https://api-libreria.vercel.app/api`;
+
+  insignias: any[] = [];
+
+ // NUEVAS VARIABLES PARA LA ANIMACIÓN
+  mostrarNotificacionInsignia = false;
+  nuevaInsignia: any = null;
 
   perfil: any = null;
   originalPerfil: any = null;
@@ -58,7 +64,7 @@ export class PerfilusuarioComponent  implements OnInit {
   apiUrlventas: string = 'https://api-libreria.vercel.app/api/ventas/historial';
   usuarioId: number | null = null;
 
-  constructor(private authService: AuthService, private http: HttpClient, private router: Router,private messageService: MessageService) {}
+  constructor(private authService: AuthService, private http: HttpClient, private router: Router, private messageService: MessageService) { }
 
   ngOnInit() {
     this.verificarUsuario();
@@ -88,6 +94,7 @@ export class PerfilusuarioComponent  implements OnInit {
         if (res.authenticated) {
           this.usuarioId = res.usuario.id;
           this.obtenerHistorial();
+           this.obtenerInsignias(); //devueleve las insignias del usuario
         }
       },
       error: err => {
@@ -108,32 +115,32 @@ export class PerfilusuarioComponent  implements OnInit {
     });
   }
 
-actualizarPerfil() {
-  if (!this.isFormChanged() || !this.isValidPhoneNumber()) return;
+  actualizarPerfil() {
+    if (!this.isFormChanged() || !this.isValidPhoneNumber()) return;
 
-  this.http.put<any>(`${this.apiUrl}/edit`, this.perfil, { withCredentials: true }).subscribe({
-    next: (response) => {
-      this.perfil = response;
-      this.originalPerfil = JSON.parse(JSON.stringify(response));
-      this.showForm = false;
+    this.http.put<any>(`${this.apiUrl}/edit`, this.perfil, { withCredentials: true }).subscribe({
+      next: (response) => {
+        this.perfil = response;
+        this.originalPerfil = JSON.parse(JSON.stringify(response));
+        this.showForm = false;
 
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Perfil actualizado',
-        detail: 'Actualizado correctamente',
-        life: 3000
-      });
-    },
-    error: () => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'No se pudo actualizar el perfil',
-        life: 3000
-      });
-    }
-  });
-}
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Perfil actualizado',
+          detail: 'Actualizado correctamente',
+          life: 3000
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo actualizar el perfil',
+          life: 3000
+        });
+      }
+    });
+  }
 
 
   activarMFA() {
@@ -166,51 +173,51 @@ actualizarPerfil() {
     });
   }
 
-cambiarContrasena() {
-  if (this.passwordData.newPassword !== this.passwordData.confirmNewPassword) {
-    this.errorMessage = 'Las contraseñas no coinciden';
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: this.errorMessage,
-      life: 3000
-    });
-    return;
-  }
-  if (!this.isFormValid()) return;
-
-  const data = {
-    currentPassword: this.passwordData.currentPassword,
-    newPassword: this.passwordData.newPassword
-  };
-
-  this.http.put<any>(`${this.apiUrl}/cambiar-contrasena`, data, { withCredentials: true }).subscribe({
-    next: () => {
-      this.successMessage = 'Contraseña actualizada con éxito';
-      this.errorMessage = null;
-      this.showPasswordForm = false;
-      this.passwordData = { currentPassword: '', newPassword: '', confirmNewPassword: '' };
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Éxito',
-        detail: this.successMessage,
-        life: 3000
-      });
-      setTimeout(() => this.successMessage = null, 3000);
-    },
-    error: (err) => {
-      this.errorMessage = err?.error?.message || 'Error al actualizar la contraseña';
-      this.successMessage = null;
+  cambiarContrasena() {
+    if (this.passwordData.newPassword !== this.passwordData.confirmNewPassword) {
+      this.errorMessage = 'Las contraseñas no coinciden';
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: this.errorMessage? this.errorMessage : 'Error al actualizar la contraseña',
+        detail: this.errorMessage,
         life: 3000
       });
-      setTimeout(() => this.errorMessage = null, 3000);
+      return;
     }
-  });
-}
+    if (!this.isFormValid()) return;
+
+    const data = {
+      currentPassword: this.passwordData.currentPassword,
+      newPassword: this.passwordData.newPassword
+    };
+
+    this.http.put<any>(`${this.apiUrl}/cambiar-contrasena`, data, { withCredentials: true }).subscribe({
+      next: () => {
+        this.successMessage = 'Contraseña actualizada con éxito';
+        this.errorMessage = null;
+        this.showPasswordForm = false;
+        this.passwordData = { currentPassword: '', newPassword: '', confirmNewPassword: '' };
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: this.successMessage,
+          life: 3000
+        });
+        setTimeout(() => this.successMessage = null, 3000);
+      },
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Error al actualizar la contraseña';
+        this.successMessage = null;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: this.errorMessage ? this.errorMessage : 'Error al actualizar la contraseña',
+          life: 3000
+        });
+        setTimeout(() => this.errorMessage = null, 3000);
+      }
+    });
+  }
 
 
   cancelarEdicion() {
@@ -241,17 +248,17 @@ cambiarContrasena() {
   }
 
   toggleEditarGuardar() {
-  if (!this.showForm) {
-    this.showForm = true;
-  } else {
-    this.actualizarPerfil();
+    if (!this.showForm) {
+      this.showForm = true;
+    } else {
+      this.actualizarPerfil();
+    }
   }
-}
 
 
-onInputChange() {
-  if (!this.showForm) this.showForm = true;
-}
+  onInputChange() {
+    if (!this.showForm) this.showForm = true;
+  }
 
   isFormChanged(): boolean {
     return JSON.stringify(this.perfil) !== JSON.stringify(this.originalPerfil);
@@ -291,4 +298,59 @@ onInputChange() {
 
   mostrarCompras: boolean = false;
 
+  obtenerInsignias(): void {
+    if (!this.usuarioId) return;
+
+    this.http.get<any>(`${this.apiUrl}/user-insignias`, { withCredentials: true }).subscribe({
+      next: (res) => {
+        this.insignias = res.insignias;
+
+        // VERIFICAR SI HAY UNA INSIGNIA NUEVA
+        this.verificarInsigniaNueva();
+      },
+      error: (err) => {
+        console.error('Error al obtener insignias:', err);
+      }
+    });
+  }
+
+
+   // NUEVO MÉTODO: Verificar si hay una insignia nueva
+  verificarInsigniaNueva(): void {
+    if (this.insignias.length === 0) return;
+
+    // Obtener la última insignia vista del localStorage
+    const ultimaVistaId = localStorage.getItem('ultimaInsigniaVista');
+    
+    // Obtener la insignia más reciente (asumiendo que viene ordenada o es la última)
+    const insigniaMasReciente = this.insignias[this.insignias.length - 1];
+    
+    // Si es diferente a la última vista, mostrarla
+    if (insigniaMasReciente && insigniaMasReciente.id.toString() !== ultimaVistaId) {
+      this.mostrarAnimacionInsignia(insigniaMasReciente);
+    }
+  }
+
+  // NUEVO MÉTODO: Mostrar la animación
+  mostrarAnimacionInsignia(insignia: any): void {
+    this.nuevaInsignia = insignia;
+    this.mostrarNotificacionInsignia = true;
+    
+    // Guardar que ya se mostró esta insignia
+    localStorage.setItem('ultimaInsigniaVista', insignia.id.toString());
+    
+    // Ocultar después de 5 segundos
+    setTimeout(() => {
+      this.cerrarNotificacion();
+    }, 5000);
+  }
+
+  // NUEVO MÉTODO: Cerrar manualmente la notificación
+  cerrarNotificacion(): void {
+    this.mostrarNotificacionInsignia = false;
+    setTimeout(() => {
+      this.nuevaInsignia = null;
+    }, 300); // Esperar a que termine la animación de salida
+  }
 }
+

@@ -1,13 +1,39 @@
 <div class="container" *ngIf="perfil">
-  <div class="profile-header">
-    <div class="header-content">
+<div class="profile-header">
+  <div class="header-content">
+    <div class="user-section">
       <div class="avatar">{{ perfil.nombre?.charAt(0) || 'U' }}</div>
       <div class="user-info">
         <h1>{{ perfil.nombre }}</h1>
         <p>Gestiona tu información personal</p>
       </div>
     </div>
+
+    <div class="insignias-section">
+      <div class="insignias-header">
+        <h3>🏆 Mis Insignias</h3>
+        <span class="progreso-texto">{{ insignias.length }}/6</span>
+      </div>
+      
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="(insignias.length / 6) * 100"></div>
+      </div>
+
+          <!-- CUANDO NO HAY INSIGNIAS -->
+      <div *ngIf="insignias.length === 0" class="sin-insignias">
+        <mat-icon class="empty-icon">emoji_events</mat-icon>
+        <p>¡Realiza tu primera compra para desbloquear insignias!</p>
+      </div>
+
+      <div class="insignias-grid">
+        <div *ngFor="let ins of insignias" class="insignia-card">
+          <img [src]="ins.icono_url" [alt]="ins.nombre" />
+          <span>{{ ins.nombre }}</span>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
   <div class="main-grid">
     <!-- 🧾 FORMULARIO PERFIL -->
@@ -21,14 +47,8 @@
         <label for="nombre">Nombre Completo</label>
         <div class="input-group">
           <mat-icon class="input-icon">person</mat-icon>
-          <input
-            type="text"
-            id="nombre"
-            [(ngModel)]="perfil.nombre"
-            [readonly]="!showForm"
-            name="nombre"
-            (ngModelChange)="onInputChange()"
-          />
+          <input type="text" id="nombre" [(ngModel)]="perfil.nombre" [readonly]="!showForm" name="nombre"
+            (ngModelChange)="onInputChange()" />
         </div>
       </div>
 
@@ -37,14 +57,8 @@
         <label for="email">Correo Electrónico</label>
         <div class="input-group" style="position: relative;">
           <mat-icon class="input-icon-left">mail</mat-icon>
-          <input
-            type="email"
-            id="email"
-            [(ngModel)]="perfil.correo"
-            readonly
-            name="email"
-            class="input-with-icons locked-input"
-          />
+          <input type="email" id="email" [(ngModel)]="perfil.correo" readonly name="email"
+            class="input-with-icons locked-input" />
           <mat-icon class="input-icon-right">lock</mat-icon>
         </div>
       </div>
@@ -54,23 +68,13 @@
         <label for="telefono">Teléfono</label>
         <div class="input-group">
           <mat-icon class="input-icon">phone</mat-icon>
-          <input
-            type="tel"
-            id="telefono"
-            [(ngModel)]="perfil.telefono"
-            [readonly]="!showForm"
-            name="telefono"
-            maxlength="10"
-            (keypress)="preventLetters($event)"
-            (ngModelChange)="onInputChange()"
-          />
+          <input type="tel" id="telefono" [(ngModel)]="perfil.telefono" [readonly]="!showForm" name="telefono"
+            maxlength="10" (keypress)="preventLetters($event)" (ngModelChange)="onInputChange()" />
         </div>
       </div>
 
-      <button class="btn"
-              [ngClass]="showForm ? 'btn-success' : 'btn-primary'"
-              (click)="toggleEditarGuardar()"
-              [disabled]="showForm && (!isFormChanged() || !isValidPhoneNumber())">
+      <button class="btn" [ngClass]="showForm ? 'btn-success' : 'btn-primary'" (click)="toggleEditarGuardar()"
+        [disabled]="showForm && (!isFormChanged() || !isValidPhoneNumber())">
         <mat-icon>{{ showForm ? 'save' : 'edit' }}</mat-icon>
         {{ showForm ? 'Guardar Cambios' : 'Editar Perfil' }}
       </button>
@@ -95,10 +99,8 @@
               <h4>Autenticación de Dos Factores</h4>
               <p>Agrega una capa extra de seguridad</p>
             </div>
-            <div
-            class="toggle-switch"
-            [class.active]="perfil.mfa_activado == 1"
-            (click)="perfil.mfa_activado == 1 ? desactivarMFA() : activarMFA()">
+            <div class="toggle-switch" [class.active]="perfil.mfa_activado == 1"
+              (click)="perfil.mfa_activado == 1 ? desactivarMFA() : activarMFA()">
             </div>
           </div>
         </div>
@@ -129,12 +131,12 @@
           <button class="btn btn-primary" (click)="showPasswordForm = true">
             <mat-icon>lock_reset</mat-icon> Cambiar Contraseña
           </button>
-  
-                <!-- Botón para mostrar/ocultar historial de compras -->
-            <button class="btn btn-light" (click)="mostrarCompras = !mostrarCompras">
+
+          <!-- Botón para mostrar/ocultar historial de compras -->
+          <button class="btn btn-light" (click)="mostrarCompras = !mostrarCompras">
             <mat-icon>shopping_cart_checkout</mat-icon>
             {{ mostrarCompras ? 'Ocultar Compras' : 'Ver Compras' }}
-            </button>
+          </button>
         </div>
       </div>
 
@@ -151,35 +153,22 @@
   </div>
 </div>
 
-<p-dialog header="Cambiar Contraseña" [(visible)]="showPasswordForm" modal [closable]="false" [style]="{width: '400px'}">
+<p-dialog header="Cambiar Contraseña" [(visible)]="showPasswordForm" modal [closable]="false"
+  [style]="{width: '400px'}">
   <form>
     <!-- Contraseña actual -->
     <div class="form-group" style="margin-bottom: 1.5rem;">
       <label for="currentPassword">Contraseña Actual</label>
-      <p-password 
-        id="currentPassword"
-        name="currentPassword"
-        [(ngModel)]="passwordData.currentPassword"
-        required
-        [toggleMask]="true"
-        inputStyleClass="w-full"
-        [feedback]="false"
-      ></p-password>
+      <p-password id="currentPassword" name="currentPassword" [(ngModel)]="passwordData.currentPassword" required
+        [toggleMask]="true" inputStyleClass="w-full" [feedback]="false"></p-password>
     </div>
 
     <!-- Nueva contraseña -->
     <div class="form-group" style="margin-bottom: 1.5rem;">
       <label for="newPassword">Nueva Contraseña</label>
-      <p-password 
-        id="newPassword"
-        name="newPassword"
-        [(ngModel)]="passwordData.newPassword"
-        required
-        [toggleMask]="true"
-        inputStyleClass="w-full"
-        [feedback]="true"
-        (input)="checkPasswordStrength(); validatePasswordsMatch()"
-      ></p-password>
+      <p-password id="newPassword" name="newPassword" [(ngModel)]="passwordData.newPassword" required
+        [toggleMask]="true" inputStyleClass="w-full" [feedback]="true"
+        (input)="checkPasswordStrength(); validatePasswordsMatch()"></p-password>
       <small [ngClass]="passwordStrength === 'Fuerte' ? 'text-success' : 'text-danger'">
         Fortaleza: {{ passwordStrength }}
       </small>
@@ -188,16 +177,9 @@
     <!-- Confirmar nueva contraseña -->
     <div class="form-group" style="margin-bottom: 1.5rem;">
       <label for="confirmNewPassword">Confirmar Nueva Contraseña</label>
-      <p-password 
-        id="confirmNewPassword"
-        name="confirmNewPassword"
-        [(ngModel)]="passwordData.confirmNewPassword"
-        required
-        [toggleMask]="true"
-        inputStyleClass="w-full"
-        [feedback]="false"
-        (input)="validatePasswordsMatch()"
-      ></p-password>
+      <p-password id="confirmNewPassword" name="confirmNewPassword" [(ngModel)]="passwordData.confirmNewPassword"
+        required [toggleMask]="true" inputStyleClass="w-full" [feedback]="false"
+        (input)="validatePasswordsMatch()"></p-password>
       <small *ngIf="!passwordsMatch" class="text-danger">Las contraseñas no coinciden</small>
     </div>
 
@@ -211,14 +193,9 @@
 
     <!-- Botones -->
     <div class="form-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
-<button
-  type="button"
-  class="btn btn-success"
-  [disabled]="!isFormValid()"
-  (click)="cambiarContrasena()"
->
-  <mat-icon>save</mat-icon> Guardar
-</button>
+      <button type="button" class="btn btn-success" [disabled]="!isFormValid()" (click)="cambiarContrasena()">
+        <mat-icon>save</mat-icon> Guardar
+      </button>
 
       <button class="btn btn-secondary" (click)="showPasswordForm = false">
         <mat-icon>cancel</mat-icon> Cancelar
@@ -258,13 +235,13 @@
           <p><strong>Método:</strong> {{ venta.metodo_pago }}</p>
           <p>
             <strong>Estado:</strong>
-            <span  [ngClass]="venta.estado === 'completado' ? 'active' : 'inactive'">
+            <span [ngClass]="venta.estado === 'completado' ? 'active' : 'inactive'">
               {{ venta.estado }}
             </span>
           </p>
           <p>
             <strong>Envío:</strong>
-            <span  [ngClass]="venta.estado_envio === 'Entregado' ? 'active' : 'inactive'">
+            <span [ngClass]="venta.estado_envio === 'Entregado' ? 'active' : 'inactive'">
               {{ venta.estado_envio }}
             </span>
           </p>
@@ -274,14 +251,46 @@
 
       <div class="compra-acciones">
         <button class="btn btn-light" (click)="verDetalle(venta.id)">
-         Ver Detalle
+          Ver Detalle
         </button>
       </div>
     </div>
   </div>
 </div>
 
-  
+
+<div class="insignia-notification-overlay" 
+     *ngIf="mostrarNotificacionInsignia"
+     (click)="cerrarNotificacion()">
+  <div class="insignia-notification-card" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="cerrarNotificacion()">
+      <mat-icon>close</mat-icon>
+    </button>
+    
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    
+    <div class="notification-icon">
+      <mat-icon class="trophy-icon">emoji_events</mat-icon>
+    </div>
+    
+    <h2>¡Insignia Desbloqueada!</h2>
+    
+    <div class="insignia-destacada">
+      <img [src]="nuevaInsignia?.icono_url" [alt]="nuevaInsignia?.nombre" />
+    </div>
+    
+    <h3>{{ nuevaInsignia?.nombre }}</h3>
+    <p>{{ nuevaInsignia?.descripcion }}</p>
+    
+    <div class="notification-footer">
+      <span>¡Sigue comprando para desbloquear más!</span>
+    </div>
+  </div>
+</div>
 
 
 

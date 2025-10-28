@@ -1,0 +1,79 @@
+<!-- Toast para notificaciones -->
+<p-toast></p-toast>
+
+<!-- Diálogo de confirmación -->
+<p-confirmDialog></p-confirmDialog>
+
+<div class="p-d-flex p-ai-center p-jc-center"
+  style="height: calc(100vh - 60px); width: 100%; padding: 20px; margin-bottom: 500px;">
+  <div class="card" style="width: 100%; margin: auto;">
+
+    <!-- Título de la sección -->
+    <h2 class="texto" style="margin-bottom: 20px;">Gestión de Insignias</h2>
+
+    <!-- Botón para agregar una insignia -->
+    <button pButton icon="pi pi-plus" label="Agregar Insignia" class="p-button-text p-mb-4"
+      (click)="showDialog('top')"></button>
+
+    <!-- Tabla de insignias -->
+    <p-table [value]="insignias" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]" class="p-shadow-2">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Icono</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Regla</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-ins>
+        <tr>
+          <td><img [src]="ins.icono_url" alt="icono" width="50" height="50"
+              style="object-fit: cover; border-radius: 50%;" /></td>
+          <td>{{ ins.nombre }}</td>
+          <td>{{ ins.descripcion }}</td>
+          <td>{{ ins.tipo }}</td>
+          <td>{{ ins.regla }}</td>
+          <td class="action-buttons">
+            <button pButton icon="pi pi-pencil" label="Editar" class="p-button-text p-mr-2" (click)="editar(ins)"
+              (click)="showDialog('top')"></button>
+            <button pButton icon="pi pi-trash" label="Eliminar" class="p-button-text p-button-danger"
+              (click)="confirmarEliminacion(ins.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-dialog header="{{ editando ? 'Editar Insignia' : 'Nueva Insignia' }}" [(visible)]="visible" [modal]="true"
+      [style]="{width: '400px'}">
+      <div class="p-fluid">
+        <div class="field">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" type="text" pInputText [(ngModel)]="formData.nombre" />
+        </div>
+        <div class="field">
+          <label for="descripcion">Descripción</label>
+          <input id="descripcion" type="text" pInputText [(ngModel)]="formData.descripcion" />
+        </div>
+        <div class="field">
+          <label for="tipo">Tipo</label>
+          <input id="tipo" type="text" pInputText [(ngModel)]="formData.tipo" />
+        </div>
+        <div class="field">
+          <label for="regla">Regla</label>
+          <input id="regla" type="text" pInputText [(ngModel)]="formData.regla" />
+        </div>
+        <div class="field">
+          <label>Icono</label>
+          <p-fileUpload mode="basic" name="icono" (onSelect)="onFileSelect($event)" [auto]="false"
+            chooseLabel="Elegir" />
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+         <button pButton label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="cancelarEdicion()"></button>
+        <p-button label="Guardar" icon="pi pi-check" (onClick)="guardar()"></p-button>
+      </ng-template>
+    </p-dialog>

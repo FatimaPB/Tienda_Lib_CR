@@ -1,34 +1,45 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivate, Router } from '@angular/router';
-import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
 
-describe('AuthGuard', () => {
-  let authGuard: AuthGuard;
-  let routerSpy: jasmine.SpyObj<Router>;
+describe('AuthService', () => {
+  let service: AuthService;
 
   beforeEach(() => {
-    // Crear un espía para el Router
-    const spy = jasmine.createSpyObj('Router', ['navigate']);
-
     TestBed.configureTestingModule({
-      providers: [
-        AuthGuard,
-        { provide: Router, useValue: spy } // Inyectar el espía en lugar del Router real
-      ],
+      providers: [AuthService]
     });
-
-    authGuard = TestBed.inject(AuthGuard); // Inyectar el guardia
-    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>; // Inyectar el espía del Router
+    service = TestBed.inject(AuthService);
   });
 
-  it('should allow activation if token exists in cookies', () => {
-    const result = authGuard.canActivate(); // Llamar al método canActivate
-    expect(result).toBeTrue(); // Esperar que se permita la activación
+  it('debería crearse correctamente', () => {
+    expect(service).toBeTruthy();
   });
 
-  it('should redirect to login if token does not exist in cookies', () => {
-    const result = authGuard.canActivate(); // Llamar al método canActivate
-    expect(result).toBeFalse(); // Esperar que no se permita la activación
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']); // Verificar que redirige al login
+  it('debería retornar null inicialmente', () => {
+    expect(service.gettipoUsuario()).toBeNull();
   });
+
+  it('debería asignar tipoUsuario al hacer login', () => {
+    service.login('admin');
+    expect(service.gettipoUsuario()).toBe('admin');
+  });
+
+  it('debería limpiar tipoUsuario al hacer logout', () => {
+    service.login('user');
+    expect(service.gettipoUsuario()).toBe('user');
+
+    service.logout();
+    expect(service.gettipoUsuario()).toBeNull();
+  });
+
+  it('el observable rol$ debería emitir nuevos valores al hacer login y logout', () => {
+    const emittedValues: (string | null)[] = [];
+    service.rol$.subscribe(value => emittedValues.push(value));
+
+    service.login('admin'); // primer valor emitido
+    service.logout();       // segundo valor emitido
+
+    expect(emittedValues).toEqual([null, 'admin', null]);
+  });
+
 });

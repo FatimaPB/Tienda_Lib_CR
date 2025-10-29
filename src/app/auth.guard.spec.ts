@@ -1,36 +1,63 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthGuard } from './auth.guard';
 
 describe('AuthGuard', () => {
   let authGuard: AuthGuard;
   let routerSpy: jasmine.SpyObj<Router>;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    // Crear un espía para el Router
     const spy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         AuthGuard,
-        { provide: Router, useValue: spy } // Inyectar el espía en lugar del Router real
+        { provide: Router, useValue: spy },
       ],
     });
 
-    authGuard = TestBed.inject(AuthGuard); // Inyectar el guardia
-    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>; // Inyectar el espía del Router
+    authGuard = TestBed.inject(AuthGuard);
+    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should allow activation if token exists', () => {
-    localStorage.setItem('token', 'dummy_token'); // Simular la existencia de un token
-    const result = authGuard.canActivate(); // Llamar al método canActivate
-    expect(result).toBeTrue(); // Esperar que se permita la activación
+  afterEach(() => {
+    httpMock.verify();
   });
 
-  it('should redirect to login if token does not exist', () => {
-    localStorage.removeItem('token'); // Asegurarse de que no hay token
-    const result = authGuard.canActivate(); // Llamar al método canActivate
-    expect(result).toBeFalse(); // Esperar que no se permita la activación
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']); // Verificar que redirige al login
+  it('debería permitir la activación si está autenticado', (done) => {
+    authGuard.canActivate().subscribe(result => {
+      expect(result).toBeTrue();
+      expect(routerSpy.navigate).not.toHaveBeenCalled();
+      done();
+    });
+
+    const req = httpMock.expectOne('https://api-libreria.vercel.app/api/check-auth');
+    req.flush({ authenticated: true });
+  });
+
+  it('debería redirigir al login si no está autenticado', (done) => {
+    authGuard.canActivate().subscribe(result => {
+      expect(result).toBeFalse();
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+      done();
+    });
+
+    const req = httpMock.expectOne('https://api-libreria.vercel.app/api/check-auth');
+    req.flush({ authenticated: false });
+  });
+
+  it('debería redirigir al login si la petición HTTP falla', (done) => {
+    authGuard.canActivate().subscribe(result => {
+      expect(result).toBeFalse();
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+      done();
+    });
+
+    const req = httpMock.expectOne('https://api-libreria.vercel.app/api/check-auth');
+    req.error(new ErrorEvent('Error de red'));
   });
 });

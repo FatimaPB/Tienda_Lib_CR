@@ -63,8 +63,8 @@ jobs:
           echo "Iniciando deploy a Vercel..."
           if [ "${GITHUB_REF##*/}" = "main" ]; then
             echo "Deploy de producción (main)"
-            vercel --prod --token $VERCEL_TOKEN --confirm
+            vercel --prod --token $VERCEL_TOKEN --org $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID --confirm
           else
             echo "Deploy de preview (develop)"
-            vercel --token $VERCEL_TOKEN --confirm
+            vercel --token $VERCEL_TOKEN --org $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID --confirm
           fi

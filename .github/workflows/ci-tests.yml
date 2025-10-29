@@ -57,14 +57,12 @@ jobs:
       - name: Deploy a Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
           echo "Iniciando deploy a Vercel..."
           if [ "${GITHUB_REF##*/}" = "main" ]; then
             echo "Deploy de producción (main)"
-            vercel --prod --token $VERCEL_TOKEN --org $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID --confirm
+            vercel --prod --token $VERCEL_TOKEN --confirm
           else
             echo "Deploy de preview (develop)"
-            vercel --token $VERCEL_TOKEN --org $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID --confirm
+            vercel --token $VERCEL_TOKEN --confirm
           fi

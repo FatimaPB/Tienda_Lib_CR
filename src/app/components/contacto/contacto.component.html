@@ -5,19 +5,29 @@
 </div>
 
 <div class="contact-container" *ngIf="!loading">
-    <!-- Mapa de Google -->
-    <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7442.568161150652!2d-98.42083866358557!3d21.14109004118161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d726eb5d1d46d3%3A0xba50c82de105ab7e!2sPl.%20de%20la%20Revoluci%C3%B3n%20Mexicana%201%2C%20Centro%2C%2043000%20Huejutla%20de%20Reyes%2C%20Hgo.!5e0!3m2!1ses!2smx!4v1738813309168!5m2!1ses!2smx" 
-        width="600"
-        height="450"
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
+  <!-- Mapa de la librería -->
+  <div class="map-container">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7442.568161150652!2d-98.42083866358557!3d21.14109004118161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d726eb5d1d46d3%3A0xba50c82de105ab7e!2sPl.%20de%20la%20Revoluci%C3%B3n%20Mexicana%201%2C%20Centro%2C%2043000%20Huejutla%20de%20Reyes%2C%20Hgo.!5e0!3m2!1ses!2smx!4v1738813309168!5m2!1ses!2smx" 
+      width="600"
+      height="450"
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
     </iframe>
-    </div>
-  
- <!-- Información de contacto -->
+  </div>
+
+<!-- Botón para abrir Google Maps con ubicación del usuario -->
+<div *ngIf="userPosition" class="ruta-btn-container">
+  <button mat-raised-button color="primary" class="ruta-btn" (click)="openInGoogleMaps()">
+    <mat-icon>directions</mat-icon>
+    Ver ruta desde mi ubicación
+  </button>
+</div>
+
+
+
+  <!-- Información de contacto -->
   <div class="content-wrapper">
     <div class="info-container">
       <h2>Información de Contacto</h2>

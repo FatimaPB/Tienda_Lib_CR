@@ -13,8 +13,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-
-
 import { Router } from '@angular/router';
 
 interface Empresa {
@@ -26,32 +24,44 @@ interface Empresa {
   instagram?: string;
 }
 
-
 @Component({
   selector: 'app-contacto',
   standalone: true,
-  imports: [CommonModule,MatButtonModule,MatCardModule,MatIconModule,MatChipsModule,MatFormFieldModule,
-    MatProgressBarModule,MatTooltipModule,MatInputModule,MatProgressSpinner
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatProgressBarModule,
+    MatTooltipModule,
+    MatInputModule,
+    MatProgressSpinner
   ],
   templateUrl: './contacto.component.html',
   styleUrl: './contacto.component.css',
   animations: [
-      trigger('fadeIn', [
-        transition(':enter', [
-          style({ opacity: 0, transform: 'translateY(20px)' }),
-          animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-        ])
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('600ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
       ])
-    ]
+    ])
+  ]
 })
 export class ContactoComponent {
- loading = true;
+  loading = true;
   empresaData: Empresa | null = null;
+
+  // Para la geolocalización
+  userPosition: { lat: number; lng: number } | null = null;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.getEmpresasData();
+    this.getUserLocation();
   }
 
   getEmpresasData(): void {
@@ -72,5 +82,31 @@ export class ContactoComponent {
         this.loading = false;
       }
     });
+  }
+
+  // Obtener la ubicación del usuario
+  getUserLocation(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.userPosition = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+        },
+        (error) => {
+          console.warn('Permiso de geolocalización denegado', error);
+        }
+      );
+    }
+  }
+
+  // Abrir Google Maps con la ruta desde el usuario hasta la librería
+  openInGoogleMaps(): void {
+    if (!this.userPosition) return;
+
+    const libreriaAddress = encodeURIComponent('Pl. de la Revolución Mexicana 1, Centro, 43000 Huejutla de Reyes, Hgo.');
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${this.userPosition.lat},${this.userPosition.lng}&destination=${libreriaAddress}`;
+    window.open(url, '_blank');
   }
 }
